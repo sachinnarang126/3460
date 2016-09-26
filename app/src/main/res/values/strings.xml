@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Interview Question</string>
+    <string name="title_activity_home">HomeActivity</string>
+    <string name="action_settings">Settings</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="home_fragment">HomeFragment</string>
+    <string name="category_fragment">CategoryFragment</string>
+    <string name="ios">iOS</string>
+    <string name="android">ANDROID</string>
+    <string name="java">JAVA</string>
+</resources>
