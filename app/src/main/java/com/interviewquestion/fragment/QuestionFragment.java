@@ -2,25 +2,24 @@ package com.interviewquestion.fragment;
 
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.interviewquestion.R;
-import com.interviewquestion.basecontroller.AppCompatFragment;
 import com.interviewquestion.dataholder.DataHolder;
 import com.interviewquestion.repository.Question;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class QuestionFragment extends AppCompatFragment implements CompoundButton.OnCheckedChangeListener {
+public class QuestionFragment extends Fragment implements View.OnClickListener {
+
     private Question.Response question;
     private boolean isChecked;
 
@@ -60,70 +59,84 @@ public class QuestionFragment extends AppCompatFragment implements CompoundButto
         String count = (bundle.getInt("pos") + 1) + "/" + bundle.getInt("total");
         txtCount.setText(count);
 
-        CheckBox checkBoxA = (CheckBox) view.findViewById(R.id.checkboxA);
-        CheckBox checkBoxB = (CheckBox) view.findViewById(R.id.checkboxB);
-        CheckBox checkBoxC = (CheckBox) view.findViewById(R.id.checkboxC);
-        CheckBox checkBoxD = (CheckBox) view.findViewById(R.id.checkboxD);
+        txtViewA.setOnClickListener(this);
+        txtViewB.setOnClickListener(this);
+        txtViewC.setOnClickListener(this);
+        txtViewD.setOnClickListener(this);
 
-        checkBoxA.setOnCheckedChangeListener(this);
-        checkBoxB.setOnCheckedChangeListener(this);
-        checkBoxC.setOnCheckedChangeListener(this);
-        checkBoxD.setOnCheckedChangeListener(this);
-    }
+        /*RelativeLayout parentA = (RelativeLayout) view.findViewById(R.id.parentA);
+        RelativeLayout parentB = (RelativeLayout) view.findViewById(R.id.parentB);
+        RelativeLayout parentC = (RelativeLayout) view.findViewById(R.id.parentC);
+        RelativeLayout parentD = (RelativeLayout) view.findViewById(R.id.parentD);
 
-    @Override
-    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-        if (!isChecked) {
-            isChecked = true;
-            switch (compoundButton.getId()) {
-                case R.id.checkboxA:
-                    updateViewAccordingToAnswer(1, getView().findViewById(R.id.parentA), ((TextView) getView().findViewById(R.id.txtViewA)));
-                    break;
-
-                case R.id.checkboxB:
-                    updateViewAccordingToAnswer(2, getView().findViewById(R.id.parentB), ((TextView) getView().findViewById(R.id.txtViewB)));
-                    break;
-
-                case R.id.checkboxC:
-                    updateViewAccordingToAnswer(3, getView().findViewById(R.id.parentC), ((TextView) getView().findViewById(R.id.txtViewC)));
-                    break;
-
-                case R.id.checkboxD:
-                    updateViewAccordingToAnswer(4, getView().findViewById(R.id.parentD), ((TextView) getView().findViewById(R.id.txtViewD)));
-                    break;
-            }
-        }
+        parentA.setOnClickListener(this);
+        parentB.setOnClickListener(this);
+        parentC.setOnClickListener(this);
+        parentD.setOnClickListener(this);*/
     }
 
     private void updateViewAccordingToAnswer(int selectedCheckBox, View view, TextView textView) {
-        int answer = Integer.parseInt(question.getAnswer());
+
+        final int answer = Integer.parseInt(question.getAnswer());
         textView.setTextColor(ContextCompat.getColor(getActivity(), android.R.color.white));
+
         if (selectedCheckBox == answer) {
             view.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.green));
             ((TextView) getView().findViewById(R.id.txtUserValue)).setText("Correct");
         } else {
             view.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.red));
-            ((TextView) getView().findViewById(R.id.txtUserValue)).setText("Incorrect");
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    ((TextView) getView().findViewById(R.id.txtUserValue)).setText("Incorrect");
 
-            switch (answer) {
-                case 1:
-                    getView().findViewById(R.id.parentA).setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.green));
-                    ((TextView) getView().findViewById(R.id.txtViewA)).setTextColor(ContextCompat.getColor(getActivity(), android.R.color.white));
+                    switch (answer) {
+                        case 1:
+                            getView().findViewById(R.id.parentA).setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.green));
+                            ((TextView) getView().findViewById(R.id.txtViewA)).setTextColor(ContextCompat.getColor(getActivity(), android.R.color.white));
+                            break;
+
+                        case 2:
+                            getView().findViewById(R.id.parentB).setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.green));
+                            ((TextView) getView().findViewById(R.id.txtViewB)).setTextColor(ContextCompat.getColor(getActivity(), android.R.color.white));
+                            break;
+
+                        case 3:
+                            getView().findViewById(R.id.parentC).setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.green));
+                            ((TextView) getView().findViewById(R.id.txtViewC)).setTextColor(ContextCompat.getColor(getActivity(), android.R.color.white));
+                            break;
+
+                        case 4:
+                            getView().findViewById(R.id.parentD).setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.green));
+                            ((TextView) getView().findViewById(R.id.txtViewD)).setTextColor(ContextCompat.getColor(getActivity(), android.R.color.white));
+                            break;
+                    }
+                }
+            }, 100);
+        }
+    }
+
+    @Override
+    public void onClick(View view) {
+
+        if (!isChecked) {
+            isChecked = true;
+
+            switch (view.getId()) {
+                case R.id.txtViewA:
+                    updateViewAccordingToAnswer(1, view, (TextView) view);
                     break;
 
-                case 2:
-                    getView().findViewById(R.id.parentB).setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.green));
-                    ((TextView) getView().findViewById(R.id.txtViewB)).setTextColor(ContextCompat.getColor(getActivity(), android.R.color.white));
+                case R.id.txtViewB:
+                    updateViewAccordingToAnswer(2, view, ((TextView) view));
                     break;
 
-                case 3:
-                    getView().findViewById(R.id.parentC).setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.green));
-                    ((TextView) getView().findViewById(R.id.txtViewC)).setTextColor(ContextCompat.getColor(getActivity(), android.R.color.white));
+                case R.id.txtViewC:
+                    updateViewAccordingToAnswer(3, view, ((TextView) view));
                     break;
 
-                case 4:
-                    getView().findViewById(R.id.parentD).setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.green));
-                    ((TextView) getView().findViewById(R.id.txtViewD)).setTextColor(ContextCompat.getColor(getActivity(), android.R.color.white));
+                case R.id.txtViewD:
+                    updateViewAccordingToAnswer(4, view, ((TextView) view));
                     break;
             }
         }

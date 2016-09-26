@@ -21,6 +21,12 @@ public class HomeActivity extends AppBaseCompatActivity {
 
         loadHomeFragment();
 
+
+    }
+
+    private void setTitle(String title) {
+        if (getSupportActionBar() != null)
+            getSupportActionBar().setTitle(title);
     }
 
     private void loadHomeFragment() {
@@ -52,7 +58,7 @@ public class HomeActivity extends AppBaseCompatActivity {
             if (fragmentFromBackStack == null) {
                 FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
                 fragmentTransaction.replace(container, fragment, tag);
-                 fragmentTransaction.addToBackStack(tag);
+                fragmentTransaction.addToBackStack(tag);
                 fragmentTransaction.commit();
             } else {
                 // this called if add to back stack

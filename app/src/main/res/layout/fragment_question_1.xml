@@ -86,24 +86,22 @@
                 android:layout_height="match_parent">
 
                 <TextView
-                    android:id="@+id/txtOptionA"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:background="@color/colorPrimary"
-                    android:gravity="center"
-                    android:padding="8dp"
-                    android:text="A"
-                    android:textColor="@android:color/white" />
-
-                <TextView
                     android:id="@+id/txtViewA"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_toEndOf="@+id/txtOptionA"
-                    android:layout_toRightOf="@+id/txtOptionA"
+                    android:layout_height="wrap_content"
+                    android:layout_toLeftOf="@+id/checkboxA"
+                    android:layout_toStartOf="@+id/checkboxA"
                     android:padding="8dp"
                     android:scrollbars="vertical"
                     android:textColor="@android:color/black" />
+
+                <CheckBox
+                    android:id="@+id/checkboxA"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true" />
 
             </RelativeLayout>
 
@@ -122,24 +120,22 @@
                 android:layout_height="match_parent">
 
                 <TextView
-                    android:id="@+id/txtOptionB"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:background="@color/colorPrimary"
-                    android:gravity="center"
-                    android:padding="8dp"
-                    android:text="B"
-                    android:textColor="@android:color/white" />
-
-                <TextView
                     android:id="@+id/txtViewB"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_toEndOf="@+id/txtOptionB"
-                    android:layout_toRightOf="@+id/txtOptionB"
+                    android:layout_height="wrap_content"
+                    android:layout_toLeftOf="@+id/checkboxB"
+                    android:layout_toStartOf="@+id/checkboxB"
                     android:padding="8dp"
                     android:scrollbars="vertical"
                     android:textColor="@android:color/black" />
+
+                <CheckBox
+                    android:id="@+id/checkboxB"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true" />
 
             </RelativeLayout>
 
@@ -160,22 +156,20 @@
                 <TextView
                     android:id="@+id/txtViewC"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_toEndOf="@+id/txtOptionC"
-                    android:layout_toRightOf="@+id/txtOptionC"
+                    android:layout_height="wrap_content"
+                    android:layout_toLeftOf="@+id/checkboxC"
+                    android:layout_toStartOf="@+id/checkboxC"
                     android:padding="8dp"
                     android:scrollbars="vertical"
                     android:textColor="@android:color/black" />
 
-                <TextView
-                    android:id="@+id/txtOptionC"
+                <CheckBox
+                    android:id="@+id/checkboxC"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:background="@color/colorPrimary"
-                    android:gravity="center"
-                    android:padding="8dp"
-                    android:text="C"
-                    android:textColor="@android:color/white" />
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true" />
 
             </RelativeLayout>
 
@@ -194,24 +188,22 @@
                 android:layout_height="match_parent">
 
                 <TextView
-                    android:id="@+id/txtOptionD"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:background="@color/colorPrimary"
-                    android:gravity="center"
-                    android:padding="8dp"
-                    android:text="D"
-                    android:textColor="@android:color/white" />
-
-                <TextView
                     android:id="@+id/txtViewD"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_toEndOf="@+id/txtOptionD"
-                    android:layout_toRightOf="@+id/txtOptionD"
+                    android:layout_height="wrap_content"
+                    android:layout_toLeftOf="@+id/checkboxD"
+                    android:layout_toStartOf="@+id/checkboxD"
                     android:padding="8dp"
                     android:scrollbars="vertical"
                     android:textColor="@android:color/black" />
+
+                <CheckBox
+                    android:id="@+id/checkboxD"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true" />
 
             </RelativeLayout>
 

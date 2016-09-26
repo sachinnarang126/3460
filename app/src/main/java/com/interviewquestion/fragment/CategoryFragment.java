@@ -37,11 +37,11 @@ public class CategoryFragment extends AppCompatFragment {
     private ProgressBar progressBar;
     private List<Question.Response> questionList;
 
-    public static CategoryFragment getInstance(/*String url, */int serviceType) {
+    public static CategoryFragment getInstance(String technology, int serviceType) {
         CategoryFragment categoryFragment = new CategoryFragment();
         Bundle bundle = new Bundle();
         bundle.putInt("serviceType", serviceType);
-//        bundle.putString("url", url);
+        bundle.putString("technology", technology);
         categoryFragment.setArguments(bundle);
         return categoryFragment;
     }
@@ -50,6 +50,7 @@ public class CategoryFragment extends AppCompatFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         categoryList = new ArrayList<>();
+        getActivity().setTitle(getArguments().getString("technology"));
     }
 
     @Override
@@ -168,7 +169,6 @@ public class CategoryFragment extends AppCompatFragment {
     }
 
     public void goToQuestionActivity(int pos, String category) {
-
         if (pos == 0) {
             DataHolder.getInstance().setQuestionList(questionList);
         } else {
@@ -182,6 +182,7 @@ public class CategoryFragment extends AppCompatFragment {
         }
 
         Intent intent = new Intent(getActivity(), QuestionActivity.class);
+        intent.putExtra("title", category);
         startActivity(intent);
     }
 
@@ -190,7 +191,8 @@ public class CategoryFragment extends AppCompatFragment {
         categoryList.clear();
         categoryList.add("All Question");
         for (Question.Response response : responseList) {
-            categoryList.add(response.getCategory());
+            if (!categoryList.contains(response.getCategory()))
+                categoryList.add(response.getCategory());
         }
 
         categoryAdapter.notifyDataSetChanged();
