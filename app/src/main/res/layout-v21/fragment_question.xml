@@ -11,7 +11,8 @@
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:elevation="16dp">
 
         <ScrollView
             android:layout_width="match_parent"
@@ -41,7 +42,8 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginTop="4dp"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:elevation="8dp">
 
             <RelativeLayout
                 android:id="@+id/parentA"
@@ -52,7 +54,6 @@
                     android:id="@+id/txtViewA"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_toLeftOf="@+id/checkboxA"
                     android:layout_toStartOf="@+id/checkboxA"
                     android:padding="8dp"
                     android:scrollbars="vertical"
@@ -63,7 +64,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
                     android:layout_centerVertical="true" />
 
             </RelativeLayout>
@@ -75,7 +75,8 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginTop="4dp"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:elevation="8dp">
 
             <RelativeLayout
                 android:id="@+id/parentB"
@@ -86,7 +87,6 @@
                     android:id="@+id/txtViewB"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_toLeftOf="@+id/checkboxB"
                     android:layout_toStartOf="@+id/checkboxB"
                     android:padding="8dp"
                     android:scrollbars="vertical"
@@ -97,7 +97,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
                     android:layout_centerVertical="true" />
 
             </RelativeLayout>
@@ -109,7 +108,8 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginTop="4dp"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:elevation="8dp">
 
             <RelativeLayout
                 android:id="@+id/parentC"
@@ -120,7 +120,6 @@
                     android:id="@+id/txtViewC"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_toLeftOf="@+id/checkboxC"
                     android:layout_toStartOf="@+id/checkboxC"
                     android:padding="8dp"
                     android:scrollbars="vertical"
@@ -131,7 +130,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
                     android:layout_centerVertical="true" />
 
             </RelativeLayout>
@@ -143,7 +141,8 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginTop="4dp"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:elevation="8dp">
 
             <RelativeLayout
                 android:id="@+id/parentD"
@@ -154,7 +153,6 @@
                     android:id="@+id/txtViewD"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_toLeftOf="@+id/checkboxD"
                     android:layout_toStartOf="@+id/checkboxD"
                     android:padding="8dp"
                     android:scrollbars="vertical"
@@ -165,7 +163,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
                     android:layout_centerVertical="true" />
 
             </RelativeLayout>
