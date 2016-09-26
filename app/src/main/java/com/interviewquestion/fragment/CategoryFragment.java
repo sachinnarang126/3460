@@ -169,7 +169,7 @@ public class CategoryFragment extends AppCompatFragment {
 
     public void goToQuestionActivity(int pos, String category) {
 
-        if (pos > 0) {
+        if (pos == 0) {
             DataHolder.getInstance().setQuestionList(questionList);
         } else {
             List<Question.Response> tempList = new ArrayList<>();

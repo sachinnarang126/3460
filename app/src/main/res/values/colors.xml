@@ -7,5 +7,8 @@
     <color name="android">#ffeead</color>
     <color name="java">#ffcc5c</color>
     <color name="ios">#ff6f69</color>
+    <color name="green">#008744</color>
+    <color name="red">#d62d20</color>
+
 
 </resources>
