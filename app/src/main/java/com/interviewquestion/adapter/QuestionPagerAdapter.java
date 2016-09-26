@@ -16,10 +16,12 @@ import java.util.List;
 public class QuestionPagerAdapter extends FragmentStatePagerAdapter {
 
     private List<Question.Response> questionList;
+    private int size;
 //    private int color;
 
     public QuestionPagerAdapter(FragmentManager fm, List<Question.Response> questionList/*, int color*/) {
         super(fm);
+        size = questionList.size();
         this.questionList = questionList;
     }
 
@@ -27,7 +29,7 @@ public class QuestionPagerAdapter extends FragmentStatePagerAdapter {
     public Fragment getItem(int position) {
         QuestionFragment questionFragment = null;
         try {
-            questionFragment = QuestionFragment.getInstance(position);
+            questionFragment = QuestionFragment.getInstance(position, size);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -36,6 +38,6 @@ public class QuestionPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public int getCount() {
-        return questionList.size();
+        return size;
     }
 }

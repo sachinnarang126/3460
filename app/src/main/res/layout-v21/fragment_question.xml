@@ -11,23 +11,58 @@
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:elevation="16dp">
+        android:layout_weight="1">
 
-        <ScrollView
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:scrollbars="vertical">
+            android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/txtQuestion"
+            <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="8dp"
-                android:textColor="@android:color/black" />
+                android:layout_height="match_parent"
+                android:layout_above="@+id/bottom"
+                android:scrollbars="vertical">
 
-        </ScrollView>
+                <TextView
+                    android:id="@+id/txtQuestion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    android:textColor="@android:color/black" />
+
+            </ScrollView>
+
+            <RelativeLayout
+                android:id="@+id/bottom"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_alignParentBottom="true"
+                android:background="@color/colorPrimary">
+
+                <TextView
+                    android:id="@+id/txtUserValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="12dp"
+                    android:textColor="@android:color/white"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/txtCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="12dp"
+                    android:textColor="@android:color/white"
+                    android:textSize="16sp" />
+
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
     </android.support.v7.widget.CardView>
 
 

@@ -24,9 +24,10 @@ public class QuestionFragment extends AppCompatFragment implements CompoundButto
     private Question.Response question;
     private boolean isChecked;
 
-    public static QuestionFragment getInstance(int pos) {
+    public static QuestionFragment getInstance(int pos, int total) {
         Bundle bundle = new Bundle();
         bundle.putInt("pos", pos);
+        bundle.putInt("total", total);
         QuestionFragment questionFragment = new QuestionFragment();
         questionFragment.setArguments(bundle);
         return questionFragment;
@@ -41,19 +42,23 @@ public class QuestionFragment extends AppCompatFragment implements CompoundButto
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        question = DataHolder.getInstance().getQuestionList().get(getArguments().getInt("pos"));
+        Bundle bundle = getArguments();
+        question = DataHolder.getInstance().getQuestionList().get(bundle.getInt("pos"));
 
         TextView txtQuestion = (TextView) view.findViewById(R.id.txtQuestion);
         TextView txtViewA = (TextView) view.findViewById(R.id.txtViewA);
         TextView txtViewB = (TextView) view.findViewById(R.id.txtViewB);
         TextView txtViewC = (TextView) view.findViewById(R.id.txtViewC);
         TextView txtViewD = (TextView) view.findViewById(R.id.txtViewD);
+        TextView txtCount = (TextView) view.findViewById(R.id.txtCount);
 
         txtQuestion.setText(question.getQuestion());
         txtViewA.setText(question.getA());
         txtViewB.setText(question.getB());
         txtViewC.setText(question.getC());
         txtViewD.setText(question.getD());
+        String count = (bundle.getInt("pos") + 1) + "/" + bundle.getInt("total");
+        txtCount.setText(count);
 
         CheckBox checkBoxA = (CheckBox) view.findViewById(R.id.checkboxA);
         CheckBox checkBoxB = (CheckBox) view.findViewById(R.id.checkboxB);
@@ -95,8 +100,10 @@ public class QuestionFragment extends AppCompatFragment implements CompoundButto
         textView.setTextColor(ContextCompat.getColor(getActivity(), android.R.color.white));
         if (selectedCheckBox == answer) {
             view.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.green));
+            ((TextView) getView().findViewById(R.id.txtUserValue)).setText("Correct");
         } else {
             view.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.red));
+            ((TextView) getView().findViewById(R.id.txtUserValue)).setText("Incorrect");
 
             switch (answer) {
                 case 1:

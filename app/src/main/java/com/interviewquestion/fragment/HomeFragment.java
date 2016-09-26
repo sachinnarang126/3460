@@ -48,11 +48,11 @@ public class HomeFragment extends AppCompatFragment implements View.OnClickListe
                 break;
 
             case R.id.txtJava:
-                serviceType = 2;
+                serviceType = 3;
                 break;
 
             case R.id.txtIos:
-                serviceType = 3;
+                serviceType = 2;
                 break;
         }
         ((HomeActivity) getActivity()).startFragmentTransactionAllowingBackStack(CategoryFragment.getInstance(serviceType),
