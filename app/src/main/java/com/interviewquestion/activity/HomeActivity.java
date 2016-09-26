@@ -22,8 +22,6 @@ public class HomeActivity extends AppBaseCompatActivity {
 
         loadHomeFragment();
 
-
-
     }
 
     private void loadHomeFragment() {
