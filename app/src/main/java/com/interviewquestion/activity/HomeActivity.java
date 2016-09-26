@@ -19,7 +19,6 @@ public class HomeActivity extends AppBaseCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
         loadHomeFragment();
 
     }

@@ -2,5 +2,9 @@
     {
         "merged": "/home/sachin/Desktop/demo/InterviewQuestion/app/build/intermediates/res/merged/debug/mipmap-mdpi/ic_launcher.png",
         "source": "/home/sachin/Desktop/demo/InterviewQuestion/app/src/main/res/mipmap-mdpi/ic_launcher.png"
+    },
+    {
+        "merged": "/home/sachin/Desktop/Sachin/ndk/HRms/3460/3460/app/build/intermediates/res/merged/debug/mipmap-mdpi/ic_launcher.png",
+        "source": "/home/sachin/Desktop/Sachin/ndk/HRms/3460/3460/app/src/main/res/mipmap-mdpi/ic_launcher.png"
     }
 ]
