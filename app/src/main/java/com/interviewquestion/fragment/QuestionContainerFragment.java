@@ -51,8 +51,8 @@ public class QuestionContainerFragment extends AppCompatFragment {
 
         questionList = new ArrayList<>();
 
-        questionPagerAdapter = new QuestionPagerAdapter(getChildFragmentManager(),questionList);
-        viewPager.setAdapter(questionPagerAdapter);
+        /*questionPagerAdapter = new QuestionPagerAdapter(getChildFragmentManager(),questionList);
+        viewPager.setAdapter(questionPagerAdapter);*/
 //        viewPager.setBackgroundColor();
     }
 }

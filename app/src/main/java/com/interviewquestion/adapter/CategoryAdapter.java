@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.interviewquestion.R;
+import com.interviewquestion.fragment.CategoryFragment;
 
 import java.util.List;
 
@@ -17,20 +18,29 @@ import java.util.List;
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder> {
 
     private List<String> categoryList;
+    private CategoryFragment categoryFragment;
 
-    public CategoryAdapter(List<String> categoryList) {
+    public CategoryAdapter(List<String> categoryList, CategoryFragment categoryFragment) {
         this.categoryList = categoryList;
+        this.categoryFragment = categoryFragment;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.category_list_item, parent, false));
+        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_category, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, final int position) {
         try {
             holder.txtCategory.setText(categoryList.get(position));
+
+            holder.txtCategory.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    categoryFragment.goToQuestionActivity(position, categoryList.get(position));
+                }
+            });
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -50,6 +60,5 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
             txtCategory = (TextView) itemView.findViewById(R.id.txtCategory);
         }
     }
-
 
 }

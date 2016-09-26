@@ -1,6 +1,6 @@
 -- Merging decision tree log ---
 manifest
-ADDED from /home/sachin/Desktop/Sachin/ndk/HRms/3460/3460/app/src/main/AndroidManifest.xml:2:1-28:12
+ADDED from /home/sachin/Desktop/Sachin/ndk/HRms/3460/3460/app/src/main/AndroidManifest.xml:2:1-32:12
 	package
 		ADDED from /home/sachin/Desktop/Sachin/ndk/HRms/3460/3460/app/src/main/AndroidManifest.xml:3:5-36
 		INJECTED from /home/sachin/Desktop/Sachin/ndk/HRms/3460/3460/app/src/main/AndroidManifest.xml
@@ -22,7 +22,7 @@ ADDED from /home/sachin/Desktop/Sachin/ndk/HRms/3460/3460/app/src/main/AndroidMa
 	android:name
 		ADDED from /home/sachin/Desktop/Sachin/ndk/HRms/3460/3460/app/src/main/AndroidManifest.xml:6:22-76
 application
-ADDED from /home/sachin/Desktop/Sachin/ndk/HRms/3460/3460/app/src/main/AndroidManifest.xml:8:5-26:19
+ADDED from /home/sachin/Desktop/Sachin/ndk/HRms/3460/3460/app/src/main/AndroidManifest.xml:8:5-30:19
 MERGED from [com.android.support:design:24.2.1] /home/sachin/Desktop/Sachin/ndk/HRms/3460/3460/app/build/intermediates/exploded-aar/com.android.support/design/24.2.1/AndroidManifest.xml:22:5-20
 MERGED from [com.android.support:support-v4:24.2.1] /home/sachin/Desktop/Sachin/ndk/HRms/3460/3460/app/build/intermediates/exploded-aar/com.android.support/support-v4/24.2.1/AndroidManifest.xml:25:5-20
 MERGED from [com.android.support:support-compat:24.2.1] /home/sachin/Desktop/Sachin/ndk/HRms/3460/3460/app/build/intermediates/exploded-aar/com.android.support/support-compat/24.2.1/AndroidManifest.xml:25:5-20
@@ -66,6 +66,14 @@ ADDED from /home/sachin/Desktop/Sachin/ndk/HRms/3460/3460/app/src/main/AndroidMa
 		ADDED from /home/sachin/Desktop/Sachin/ndk/HRms/3460/3460/app/src/main/AndroidManifest.xml:25:13-56
 	android:name
 		ADDED from /home/sachin/Desktop/Sachin/ndk/HRms/3460/3460/app/src/main/AndroidManifest.xml:23:13-50
+activity#com.interviewquestion.activity.QuestionActivity
+ADDED from /home/sachin/Desktop/Sachin/ndk/HRms/3460/3460/app/src/main/AndroidManifest.xml:26:9-29:68
+	android:label
+		ADDED from /home/sachin/Desktop/Sachin/ndk/HRms/3460/3460/app/src/main/AndroidManifest.xml:28:13-60
+	android:theme
+		ADDED from /home/sachin/Desktop/Sachin/ndk/HRms/3460/3460/app/src/main/AndroidManifest.xml:29:13-56
+	android:name
+		ADDED from /home/sachin/Desktop/Sachin/ndk/HRms/3460/3460/app/src/main/AndroidManifest.xml:27:13-54
 uses-sdk
 INJECTED from /home/sachin/Desktop/Sachin/ndk/HRms/3460/3460/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
 MERGED from [com.android.support:design:24.2.1] /home/sachin/Desktop/Sachin/ndk/HRms/3460/3460/app/build/intermediates/exploded-aar/com.android.support/design/24.2.1/AndroidManifest.xml:20:5-43

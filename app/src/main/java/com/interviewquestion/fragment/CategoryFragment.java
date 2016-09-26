@@ -1,6 +1,7 @@
 package com.interviewquestion.fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,8 +13,10 @@ import android.widget.ProgressBar;
 
 import com.interviewquestion.R;
 import com.interviewquestion.activity.HomeActivity;
+import com.interviewquestion.activity.QuestionActivity;
 import com.interviewquestion.adapter.CategoryAdapter;
 import com.interviewquestion.basecontroller.AppCompatFragment;
+import com.interviewquestion.dataholder.DataHolder;
 import com.interviewquestion.network.RetrofitApiService;
 import com.interviewquestion.network.RetrofitClient;
 import com.interviewquestion.repository.Question;
@@ -28,11 +31,11 @@ import retrofit2.Response;
 
 public class CategoryFragment extends AppCompatFragment {
 
+    boolean isServiceExecuted;
     private CategoryAdapter categoryAdapter;
     private List<String> categoryList;
     private ProgressBar progressBar;
-    boolean isServiceExecuted;
-    private RecyclerView recyclerView;
+    private List<Question.Response> questionList;
 
     public static CategoryFragment getInstance(/*String url, */int serviceType) {
         CategoryFragment categoryFragment = new CategoryFragment();
@@ -60,10 +63,10 @@ public class CategoryFragment extends AppCompatFragment {
         super.onViewCreated(view, savedInstanceState);
         progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
 
-        recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
+        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
-        categoryAdapter = new CategoryAdapter(categoryList);
+        categoryAdapter = new CategoryAdapter(categoryList, this);
         recyclerView.setAdapter(categoryAdapter);
 
         if (!isServiceExecuted) {
@@ -80,9 +83,7 @@ public class CategoryFragment extends AppCompatFragment {
                     getJavaQuestion();
                     break;
             }
-        } /*else {
-
-        }*/
+        }
     }
 
     private void getAndroidQuestion() {
@@ -166,17 +167,32 @@ public class CategoryFragment extends AppCompatFragment {
         }
     }
 
+    public void goToQuestionActivity(int pos, String category) {
+
+        if (pos > 0) {
+            DataHolder.getInstance().setQuestionList(questionList);
+        } else {
+            List<Question.Response> tempList = new ArrayList<>();
+            for (Question.Response response : questionList) {
+                if (response.getCategory().equalsIgnoreCase(category)) {
+                    tempList.add(response);
+                }
+            }
+            DataHolder.getInstance().setQuestionList(tempList);
+        }
+
+        Intent intent = new Intent(getActivity(), QuestionActivity.class);
+        startActivity(intent);
+    }
+
     private void updateUI(List<Question.Response> responseList) {
+        questionList = responseList;
         categoryList.clear();
-        categoryList.add("All");
+        categoryList.add("All Question");
         for (Question.Response response : responseList) {
-            System.out.println("response.getCategory() " + response.getCategory());
             categoryList.add(response.getCategory());
         }
 
-        System.out.println("categoryList.size " + categoryList.size());
         categoryAdapter.notifyDataSetChanged();
-        /*categoryAdapter = new CategoryAdapter(categoryList);
-        recyclerView.setAdapter(categoryAdapter);*/
     }
 }

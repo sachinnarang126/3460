@@ -9,4 +9,5 @@
     <string name="ios">iOS</string>
     <string name="android">ANDROID</string>
     <string name="java">JAVA</string>
+    <string name="title_activity_question">QuestionActivity</string>
 </resources>
