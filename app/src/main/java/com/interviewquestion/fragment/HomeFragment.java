@@ -5,6 +5,9 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -25,7 +28,8 @@ public class HomeFragment extends AppCompatFragment implements View.OnClickListe
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        ((HomeActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        setHasOptionsMenu(true);
+        ((HomeActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         return inflater.inflate(R.layout.fragment_home, container, false);
     }
 
@@ -47,23 +51,39 @@ public class HomeFragment extends AppCompatFragment implements View.OnClickListe
     }
 
     @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_home, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     public void onClick(View view) {
         int serviceType = 0;
         String technology = "";
         switch (view.getId()) {
             case R.id.txtAndroid:
                 serviceType = 1;
-                technology = "Android";
+                technology = "ANDROID";
                 break;
 
             case R.id.txtIos:
                 serviceType = 2;
-                technology = "Ios";
+                technology = "IOS";
                 break;
 
             case R.id.txtJava:
                 serviceType = 3;
-                technology = "Java";
+                technology = "JAVA";
                 break;
 
         }

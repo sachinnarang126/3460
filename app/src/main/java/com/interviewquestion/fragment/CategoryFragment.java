@@ -7,6 +7,8 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,16 +48,6 @@ public class CategoryFragment extends AppCompatFragment implements OnItemClickLi
         bundle.putString("technology", technology);
         categoryFragment.setArguments(bundle);
         return categoryFragment;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // handle arrow click here
-        if (item.getItemId() == android.R.id.home) {
-            getActivity().onBackPressed(); // close this activity and return to preview activity (if there is any)
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -103,6 +95,41 @@ public class CategoryFragment extends AppCompatFragment implements OnItemClickLi
                     break;
             }
         }
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_category, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                getActivity().onBackPressed();
+                break;
+
+            case R.id.action_android:
+
+                break;
+
+            case R.id.action_ios:
+
+                break;
+
+            case R.id.action_java:
+
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
     }
 
     private void getAndroidQuestion() {

@@ -2,14 +2,15 @@ package com.interviewquestion.activity;
 
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 
 import com.interviewquestion.R;
 import com.interviewquestion.adapter.QuestionPagerAdapter;
+import com.interviewquestion.basecontroller.AppBaseCompatActivity;
 import com.interviewquestion.dataholder.DataHolder;
 import com.interviewquestion.repository.Question;
 
@@ -17,7 +18,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class QuestionActivity extends AppCompatActivity {
+public class QuestionActivity extends AppBaseCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +50,37 @@ public class QuestionActivity extends AppCompatActivity {
         viewPager.setAdapter(questionPagerAdapter);
         progressBar.setVisibility(View.GONE);
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_question, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // handle arrow click here
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                break;
+
+            case R.id.action_show_answered:
+
+                break;
+
+            case R.id.action_show_unanswered:
+
+                break;
+
+            case R.id.action_show_all:
+
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
 
     private void shuffleQuestion(List<Question.Response> questionList) {
         List<String> shuffledQuestionList = new ArrayList<>();
@@ -94,14 +126,4 @@ public class QuestionActivity extends AppCompatActivity {
         }
     }
 
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // handle arrow click here
-        if (item.getItemId() == android.R.id.home) {
-            finish(); // close this activity and return to preview activity (if there is any)
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 }

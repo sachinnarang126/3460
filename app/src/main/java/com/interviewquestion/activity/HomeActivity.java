@@ -23,11 +23,6 @@ public class HomeActivity extends AppBaseCompatActivity {
 
     }
 
-    private void setTitle(String title) {
-        if (getSupportActionBar() != null)
-            getSupportActionBar().setTitle(title);
-    }
-
     private void loadHomeFragment() {
         startFragmentTransaction(HomeFragment.getInstance(), getString(R.string.home_fragment), R.id.fragment_container);
     }
