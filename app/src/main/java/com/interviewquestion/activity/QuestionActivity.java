@@ -5,6 +5,8 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import com.interviewquestion.R;
 import com.interviewquestion.adapter.QuestionPagerAdapter;
@@ -30,10 +32,14 @@ public class QuestionActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
+        ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.VISIBLE);
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
 
-        List<Question.Response> shuffledQuestionList = new ArrayList<>(DataHolder.getInstance().getQuestionList());
+        List<Question.Response> shuffledQuestionList = new ArrayList<>();
+        shuffledQuestionList.addAll(DataHolder.getInstance().getQuestionList());
+
         shuffleQuestion(shuffledQuestionList);
         Collections.shuffle(shuffledQuestionList);
 
@@ -41,14 +47,16 @@ public class QuestionActivity extends AppCompatActivity {
 
         QuestionPagerAdapter questionPagerAdapter = new QuestionPagerAdapter(getSupportFragmentManager(), shuffledQuestionList);
         viewPager.setAdapter(questionPagerAdapter);
-
+        progressBar.setVisibility(View.GONE);
     }
 
     private void shuffleQuestion(List<Question.Response> questionList) {
         List<String> shuffledQuestionList = new ArrayList<>();
         for (Question.Response response : questionList) {
             shuffledQuestionList.clear();
-
+            response.setAttempted(false);
+            response.setCorrectAnswerProvided(false);
+            response.setUserAnswer(0);
             String answer = "";
             switch (response.getAnswer()) {
                 case "1":

@@ -192,6 +192,7 @@ public class CategoryFragment extends AppCompatFragment implements OnItemClickLi
         } else {
             List<Question.Response> tempList = new ArrayList<>();
             for (Question.Response response : questionList) {
+//                System.out.println("id " + response.getId() + " isAttempted " + response.isAttempted() + " isCorrectAnswerProvided " + response.isCorrectAnswerProvided() + " getUserAnswer " + response.getUserAnswer());
                 if (response.getCategory().equalsIgnoreCase(category)) {
                     tempList.add(response);
                 }
