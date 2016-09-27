@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
@@ -17,6 +18,7 @@ import com.interviewquestion.activity.QuestionActivity;
 import com.interviewquestion.adapter.CategoryAdapter;
 import com.interviewquestion.basecontroller.AppCompatFragment;
 import com.interviewquestion.dataholder.DataHolder;
+import com.interviewquestion.interfaces.OnItemClickListener;
 import com.interviewquestion.network.RetrofitApiService;
 import com.interviewquestion.network.RetrofitClient;
 import com.interviewquestion.repository.Question;
@@ -29,7 +31,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class CategoryFragment extends AppCompatFragment {
+public class CategoryFragment extends AppCompatFragment implements OnItemClickListener.OnItemClickCallback {
 
     boolean isServiceExecuted;
     private CategoryAdapter categoryAdapter;
@@ -47,10 +49,23 @@ public class CategoryFragment extends AppCompatFragment {
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // handle arrow click here
+        if (item.getItemId() == android.R.id.home) {
+            getActivity().onBackPressed(); // close this activity and return to preview activity (if there is any)
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
         categoryList = new ArrayList<>();
         getActivity().setTitle(getArguments().getString("technology"));
+
+        ((HomeActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
@@ -168,8 +183,8 @@ public class CategoryFragment extends AppCompatFragment {
         }
     }
 
-    public void goToQuestionActivity(int pos, String category) {
-        if (pos == 0) {
+    public void goToQuestionActivity(int position, String category) {
+        if (position == 0) {
             DataHolder.getInstance().setQuestionList(questionList);
         } else {
             List<Question.Response> tempList = new ArrayList<>();
@@ -196,5 +211,10 @@ public class CategoryFragment extends AppCompatFragment {
         }
 
         categoryAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onItemClicked(View view, int position) {
+        goToQuestionActivity(position, categoryList.get(position));
     }
 }

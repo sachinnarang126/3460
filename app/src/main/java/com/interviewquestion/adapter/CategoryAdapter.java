@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.interviewquestion.R;
-import com.interviewquestion.fragment.CategoryFragment;
+import com.interviewquestion.interfaces.OnItemClickListener;
 
 import java.util.List;
 
@@ -18,11 +18,11 @@ import java.util.List;
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder> {
 
     private List<String> categoryList;
-    private CategoryFragment categoryFragment;
+    private OnItemClickListener.OnItemClickCallback onItemClickCallback;
 
-    public CategoryAdapter(List<String> categoryList, CategoryFragment categoryFragment) {
+    public CategoryAdapter(List<String> categoryList, OnItemClickListener.OnItemClickCallback onItemClickCallback) {
         this.categoryList = categoryList;
-        this.categoryFragment = categoryFragment;
+        this.onItemClickCallback = onItemClickCallback;
     }
 
     @Override
@@ -34,13 +34,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     public void onBindViewHolder(ViewHolder holder, final int position) {
         try {
             holder.txtCategory.setText(categoryList.get(position));
-
-            holder.txtCategory.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    categoryFragment.goToQuestionActivity(position, categoryList.get(position));
-                }
-            });
+            holder.txtCategory.setOnClickListener(new OnItemClickListener(position, onItemClickCallback));
         } catch (Exception e) {
             e.printStackTrace();
         }
