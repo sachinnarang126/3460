@@ -5,6 +5,7 @@
     <string name="action_show_all">Show All</string>
     <string name="action_show_answered">Show Answered</string>
     <string name="action_show_un_answered">Show Unanswered</string>
+    <string name="action_reset_all">Reset All</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="home_fragment">HomeFragment</string>

@@ -37,4 +37,9 @@ public class QuestionPagerAdapter extends FragmentStatePagerAdapter {
     public int getCount() {
         return size;
     }
+
+    @Override
+    public int getItemPosition(Object object) {
+        return POSITION_NONE;
+    }
 }

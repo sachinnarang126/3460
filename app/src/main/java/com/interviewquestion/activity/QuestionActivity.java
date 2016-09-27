@@ -16,38 +16,44 @@ import com.interviewquestion.repository.Question;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 public class QuestionActivity extends AppBaseCompatActivity {
+
+    private List<Question.Response> shuffledQuestionList;
+    private ProgressBar progressBar;
+    private QuestionPagerAdapter questionPagerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         setTitle(getIntent().getStringExtra("title"));
 
-        // add back arrow to toolbar
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
-        ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar);
+
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
         progressBar.setVisibility(View.VISIBLE);
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
 
-        List<Question.Response> shuffledQuestionList = new ArrayList<>();
+        shuffledQuestionList = new ArrayList<>();
         shuffledQuestionList.addAll(DataHolder.getInstance().getQuestionList());
-
         shuffleQuestion(shuffledQuestionList);
         Collections.shuffle(shuffledQuestionList);
 
         DataHolder.getInstance().setShuffledQuestionList(shuffledQuestionList);
 
-        QuestionPagerAdapter questionPagerAdapter = new QuestionPagerAdapter(getSupportFragmentManager(), shuffledQuestionList);
+        questionPagerAdapter = new QuestionPagerAdapter(getSupportFragmentManager(), shuffledQuestionList);
         viewPager.setAdapter(questionPagerAdapter);
+
         progressBar.setVisibility(View.GONE);
     }
 
@@ -59,28 +65,71 @@ public class QuestionActivity extends AppBaseCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // handle arrow click here
         switch (item.getItemId()) {
             case android.R.id.home:
                 finish();
                 break;
 
             case R.id.action_show_answered:
-
+//                prepareListToShowAnsweredQuestion();
                 break;
 
             case R.id.action_show_unanswered:
-
+//                prepareListToShowUnansweredQuestion();
                 break;
 
             case R.id.action_show_all:
+                prepareListToShowAllQuestion();
+                break;
 
+            case R.id.action_reset_all:
+                prepareListToResetAll();
                 break;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
+    private void prepareListToShowAllQuestion() {
+        shuffledQuestionList.clear();
+        shuffledQuestionList.addAll(DataHolder.getInstance().getQuestionList());
+        questionPagerAdapter.notifyDataSetChanged();
+    }
+
+    private void prepareListToShowUnansweredQuestion() {
+        progressBar.setVisibility(View.VISIBLE);
+        Iterator<Question.Response> iterator = shuffledQuestionList.iterator();
+        while (iterator.hasNext()) {
+            Question.Response response = iterator.next();
+            if (response.isAttempted())
+                iterator.remove();
+        }
+        questionPagerAdapter.notifyDataSetChanged();
+        progressBar.setVisibility(View.GONE);
+    }
+
+    private void prepareListToShowAnsweredQuestion() {
+        progressBar.setVisibility(View.VISIBLE);
+        Iterator<Question.Response> iterator = shuffledQuestionList.iterator();
+        while (iterator.hasNext()) {
+            Question.Response response = iterator.next();
+            if (!response.isAttempted())
+                iterator.remove();
+        }
+        questionPagerAdapter.notifyDataSetChanged();
+        progressBar.setVisibility(View.GONE);
+    }
+
+    private void prepareListToResetAll() {
+        progressBar.setVisibility(View.VISIBLE);
+        shuffledQuestionList.clear();
+        shuffledQuestionList.addAll(DataHolder.getInstance().getQuestionList());
+
+        shuffleQuestion(shuffledQuestionList);
+
+        questionPagerAdapter.notifyDataSetChanged();
+        progressBar.setVisibility(View.GONE);
+    }
 
     private void shuffleQuestion(List<Question.Response> questionList) {
         List<String> shuffledQuestionList = new ArrayList<>();

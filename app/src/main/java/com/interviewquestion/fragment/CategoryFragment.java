@@ -1,9 +1,11 @@
 package com.interviewquestion.fragment;
 
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -112,15 +114,24 @@ public class CategoryFragment extends AppCompatFragment implements OnItemClickLi
                 break;
 
             case R.id.action_android:
-
+                getArguments().putInt("serviceType", 1);
+                getArguments().putString("technology", "ANDROID");
+                getActivity().setTitle("ANDROID");
+                getAndroidQuestion();
                 break;
 
             case R.id.action_ios:
-
+                getArguments().putInt("serviceType", 2);
+                getArguments().putString("technology", "IOS");
+                getActivity().setTitle("IOS");
+                getIosQuestion();
                 break;
 
             case R.id.action_java:
-
+                getArguments().putInt("serviceType", 3);
+                getArguments().putString("technology", "JAVA");
+                getActivity().setTitle("JAVA");
+                getJavaQuestion();
                 break;
         }
 
@@ -154,6 +165,7 @@ public class CategoryFragment extends AppCompatFragment implements OnItemClickLi
                 @Override
                 public void onFailure(Call<Question> call, Throwable t) {
                     progressBar.setVisibility(View.GONE);
+                    displayDataReloadAlert();
                 }
             });
         }
@@ -181,6 +193,7 @@ public class CategoryFragment extends AppCompatFragment implements OnItemClickLi
                 @Override
                 public void onFailure(Call<Question> call, Throwable t) {
                     progressBar.setVisibility(View.GONE);
+                    displayDataReloadAlert();
                 }
             });
         }
@@ -208,6 +221,7 @@ public class CategoryFragment extends AppCompatFragment implements OnItemClickLi
                 @Override
                 public void onFailure(Call<Question> call, Throwable t) {
                     progressBar.setVisibility(View.GONE);
+                    displayDataReloadAlert();
                 }
             });
         }
@@ -247,5 +261,46 @@ public class CategoryFragment extends AppCompatFragment implements OnItemClickLi
     @Override
     public void onItemClicked(View view, int position) {
         goToQuestionActivity(position, categoryList.get(position));
+    }
+
+    private void displayDataReloadAlert() {
+        try {
+            if (isAdded() && getActivity() != null) {
+                new AlertDialog.Builder(getActivity())
+                        .setTitle("Question")
+                        .setMessage("Error receiving post from server, Reload Again...?")
+                        .setPositiveButton("Reload", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                                switch (getArguments().getInt("serviceType")) {
+                                    case 1:
+                                        getAndroidQuestion();
+                                        break;
+
+                                    case 2:
+                                        getIosQuestion();
+                                        break;
+
+                                    case 3:
+                                        getJavaQuestion();
+                                        break;
+                                }
+
+                            }
+                        })
+                        .setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .setCancelable(false)
+                        .create()
+                        .show();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
