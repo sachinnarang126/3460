@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/appBackground"
     android:orientation="vertical"
-    android:padding="8dp"
-    tools:context="com.interviewquestion.activity.HomeActivityFragment">
+    android:padding="8dp">
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
@@ -86,20 +84,23 @@
                 android:layout_height="match_parent">
 
                 <TextView
+                    android:id="@+id/txtOptionA"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@color/colorPrimary"
+                    android:gravity="center"
+                    android:padding="8dp"
+                    android:text="A"
+                    android:textColor="@android:color/white" />
+
+                <TextView
                     android:id="@+id/txtViewA"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_toStartOf="@+id/checkboxA"
+                    android:layout_height="match_parent"
+                    android:layout_toEndOf="@+id/txtOptionA"
                     android:padding="8dp"
                     android:scrollbars="vertical"
                     android:textColor="@android:color/black" />
-
-                <CheckBox
-                    android:id="@+id/checkboxA"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true" />
 
             </RelativeLayout>
 
@@ -119,20 +120,23 @@
                 android:layout_height="match_parent">
 
                 <TextView
+                    android:id="@+id/txtOptionB"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@color/colorPrimary"
+                    android:gravity="center"
+                    android:padding="8dp"
+                    android:text="B"
+                    android:textColor="@android:color/white" />
+
+                <TextView
                     android:id="@+id/txtViewB"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_toStartOf="@+id/checkboxB"
+                    android:layout_height="match_parent"
+                    android:layout_toEndOf="@+id/txtOptionB"
                     android:padding="8dp"
                     android:scrollbars="vertical"
                     android:textColor="@android:color/black" />
-
-                <CheckBox
-                    android:id="@+id/checkboxB"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true" />
 
             </RelativeLayout>
 
@@ -152,20 +156,23 @@
                 android:layout_height="match_parent">
 
                 <TextView
+                    android:id="@+id/txtOptionC"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@color/colorPrimary"
+                    android:gravity="center"
+                    android:padding="8dp"
+                    android:text="C"
+                    android:textColor="@android:color/white" />
+
+                <TextView
                     android:id="@+id/txtViewC"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_toStartOf="@+id/checkboxC"
+                    android:layout_height="match_parent"
+                    android:layout_toEndOf="@+id/txtOptionC"
                     android:padding="8dp"
                     android:scrollbars="vertical"
                     android:textColor="@android:color/black" />
-
-                <CheckBox
-                    android:id="@+id/checkboxC"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true" />
 
             </RelativeLayout>
 
@@ -185,20 +192,23 @@
                 android:layout_height="match_parent">
 
                 <TextView
+                    android:id="@+id/txtOptionD"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@color/colorPrimary"
+                    android:gravity="center"
+                    android:padding="8dp"
+                    android:text="D"
+                    android:textColor="@android:color/white" />
+
+                <TextView
                     android:id="@+id/txtViewD"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_toStartOf="@+id/checkboxD"
+                    android:layout_height="match_parent"
+                    android:layout_toEndOf="@+id/txtOptionD"
                     android:padding="8dp"
                     android:scrollbars="vertical"
                     android:textColor="@android:color/black" />
-
-                <CheckBox
-                    android:id="@+id/checkboxD"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true" />
 
             </RelativeLayout>
 

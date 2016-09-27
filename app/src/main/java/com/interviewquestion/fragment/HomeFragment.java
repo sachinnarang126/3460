@@ -31,6 +31,7 @@ public class HomeFragment extends AppCompatFragment implements View.OnClickListe
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        getActivity().setTitle("");
         TextView txtAndroid = (TextView) view.findViewById(R.id.txtAndroid);
         TextView txtJava = (TextView) view.findViewById(R.id.txtJava);
         TextView txtIos = (TextView) view.findViewById(R.id.txtIos);
@@ -42,20 +43,25 @@ public class HomeFragment extends AppCompatFragment implements View.OnClickListe
     @Override
     public void onClick(View view) {
         int serviceType = 0;
+        String technology = "";
         switch (view.getId()) {
             case R.id.txtAndroid:
                 serviceType = 1;
-                break;
-
-            case R.id.txtJava:
-                serviceType = 3;
+                technology = "Android";
                 break;
 
             case R.id.txtIos:
                 serviceType = 2;
+                technology = "Ios";
                 break;
+
+            case R.id.txtJava:
+                serviceType = 3;
+                technology = "Java";
+                break;
+
         }
-        ((HomeActivity) getActivity()).startFragmentTransactionAllowingBackStack(CategoryFragment.getInstance(serviceType),
+        ((HomeActivity) getActivity()).startFragmentTransactionAllowingBackStack(CategoryFragment.getInstance(technology, serviceType),
                 getString(R.string.category_fragment), R.id.fragment_container);
     }
 }

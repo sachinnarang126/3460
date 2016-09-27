@@ -24,7 +24,7 @@ public class RetrofitClient {
         } else {
             client = new OkHttpClient.Builder().build();
         }
-        OkHttpClient.Builder builder = client.newBuilder().readTimeout(20, TimeUnit.SECONDS).connectTimeout(20, TimeUnit.SECONDS);
+        OkHttpClient.Builder builder = client.newBuilder().readTimeout(40, TimeUnit.SECONDS).connectTimeout(40, TimeUnit.SECONDS);
         return builder.build();
     }
 
