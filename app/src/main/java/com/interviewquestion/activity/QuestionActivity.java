@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 
 import com.interviewquestion.R;
@@ -12,6 +11,8 @@ import com.interviewquestion.adapter.QuestionPagerAdapter;
 import com.interviewquestion.dataholder.DataHolder;
 import com.interviewquestion.repository.Question;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class QuestionActivity extends AppCompatActivity {
@@ -22,21 +23,67 @@ public class QuestionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_question);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        toolbar.setTitle(getIntent().getStringExtra("title"));
+        setTitle(getIntent().getStringExtra("title"));
 
         // add back arrow to toolbar
-        if (getSupportActionBar() != null){
+        if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
 
-        List<Question.Response> questionList = DataHolder.getInstance().getQuestionList();
+        List<Question.Response> shuffledQuestionList = new ArrayList<>(DataHolder.getInstance().getQuestionList());
+        shuffleQuestion(shuffledQuestionList);
+        Collections.shuffle(shuffledQuestionList);
 
-        QuestionPagerAdapter questionPagerAdapter = new QuestionPagerAdapter(getSupportFragmentManager(), questionList);
+        DataHolder.getInstance().setShuffledQuestionList(shuffledQuestionList);
+
+        QuestionPagerAdapter questionPagerAdapter = new QuestionPagerAdapter(getSupportFragmentManager(), shuffledQuestionList);
         viewPager.setAdapter(questionPagerAdapter);
+
+    }
+
+    private void shuffleQuestion(List<Question.Response> questionList) {
+        List<String> shuffledQuestionList = new ArrayList<>();
+        for (Question.Response response : questionList) {
+            shuffledQuestionList.clear();
+
+            String answer = "";
+            switch (response.getAnswer()) {
+                case "1":
+                    answer = response.getA();
+                    break;
+
+                case "2":
+                    answer = response.getB();
+                    break;
+
+                case "3":
+                    answer = response.getC();
+                    break;
+
+                case "4":
+                    answer = response.getD();
+                    break;
+            }
+
+            shuffledQuestionList.add(response.getA());
+            shuffledQuestionList.add(response.getB());
+            shuffledQuestionList.add(response.getC());
+            shuffledQuestionList.add(response.getD());
+
+            Collections.shuffle(shuffledQuestionList);
+
+            int answerIndex = shuffledQuestionList.indexOf(answer);
+
+            response.setAnswer(String.valueOf(answerIndex + 1));
+
+            response.setA(shuffledQuestionList.get(0));
+            response.setB(shuffledQuestionList.get(1));
+            response.setC(shuffledQuestionList.get(2));
+            response.setD(shuffledQuestionList.get(3));
+        }
     }
 
 

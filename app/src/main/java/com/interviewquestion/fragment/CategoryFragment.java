@@ -88,14 +88,17 @@ public class CategoryFragment extends AppCompatFragment implements OnItemClickLi
         if (!isServiceExecuted) {
             switch (getArguments().getInt("serviceType")) {
                 case 1:
+//                    recyclerView.setBackgroundColor(ContextCompat.getColor(getActivity(),R.color.android));
                     getAndroidQuestion();
                     break;
 
                 case 2:
+//                    recyclerView.setBackgroundColor(ContextCompat.getColor(getActivity(),R.color.ios));
                     getIosQuestion();
                     break;
 
                 case 3:
+//                    recyclerView.setBackgroundColor(ContextCompat.getColor(getActivity(),R.color.java));
                     getJavaQuestion();
                     break;
             }

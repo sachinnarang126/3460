@@ -42,7 +42,8 @@ public class QuestionFragment extends Fragment implements View.OnClickListener {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Bundle bundle = getArguments();
-        question = DataHolder.getInstance().getQuestionList().get(bundle.getInt("pos"));
+
+        question = DataHolder.getInstance().getShuffledQuestionList().get(bundle.getInt("pos"));
 
         TextView txtQuestion = (TextView) view.findViewById(R.id.txtQuestion);
         TextView txtViewA = (TextView) view.findViewById(R.id.txtViewA);
@@ -52,6 +53,7 @@ public class QuestionFragment extends Fragment implements View.OnClickListener {
         TextView txtCount = (TextView) view.findViewById(R.id.txtCount);
 
         txtQuestion.setText(question.getQuestion());
+
         txtViewA.setText(question.getA());
         txtViewB.setText(question.getB());
         txtViewC.setText(question.getC());
@@ -64,27 +66,81 @@ public class QuestionFragment extends Fragment implements View.OnClickListener {
         txtViewC.setOnClickListener(this);
         txtViewD.setOnClickListener(this);
 
-        /*RelativeLayout parentA = (RelativeLayout) view.findViewById(R.id.parentA);
-        RelativeLayout parentB = (RelativeLayout) view.findViewById(R.id.parentB);
-        RelativeLayout parentC = (RelativeLayout) view.findViewById(R.id.parentC);
-        RelativeLayout parentD = (RelativeLayout) view.findViewById(R.id.parentD);
+        if (question.isAttempted()) {
+            TextView txtUserValue = (TextView) view.findViewById(R.id.txtUserValue);
+            setUiCorrectAnswer(txtViewA, txtViewB, txtViewC, txtViewD);
+            if (!question.isCorrectAnswerProvided()) {
+                setUiForIncorrectAnswer(txtViewA, txtViewB, txtViewC, txtViewD);
+                txtUserValue.setText("Incorrect");
+            } else {
+                txtUserValue.setText("Correct");
+            }
+        }
 
-        parentA.setOnClickListener(this);
-        parentB.setOnClickListener(this);
-        parentC.setOnClickListener(this);
-        parentD.setOnClickListener(this);*/
     }
 
-    private void updateViewAccordingToAnswer(int selectedCheckBox, View view, TextView textView) {
+    private void setUiCorrectAnswer(TextView txtViewA, TextView txtViewB, TextView txtViewC, TextView txtViewD) {
+        switch (question.getAnswer()) {
+            case "1":
+                txtViewA.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.green));
+                txtViewA.setTextColor(ContextCompat.getColor(getActivity(), android.R.color.white));
+                break;
+
+            case "2":
+                txtViewB.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.green));
+                txtViewB.setTextColor(ContextCompat.getColor(getActivity(), android.R.color.white));
+                break;
+
+            case "3":
+                txtViewC.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.green));
+                txtViewC.setTextColor(ContextCompat.getColor(getActivity(), android.R.color.white));
+                break;
+
+            case "4":
+                txtViewD.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.green));
+                txtViewD.setTextColor(ContextCompat.getColor(getActivity(), android.R.color.white));
+                break;
+        }
+    }
+
+    private void setUiForIncorrectAnswer(TextView txtViewA, TextView txtViewB, TextView txtViewC, TextView txtViewD) {
+        switch (question.getUserAnswer()) {
+            case 1:
+                txtViewA.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.red));
+                txtViewA.setTextColor(ContextCompat.getColor(getActivity(), android.R.color.white));
+                break;
+
+            case 2:
+                txtViewB.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.red));
+                txtViewB.setTextColor(ContextCompat.getColor(getActivity(), android.R.color.white));
+                break;
+
+            case 3:
+                txtViewC.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.red));
+                txtViewC.setTextColor(ContextCompat.getColor(getActivity(), android.R.color.white));
+                break;
+
+            case 4:
+                txtViewD.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.red));
+                txtViewD.setTextColor(ContextCompat.getColor(getActivity(), android.R.color.white));
+                break;
+        }
+    }
+
+    private void updateViewAccordingToAnswer(int selectedAnswer, TextView textView) {
 
         final int answer = Integer.parseInt(question.getAnswer());
         textView.setTextColor(ContextCompat.getColor(getActivity(), android.R.color.white));
+        question.setAttempted(true);
+        question.setUserAnswer(selectedAnswer);
 
-        if (selectedCheckBox == answer) {
-            view.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.green));
+        if (selectedAnswer == answer) {
+            textView.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.green));
             ((TextView) getView().findViewById(R.id.txtUserValue)).setText("Correct");
+            question.setCorrectAnswerProvided(true);
         } else {
-            view.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.red));
+            question.setCorrectAnswerProvided(false);
+            textView.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.red));
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -124,19 +180,19 @@ public class QuestionFragment extends Fragment implements View.OnClickListener {
 
             switch (view.getId()) {
                 case R.id.txtViewA:
-                    updateViewAccordingToAnswer(1, view, (TextView) view);
+                    updateViewAccordingToAnswer(1, (TextView) view);
                     break;
 
                 case R.id.txtViewB:
-                    updateViewAccordingToAnswer(2, view, ((TextView) view));
+                    updateViewAccordingToAnswer(2, (TextView) view);
                     break;
 
                 case R.id.txtViewC:
-                    updateViewAccordingToAnswer(3, view, ((TextView) view));
+                    updateViewAccordingToAnswer(3, (TextView) view);
                     break;
 
                 case R.id.txtViewD:
-                    updateViewAccordingToAnswer(4, view, ((TextView) view));
+                    updateViewAccordingToAnswer(4, (TextView) view);
                     break;
             }
         }

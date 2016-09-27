@@ -83,6 +83,46 @@ public class Question {
         @Expose
         private String answer;
 
+        private boolean isAttempted;
+
+        private boolean isCorrectAnswerProvided;
+
+        private int userAnswer;
+
+        private int userChoice;
+
+        public boolean isAttempted() {
+            return isAttempted;
+        }
+
+        public void setAttempted(boolean attempted) {
+            isAttempted = attempted;
+        }
+
+        public boolean isCorrectAnswerProvided() {
+            return isCorrectAnswerProvided;
+        }
+
+        public void setCorrectAnswerProvided(boolean correctAnswerProvided) {
+            isCorrectAnswerProvided = correctAnswerProvided;
+        }
+
+        public int getUserAnswer() {
+            return userAnswer;
+        }
+
+        public void setUserAnswer(int userAnswer) {
+            this.userAnswer = userAnswer;
+        }
+
+        public int getUserChoice() {
+            return userChoice;
+        }
+
+        public void setUserChoice(int userChoice) {
+            this.userChoice = userChoice;
+        }
+
         /**
          * @return The id
          */

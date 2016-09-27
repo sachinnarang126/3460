@@ -15,14 +15,11 @@ import java.util.List;
 
 public class QuestionPagerAdapter extends FragmentStatePagerAdapter {
 
-//    private List<Question.Response> questionList;
     private int size;
-//    private int color;
 
-    public QuestionPagerAdapter(FragmentManager fm, List<Question.Response> questionList/*, int color*/) {
+    public QuestionPagerAdapter(FragmentManager fm, List<Question.Response> questionList) {
         super(fm);
         size = questionList.size();
-//        this.questionList = questionList;
     }
 
     @Override

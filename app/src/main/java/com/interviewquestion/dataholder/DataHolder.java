@@ -7,6 +7,15 @@ import java.util.List;
 public class DataHolder {
     private static DataHolder dataHolder;
     private List<Question.Response> questionList;
+    private List<Question.Response> shuffledQuestionList;
+
+    public List<Question.Response> getShuffledQuestionList() {
+        return shuffledQuestionList;
+    }
+
+    public void setShuffledQuestionList(List<Question.Response> shuffledQuestionList) {
+        this.shuffledQuestionList = shuffledQuestionList;
+    }
 
     public List<Question.Response> getQuestionList() {
         return questionList;
