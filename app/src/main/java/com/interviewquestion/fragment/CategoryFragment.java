@@ -78,6 +78,10 @@ public class CategoryFragment extends AppCompatFragment implements QuestionView,
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
         categoryAdapter = new CategoryAdapter(categoryList, this);
+
+//        recyclerView.addItemDecoration(new DividerItemDecoration(getActivity()));
+//        recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), R.drawable.decorator));
+//        recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(categoryAdapter);
 
         if (!isServiceExecuted) {
