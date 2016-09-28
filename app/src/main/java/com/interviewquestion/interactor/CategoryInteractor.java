@@ -10,7 +10,7 @@ import retrofit2.Call;
  * Created by root on 28/9/16.
  */
 
-public interface QuestionInteractor {
+public interface CategoryInteractor {
 
     void getJavaQuestions(OnQuestionResponseListener questionResponseListener, Call<Question> questionCall);
 

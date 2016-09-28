@@ -1,11 +1,8 @@
 package com.interviewquestion.fragment;
 
 
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -18,28 +15,26 @@ import android.widget.ProgressBar;
 
 import com.interviewquestion.R;
 import com.interviewquestion.activity.HomeActivity;
-import com.interviewquestion.activity.QuestionActivity;
 import com.interviewquestion.adapter.CategoryAdapter;
 import com.interviewquestion.basecontroller.AppCompatFragment;
-import com.interviewquestion.dataholder.DataHolder;
 import com.interviewquestion.interfaces.OnItemClickListener;
-import com.interviewquestion.presenter.QuestionPresenter;
-import com.interviewquestion.presenter.QuestionPresenterImpl;
+import com.interviewquestion.presenter.CategoryPresenter;
+import com.interviewquestion.presenter.CategoryPresenterImpl;
 import com.interviewquestion.repository.Question;
-import com.interviewquestion.view.QuestionView;
+import com.interviewquestion.view.CategoryView;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CategoryFragment extends AppCompatFragment implements QuestionView, OnItemClickListener.OnItemClickCallback {
+public class CategoryFragment extends AppCompatFragment implements CategoryView, OnItemClickListener.OnItemClickCallback {
 
     boolean isServiceExecuted;
     private CategoryAdapter categoryAdapter;
     private List<String> categoryList;
     private ProgressBar progressBar;
     private List<Question.Response> questionList;
-    private QuestionPresenter questionPresenter;
+    private CategoryPresenter categoryPresenter;
 
     public static CategoryFragment getInstance(String technology, int serviceType) {
         CategoryFragment categoryFragment = new CategoryFragment();
@@ -57,7 +52,7 @@ public class CategoryFragment extends AppCompatFragment implements QuestionView,
         categoryList = new ArrayList<>();
 
         WeakReference<CategoryFragment> reference = new WeakReference<>(this);
-        questionPresenter = new QuestionPresenterImpl(reference);
+        categoryPresenter = new CategoryPresenterImpl(reference);
 
         getActivity().setTitle(getArguments().getString("technology"));
         ((HomeActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -85,7 +80,7 @@ public class CategoryFragment extends AppCompatFragment implements QuestionView,
         recyclerView.setAdapter(categoryAdapter);
 
         if (!isServiceExecuted) {
-            questionPresenter.prepareToFetchQuestion(getArguments().getInt("serviceType"));
+            categoryPresenter.prepareToFetchQuestion(getArguments().getInt("serviceType"));
         }
     }
 
@@ -130,29 +125,28 @@ public class CategoryFragment extends AppCompatFragment implements QuestionView,
 
             case R.id.action_android:
                 getArguments().putInt("serviceType", 1);
-                getArguments().putString("technology", "ANDROID");
+                getArguments().putString("technology", getString(R.string.android));
                 getActivity().setTitle(getString(R.string.android));
                 getActivity().invalidateOptionsMenu();
 
-                questionPresenter.prepareToFetchQuestion(1);
+                categoryPresenter.prepareToFetchQuestion(1);
                 break;
 
             case R.id.action_ios:
                 getArguments().putInt("serviceType", 2);
-                getArguments().putString("technology", "IOS");
+                getArguments().putString("technology", getString(R.string.ios));
                 getActivity().setTitle(getString(R.string.ios));
                 getActivity().invalidateOptionsMenu();
 
-                questionPresenter.prepareToFetchQuestion(2);
+                categoryPresenter.prepareToFetchQuestion(2);
                 break;
 
             case R.id.action_java:
                 getArguments().putInt("serviceType", 3);
-                getArguments().putString("technology", "JAVA");
+                getArguments().putString("technology", getString(R.string.java));
                 getActivity().setTitle(getString(R.string.java));
                 getActivity().invalidateOptionsMenu();
-                questionPresenter.prepareToFetchQuestion(3);
-
+                categoryPresenter.prepareToFetchQuestion(3);
                 break;
         }
 
@@ -161,27 +155,8 @@ public class CategoryFragment extends AppCompatFragment implements QuestionView,
 
     @Override
     public void onDestroy() {
-        questionPresenter.onDestroy();
+        categoryPresenter.onDestroy();
         super.onDestroy();
-    }
-
-    public void goToQuestionActivity(int position, String category) {
-        if (position == 0) {
-            DataHolder.getInstance().setQuestionList(questionList);
-        } else {
-            List<Question.Response> tempList = new ArrayList<>();
-            for (Question.Response response : questionList) {
-//                System.out.println("id " + response.getId() + " isAttempted " + response.isAttempted() + " isCorrectAnswerProvided " + response.isCorrectAnswerProvided() + " getUserAnswer " + response.getUserAnswer());
-                if (response.getCategory().equalsIgnoreCase(category)) {
-                    tempList.add(response);
-                }
-            }
-            DataHolder.getInstance().setQuestionList(tempList);
-        }
-
-        Intent intent = new Intent(getActivity(), QuestionActivity.class);
-        intent.putExtra("title", category);
-        startActivity(intent);
     }
 
     private void updateUI(List<Question.Response> responseList) {
@@ -198,48 +173,7 @@ public class CategoryFragment extends AppCompatFragment implements QuestionView,
 
     @Override
     public void onItemClicked(View view, int position) {
-        goToQuestionActivity(position, categoryList.get(position));
-    }
-
-    private void displayDataReloadAlert() {
-        try {
-            if (isAdded() && getActivity() != null) {
-                new AlertDialog.Builder(getActivity())
-                        .setTitle("Question")
-                        .setMessage("Error receiving post from server, Reload Again...?")
-                        .setPositiveButton("Reload", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                                switch (getArguments().getInt("serviceType")) {
-                                    case 1:
-                                        questionPresenter.prepareToFetchQuestion(1);
-                                        break;
-
-                                    case 2:
-                                        questionPresenter.prepareToFetchQuestion(2);
-                                        break;
-
-                                    case 3:
-                                        questionPresenter.prepareToFetchQuestion(3);
-                                        break;
-                                }
-
-                            }
-                        })
-                        .setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        })
-                        .setCancelable(false)
-                        .create()
-                        .show();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        categoryPresenter.showQuestions(position, categoryList.get(position), questionList);
     }
 
     @Override
@@ -254,8 +188,8 @@ public class CategoryFragment extends AppCompatFragment implements QuestionView,
 
     @Override
     public void onError(String error) {
-        System.out.println("error " + error);
-        displayDataReloadAlert();
+//        System.out.println("error " + error);
+        categoryPresenter.displayDataReloadAlert();
     }
 
     @Override
