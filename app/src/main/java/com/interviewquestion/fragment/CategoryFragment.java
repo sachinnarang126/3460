@@ -23,25 +23,23 @@ import com.interviewquestion.adapter.CategoryAdapter;
 import com.interviewquestion.basecontroller.AppCompatFragment;
 import com.interviewquestion.dataholder.DataHolder;
 import com.interviewquestion.interfaces.OnItemClickListener;
-import com.interviewquestion.network.RetrofitApiService;
-import com.interviewquestion.network.RetrofitClient;
+import com.interviewquestion.presenter.QuestionPresenter;
+import com.interviewquestion.presenter.QuestionPresenterImpl;
 import com.interviewquestion.repository.Question;
-import com.interviewquestion.util.Constant;
+import com.interviewquestion.view.QuestionView;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
-public class CategoryFragment extends AppCompatFragment implements OnItemClickListener.OnItemClickCallback {
+public class CategoryFragment extends AppCompatFragment implements QuestionView, OnItemClickListener.OnItemClickCallback {
 
     boolean isServiceExecuted;
     private CategoryAdapter categoryAdapter;
     private List<String> categoryList;
     private ProgressBar progressBar;
     private List<Question.Response> questionList;
+    private QuestionPresenter questionPresenter;
 
     public static CategoryFragment getInstance(String technology, int serviceType) {
         CategoryFragment categoryFragment = new CategoryFragment();
@@ -57,8 +55,11 @@ public class CategoryFragment extends AppCompatFragment implements OnItemClickLi
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
         categoryList = new ArrayList<>();
-        getActivity().setTitle(getArguments().getString("technology"));
 
+        WeakReference<CategoryFragment> reference = new WeakReference<>(this);
+        questionPresenter = new QuestionPresenterImpl(reference);
+
+        getActivity().setTitle(getArguments().getString("technology"));
         ((HomeActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
@@ -80,19 +81,7 @@ public class CategoryFragment extends AppCompatFragment implements OnItemClickLi
         recyclerView.setAdapter(categoryAdapter);
 
         if (!isServiceExecuted) {
-            switch (getArguments().getInt("serviceType")) {
-                case 1:
-                    getAndroidQuestion();
-                    break;
-
-                case 2:
-                    getIosQuestion();
-                    break;
-
-                case 3:
-                    getJavaQuestion();
-                    break;
-            }
+            questionPresenter.prepareToFetchQuestion(getArguments().getInt("serviceType"));
         }
     }
 
@@ -140,7 +129,8 @@ public class CategoryFragment extends AppCompatFragment implements OnItemClickLi
                 getArguments().putString("technology", "ANDROID");
                 getActivity().setTitle(getString(R.string.android));
                 getActivity().invalidateOptionsMenu();
-                getAndroidQuestion();
+
+                questionPresenter.prepareToFetchQuestion(1);
                 break;
 
             case R.id.action_ios:
@@ -148,7 +138,8 @@ public class CategoryFragment extends AppCompatFragment implements OnItemClickLi
                 getArguments().putString("technology", "IOS");
                 getActivity().setTitle(getString(R.string.ios));
                 getActivity().invalidateOptionsMenu();
-                getIosQuestion();
+
+                questionPresenter.prepareToFetchQuestion(2);
                 break;
 
             case R.id.action_java:
@@ -156,95 +147,18 @@ public class CategoryFragment extends AppCompatFragment implements OnItemClickLi
                 getArguments().putString("technology", "JAVA");
                 getActivity().setTitle(getString(R.string.java));
                 getActivity().invalidateOptionsMenu();
-                getJavaQuestion();
+                questionPresenter.prepareToFetchQuestion(3);
+
                 break;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    private void getAndroidQuestion() {
-        if (((HomeActivity) getActivity()).isInternetAvailable()) {
-
-            progressBar.setVisibility(View.VISIBLE);
-
-            RetrofitApiService retrofitApiService = RetrofitClient.getRetrofitClient();
-            Call<Question> questionCall = retrofitApiService.getAndroidQuestion();
-            putServiceCallInServiceMap(questionCall, Constant.ANDROID);
-
-            questionCall.enqueue(new Callback<Question>() {
-                @Override
-                public void onResponse(Call<Question> call, Response<Question> response) {
-                    if (response.isSuccessful()) {
-                        progressBar.setVisibility(View.GONE);
-                        isServiceExecuted = true;
-                        updateUI(response.body().getResponse().get(0));
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<Question> call, Throwable t) {
-                    progressBar.setVisibility(View.GONE);
-                    displayDataReloadAlert();
-                }
-            });
-        }
-    }
-
-    private void getIosQuestion() {
-        if (((HomeActivity) getActivity()).isInternetAvailable()) {
-
-            progressBar.setVisibility(View.VISIBLE);
-
-            RetrofitApiService retrofitApiService = RetrofitClient.getRetrofitClient();
-            Call<Question> questionCall = retrofitApiService.getIosQuestion();
-            putServiceCallInServiceMap(questionCall, Constant.IOS);
-
-            questionCall.enqueue(new Callback<Question>() {
-                @Override
-                public void onResponse(Call<Question> call, Response<Question> response) {
-                    if (response.isSuccessful()) {
-                        progressBar.setVisibility(View.GONE);
-                        isServiceExecuted = true;
-                        updateUI(response.body().getResponse().get(0));
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<Question> call, Throwable t) {
-                    progressBar.setVisibility(View.GONE);
-                    displayDataReloadAlert();
-                }
-            });
-        }
-    }
-
-    private void getJavaQuestion() {
-        if (((HomeActivity) getActivity()).isInternetAvailable()) {
-
-            progressBar.setVisibility(View.VISIBLE);
-
-            RetrofitApiService retrofitApiService = RetrofitClient.getRetrofitClient();
-            Call<Question> questionCall = retrofitApiService.getJavaQuestion();
-            putServiceCallInServiceMap(questionCall, Constant.JAVA);
-
-            questionCall.enqueue(new Callback<Question>() {
-                @Override
-                public void onResponse(Call<Question> call, Response<Question> response) {
-                    if (response.isSuccessful()) {
-                        progressBar.setVisibility(View.GONE);
-                        isServiceExecuted = true;
-                        updateUI(response.body().getResponse().get(0));
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<Question> call, Throwable t) {
-                    progressBar.setVisibility(View.GONE);
-                    displayDataReloadAlert();
-                }
-            });
-        }
+    @Override
+    public void onDestroy() {
+        questionPresenter.onDestroy();
+        super.onDestroy();
     }
 
     public void goToQuestionActivity(int position, String category) {
@@ -295,15 +209,15 @@ public class CategoryFragment extends AppCompatFragment implements OnItemClickLi
                                 dialog.dismiss();
                                 switch (getArguments().getInt("serviceType")) {
                                     case 1:
-                                        getAndroidQuestion();
+                                        questionPresenter.prepareToFetchQuestion(1);
                                         break;
 
                                     case 2:
-                                        getIosQuestion();
+                                        questionPresenter.prepareToFetchQuestion(2);
                                         break;
 
                                     case 3:
-                                        getJavaQuestion();
+                                        questionPresenter.prepareToFetchQuestion(3);
                                         break;
                                 }
 
@@ -322,5 +236,26 @@ public class CategoryFragment extends AppCompatFragment implements OnItemClickLi
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void showProgress() {
+        progressBar.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideProgress() {
+        progressBar.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onError(String error) {
+        System.out.println("error " + error);
+        displayDataReloadAlert();
+    }
+
+    @Override
+    public void onSuccess(List<Question.Response> questionList) {
+        updateUI(questionList);
     }
 }
