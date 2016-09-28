@@ -21,7 +21,7 @@ import com.interviewquestion.repository.Question;
 public class QuestionFragment extends Fragment implements View.OnClickListener {
 
     private Question.Response question;
-    private boolean isChecked;
+//    private boolean isChecked;
 
     public static QuestionFragment getInstance(int pos, int total) {
         Bundle bundle = new Bundle();
@@ -175,8 +175,8 @@ public class QuestionFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View view) {
 
-        if (!isChecked) {
-            isChecked = true;
+        if (!question.isAttempted()) {
+            question.setAttempted(true);
 
             switch (view.getId()) {
                 case R.id.txtViewA:

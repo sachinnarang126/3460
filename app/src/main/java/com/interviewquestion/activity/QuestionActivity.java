@@ -71,23 +71,33 @@ public class QuestionActivity extends AppBaseCompatActivity {
                 break;
 
             case R.id.action_show_answered:
-//                prepareListToShowAnsweredQuestion();
+                getSupportActionBar().setSubtitle(getString(R.string.answered));
+                prepareListToShowAnsweredQuestion();
                 break;
 
             case R.id.action_show_unanswered:
-//                prepareListToShowUnansweredQuestion();
+                getSupportActionBar().setSubtitle(getString(R.string.unanswered));
+                prepareListToShowUnansweredQuestion();
                 break;
 
             case R.id.action_show_all:
+                getSupportActionBar().setSubtitle(getString(R.string.all));
                 prepareListToShowAllQuestion();
                 break;
 
             case R.id.action_reset_all:
+                getSupportActionBar().setSubtitle(getString(R.string.reset));
                 prepareListToResetAll();
                 break;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+//        menu.findItem(R.id.action_show_all).setVisible(false);
+        return super.onPrepareOptionsMenu(menu);
     }
 
     private void prepareListToShowAllQuestion() {
@@ -98,6 +108,8 @@ public class QuestionActivity extends AppBaseCompatActivity {
 
     private void prepareListToShowUnansweredQuestion() {
         progressBar.setVisibility(View.VISIBLE);
+        shuffledQuestionList.clear();
+        shuffledQuestionList.addAll(DataHolder.getInstance().getQuestionList());
         Iterator<Question.Response> iterator = shuffledQuestionList.iterator();
         while (iterator.hasNext()) {
             Question.Response response = iterator.next();
@@ -110,6 +122,8 @@ public class QuestionActivity extends AppBaseCompatActivity {
 
     private void prepareListToShowAnsweredQuestion() {
         progressBar.setVisibility(View.VISIBLE);
+        shuffledQuestionList.clear();
+        shuffledQuestionList.addAll(DataHolder.getInstance().getQuestionList());
         Iterator<Question.Response> iterator = shuffledQuestionList.iterator();
         while (iterator.hasNext()) {
             Question.Response response = iterator.next();

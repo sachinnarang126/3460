@@ -18,7 +18,7 @@
             <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_above="@+id/bottom"
+                android:layout_below="@+id/bottom"
                 android:scrollbars="vertical">
 
                 <TextView
@@ -34,8 +34,6 @@
                 android:id="@+id/bottom"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
-                android:layout_alignParentBottom="true"
-                android:layout_marginTop="4dp"
                 android:background="@color/colorPrimary">
 
                 <TextView

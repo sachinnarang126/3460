@@ -14,4 +14,10 @@
     <string name="android">ANDROID</string>
     <string name="java">JAVA</string>
     <string name="title_activity_question">Questions</string>
+
+    <!-- Question Activity -->
+    <string name="all">All</string>
+    <string name="reset">Reset</string>
+    <string name="answered">Answered</string>
+    <string name="unanswered">Unanswered</string>
 </resources>

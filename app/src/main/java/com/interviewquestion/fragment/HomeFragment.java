@@ -30,6 +30,7 @@ public class HomeFragment extends AppCompatFragment implements View.OnClickListe
                              Bundle savedInstanceState) {
         setHasOptionsMenu(true);
         ((HomeActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        getActivity().setTitle("Test your Skills");
         return inflater.inflate(R.layout.fragment_home, container, false);
     }
 
@@ -73,17 +74,17 @@ public class HomeFragment extends AppCompatFragment implements View.OnClickListe
         switch (view.getId()) {
             case R.id.txtAndroid:
                 serviceType = 1;
-                technology = "ANDROID";
+                technology = getString(R.string.android);
                 break;
 
             case R.id.txtIos:
                 serviceType = 2;
-                technology = "IOS";
+                technology = getString(R.string.ios);
                 break;
 
             case R.id.txtJava:
                 serviceType = 3;
-                technology = "JAVA";
+                technology = getString(R.string.java);
                 break;
 
         }

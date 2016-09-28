@@ -15,18 +15,20 @@ import java.util.List;
 
 public class QuestionPagerAdapter extends FragmentStatePagerAdapter {
 
-    private int size;
+    //    private int size;
+    private List<Question.Response> questionList;
 
     public QuestionPagerAdapter(FragmentManager fm, List<Question.Response> questionList) {
         super(fm);
-        size = questionList.size();
+        this.questionList = questionList;
+//        size = questionList.size();
     }
 
     @Override
     public Fragment getItem(int position) {
         QuestionFragment questionFragment = null;
         try {
-            questionFragment = QuestionFragment.getInstance(position, size);
+            questionFragment = QuestionFragment.getInstance(position, questionList.size());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -35,11 +37,16 @@ public class QuestionPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public int getCount() {
-        return size;
+        return questionList.size();
     }
 
     @Override
     public int getItemPosition(Object object) {
         return POSITION_NONE;
     }
+
+    /*@Override
+    public void destroyItem(ViewGroup container, int position, Object object) {
+//        super.destroyItem(container, position, object);
+    }*/
 }

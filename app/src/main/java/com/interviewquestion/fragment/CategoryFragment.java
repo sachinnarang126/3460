@@ -82,17 +82,14 @@ public class CategoryFragment extends AppCompatFragment implements OnItemClickLi
         if (!isServiceExecuted) {
             switch (getArguments().getInt("serviceType")) {
                 case 1:
-//                    recyclerView.setBackgroundColor(ContextCompat.getColor(getActivity(),R.color.android));
                     getAndroidQuestion();
                     break;
 
                 case 2:
-//                    recyclerView.setBackgroundColor(ContextCompat.getColor(getActivity(),R.color.ios));
                     getIosQuestion();
                     break;
 
                 case 3:
-//                    recyclerView.setBackgroundColor(ContextCompat.getColor(getActivity(),R.color.java));
                     getJavaQuestion();
                     break;
             }
@@ -106,6 +103,31 @@ public class CategoryFragment extends AppCompatFragment implements OnItemClickLi
     }
 
     @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+        switch (getArguments().getInt("serviceType")) {
+            case 1:
+                menu.findItem(R.id.action_android).setVisible(false);
+                menu.findItem(R.id.action_ios).setVisible(true);
+                menu.findItem(R.id.action_java).setVisible(true);
+                break;
+
+            case 2:
+                menu.findItem(R.id.action_android).setVisible(true);
+                menu.findItem(R.id.action_ios).setVisible(false);
+                menu.findItem(R.id.action_java).setVisible(true);
+                break;
+
+            case 3:
+                menu.findItem(R.id.action_android).setVisible(true);
+                menu.findItem(R.id.action_ios).setVisible(true);
+                menu.findItem(R.id.action_java).setVisible(false);
+                break;
+        }
+    }
+
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
         switch (item.getItemId()) {
@@ -116,31 +138,29 @@ public class CategoryFragment extends AppCompatFragment implements OnItemClickLi
             case R.id.action_android:
                 getArguments().putInt("serviceType", 1);
                 getArguments().putString("technology", "ANDROID");
-                getActivity().setTitle("ANDROID");
+                getActivity().setTitle(getString(R.string.android));
+                getActivity().invalidateOptionsMenu();
                 getAndroidQuestion();
                 break;
 
             case R.id.action_ios:
                 getArguments().putInt("serviceType", 2);
                 getArguments().putString("technology", "IOS");
-                getActivity().setTitle("IOS");
+                getActivity().setTitle(getString(R.string.ios));
+                getActivity().invalidateOptionsMenu();
                 getIosQuestion();
                 break;
 
             case R.id.action_java:
                 getArguments().putInt("serviceType", 3);
                 getArguments().putString("technology", "JAVA");
-                getActivity().setTitle("JAVA");
+                getActivity().setTitle(getString(R.string.java));
+                getActivity().invalidateOptionsMenu();
                 getJavaQuestion();
                 break;
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onPrepareOptionsMenu(Menu menu) {
-        super.onPrepareOptionsMenu(menu);
     }
 
     private void getAndroidQuestion() {
