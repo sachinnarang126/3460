@@ -4,7 +4,6 @@ package com.interviewquestion.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -18,9 +17,6 @@ import com.interviewquestion.activity.HomeActivity;
 import com.interviewquestion.activity.SettingsActivity;
 import com.interviewquestion.basecontroller.AppCompatFragment;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class HomeFragment extends AppCompatFragment implements View.OnClickListener {
 
     public static HomeFragment getInstance() {
@@ -31,8 +27,8 @@ public class HomeFragment extends AppCompatFragment implements View.OnClickListe
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         setHasOptionsMenu(true);
-        ((HomeActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         getActivity().setTitle("Test your Skills");
+        ((HomeActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         return inflater.inflate(R.layout.fragment_home, container, false);
     }
 
@@ -44,7 +40,6 @@ public class HomeFragment extends AppCompatFragment implements View.OnClickListe
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        getActivity().setTitle("");
         TextView txtAndroid = (TextView) view.findViewById(R.id.txtAndroid);
         TextView txtJava = (TextView) view.findViewById(R.id.txtJava);
         TextView txtIos = (TextView) view.findViewById(R.id.txtIos);
