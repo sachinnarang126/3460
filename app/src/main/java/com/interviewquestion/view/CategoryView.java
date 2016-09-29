@@ -8,7 +8,7 @@ import java.util.List;
  * Created by root on 28/9/16.
  */
 
-public interface QuestionView {
+public interface CategoryView {
     void showProgress();
 
     void hideProgress();

@@ -10,7 +10,7 @@ import retrofit2.Response;
  * Created by root on 28/9/16.
  */
 
-public class QuestionInteractorImpl implements QuestionInteractor {
+public class CategoryInteractorImpl implements CategoryInteractor {
 
     @Override
     public void getJavaQuestions(final OnQuestionResponseListener questionResponseListener, Call<Question> questionCall) {
