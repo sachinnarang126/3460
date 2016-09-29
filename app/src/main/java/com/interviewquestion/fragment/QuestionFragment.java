@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,6 +49,12 @@ public class QuestionFragment extends Fragment implements View.OnClickListener {
         TextView txtViewC = (TextView) view.findViewById(R.id.txtViewC);
         TextView txtViewD = (TextView) view.findViewById(R.id.txtViewD);
         TextView txtCount = (TextView) view.findViewById(R.id.txtCount);
+
+        txtViewA.setMovementMethod(new ScrollingMovementMethod());
+        txtViewB.setMovementMethod(new ScrollingMovementMethod());
+        txtViewC.setMovementMethod(new ScrollingMovementMethod());
+        txtViewD.setMovementMethod(new ScrollingMovementMethod());
+
 
         txtQuestion.setText(question.getQuestion());
 

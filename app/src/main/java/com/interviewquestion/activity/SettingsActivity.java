@@ -22,7 +22,6 @@ public class SettingsActivity extends AppCompatActivity {
         getFragmentManager().beginTransaction()
                 .replace(R.id.fragment_container, SettingsFragment.getInstance())
                 .commit();
-
     }
 
     @Override

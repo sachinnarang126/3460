@@ -44,7 +44,6 @@ public class CategoryPresenterImpl implements CategoryPresenter, CategoryInterac
         categoryList.clear();
         questionList = null;
         categoryView.clear();
-        categoryView = null;
         categoryAdapter = null;
     }
 
