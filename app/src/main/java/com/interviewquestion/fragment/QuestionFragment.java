@@ -14,14 +14,11 @@ import android.widget.TextView;
 import com.interviewquestion.R;
 import com.interviewquestion.dataholder.DataHolder;
 import com.interviewquestion.repository.Question;
+import com.interviewquestion.util.Constant;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class QuestionFragment extends Fragment implements View.OnClickListener {
 
     private Question.Response question;
-//    private boolean isChecked;
 
     public static QuestionFragment getInstance(int pos, int total) {
         Bundle bundle = new Bundle();
@@ -71,32 +68,32 @@ public class QuestionFragment extends Fragment implements View.OnClickListener {
             setUiCorrectAnswer(txtViewA, txtViewB, txtViewC, txtViewD);
             if (!question.isCorrectAnswerProvided()) {
                 setUiForIncorrectAnswer(txtViewA, txtViewB, txtViewC, txtViewD);
-                txtUserValue.setText("Incorrect");
+                txtUserValue.setText(getString(R.string.incorrect));
             } else {
-                txtUserValue.setText("Correct");
+                txtUserValue.setText(getString(R.string.correct));
             }
         }
 
     }
 
     private void setUiCorrectAnswer(TextView txtViewA, TextView txtViewB, TextView txtViewC, TextView txtViewD) {
-        switch (question.getAnswer()) {
-            case "1":
+        switch (Integer.parseInt(question.getAnswer())) {
+            case Constant.OPTION_A:
                 txtViewA.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.green));
                 txtViewA.setTextColor(ContextCompat.getColor(getActivity(), android.R.color.white));
                 break;
 
-            case "2":
+            case Constant.OPTION_B:
                 txtViewB.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.green));
                 txtViewB.setTextColor(ContextCompat.getColor(getActivity(), android.R.color.white));
                 break;
 
-            case "3":
+            case Constant.OPTION_C:
                 txtViewC.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.green));
                 txtViewC.setTextColor(ContextCompat.getColor(getActivity(), android.R.color.white));
                 break;
 
-            case "4":
+            case Constant.OPTION_D:
                 txtViewD.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.green));
                 txtViewD.setTextColor(ContextCompat.getColor(getActivity(), android.R.color.white));
                 break;
@@ -105,22 +102,22 @@ public class QuestionFragment extends Fragment implements View.OnClickListener {
 
     private void setUiForIncorrectAnswer(TextView txtViewA, TextView txtViewB, TextView txtViewC, TextView txtViewD) {
         switch (question.getUserAnswer()) {
-            case 1:
+            case Constant.OPTION_A:
                 txtViewA.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.red));
                 txtViewA.setTextColor(ContextCompat.getColor(getActivity(), android.R.color.white));
                 break;
 
-            case 2:
+            case Constant.OPTION_B:
                 txtViewB.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.red));
                 txtViewB.setTextColor(ContextCompat.getColor(getActivity(), android.R.color.white));
                 break;
 
-            case 3:
+            case Constant.OPTION_C:
                 txtViewC.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.red));
                 txtViewC.setTextColor(ContextCompat.getColor(getActivity(), android.R.color.white));
                 break;
 
-            case 4:
+            case Constant.OPTION_D:
                 txtViewD.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.red));
                 txtViewD.setTextColor(ContextCompat.getColor(getActivity(), android.R.color.white));
                 break;
@@ -136,7 +133,7 @@ public class QuestionFragment extends Fragment implements View.OnClickListener {
 
         if (selectedAnswer == answer) {
             textView.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.green));
-            ((TextView) getView().findViewById(R.id.txtUserValue)).setText("Correct");
+            ((TextView) getView().findViewById(R.id.txtUserValue)).setText(getString(R.string.correct));
             question.setCorrectAnswerProvided(true);
         } else {
             question.setCorrectAnswerProvided(false);
@@ -144,25 +141,25 @@ public class QuestionFragment extends Fragment implements View.OnClickListener {
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    ((TextView) getView().findViewById(R.id.txtUserValue)).setText("Incorrect");
+                    ((TextView) getView().findViewById(R.id.txtUserValue)).setText(getString(R.string.incorrect));
 
                     switch (answer) {
-                        case 1:
+                        case Constant.OPTION_A:
                             getView().findViewById(R.id.parentA).setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.green));
                             ((TextView) getView().findViewById(R.id.txtViewA)).setTextColor(ContextCompat.getColor(getActivity(), android.R.color.white));
                             break;
 
-                        case 2:
+                        case Constant.OPTION_B:
                             getView().findViewById(R.id.parentB).setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.green));
                             ((TextView) getView().findViewById(R.id.txtViewB)).setTextColor(ContextCompat.getColor(getActivity(), android.R.color.white));
                             break;
 
-                        case 3:
+                        case Constant.OPTION_C:
                             getView().findViewById(R.id.parentC).setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.green));
                             ((TextView) getView().findViewById(R.id.txtViewC)).setTextColor(ContextCompat.getColor(getActivity(), android.R.color.white));
                             break;
 
-                        case 4:
+                        case Constant.OPTION_D:
                             getView().findViewById(R.id.parentD).setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.green));
                             ((TextView) getView().findViewById(R.id.txtViewD)).setTextColor(ContextCompat.getColor(getActivity(), android.R.color.white));
                             break;
@@ -180,19 +177,19 @@ public class QuestionFragment extends Fragment implements View.OnClickListener {
 
             switch (view.getId()) {
                 case R.id.txtViewA:
-                    updateViewAccordingToAnswer(1, (TextView) view);
+                    updateViewAccordingToAnswer(Constant.OPTION_A, (TextView) view);
                     break;
 
                 case R.id.txtViewB:
-                    updateViewAccordingToAnswer(2, (TextView) view);
+                    updateViewAccordingToAnswer(Constant.OPTION_B, (TextView) view);
                     break;
 
                 case R.id.txtViewC:
-                    updateViewAccordingToAnswer(3, (TextView) view);
+                    updateViewAccordingToAnswer(Constant.OPTION_C, (TextView) view);
                     break;
 
                 case R.id.txtViewD:
-                    updateViewAccordingToAnswer(4, (TextView) view);
+                    updateViewAccordingToAnswer(Constant.OPTION_D, (TextView) view);
                     break;
             }
         }

@@ -10,4 +10,11 @@ public class Constant {
     public static final String ANDROID = BASE_URL + "android.php";
     public static final String IOS = BASE_URL + "ios.php";
     public static final String JAVA = BASE_URL + "java.php";
+
+
+    public static final int OPTION_A = 1;
+    public static final int OPTION_B = 2;
+    public static final int OPTION_C = 3;
+    public static final int OPTION_D = 4;
+
 }
