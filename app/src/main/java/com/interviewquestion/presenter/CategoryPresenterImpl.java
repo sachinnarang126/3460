@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 
+import com.interviewquestion.R;
 import com.interviewquestion.activity.HomeActivity;
 import com.interviewquestion.activity.QuestionActivity;
 import com.interviewquestion.adapter.CategoryAdapter;
@@ -87,6 +88,8 @@ public class CategoryPresenterImpl implements CategoryPresenter, CategoryInterac
                         categoryInteractor.getJavaQuestions(this, questionCall);
                         break;
                 }
+            } else {
+                context.onError(context.getString(R.string.error_internet));
             }
 
         }

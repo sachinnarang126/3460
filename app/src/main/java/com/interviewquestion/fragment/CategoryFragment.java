@@ -3,6 +3,7 @@ package com.interviewquestion.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -33,6 +34,7 @@ public class CategoryFragment extends AppCompatFragment implements CategoryView,
         CategoryFragment categoryFragment = new CategoryFragment();
         Bundle bundle = new Bundle();
         bundle.putInt("serviceType", serviceType);
+        bundle.putInt("recoveryServiceType", serviceType);
         bundle.putString("technology", technology);
         categoryFragment.setArguments(bundle);
         return categoryFragment;
@@ -82,6 +84,13 @@ public class CategoryFragment extends AppCompatFragment implements CategoryView,
     public void onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
         switch (getArguments().getInt("serviceType")) {
+            case 0:
+//                getArguments().putInt("serviceType", getArguments().getInt("recoveryServiceType"));
+                menu.findItem(R.id.action_android).setVisible(true);
+                menu.findItem(R.id.action_ios).setVisible(true);
+                menu.findItem(R.id.action_java).setVisible(true);
+                break;
+
             case 1:
                 menu.findItem(R.id.action_android).setVisible(false);
                 menu.findItem(R.id.action_ios).setVisible(true);
@@ -152,6 +161,40 @@ public class CategoryFragment extends AppCompatFragment implements CategoryView,
         categoryPresenter.showQuestions(position);
     }
 
+    private void showToast(String error) {
+        getArguments().putInt("serviceType", 0);
+        getActivity().invalidateOptionsMenu();
+        Snackbar.make(getView().findViewById(R.id.relativeParent), error, Snackbar.LENGTH_LONG).show();
+
+        /*Snackbar snack = Snackbar.make(overViewRelLay, R.string.snackbar_text, Snackbar.LENGTH_LONG).
+                setCallback(new Snackbar.Callback() {
+                    @Override
+                    public void onDismissed(Snackbar snackbar, int event) {
+                        switch (event) {
+
+                            case Snackbar.Callback.DISMISS_EVENT_ACTION:
+
+                                break;
+
+                            case Snackbar.Callback.DISMISS_EVENT_TIMEOUT:
+
+                                break;
+                        }
+                    }
+
+                    @Override
+                    public void onShown(Snackbar snackbar) {
+
+                    }
+                }).setAction(R.string.snackbar_action_undo, new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+        snack.show();*/
+    }
+
     @Override
     public void showProgress() {
         progressBar.setVisibility(View.VISIBLE);
@@ -160,6 +203,11 @@ public class CategoryFragment extends AppCompatFragment implements CategoryView,
     @Override
     public void hideProgress() {
         progressBar.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onError(String error) {
+        showToast(error);
     }
 
 }

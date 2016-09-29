@@ -8,4 +8,6 @@ public interface CategoryView {
     void showProgress();
 
     void hideProgress();
+
+    void onError(String error);
 }
