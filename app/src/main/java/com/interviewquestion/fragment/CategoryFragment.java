@@ -15,25 +15,18 @@ import android.widget.ProgressBar;
 
 import com.interviewquestion.R;
 import com.interviewquestion.activity.HomeActivity;
-import com.interviewquestion.adapter.CategoryAdapter;
 import com.interviewquestion.basecontroller.AppCompatFragment;
 import com.interviewquestion.interfaces.OnItemClickListener;
 import com.interviewquestion.presenter.CategoryPresenter;
 import com.interviewquestion.presenter.CategoryPresenterImpl;
-import com.interviewquestion.repository.Question;
 import com.interviewquestion.view.CategoryView;
 
 import java.lang.ref.WeakReference;
-import java.util.ArrayList;
-import java.util.List;
 
 public class CategoryFragment extends AppCompatFragment implements CategoryView, OnItemClickListener.OnItemClickCallback {
 
     boolean isServiceExecuted;
-    private CategoryAdapter categoryAdapter;
-    private List<String> categoryList;
     private ProgressBar progressBar;
-    private List<Question.Response> questionList;
     private CategoryPresenter categoryPresenter;
 
     public static CategoryFragment getInstance(String technology, int serviceType) {
@@ -49,9 +42,8 @@ public class CategoryFragment extends AppCompatFragment implements CategoryView,
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        categoryList = new ArrayList<>();
 
-        WeakReference<CategoryFragment> reference = new WeakReference<>(this);
+        WeakReference<CategoryView> reference = new WeakReference<CategoryView>(this);
         categoryPresenter = new CategoryPresenterImpl(reference);
 
         getActivity().setTitle(getArguments().getString("technology"));
@@ -72,12 +64,8 @@ public class CategoryFragment extends AppCompatFragment implements CategoryView,
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
-        categoryAdapter = new CategoryAdapter(categoryList, this);
 
-//        recyclerView.addItemDecoration(new DividerItemDecoration(getActivity()));
-//        recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), R.drawable.decorator));
-//        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(categoryAdapter);
+        recyclerView.setAdapter(categoryPresenter.initCategoryAdapter());
 
         if (!isServiceExecuted) {
             categoryPresenter.prepareToFetchQuestion(getArguments().getInt("serviceType"));
@@ -155,25 +143,13 @@ public class CategoryFragment extends AppCompatFragment implements CategoryView,
 
     @Override
     public void onDestroy() {
-        categoryPresenter.onDestroy();
         super.onDestroy();
-    }
-
-    private void updateUI(List<Question.Response> responseList) {
-        questionList = responseList;
-        categoryList.clear();
-        categoryList.add("All Question");
-        for (Question.Response response : responseList) {
-            if (!categoryList.contains(response.getCategory()))
-                categoryList.add(response.getCategory());
-        }
-
-        categoryAdapter.notifyDataSetChanged();
+        categoryPresenter.onDestroy();
     }
 
     @Override
     public void onItemClicked(View view, int position) {
-        categoryPresenter.showQuestions(position, categoryList.get(position), questionList);
+        categoryPresenter.showQuestions(position);
     }
 
     @Override
@@ -186,14 +162,4 @@ public class CategoryFragment extends AppCompatFragment implements CategoryView,
         progressBar.setVisibility(View.GONE);
     }
 
-    @Override
-    public void onError(String error) {
-//        System.out.println("error " + error);
-        categoryPresenter.displayDataReloadAlert();
-    }
-
-    @Override
-    public void onSuccess(List<Question.Response> questionList) {
-        updateUI(questionList);
-    }
 }
