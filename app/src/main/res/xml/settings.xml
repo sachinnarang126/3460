@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory>
+
+        <!--<Preference
+            android:enabled="true"
+            android:icon="@drawable/ic_budget"
+            android:key="prefMonthlyBudget"
+            android:selectable="true"
+            android:summary="OFF"
+            android:title="Monthly Budget Mode" />
+-->
+
+
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="prefRemoveQuestion"
+            android:summary="Remove Question from list when answered"
+            android:title="Remove Question" />
+
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

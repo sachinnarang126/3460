@@ -1,6 +1,7 @@
 package com.interviewquestion.fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 
 import com.interviewquestion.R;
 import com.interviewquestion.activity.HomeActivity;
+import com.interviewquestion.activity.SettingsActivity;
 import com.interviewquestion.basecontroller.AppCompatFragment;
 
 /**
@@ -61,6 +63,11 @@ public class HomeFragment extends AppCompatFragment implements View.OnClickListe
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_settings:
+                Intent intent = new Intent(getActivity(), SettingsActivity.class);
+                startActivity(intent);
+                break;
+
+            case R.id.action_rate_us:
 
                 break;
         }

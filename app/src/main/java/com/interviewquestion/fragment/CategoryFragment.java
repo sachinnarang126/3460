@@ -143,8 +143,8 @@ public class CategoryFragment extends AppCompatFragment implements CategoryView,
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
         categoryPresenter.onDestroy();
+        super.onDestroy();
     }
 
     @Override
