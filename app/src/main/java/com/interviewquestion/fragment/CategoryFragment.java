@@ -12,7 +12,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
+import android.widget.FrameLayout;
 
 import com.interviewquestion.R;
 import com.interviewquestion.activity.HomeActivity;
@@ -26,8 +26,8 @@ import java.lang.ref.WeakReference;
 
 public class CategoryFragment extends AppCompatFragment implements CategoryView, OnItemClickListener.OnItemClickCallback {
 
-    boolean isServiceExecuted;
-    private ProgressBar progressBar;
+    boolean isServiceExecuted, isServiceExecuting;
+    private FrameLayout progressBar;
     private CategoryPresenter categoryPresenter;
 
     public static CategoryFragment getInstance(String technology, int serviceType) {
@@ -61,7 +61,7 @@ public class CategoryFragment extends AppCompatFragment implements CategoryView,
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
+        progressBar = (FrameLayout) view.findViewById(R.id.progressBarContainer);
 
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
@@ -70,6 +70,7 @@ public class CategoryFragment extends AppCompatFragment implements CategoryView,
         recyclerView.setAdapter(categoryPresenter.initCategoryAdapter());
 
         if (!isServiceExecuted) {
+            isServiceExecuted = true;
             categoryPresenter.prepareToFetchQuestion(getArguments().getInt("serviceType"));
         }
     }
@@ -143,6 +144,7 @@ public class CategoryFragment extends AppCompatFragment implements CategoryView,
                 getArguments().putString("technology", getString(R.string.java));
                 getActivity().setTitle(getString(R.string.java));
                 getActivity().invalidateOptionsMenu();
+
                 categoryPresenter.prepareToFetchQuestion(3);
                 break;
         }
@@ -158,7 +160,8 @@ public class CategoryFragment extends AppCompatFragment implements CategoryView,
 
     @Override
     public void onItemClicked(View view, int position) {
-        categoryPresenter.showQuestions(position);
+        if (!isServiceExecuting)
+            categoryPresenter.showQuestions(position);
     }
 
     private void showToast(String error) {
@@ -197,11 +200,13 @@ public class CategoryFragment extends AppCompatFragment implements CategoryView,
 
     @Override
     public void showProgress() {
+        isServiceExecuting = true;
         progressBar.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void hideProgress() {
+        isServiceExecuting = false;
         progressBar.setVisibility(View.GONE);
     }
 
