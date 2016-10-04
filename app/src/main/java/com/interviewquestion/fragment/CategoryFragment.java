@@ -11,7 +11,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
+import android.widget.FrameLayout;
 
 import com.interviewquestion.R;
 import com.interviewquestion.activity.HomeActivity;
@@ -26,7 +26,8 @@ import java.lang.ref.WeakReference;
 public class CategoryFragment extends AppCompatFragment implements CategoryView, OnItemClickListener.OnItemClickCallback {
 
     boolean isServiceExecuted;
-    private ProgressBar progressBar;
+    //    private ProgressBar progressBar;
+    private FrameLayout progressBar;
     private CategoryPresenter categoryPresenter;
 
     public static CategoryFragment getInstance(String technology, int serviceType) {
@@ -59,7 +60,8 @@ public class CategoryFragment extends AppCompatFragment implements CategoryView,
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
+//        progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
+        progressBar = (FrameLayout) view.findViewById(R.id.progressBarContainer);
 
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
