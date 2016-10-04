@@ -2,9 +2,9 @@ package com.interviewquestion.activity;
 
 import android.content.Intent;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 
@@ -33,6 +33,6 @@ public class SplashActivity extends AppCompatActivity {
                 startActivity(new Intent(SplashActivity.this,HomeActivity.class));
                 finish();
             }
-        }, 2000);
+        }, 1000);
     }
 }
