@@ -11,6 +11,7 @@ import com.interviewquestion.R;
 import com.interviewquestion.basecontroller.AppBaseCompatActivity;
 import com.interviewquestion.presenter.QuestionPresenter;
 import com.interviewquestion.presenter.QuestionPresenterImpl;
+import com.interviewquestion.util.DepthPageTransformer;
 import com.interviewquestion.view.QuestionView;
 
 import java.lang.ref.WeakReference;
@@ -38,6 +39,7 @@ public class QuestionActivity extends AppBaseCompatActivity implements QuestionV
 
         showProgress();
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
+        viewPager.setPageTransformer(true, new DepthPageTransformer());
         questionPresenter.onCreate();
         viewPager.setAdapter(questionPresenter.initAdapter());
         hideProgress();
