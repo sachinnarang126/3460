@@ -58,32 +58,32 @@ public class CategoryPresenterImpl implements CategoryPresenter, CategoryInterac
                 RetrofitApiService apiService = RetrofitClient.getRetrofitClient();
                 Call<Question> questionCall;
                 switch (serviceType) {
-                    case 1:
-                        if (context.isServiceCallExist(Constant.ANDROID)) {
-                            questionCall = context.getServiceCallIfExist(Constant.ANDROID);
+                    case Constant.ANDROID:
+                        if (context.isServiceCallExist(Constant.ANDROID_URL)) {
+                            questionCall = context.getServiceCallIfExist(Constant.ANDROID_URL);
                         } else {
                             questionCall = apiService.getAndroidQuestion();
-                            context.putServiceCallInServiceMap(questionCall, Constant.ANDROID);
+                            context.putServiceCallInServiceMap(questionCall, Constant.ANDROID_URL);
                         }
                         categoryInteractor.getAndroidQuestions(this, questionCall);
                         break;
 
-                    case 2:
-                        if (context.isServiceCallExist(Constant.IOS)) {
-                            questionCall = context.getServiceCallIfExist(Constant.IOS);
+                    case Constant.IOS:
+                        if (context.isServiceCallExist(Constant.IOS_URL)) {
+                            questionCall = context.getServiceCallIfExist(Constant.IOS_URL);
                         } else {
                             questionCall = apiService.getIosQuestion();
-                            context.putServiceCallInServiceMap(questionCall, Constant.IOS);
+                            context.putServiceCallInServiceMap(questionCall, Constant.IOS_URL);
                         }
                         categoryInteractor.getIosQuestion(this, questionCall);
                         break;
 
-                    case 3:
-                        if (context.isServiceCallExist(Constant.JAVA)) {
-                            questionCall = context.getServiceCallIfExist(Constant.JAVA);
+                    case Constant.JAVA:
+                        if (context.isServiceCallExist(Constant.JAVA_URL)) {
+                            questionCall = context.getServiceCallIfExist(Constant.JAVA_URL);
                         } else {
                             questionCall = apiService.getJavaQuestion();
-                            context.putServiceCallInServiceMap(questionCall, Constant.JAVA);
+                            context.putServiceCallInServiceMap(questionCall, Constant.JAVA_URL);
                         }
                         categoryInteractor.getJavaQuestions(this, questionCall);
                         break;
@@ -143,16 +143,16 @@ public class CategoryPresenterImpl implements CategoryPresenter, CategoryInterac
                             public void onClick(DialogInterface dialog, int which) {
                                 dialog.dismiss();
                                 switch (context.getArguments().getInt("serviceType")) {
-                                    case 1:
-                                        prepareToFetchQuestion(1);
+                                    case Constant.ANDROID:
+                                        prepareToFetchQuestion(Constant.ANDROID);
                                         break;
 
-                                    case 2:
-                                        prepareToFetchQuestion(2);
+                                    case Constant.IOS:
+                                        prepareToFetchQuestion(Constant.IOS);
                                         break;
 
-                                    case 3:
-                                        prepareToFetchQuestion(3);
+                                    case Constant.JAVA:
+                                        prepareToFetchQuestion(Constant.JAVA);
                                         break;
                                 }
 

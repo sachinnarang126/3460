@@ -11,13 +11,13 @@ import retrofit2.http.POST;
 public interface RetrofitApiService {
 
     @Headers("x-TokenType:Dev")
-    @POST(Constant.ANDROID)
+    @POST(Constant.ANDROID_URL)
     Call<Question> getAndroidQuestion();
 
-    @GET(Constant.IOS)
+    @GET(Constant.IOS_URL)
     Call<Question> getIosQuestion();
 
-    @GET(Constant.JAVA)
+    @GET(Constant.JAVA_URL)
     Call<Question> getJavaQuestion();
 
 }

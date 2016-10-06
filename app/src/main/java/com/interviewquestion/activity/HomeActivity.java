@@ -1,6 +1,7 @@
 package com.interviewquestion.activity;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -11,6 +12,8 @@ import com.interviewquestion.basecontroller.AppBaseCompatActivity;
 import com.interviewquestion.fragment.HomeFragment;
 
 public class HomeActivity extends AppBaseCompatActivity {
+
+    private boolean doubleBackToExitPressedOnce;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,4 +64,27 @@ public class HomeActivity extends AppBaseCompatActivity {
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        System.out.println("getSupportFragmentManager().getBackStackEntryCount() " + getSupportFragmentManager().getBackStackEntryCount());
+        if (getSupportFragmentManager().getBackStackEntryCount() == 0){
+            if (doubleBackToExitPressedOnce) {
+                finish();
+                return;
+            }
+
+            this.doubleBackToExitPressedOnce = true;
+            showToast("Please press BACK again to exit");
+
+            new Handler().postDelayed(new Runnable() {
+
+                @Override
+                public void run() {
+                    doubleBackToExitPressedOnce = false;
+                }
+            }, 2000);
+        } else {
+            super.onBackPressed();
+        }
+    }
 }

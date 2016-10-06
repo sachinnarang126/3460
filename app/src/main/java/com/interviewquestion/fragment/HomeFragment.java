@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.interviewquestion.R;
 import com.interviewquestion.activity.HomeActivity;
 import com.interviewquestion.basecontroller.AppCompatFragment;
+import com.interviewquestion.util.Constant;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -72,17 +73,17 @@ public class HomeFragment extends AppCompatFragment implements View.OnClickListe
         String technology = "";
         switch (view.getId()) {
             case R.id.txtAndroid:
-                serviceType = 1;
+                serviceType = Constant.ANDROID;
                 technology = getString(R.string.android);
                 break;
 
             case R.id.txtIos:
-                serviceType = 2;
+                serviceType = Constant.IOS;
                 technology = getString(R.string.ios);
                 break;
 
             case R.id.txtJava:
-                serviceType = 3;
+                serviceType = Constant.JAVA;
                 technology = getString(R.string.java);
                 break;
 

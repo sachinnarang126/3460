@@ -20,13 +20,14 @@ import com.interviewquestion.basecontroller.AppCompatFragment;
 import com.interviewquestion.interfaces.OnItemClickListener;
 import com.interviewquestion.presenter.CategoryPresenter;
 import com.interviewquestion.presenter.CategoryPresenterImpl;
+import com.interviewquestion.util.Constant;
 import com.interviewquestion.view.CategoryView;
 
 import java.lang.ref.WeakReference;
 
 public class CategoryFragment extends AppCompatFragment implements CategoryView, OnItemClickListener.OnItemClickCallback {
 
-    boolean isServiceExecuted, isServiceExecuting;
+    private boolean isServiceExecuted, isServiceExecuting;
     private FrameLayout progressBar;
     private CategoryPresenter categoryPresenter;
 
@@ -85,26 +86,25 @@ public class CategoryFragment extends AppCompatFragment implements CategoryView,
     public void onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
         switch (getArguments().getInt("serviceType")) {
-            case 0:
-//                getArguments().putInt("serviceType", getArguments().getInt("recoveryServiceType"));
+            case Constant.SHOW_ALL:
                 menu.findItem(R.id.action_android).setVisible(true);
                 menu.findItem(R.id.action_ios).setVisible(true);
                 menu.findItem(R.id.action_java).setVisible(true);
                 break;
 
-            case 1:
+            case Constant.ANDROID:
                 menu.findItem(R.id.action_android).setVisible(false);
                 menu.findItem(R.id.action_ios).setVisible(true);
                 menu.findItem(R.id.action_java).setVisible(true);
                 break;
 
-            case 2:
+            case Constant.IOS:
                 menu.findItem(R.id.action_android).setVisible(true);
                 menu.findItem(R.id.action_ios).setVisible(false);
                 menu.findItem(R.id.action_java).setVisible(true);
                 break;
 
-            case 3:
+            case Constant.JAVA:
                 menu.findItem(R.id.action_android).setVisible(true);
                 menu.findItem(R.id.action_ios).setVisible(true);
                 menu.findItem(R.id.action_java).setVisible(false);
@@ -122,30 +122,30 @@ public class CategoryFragment extends AppCompatFragment implements CategoryView,
                 break;
 
             case R.id.action_android:
-                getArguments().putInt("serviceType", 1);
+                getArguments().putInt("serviceType", Constant.ANDROID);
                 getArguments().putString("technology", getString(R.string.android));
                 getActivity().setTitle(getString(R.string.android));
                 getActivity().invalidateOptionsMenu();
 
-                categoryPresenter.prepareToFetchQuestion(1);
+                categoryPresenter.prepareToFetchQuestion(Constant.ANDROID);
                 break;
 
             case R.id.action_ios:
-                getArguments().putInt("serviceType", 2);
+                getArguments().putInt("serviceType", Constant.IOS);
                 getArguments().putString("technology", getString(R.string.ios));
                 getActivity().setTitle(getString(R.string.ios));
                 getActivity().invalidateOptionsMenu();
 
-                categoryPresenter.prepareToFetchQuestion(2);
+                categoryPresenter.prepareToFetchQuestion(Constant.IOS);
                 break;
 
             case R.id.action_java:
-                getArguments().putInt("serviceType", 3);
+                getArguments().putInt("serviceType", Constant.JAVA);
                 getArguments().putString("technology", getString(R.string.java));
                 getActivity().setTitle(getString(R.string.java));
                 getActivity().invalidateOptionsMenu();
 
-                categoryPresenter.prepareToFetchQuestion(3);
+                categoryPresenter.prepareToFetchQuestion(Constant.JAVA);
                 break;
         }
 
@@ -165,7 +165,7 @@ public class CategoryFragment extends AppCompatFragment implements CategoryView,
     }
 
     private void showToast(String error) {
-        getArguments().putInt("serviceType", 0);
+        getArguments().putInt("serviceType", Constant.SHOW_ALL);
         getActivity().invalidateOptionsMenu();
         Snackbar.make(getView().findViewById(R.id.relativeParent), error, Snackbar.LENGTH_LONG).show();
 
