@@ -2,6 +2,7 @@ package com.interviewquestion.activity;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -66,15 +67,14 @@ public class HomeActivity extends AppBaseCompatActivity {
 
     @Override
     public void onBackPressed() {
-        System.out.println("getSupportFragmentManager().getBackStackEntryCount() " + getSupportFragmentManager().getBackStackEntryCount());
-        if (getSupportFragmentManager().getBackStackEntryCount() == 0){
+        if (getSupportFragmentManager().getBackStackEntryCount() == 0) {
             if (doubleBackToExitPressedOnce) {
                 finish();
                 return;
             }
 
-            this.doubleBackToExitPressedOnce = true;
-            showToast("Please press BACK again to exit");
+            doubleBackToExitPressedOnce = true;
+            Snackbar.make(findViewById(R.id.fragment_container), "Please press BACK again to exit", 2000)/*.setDuration(2000)*/.show();
 
             new Handler().postDelayed(new Runnable() {
 
