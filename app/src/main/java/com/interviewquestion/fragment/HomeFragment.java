@@ -49,6 +49,26 @@ public class HomeFragment extends AppCompatFragment implements View.OnClickListe
         txtAndroid.setOnClickListener(this);
         txtJava.setOnClickListener(this);
         txtIos.setOnClickListener(this);
+
+        /*List<Integer> idList = new ArrayList<>();
+        idList.add(1);
+        idList.add(4);
+        idList.add(6);
+
+        Call<Question> testCall = RetrofitClient.getRetrofitClient().iosSelectedQuestion(idList);
+
+        testCall.enqueue(new Callback<Question>() {
+            @Override
+            public void onResponse(Call<Question> call, Response<Question> response) {
+                System.out.println("HomeFragment.onResponse");
+            }
+
+            @Override
+            public void onFailure(Call<Question> call, Throwable t) {
+                System.out.println("HomeFragment.onFailure");
+                t.printStackTrace();
+            }
+        });*/
     }
 
     @Override

@@ -7,9 +7,12 @@ package com.interviewquestion.util;
 public class Constant {
 
     public static final String BASE_URL = "http://skrillsystems.com/api/";
-    public static final String ANDROID_URL = BASE_URL + "android.php";
-    public static final String IOS_URL = BASE_URL + "ios.php";
-    public static final String JAVA_URL = BASE_URL + "java.php";
+    public static final String ANDROID_URL = "android.php";
+    public static final String IOS_URL = "ios.php";
+    public static final String JAVA_URL = "java.php";
+    public static final String IOS_POST_URL = "ios_post.php";
+    public static final String JAVA_POST_URL = "java_post.php";
+    public static final String ANDROID_POST_URL = "android_post.php";
 
 
     public static final int OPTION_A = 1;
