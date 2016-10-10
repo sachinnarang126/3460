@@ -25,4 +25,7 @@ public class Constant {
     public static final int IOS = 2;
     public static final int JAVA = 3;
 
+    public static final String SHARED_PREF = "IQ_PREF";
+    public static final String IS_APP_FIRST_LAUNCH = "isAppFirstLaunch";
+
 }

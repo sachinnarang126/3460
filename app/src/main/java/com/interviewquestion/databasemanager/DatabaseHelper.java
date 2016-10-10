@@ -4,7 +4,9 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import com.interviewquestion.repository.datamodel.Questions;
+import com.interviewquestion.repository.databasemodel.Android;
+import com.interviewquestion.repository.databasemodel.Ios;
+import com.interviewquestion.repository.databasemodel.Java;
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.support.ConnectionSource;
@@ -15,12 +17,14 @@ import java.sql.SQLException;
 public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
     // Name of the database file for your application -- change to something appropriate for your app
-    private static final String DATABASE_NAME = "3460_DB";
+    private static final String DATABASE_NAME = "IQ_DB";
 
     // Any time you make changes to your database objects, you may have to increase the database version
     private static final int DATABASE_VERSION = 1; // update shared preference for authorized user flag
 
-    private Dao<Questions, Integer> questionModel;
+    private Dao<Java, Integer> javaDao;
+    private Dao<Ios, Integer> iosDao;
+    private Dao<Android, Integer> androidDao;
 //    private Context context;
 
     DatabaseHelper(Context context) {
@@ -31,7 +35,9 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase, ConnectionSource connectionSource) {
         try {
-            TableUtils.createTable(connectionSource, Questions.class);
+            TableUtils.createTable(connectionSource, Android.class);
+            TableUtils.createTable(connectionSource, Ios.class);
+            TableUtils.createTable(connectionSource, Java.class);
         } catch (SQLException e) {
             Log.e(DatabaseHelper.class.getName(), "Can't Create Database", e);
             e.printStackTrace();
@@ -86,29 +92,45 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 */
     }
 
-    /*public Dao<GraphModel, Integer> getGraphModelDao() {
-        if (graphModelDao == null) {
+    public Dao<Android, Integer> getAndroidDao() {
+        if (androidDao == null) {
             try {
-                graphModelDao = getDao(GraphModel.class);
+                androidDao = getDao(Android.class);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
-        return graphModelDao;
-    }*/
+        return androidDao;
+    }
+
+    public Dao<Ios, Integer> getIosDao() {
+        if (iosDao == null) {
+            try {
+                iosDao = getDao(Ios.class);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return iosDao;
+    }
+
+    public Dao<Java, Integer> getJavaDao() {
+        if (javaDao == null) {
+            try {
+                javaDao = getDao(Java.class);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return javaDao;
+    }
 
 
     public void clearAllTableData() {
         try {
-            TableUtils.clearTable(connectionSource, Questions.class);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void clearGraphTable() {
-        try {
-            TableUtils.clearTable(connectionSource, Questions.class);
+            TableUtils.clearTable(connectionSource, Java.class);
+            TableUtils.clearTable(connectionSource, Ios.class);
+            TableUtils.clearTable(connectionSource, Android.class);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -117,6 +139,8 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     @Override
     public void close() {
         super.close();
-        questionModel = null;
+        androidDao = null;
+        iosDao = null;
+        androidDao = null;
     }
 }

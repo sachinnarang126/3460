@@ -1,6 +1,10 @@
 package com.interviewquestion.dataholder;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+
 import com.interviewquestion.repository.Question;
+import com.interviewquestion.util.Constant;
 
 import java.util.List;
 
@@ -23,6 +27,10 @@ public class DataHolder {
 
     public void setQuestionList(List<Question.Response> questionList) {
         this.questionList = questionList;
+    }
+
+    public SharedPreferences getPreferences(Context context) {
+        return context.getSharedPreferences(Constant.SHARED_PREF, 0);
     }
 
     private DataHolder() {
