@@ -5,6 +5,7 @@ import android.content.Context;
 import com.interviewquestion.repository.databasemodel.Android;
 import com.interviewquestion.repository.databasemodel.Ios;
 import com.interviewquestion.repository.databasemodel.Java;
+import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.table.TableUtils;
 
 import java.sql.SQLException;
@@ -50,6 +51,16 @@ public class DatabaseManager {
         }
     }
 
+    public List<Android> fetchAndroidQuestionFromDB() {
+        QueryBuilder<Android, Integer> queryBuilder = databaseHelper.getAndroidDao().queryBuilder();
+        try {
+            return queryBuilder.query();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 
     /*
      **********************************IOS TABLE FUNCTIONS**********************************
@@ -71,6 +82,16 @@ public class DatabaseManager {
         }
     }
 
+    public List<Ios> fetchIosQuestionFromDB() {
+        QueryBuilder<Ios, Integer> queryBuilder = databaseHelper.getIosDao().queryBuilder();
+        try {
+            return queryBuilder.query();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 
     /*
      **********************************JAVA TABLE FUNCTIONS**********************************
@@ -90,5 +111,15 @@ public class DatabaseManager {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public List<Java> fetchJavaQuestionFromDB() {
+        QueryBuilder<Java, Integer> queryBuilder = databaseHelper.getJavaDao().queryBuilder();
+        try {
+            return queryBuilder.query();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

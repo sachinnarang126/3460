@@ -27,7 +27,7 @@ import java.lang.ref.WeakReference;
 
 public class CategoryFragment extends AppCompatFragment implements CategoryView, OnItemClickListener.OnItemClickCallback {
 
-    private boolean isServiceExecuted, isServiceExecuting;
+    private boolean isDataFetchedFromDB;
     private FrameLayout progressBar;
     private CategoryPresenter categoryPresenter;
 
@@ -70,8 +70,8 @@ public class CategoryFragment extends AppCompatFragment implements CategoryView,
 
         recyclerView.setAdapter(categoryPresenter.initCategoryAdapter());
 
-        if (!isServiceExecuted) {
-            isServiceExecuted = true;
+        if (!isDataFetchedFromDB) {
+            isDataFetchedFromDB = true;
             categoryPresenter.prepareToFetchQuestionFromDB(getArguments().getInt("serviceType"));
         }
     }
@@ -160,8 +160,7 @@ public class CategoryFragment extends AppCompatFragment implements CategoryView,
 
     @Override
     public void onItemClicked(View view, int position) {
-        if (!isServiceExecuting)
-            categoryPresenter.showQuestions(position);
+        categoryPresenter.showQuestions(position);
     }
 
     private void showToast(String error) {
@@ -200,13 +199,11 @@ public class CategoryFragment extends AppCompatFragment implements CategoryView,
 
     @Override
     public void showProgress() {
-        isServiceExecuting = true;
         progressBar.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void hideProgress() {
-        isServiceExecuting = false;
         progressBar.setVisibility(View.GONE);
     }
 

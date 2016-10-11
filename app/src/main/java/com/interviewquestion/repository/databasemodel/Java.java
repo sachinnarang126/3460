@@ -1,6 +1,5 @@
 package com.interviewquestion.repository.databasemodel;
 
-import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
 /**
@@ -8,22 +7,9 @@ import com.j256.ormlite.table.DatabaseTable;
  */
 
 @DatabaseTable(tableName = "JAVA")
-public class Java {
+public class Java extends Questions {
 
-    public static final String CATEGORY = "category";
-    public static final String USER_LEVEL = "user_level";
-    public static final String QUESTION = "question";
-    public static final String OPTION_A = "a";
-    public static final String OPTION_B = "b";
-    public static final String OPTION_C = "c";
-    public static final String OPTION_D = "d";
-    public static final String ANSWER = "answer";
-    public static final String IS_ATTEMPTED = "is_attempted";
-    public static final String IS_CORRECT_ANSWER_PROVIDED = "is_correct_answer_provided";
-    public static final String USER_ANSWER = "user_answer";
-    public static final String USER_CHOICE = "user_choice";
-
-    @DatabaseField(generatedId = true)
+    /*@DatabaseField(generatedId = true)
     private int id;
 
     @DatabaseField(columnName = USER_LEVEL)
@@ -60,9 +46,9 @@ public class Java {
     private int userAnswer;
 
     @DatabaseField(columnName = USER_CHOICE)
-    private int userChoice;
+    private int userChoice;*/
 
-    public int getId() {
+    /*public int getId() {
         return id;
     }
 
@@ -164,6 +150,135 @@ public class Java {
 
     public void setUserChoice(int userChoice) {
         this.userChoice = userChoice;
+    }*/
+
+    @Override
+    public int getId() {
+        return super.getId();
     }
 
+    @Override
+    public void setId(int id) {
+        super.setId(id);
+    }
+
+    @Override
+    public int getUserLevel() {
+        return super.getUserLevel();
+    }
+
+    @Override
+    public void setUserLevel(int userLevel) {
+        super.setUserLevel(userLevel);
+    }
+
+    @Override
+    public String getCategory() {
+        return super.getCategory();
+    }
+
+    @Override
+    public void setCategory(String category) {
+        super.setCategory(category);
+    }
+
+    @Override
+    public String getQuestion() {
+        return super.getQuestion();
+    }
+
+    @Override
+    public void setQuestion(String question) {
+        super.setQuestion(question);
+    }
+
+    @Override
+    public String getA() {
+        return super.getA();
+    }
+
+    @Override
+    public void setA(String a) {
+        super.setA(a);
+    }
+
+    @Override
+    public String getB() {
+        return super.getB();
+    }
+
+    @Override
+    public void setB(String b) {
+        super.setB(b);
+    }
+
+    @Override
+    public String getC() {
+        return super.getC();
+    }
+
+    @Override
+    public void setC(String c) {
+        super.setC(c);
+    }
+
+    @Override
+    public String getD() {
+        return super.getD();
+    }
+
+    @Override
+    public void setD(String d) {
+        super.setD(d);
+    }
+
+    @Override
+    public String getAnswer() {
+        return super.getAnswer();
+    }
+
+    @Override
+    public void setAnswer(String answer) {
+        super.setAnswer(answer);
+    }
+
+    @Override
+    public boolean isAttempted() {
+        return super.isAttempted();
+    }
+
+    @Override
+    public void setAttempted(boolean attempted) {
+        super.setAttempted(attempted);
+    }
+
+    @Override
+    public boolean isCorrectAnswerProvided() {
+        return super.isCorrectAnswerProvided();
+    }
+
+    @Override
+    public void setCorrectAnswerProvided(boolean correctAnswerProvided) {
+        super.setCorrectAnswerProvided(correctAnswerProvided);
+    }
+
+    @Override
+    public int getUserAnswer() {
+        return super.getUserAnswer();
+    }
+
+    @Override
+    public void setUserAnswer(int userAnswer) {
+        super.setUserAnswer(userAnswer);
+    }
+
+    @Override
+    public int getUserChoice() {
+        return super.getUserChoice();
+    }
+
+    @Override
+    public void setUserChoice(int userChoice) {
+        super.setUserChoice(userChoice);
+    }
 }

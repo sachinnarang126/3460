@@ -173,7 +173,7 @@ public class SplashPresenterImpl implements SplashPresenter, SplashInteractor.On
         for (Question.Response question : questionList) {
             Android android = new Android();
             android.setId(Integer.parseInt(question.getId()));
-            android.setUserLevel(Integer.parseInt(question.getQuestionType()));
+            android.setUserLevel(Integer.parseInt(question.getUserLevel()));
             android.setCategory(question.getCategory());
             android.setQuestion(question.getQuestion());
             android.setA(question.getA());
@@ -194,7 +194,7 @@ public class SplashPresenterImpl implements SplashPresenter, SplashInteractor.On
         for (Question.Response question : questionList) {
             Ios ios = new Ios();
             ios.setId(Integer.parseInt(question.getId()));
-            ios.setUserLevel(Integer.parseInt(question.getQuestionType()));
+            ios.setUserLevel(Integer.parseInt(question.getUserLevel()));
             ios.setCategory(question.getCategory());
             ios.setQuestion(question.getQuestion());
             ios.setA(question.getA());
@@ -215,7 +215,7 @@ public class SplashPresenterImpl implements SplashPresenter, SplashInteractor.On
         for (Question.Response question : questionList) {
             Java java = new Java();
             java.setId(Integer.parseInt(question.getId()));
-            java.setUserLevel(Integer.parseInt(question.getQuestionType()));
+            java.setUserLevel(Integer.parseInt(question.getUserLevel()));
             java.setCategory(question.getCategory());
             java.setQuestion(question.getQuestion());
             java.setA(question.getA());

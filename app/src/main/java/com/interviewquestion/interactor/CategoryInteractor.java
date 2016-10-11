@@ -1,6 +1,6 @@
 package com.interviewquestion.interactor;
 
-import com.interviewquestion.repository.Question;
+import com.interviewquestion.repository.databasemodel.Questions;
 
 import java.util.List;
 
@@ -17,7 +17,7 @@ public interface CategoryInteractor {
     void getIosQuestion(OnQuestionResponseListener questionResponseListener);
 
     interface OnQuestionResponseListener {
-        void onSuccess(List<Question.Response> questionList);
+        void onSuccess(List<Questions> questionList);
 
         void onError(String error);
     }

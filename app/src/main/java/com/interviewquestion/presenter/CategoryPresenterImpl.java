@@ -4,11 +4,10 @@ import android.content.Intent;
 
 import com.interviewquestion.activity.QuestionActivity;
 import com.interviewquestion.adapter.CategoryAdapter;
-import com.interviewquestion.dataholder.DataHolder;
 import com.interviewquestion.fragment.CategoryFragment;
 import com.interviewquestion.interactor.CategoryInteractor;
 import com.interviewquestion.interactor.CategoryInteractorImpl;
-import com.interviewquestion.repository.Question;
+import com.interviewquestion.repository.databasemodel.Questions;
 import com.interviewquestion.util.Constant;
 import com.interviewquestion.view.CategoryView;
 
@@ -25,7 +24,7 @@ public class CategoryPresenterImpl implements CategoryPresenter, CategoryInterac
     private WeakReference<CategoryView> categoryView;
     private CategoryInteractor categoryInteractor;
     private CategoryAdapter categoryAdapter;
-    private List<Question.Response> questionList;
+    private List<Questions> questionList;
 
     public CategoryPresenterImpl(WeakReference<CategoryView> categoryView) {
         this.categoryView = categoryView;
@@ -43,7 +42,7 @@ public class CategoryPresenterImpl implements CategoryPresenter, CategoryInterac
     @Override
     public void prepareToFetchQuestionFromDB(int serviceType) {
         if (categoryView.get() != null) {
-            CategoryFragment context = ((CategoryFragment) categoryView.get());
+//            CategoryFragment context = ((CategoryFragment) categoryView.get());
 
             categoryView.get().showProgress();
             switch (serviceType) {
@@ -69,15 +68,15 @@ public class CategoryPresenterImpl implements CategoryPresenter, CategoryInterac
     @Override
     public void showQuestions(int position) {
         if (position == 0) {
-            DataHolder.getInstance().setQuestionList(questionList);
+//            DataHolder.getInstance().setQuestionList(questionList);
         } else {
-            List<Question.Response> tempList = new ArrayList<>();
-            for (Question.Response response : questionList) {
-                if (response.getCategory().equalsIgnoreCase(categoryList.get(position))) {
-                    tempList.add(response);
+            List<Questions> tempList = new ArrayList<>();
+            for (Questions questions : questionList) {
+                if (questions.getCategory().equalsIgnoreCase(categoryList.get(position))) {
+                    tempList.add(questions);
                 }
             }
-            DataHolder.getInstance().setQuestionList(tempList);
+//            DataHolder.getInstance().setQuestionList(tempList);
         }
         CategoryFragment context = ((CategoryFragment) categoryView.get());
         Intent intent = new Intent(context.getActivity(), QuestionActivity.class);
@@ -86,7 +85,7 @@ public class CategoryPresenterImpl implements CategoryPresenter, CategoryInterac
     }
 
     @Override
-    public void onSuccess(List<Question.Response> questionList) {
+    public void onSuccess(List<Questions> questionList) {
         if (categoryView.get() != null) {
             updateUI(questionList);
             categoryView.get().hideProgress();
@@ -101,13 +100,13 @@ public class CategoryPresenterImpl implements CategoryPresenter, CategoryInterac
     }
 
     @Override
-    public void updateUI(List<Question.Response> responseList) {
+    public void updateUI(List<Questions> responseList) {
         questionList = responseList;
         categoryList.clear();
         categoryList.add("All Question");
-        for (Question.Response response : responseList) {
-            if (!categoryList.contains(response.getCategory()))
-                categoryList.add(response.getCategory());
+        for (Questions questions : responseList) {
+            if (!categoryList.contains(questions.getCategory()))
+                categoryList.add(questions.getCategory());
         }
 
         categoryAdapter.notifyDataSetChanged();
@@ -116,5 +115,14 @@ public class CategoryPresenterImpl implements CategoryPresenter, CategoryInterac
     @Override
     public CategoryAdapter initCategoryAdapter() {
         return categoryAdapter = new CategoryAdapter(categoryList, (CategoryFragment) categoryView.get());
+    }
+
+    @Override
+    public <T extends Questions> List<Questions> castToQuestions(List<T> questionListFromDB) {
+        List<Questions> questionsList = new ArrayList<>();
+        for (T t : questionListFromDB) {
+            questionsList.add(t);
+        }
+        return questionsList;
     }
 }

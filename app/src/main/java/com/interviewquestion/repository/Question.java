@@ -60,7 +60,7 @@ public class Question {
         private String id;
         @SerializedName("question_type")
         @Expose
-        private String questionType;
+        private String userLevel;
         @SerializedName("category")
         @Expose
         private String category;
@@ -138,17 +138,17 @@ public class Question {
         }
 
         /**
-         * @return The questionType
+         * @return The userLevel
          */
-        public String getQuestionType() {
-            return questionType;
+        public String getUserLevel() {
+            return userLevel;
         }
 
         /**
-         * @param questionType The question_type
+         * @param userLevel The userLevel
          */
-        public void setQuestionType(String questionType) {
-            this.questionType = questionType;
+        public void setUserLevel(String userLevel) {
+            this.userLevel = userLevel;
         }
 
         /**
