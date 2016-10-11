@@ -16,11 +16,9 @@ public interface CategoryPresenter {
 
     void onDestroy();
 
-    void prepareToFetchQuestion(int serviceType);
+    void prepareToFetchQuestionFromDB(int serviceType);
 
     void showQuestions(int position);
-
-    void displayDataReloadAlert();
 
     void updateUI(List<Question.Response> responseList);
 

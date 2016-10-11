@@ -120,15 +120,15 @@ public class SplashPresenterImpl implements SplashPresenter, SplashInteractor.On
                                 dialog.dismiss();
                                 switch (context.getArguments().getInt("serviceType")) {
                                     case Constant.ANDROID:
-//                                        prepareToFetchQuestion(Constant.ANDROID);
+//                                        prepareToFetchQuestionFromDB(Constant.ANDROID);
                                         break;
 
                                     case Constant.IOS:
-//                                        prepareToFetchQuestion(Constant.IOS);
+//                                        prepareToFetchQuestionFromDB(Constant.IOS);
                                         break;
 
                                     case Constant.JAVA:
-//                                        prepareToFetchQuestion(Constant.JAVA);
+//                                        prepareToFetchQuestionFromDB(Constant.JAVA);
                                         break;
                                 }
 

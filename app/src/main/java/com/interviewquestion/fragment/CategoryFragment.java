@@ -72,7 +72,7 @@ public class CategoryFragment extends AppCompatFragment implements CategoryView,
 
         if (!isServiceExecuted) {
             isServiceExecuted = true;
-            categoryPresenter.prepareToFetchQuestion(getArguments().getInt("serviceType"));
+            categoryPresenter.prepareToFetchQuestionFromDB(getArguments().getInt("serviceType"));
         }
     }
 
@@ -127,7 +127,7 @@ public class CategoryFragment extends AppCompatFragment implements CategoryView,
                 getActivity().setTitle(getString(R.string.android));
                 getActivity().invalidateOptionsMenu();
 
-                categoryPresenter.prepareToFetchQuestion(Constant.ANDROID);
+                categoryPresenter.prepareToFetchQuestionFromDB(Constant.ANDROID);
                 break;
 
             case R.id.action_ios:
@@ -136,7 +136,7 @@ public class CategoryFragment extends AppCompatFragment implements CategoryView,
                 getActivity().setTitle(getString(R.string.ios));
                 getActivity().invalidateOptionsMenu();
 
-                categoryPresenter.prepareToFetchQuestion(Constant.IOS);
+                categoryPresenter.prepareToFetchQuestionFromDB(Constant.IOS);
                 break;
 
             case R.id.action_java:
@@ -145,7 +145,7 @@ public class CategoryFragment extends AppCompatFragment implements CategoryView,
                 getActivity().setTitle(getString(R.string.java));
                 getActivity().invalidateOptionsMenu();
 
-                categoryPresenter.prepareToFetchQuestion(Constant.JAVA);
+                categoryPresenter.prepareToFetchQuestionFromDB(Constant.JAVA);
                 break;
         }
 
