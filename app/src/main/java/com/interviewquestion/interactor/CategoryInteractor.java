@@ -17,7 +17,7 @@ public interface CategoryInteractor {
     void getIosQuestion(OnQuestionResponseListener questionResponseListener);
 
     interface OnQuestionResponseListener {
-        void onSuccess(List<Questions> questionList);
+        <T extends Questions> void onSuccess(List<T> questionListFromDB);
 
         void onError(String error);
     }

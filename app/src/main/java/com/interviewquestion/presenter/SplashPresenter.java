@@ -16,7 +16,7 @@ public interface SplashPresenter {
 
     void displayDataReloadAlert();
 
-    void saveDataToDB(List<Question.Response> questionList,int serviceType);
+    void saveDataToDB(List<Question.Response> questionList, int serviceType);
 
     void goToHomeActivity();
 

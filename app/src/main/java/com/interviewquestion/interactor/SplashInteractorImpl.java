@@ -38,7 +38,7 @@ public class SplashInteractorImpl implements SplashInteractor {
             @Override
             public void onResponse(Call<Question> call, Response<Question> response) {
                 if (response.isSuccessful()) {
-                    questionResponseListener.onSuccess(response.body().getResponse().get(0),Constant.ANDROID);
+                    questionResponseListener.onSuccess(response.body().getResponse().get(0), Constant.ANDROID);
                 }
             }
 

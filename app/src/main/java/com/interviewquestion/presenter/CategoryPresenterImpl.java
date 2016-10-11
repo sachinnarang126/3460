@@ -4,6 +4,7 @@ import android.content.Intent;
 
 import com.interviewquestion.activity.QuestionActivity;
 import com.interviewquestion.adapter.CategoryAdapter;
+import com.interviewquestion.dataholder.DataHolder;
 import com.interviewquestion.fragment.CategoryFragment;
 import com.interviewquestion.interactor.CategoryInteractor;
 import com.interviewquestion.interactor.CategoryInteractorImpl;
@@ -42,8 +43,6 @@ public class CategoryPresenterImpl implements CategoryPresenter, CategoryInterac
     @Override
     public void prepareToFetchQuestionFromDB(int serviceType) {
         if (categoryView.get() != null) {
-//            CategoryFragment context = ((CategoryFragment) categoryView.get());
-
             categoryView.get().showProgress();
             switch (serviceType) {
                 case Constant.ANDROID:
@@ -61,14 +60,13 @@ public class CategoryPresenterImpl implements CategoryPresenter, CategoryInterac
                     categoryInteractor.getJavaQuestions(this);
                     break;
             }
-
         }
     }
 
     @Override
     public void showQuestions(int position) {
         if (position == 0) {
-//            DataHolder.getInstance().setQuestionList(questionList);
+            DataHolder.getInstance().setQuestionList(questionList);
         } else {
             List<Questions> tempList = new ArrayList<>();
             for (Questions questions : questionList) {
@@ -76,7 +74,7 @@ public class CategoryPresenterImpl implements CategoryPresenter, CategoryInterac
                     tempList.add(questions);
                 }
             }
-//            DataHolder.getInstance().setQuestionList(tempList);
+            DataHolder.getInstance().setQuestionList(tempList);
         }
         CategoryFragment context = ((CategoryFragment) categoryView.get());
         Intent intent = new Intent(context.getActivity(), QuestionActivity.class);
@@ -85,9 +83,9 @@ public class CategoryPresenterImpl implements CategoryPresenter, CategoryInterac
     }
 
     @Override
-    public void onSuccess(List<Questions> questionList) {
+    public <T extends Questions> void onSuccess(List<T> questionListFromDB) {
         if (categoryView.get() != null) {
-            updateUI(questionList);
+            updateUI(castToQuestions(questionListFromDB));
             categoryView.get().hideProgress();
         }
     }
@@ -96,6 +94,7 @@ public class CategoryPresenterImpl implements CategoryPresenter, CategoryInterac
     public void onError(String error) {
         if (categoryView.get() != null) {
             categoryView.get().hideProgress();
+            categoryView.get().onError(error);
         }
     }
 

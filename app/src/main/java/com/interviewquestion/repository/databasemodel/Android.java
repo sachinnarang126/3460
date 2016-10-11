@@ -7,7 +7,7 @@ import com.j256.ormlite.table.DatabaseTable;
  */
 
 @DatabaseTable(tableName = "ANDROID")
-public class Android extends Questions{
+public class Android extends Questions {
 
     /*@DatabaseField(generatedId = true)
     private int id;

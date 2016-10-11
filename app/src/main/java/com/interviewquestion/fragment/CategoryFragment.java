@@ -163,38 +163,10 @@ public class CategoryFragment extends AppCompatFragment implements CategoryView,
         categoryPresenter.showQuestions(position);
     }
 
-    private void showToast(String error) {
+    private void showSnackBar(String error) {
         getArguments().putInt("serviceType", Constant.SHOW_ALL);
         getActivity().invalidateOptionsMenu();
         Snackbar.make(getView().findViewById(R.id.relativeParent), error, Snackbar.LENGTH_LONG).show();
-
-        /*Snackbar snack = Snackbar.make(overViewRelLay, R.string.snackbar_text, Snackbar.LENGTH_LONG).
-                setCallback(new Snackbar.Callback() {
-                    @Override
-                    public void onDismissed(Snackbar snackbar, int event) {
-                        switch (event) {
-
-                            case Snackbar.Callback.DISMISS_EVENT_ACTION:
-
-                                break;
-
-                            case Snackbar.Callback.DISMISS_EVENT_TIMEOUT:
-
-                                break;
-                        }
-                    }
-
-                    @Override
-                    public void onShown(Snackbar snackbar) {
-
-                    }
-                }).setAction(R.string.snackbar_action_undo, new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
-        snack.show();*/
     }
 
     @Override
@@ -209,7 +181,7 @@ public class CategoryFragment extends AppCompatFragment implements CategoryView,
 
     @Override
     public void onError(String error) {
-        showToast(error);
+        showSnackBar(error);
     }
 
 }

@@ -6,7 +6,7 @@ import com.j256.ormlite.field.DatabaseField;
  * Created by sachin on 11/10/16.
  */
 
-public class Questions  {
+public class Questions {
 
     public static final String CATEGORY = "category";
     public static final String USER_LEVEL = "user_level";

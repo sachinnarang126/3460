@@ -19,7 +19,7 @@ public class NetworkChangeReceiver extends BroadcastReceiver {
         boolean isAppFirstLaunch = DataHolder.getInstance().getPreferences(context).
                 getBoolean(Constant.IS_APP_FIRST_LAUNCH, true);
 
-        if (isAppFirstLaunch){
+        if (isAppFirstLaunch) {
 
         }
     }

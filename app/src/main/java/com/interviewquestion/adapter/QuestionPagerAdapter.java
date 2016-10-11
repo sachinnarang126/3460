@@ -5,7 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.interviewquestion.fragment.QuestionFragment;
-import com.interviewquestion.repository.Question;
+import com.interviewquestion.repository.databasemodel.Questions;
 
 import java.util.List;
 
@@ -16,9 +16,9 @@ import java.util.List;
 public class QuestionPagerAdapter extends FragmentStatePagerAdapter {
 
     //    private int size;
-    private List<Question.Response> questionList;
+    private List<Questions> questionList;
 
-    public QuestionPagerAdapter(FragmentManager fm, List<Question.Response> questionList) {
+    public QuestionPagerAdapter(FragmentManager fm, List<Questions> questionList) {
         super(fm);
         this.questionList = questionList;
 //        size = questionList.size();
