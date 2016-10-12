@@ -17,12 +17,19 @@ import com.interviewquestion.R;
 import com.interviewquestion.activity.HomeActivity;
 import com.interviewquestion.activity.SettingsActivity;
 import com.interviewquestion.basecontroller.AppCompatFragment;
+import com.interviewquestion.presenter.HomePresenter;
+import com.interviewquestion.presenter.HomePresenterImpl;
 import com.interviewquestion.util.Constant;
+import com.interviewquestion.view.HomeView;
+
+import java.lang.ref.WeakReference;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class HomeFragment extends AppCompatFragment implements View.OnClickListener {
+public class HomeFragment extends AppCompatFragment implements View.OnClickListener, HomeView {
+
+    private HomePresenter homePresenter;
 
     public static HomeFragment getInstance() {
         return new HomeFragment();
@@ -40,6 +47,15 @@ public class HomeFragment extends AppCompatFragment implements View.OnClickListe
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        WeakReference<HomeView> weakReference = new WeakReference<HomeView>(this);
+        homePresenter = new HomePresenterImpl(weakReference);
+        homePresenter.prepareToFetchQuestion();
+    }
+
+    @Override
+    public void onDestroy() {
+        homePresenter.onDestroy();
+        super.onDestroy();
     }
 
     @Override
@@ -51,26 +67,6 @@ public class HomeFragment extends AppCompatFragment implements View.OnClickListe
         txtAndroid.setOnClickListener(this);
         txtJava.setOnClickListener(this);
         txtIos.setOnClickListener(this);
-
-        /*List<Integer> idList = new ArrayList<>();
-        idList.add(1);
-        idList.add(4);
-        idList.add(6);
-
-        Call<Question> testCall = RetrofitClient.getRetrofitClient().iosSelectedQuestion(idList);
-
-        testCall.enqueue(new Callback<Question>() {
-            @Override
-            public void onResponse(Call<Question> call, Response<Question> response) {
-                System.out.println("HomeFragment.onResponse");
-            }
-
-            @Override
-            public void onFailure(Call<Question> call, Throwable t) {
-                System.out.println("HomeFragment.onFailure");
-                t.printStackTrace();
-            }
-        });*/
     }
 
     @Override
@@ -113,5 +109,15 @@ public class HomeFragment extends AppCompatFragment implements View.OnClickListe
         }
         ((HomeActivity) getActivity()).startFragmentTransactionAllowingBackStack(CategoryFragment.getInstance(technology, serviceType),
                 getString(R.string.category_fragment), R.id.fragment_container);
+    }
+
+    @Override
+    public void onError(String error) {
+
+    }
+
+    @Override
+    public void onSuccess() {
+
     }
 }

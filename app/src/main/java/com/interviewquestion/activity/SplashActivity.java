@@ -73,33 +73,5 @@ public class SplashActivity extends AppBaseCompatActivity implements SplashView 
 
     private void showSnackBar(String error) {
         Snackbar.make(findViewById(R.id.container), error, Snackbar.LENGTH_LONG).show();
-
-        /*Snackbar snack = Snackbar.make(overViewRelLay, R.string.snackbar_text, Snackbar.LENGTH_LONG).
-                setCallback(new Snackbar.Callback() {
-                    @Override
-                    public void onDismissed(Snackbar snackbar, int event) {
-                        switch (event) {
-
-                            case Snackbar.Callback.DISMISS_EVENT_ACTION:
-
-                                break;
-
-                            case Snackbar.Callback.DISMISS_EVENT_TIMEOUT:
-
-                                break;
-                        }
-                    }
-
-                    @Override
-                    public void onShown(Snackbar snackbar) {
-
-                    }
-                }).setAction(R.string.snackbar_action_undo, new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
-        snack.show();*/
     }
 }

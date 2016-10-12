@@ -11,6 +11,7 @@ import com.j256.ormlite.stmt.UpdateBuilder;
 import com.j256.ormlite.table.TableUtils;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class DatabaseManager {
@@ -29,7 +30,6 @@ public class DatabaseManager {
     }
 
     public DatabaseHelper getDatabaseHelper() {
-
         return databaseHelper;
     }
 
@@ -97,6 +97,20 @@ public class DatabaseManager {
         }
     }
 
+    public List<Integer> getAndroidIdList() {
+        List<Integer> integerList = new ArrayList<>();
+        QueryBuilder<Android, Integer> queryBuilder = databaseHelper.getAndroidDao().queryBuilder();
+        try {
+            List<Android> androidList = queryBuilder.selectColumns(Questions.ID).query();
+            for (Android android : androidList) {
+                integerList.add(android.getId());
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return integerList;
+    }
+
 
     /*
      **********************************IOS TABLE FUNCTIONS**********************************
@@ -152,6 +166,20 @@ public class DatabaseManager {
         }
     }
 
+    public List<Integer> getIosIdList() {
+        List<Integer> integerList = new ArrayList<>();
+        QueryBuilder<Ios, Integer> queryBuilder = databaseHelper.getIosDao().queryBuilder();
+        try {
+            List<Ios> iosIdList = queryBuilder.selectColumns(Questions.ID).query();
+            for (Ios ios : iosIdList) {
+                integerList.add(ios.getId());
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return integerList;
+    }
+
 
     /*
      **********************************JAVA TABLE FUNCTIONS**********************************
@@ -205,5 +233,19 @@ public class DatabaseManager {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public List<Integer> getJavaIdList() {
+        List<Integer> integerList = new ArrayList<>();
+        QueryBuilder<Java, Integer> queryBuilder = databaseHelper.getJavaDao().queryBuilder();
+        try {
+            List<Java> javaIdList = queryBuilder.selectColumns(Questions.ID).query();
+            for (Java java : javaIdList) {
+                integerList.add(java.getId());
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return integerList;
     }
 }

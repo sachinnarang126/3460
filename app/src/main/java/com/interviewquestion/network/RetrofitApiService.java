@@ -26,14 +26,14 @@ public interface RetrofitApiService {
 
     @FormUrlEncoded
     @POST(Constant.IOS_POST_URL)
-    Call<QuestionResponse> iosSelectedQuestion(@Field("id[]") List<Integer> id);
+    Call<QuestionResponse> getIosSelectedQuestion(@Field("id[]") List<Integer> id);
 
     @FormUrlEncoded
     @POST(Constant.ANDROID_POST_URL)
-    Call<QuestionResponse> androidSelectedQuestion(@Field("id[]") List<Integer> id);
+    Call<QuestionResponse> getAndroidSelectedQuestion(@Field("id[]") List<Integer> id);
 
     @FormUrlEncoded
     @POST(Constant.JAVA_POST_URL)
-    Call<QuestionResponse> javaSelectedQuestion(@Field("id[]") List<Integer> id);
+    Call<QuestionResponse> getJavaSelectedQuestion(@Field("id[]") List<Integer> id);
 
 }
