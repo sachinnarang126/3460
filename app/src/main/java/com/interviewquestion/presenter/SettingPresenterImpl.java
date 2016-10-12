@@ -44,7 +44,7 @@ public class SettingPresenterImpl implements SettingPresenter, Preference.OnPref
         switch (preference.getKey()) {
 
             case "prefResetAll":
-                showResetAllQuestionDialog("Do you want to Reset All Question", new DialogInterface.OnClickListener() {
+                showResetAllQuestionDialog("Do you want to Reset All Questions?", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         resetAllQuestion();
