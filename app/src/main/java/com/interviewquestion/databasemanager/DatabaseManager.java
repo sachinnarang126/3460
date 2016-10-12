@@ -83,8 +83,7 @@ public class DatabaseManager {
         try {
             updateBuilder.updateColumnValue(Questions.IS_ATTEMPTED, false).
                     updateColumnValue(Questions.IS_CORRECT_ANSWER_PROVIDED, false).
-                    updateColumnValue(Questions.USER_ANSWER, 0).
-                    updateColumnValue(Questions.USER_CHOICE, 0).update();
+                    updateColumnValue(Questions.USER_ANSWER, 0).update();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -139,8 +138,7 @@ public class DatabaseManager {
         try {
             updateBuilder.updateColumnValue(Questions.IS_ATTEMPTED, false).
                     updateColumnValue(Questions.IS_CORRECT_ANSWER_PROVIDED, false).
-                    updateColumnValue(Questions.USER_ANSWER, 0).
-                    updateColumnValue(Questions.USER_CHOICE, 0).update();
+                    updateColumnValue(Questions.USER_ANSWER, 0).update();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -195,8 +193,7 @@ public class DatabaseManager {
         try {
             updateBuilder.updateColumnValue(Questions.IS_ATTEMPTED, false).
                     updateColumnValue(Questions.IS_CORRECT_ANSWER_PROVIDED, false).
-                    updateColumnValue(Questions.USER_ANSWER, 0).
-                    updateColumnValue(Questions.USER_CHOICE, 0).update();
+                    updateColumnValue(Questions.USER_ANSWER, 0).update();
         } catch (SQLException e) {
             e.printStackTrace();
         }

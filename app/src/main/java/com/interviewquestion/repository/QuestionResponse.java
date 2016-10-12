@@ -14,7 +14,7 @@ import javax.annotation.Generated;
 
 
 @Generated("org.jsonschema2pojo")
-public class Question {
+public class QuestionResponse {
 
     @SerializedName("response")
     @Expose

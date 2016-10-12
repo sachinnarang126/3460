@@ -57,35 +57,6 @@ public class Questions {
     @DatabaseField(columnName = USER_ANSWER)
     protected int userAnswer;
 
-    @DatabaseField(columnName = USER_CHOICE)
-    protected int userChoice;
-
-    /*protected int id;
-
-    protected int userLevel;
-
-    protected String category;
-
-    protected String question;
-
-    protected String a;
-
-    protected String b;
-
-    protected String c;
-
-    protected String d;
-
-    protected String answer;
-
-    protected boolean isAttempted;
-
-    protected boolean isCorrectAnswerProvided;
-
-    protected int userAnswer;
-
-    protected int userChoice;*/
-
     public int getId() {
         return id;
     }
@@ -180,13 +151,5 @@ public class Questions {
 
     public void setUserAnswer(int userAnswer) {
         this.userAnswer = userAnswer;
-    }
-
-    public int getUserChoice() {
-        return userChoice;
-    }
-
-    public void setUserChoice(int userChoice) {
-        this.userChoice = userChoice;
     }
 }

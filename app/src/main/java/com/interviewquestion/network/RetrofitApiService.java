@@ -1,6 +1,6 @@
 package com.interviewquestion.network;
 
-import com.interviewquestion.repository.Question;
+import com.interviewquestion.repository.QuestionResponse;
 import com.interviewquestion.util.Constant;
 
 import java.util.List;
@@ -16,24 +16,24 @@ public interface RetrofitApiService {
 
     @Headers("x-TokenType:Dev")
     @POST(Constant.ANDROID_URL)
-    Call<Question> getAndroidQuestion();
+    Call<QuestionResponse> getAndroidQuestion();
 
     @GET(Constant.IOS_URL)
-    Call<Question> getIosQuestion();
+    Call<QuestionResponse> getIosQuestion();
 
     @GET(Constant.JAVA_URL)
-    Call<Question> getJavaQuestion();
+    Call<QuestionResponse> getJavaQuestion();
 
     @FormUrlEncoded
     @POST(Constant.IOS_POST_URL)
-    Call<Question> iosSelectedQuestion(@Field("id[]") List<Integer> id);
+    Call<QuestionResponse> iosSelectedQuestion(@Field("id[]") List<Integer> id);
 
     @FormUrlEncoded
     @POST(Constant.ANDROID_POST_URL)
-    Call<Question> androidSelectedQuestion(@Field("id[]") List<Integer> id);
+    Call<QuestionResponse> androidSelectedQuestion(@Field("id[]") List<Integer> id);
 
     @FormUrlEncoded
     @POST(Constant.JAVA_POST_URL)
-    Call<Question> javaSelectedQuestion(@Field("id[]") List<Integer> id);
+    Call<QuestionResponse> javaSelectedQuestion(@Field("id[]") List<Integer> id);
 
 }

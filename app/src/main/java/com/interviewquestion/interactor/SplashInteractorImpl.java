@@ -1,6 +1,6 @@
 package com.interviewquestion.interactor;
 
-import com.interviewquestion.repository.Question;
+import com.interviewquestion.repository.QuestionResponse;
 import com.interviewquestion.util.Constant;
 
 import retrofit2.Call;
@@ -14,17 +14,17 @@ import retrofit2.Response;
 public class SplashInteractorImpl implements SplashInteractor {
 
     @Override
-    public void getJavaQuestions(final OnJavaQuestionResponseListener questionResponseListener, Call<Question> questionCall) {
-        questionCall.enqueue(new Callback<Question>() {
+    public void getJavaQuestions(final OnJavaQuestionResponseListener questionResponseListener, Call<QuestionResponse> questionCall) {
+        questionCall.enqueue(new Callback<QuestionResponse>() {
             @Override
-            public void onResponse(Call<Question> call, Response<Question> response) {
+            public void onResponse(Call<QuestionResponse> call, Response<QuestionResponse> response) {
                 if (response.isSuccessful()) {
                     questionResponseListener.onSuccess(response.body().getResponse().get(0), Constant.JAVA);
                 }
             }
 
             @Override
-            public void onFailure(Call<Question> call, Throwable t) {
+            public void onFailure(Call<QuestionResponse> call, Throwable t) {
                 t.printStackTrace();
                 questionResponseListener.onError(t.getMessage());
             }
@@ -32,18 +32,18 @@ public class SplashInteractorImpl implements SplashInteractor {
     }
 
     @Override
-    public void getAndroidQuestions(final OnAndroidQuestionResponseListener questionResponseListener, Call<Question> questionCall) {
+    public void getAndroidQuestions(final OnAndroidQuestionResponseListener questionResponseListener, Call<QuestionResponse> questionCall) {
 
-        questionCall.enqueue(new Callback<Question>() {
+        questionCall.enqueue(new Callback<QuestionResponse>() {
             @Override
-            public void onResponse(Call<Question> call, Response<Question> response) {
+            public void onResponse(Call<QuestionResponse> call, Response<QuestionResponse> response) {
                 if (response.isSuccessful()) {
                     questionResponseListener.onSuccess(response.body().getResponse().get(0), Constant.ANDROID);
                 }
             }
 
             @Override
-            public void onFailure(Call<Question> call, Throwable t) {
+            public void onFailure(Call<QuestionResponse> call, Throwable t) {
                 t.printStackTrace();
                 questionResponseListener.onError(t.getMessage());
             }
@@ -51,18 +51,18 @@ public class SplashInteractorImpl implements SplashInteractor {
     }
 
     @Override
-    public void getIosQuestion(final OnIosQuestionResponseListener questionResponseListener, Call<Question> questionCall) {
+    public void getIosQuestion(final OnIosQuestionResponseListener questionResponseListener, Call<QuestionResponse> questionCall) {
 
-        questionCall.enqueue(new Callback<Question>() {
+        questionCall.enqueue(new Callback<QuestionResponse>() {
             @Override
-            public void onResponse(Call<Question> call, Response<Question> response) {
+            public void onResponse(Call<QuestionResponse> call, Response<QuestionResponse> response) {
                 if (response.isSuccessful()) {
                     questionResponseListener.onSuccess(response.body().getResponse().get(0), Constant.IOS);
                 }
             }
 
             @Override
-            public void onFailure(Call<Question> call, Throwable t) {
+            public void onFailure(Call<QuestionResponse> call, Throwable t) {
                 t.printStackTrace();
                 questionResponseListener.onError(t.getMessage());
             }

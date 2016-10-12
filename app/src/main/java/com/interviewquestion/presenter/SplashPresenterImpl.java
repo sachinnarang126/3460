@@ -15,7 +15,7 @@ import com.interviewquestion.interactor.SplashInteractor;
 import com.interviewquestion.interactor.SplashInteractorImpl;
 import com.interviewquestion.network.RetrofitApiService;
 import com.interviewquestion.network.RetrofitClient;
-import com.interviewquestion.repository.Question;
+import com.interviewquestion.repository.QuestionResponse;
 import com.interviewquestion.repository.databasemodel.Android;
 import com.interviewquestion.repository.databasemodel.Ios;
 import com.interviewquestion.repository.databasemodel.Java;
@@ -57,7 +57,7 @@ public class SplashPresenterImpl implements SplashPresenter, SplashInteractor.On
 
                 splashView.get().showProgress();
                 RetrofitApiService apiService = RetrofitClient.getRetrofitClient();
-                Call<Question> androidQuestionCall;
+                Call<QuestionResponse> androidQuestionCall;
                 if (context.isServiceCallExist(Constant.ANDROID_URL)) {
                     androidQuestionCall = context.getServiceCallIfExist(Constant.ANDROID_URL);
                 } else {
@@ -66,7 +66,7 @@ public class SplashPresenterImpl implements SplashPresenter, SplashInteractor.On
                 }
 
 
-                Call<Question> iosQuestionCall;
+                Call<QuestionResponse> iosQuestionCall;
                 if (context.isServiceCallExist(Constant.IOS_URL)) {
                     iosQuestionCall = context.getServiceCallIfExist(Constant.IOS_URL);
                 } else {
@@ -74,7 +74,7 @@ public class SplashPresenterImpl implements SplashPresenter, SplashInteractor.On
                     context.putServiceCallInServiceMap(iosQuestionCall, Constant.IOS_URL);
                 }
 
-                Call<Question> javaQuestionCall;
+                Call<QuestionResponse> javaQuestionCall;
                 if (context.isServiceCallExist(Constant.JAVA_URL)) {
                     javaQuestionCall = context.getServiceCallIfExist(Constant.JAVA_URL);
                 } else {
@@ -93,7 +93,7 @@ public class SplashPresenterImpl implements SplashPresenter, SplashInteractor.On
     }
 
     @Override
-    public void onSuccess(List<Question.Response> questionList, int serviceType) {
+    public void onSuccess(List<QuestionResponse.Response> questionList, int serviceType) {
         serviceCount++;
         saveDataToDB(questionList, serviceType);
         if (serviceCount == 3)
@@ -151,7 +151,7 @@ public class SplashPresenterImpl implements SplashPresenter, SplashInteractor.On
     }
 
     @Override
-    synchronized public void saveDataToDB(List<Question.Response> questionList, int serviceType) {
+    synchronized public void saveDataToDB(List<QuestionResponse.Response> questionList, int serviceType) {
         DatabaseManager databaseManager = DatabaseManager.getDataBaseManager((SplashActivity) splashView.get());
         switch (serviceType) {
             case Constant.ANDROID:
@@ -168,9 +168,9 @@ public class SplashPresenterImpl implements SplashPresenter, SplashInteractor.On
         }
     }
 
-    private void saveAndroidQuestion(DatabaseManager databaseManager, List<Question.Response> questionList) {
+    private void saveAndroidQuestion(DatabaseManager databaseManager, List<QuestionResponse.Response> questionList) {
         List<Android> androidList = new ArrayList<>();
-        for (Question.Response question : questionList) {
+        for (QuestionResponse.Response question : questionList) {
             Android android = new Android();
             android.setId(Integer.parseInt(question.getId()));
             android.setUserLevel(Integer.parseInt(question.getUserLevel()));
@@ -188,10 +188,10 @@ public class SplashPresenterImpl implements SplashPresenter, SplashInteractor.On
 
     }
 
-    private void saveIosQuestion(DatabaseManager databaseManager, List<Question.Response> questionList) {
+    private void saveIosQuestion(DatabaseManager databaseManager, List<QuestionResponse.Response> questionList) {
         List<Ios> iosList = new ArrayList<>();
 
-        for (Question.Response question : questionList) {
+        for (QuestionResponse.Response question : questionList) {
             Ios ios = new Ios();
             ios.setId(Integer.parseInt(question.getId()));
             ios.setUserLevel(Integer.parseInt(question.getUserLevel()));
@@ -209,10 +209,10 @@ public class SplashPresenterImpl implements SplashPresenter, SplashInteractor.On
 
     }
 
-    private void saveJavaQuestion(DatabaseManager databaseManager, List<Question.Response> questionList) {
+    private void saveJavaQuestion(DatabaseManager databaseManager, List<QuestionResponse.Response> questionList) {
         List<Java> javaList = new ArrayList<>();
 
-        for (Question.Response question : questionList) {
+        for (QuestionResponse.Response question : questionList) {
             Java java = new Java();
             java.setId(Integer.parseInt(question.getId()));
             java.setUserLevel(Integer.parseInt(question.getUserLevel()));
