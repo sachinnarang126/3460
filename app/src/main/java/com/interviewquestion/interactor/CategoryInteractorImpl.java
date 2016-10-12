@@ -1,6 +1,7 @@
 package com.interviewquestion.interactor;
 
 import android.content.Context;
+import android.preference.PreferenceManager;
 
 import com.interviewquestion.databasemanager.DatabaseManager;
 import com.interviewquestion.repository.databasemodel.Android;
@@ -24,7 +25,9 @@ public class CategoryInteractorImpl implements CategoryInteractor {
     @Override
     public void getJavaQuestions(final OnQuestionResponseListener questionResponseListener) {
         // get Java question from db
-        List<Java> javaQuestionList = DatabaseManager.getDataBaseManager(context).fetchJavaQuestionFromDB();
+        boolean isShowAnsweredQuestion = PreferenceManager
+                .getDefaultSharedPreferences(context).getBoolean("prefShowAnsweredQuestion", false);
+        List<Java> javaQuestionList = DatabaseManager.getDataBaseManager(context).fetchJavaQuestionFromDB(isShowAnsweredQuestion);
         if (javaQuestionList.size() > 0) {
             questionResponseListener.onSuccess(javaQuestionList);
         } else {
@@ -34,7 +37,9 @@ public class CategoryInteractorImpl implements CategoryInteractor {
 
     @Override
     public void getAndroidQuestions(final OnQuestionResponseListener questionResponseListener) {
-        List<Android> androidQuestionList = DatabaseManager.getDataBaseManager(context).fetchAndroidQuestionFromDB();
+        boolean isShowAnsweredQuestion = PreferenceManager
+                .getDefaultSharedPreferences(context).getBoolean("prefShowAnsweredQuestion", false);
+        List<Android> androidQuestionList = DatabaseManager.getDataBaseManager(context).fetchAndroidQuestionFromDB(isShowAnsweredQuestion);
         if (androidQuestionList.size() > 0) {
             questionResponseListener.onSuccess(androidQuestionList);
         } else {
@@ -44,7 +49,9 @@ public class CategoryInteractorImpl implements CategoryInteractor {
 
     @Override
     public void getIosQuestion(final OnQuestionResponseListener questionResponseListener) {
-        List<Ios> iosQuestionList = DatabaseManager.getDataBaseManager(context).fetchIosQuestionFromDB();
+        boolean isShowAnsweredQuestion = PreferenceManager
+                .getDefaultSharedPreferences(context).getBoolean("prefShowAnsweredQuestion", false);
+        List<Ios> iosQuestionList = DatabaseManager.getDataBaseManager(context).fetchIosQuestionFromDB(isShowAnsweredQuestion);
         if (iosQuestionList.size() > 0) {
             questionResponseListener.onSuccess(iosQuestionList);
         } else {

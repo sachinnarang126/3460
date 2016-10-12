@@ -2,21 +2,24 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <PreferenceCategory>
 
-        <!--<Preference
+        <Preference
             android:enabled="true"
-            android:icon="@drawable/ic_budget"
-            android:key="prefMonthlyBudget"
+            android:key="prefResetAll"
             android:selectable="true"
-            android:summary="OFF"
-            android:title="Monthly Budget Mode" />
--->
-
+            android:summary="Resetting all question make them unanswered"
+            android:title="Reset All Question" />
 
         <SwitchPreference
-            android:defaultValue="false"
-            android:key="prefRemoveQuestion"
-            android:summary="Remove Question from list when answered"
-            android:title="Remove Question" />
+            android:defaultValue="true"
+            android:key="prefShowAnsweredQuestion"
+            android:summary="Always show answered question"
+            android:title="Show Answered Question" />
+
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="prefReceiveNotification"
+            android:summary="Receive notification for new questions"
+            android:title="Notification" />
 
 
     </PreferenceCategory>

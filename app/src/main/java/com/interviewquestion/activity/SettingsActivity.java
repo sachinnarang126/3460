@@ -1,6 +1,7 @@
 package com.interviewquestion.activity;
 
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -33,5 +34,9 @@ public class SettingsActivity extends AppCompatActivity {
 
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void showSnackBar(String text){
+        Snackbar.make(findViewById(R.id.container), text, Snackbar.LENGTH_LONG).show();
     }
 }
