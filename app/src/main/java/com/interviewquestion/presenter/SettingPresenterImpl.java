@@ -40,6 +40,7 @@ public class SettingPresenterImpl implements SettingPresenter, Preference.OnPref
 
     @Override
     public boolean onPreferenceClick(Preference preference) {
+        System.out.println("SettingPresenterImpl.onPreferenceClick");
         switch (preference.getKey()) {
 
             case "prefResetAll":
@@ -47,7 +48,7 @@ public class SettingPresenterImpl implements SettingPresenter, Preference.OnPref
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         resetAllQuestion();
-                        settingView.get().showSnackBar("Question reset done");
+                        settingView.get().showSnackBar("Question reset successfully");
                     }
                 });
                 break;

@@ -41,7 +41,7 @@ public class QuestionActivity extends AppBaseCompatActivity implements QuestionV
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
         viewPager.setPageTransformer(true, new DepthPageTransformer());
         questionPresenter.onCreate();
-        viewPager.setAdapter(questionPresenter.initAdapter());
+        viewPager.setAdapter(questionPresenter.initAdapter(getIntent().getIntExtra("technology", 0)));
         hideProgress();
     }
 
@@ -94,7 +94,7 @@ public class QuestionActivity extends AppBaseCompatActivity implements QuestionV
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
         questionPresenter.onDestroy();
+        super.onDestroy();
     }
 }

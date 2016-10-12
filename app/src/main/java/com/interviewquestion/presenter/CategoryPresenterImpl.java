@@ -79,6 +79,7 @@ public class CategoryPresenterImpl implements CategoryPresenter, CategoryInterac
         CategoryFragment context = ((CategoryFragment) categoryView.get());
         Intent intent = new Intent(context.getActivity(), QuestionActivity.class);
         intent.putExtra("title", categoryList.get(position));
+        intent.putExtra("technology", ((CategoryFragment) categoryView.get()).getArguments().getInt("serviceType"));
         context.startActivity(intent);
     }
 

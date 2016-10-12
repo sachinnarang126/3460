@@ -84,13 +84,57 @@ public class QuestionPresenterImpl implements QuestionPresenter {
         questionView.get().showProgress();
         shuffledQuestionList.clear();
         shuffledQuestionList.addAll(DataHolder.getInstance().getQuestionList());
-        shuffleQuestion();
+        shuffleQuestionAndResetAllLocally();
         questionPagerAdapter.notifyDataSetChanged();
         questionView.get().hideProgress();
     }
 
     @Override
     public void shuffleQuestion() {
+        List<String> shuffledOptionList = new ArrayList<>();
+        for (Questions question : shuffledQuestionList) {
+            shuffledOptionList.clear();
+            if (!question.isAttempted()){
+                String answer = "";
+                switch (question.getAnswer()) {
+                    case "1":
+                        answer = question.getA();
+                        break;
+
+                    case "2":
+                        answer = question.getB();
+                        break;
+
+                    case "3":
+                        answer = question.getC();
+                        break;
+
+                    case "4":
+                        answer = question.getD();
+                        break;
+                }
+
+                shuffledOptionList.add(question.getA());
+                shuffledOptionList.add(question.getB());
+                shuffledOptionList.add(question.getC());
+                shuffledOptionList.add(question.getD());
+
+                Collections.shuffle(shuffledOptionList);
+
+                int answerIndex = shuffledOptionList.indexOf(answer);
+
+                question.setAnswer(String.valueOf(answerIndex + 1));
+
+                question.setA(shuffledOptionList.get(0));
+                question.setB(shuffledOptionList.get(1));
+                question.setC(shuffledOptionList.get(2));
+                question.setD(shuffledOptionList.get(3));
+            }
+        }
+    }
+
+    @Override
+    public void shuffleQuestionAndResetAllLocally() {
         List<String> shuffledOptionList = new ArrayList<>();
         for (Questions response : shuffledQuestionList) {
             shuffledOptionList.clear();
@@ -135,8 +179,8 @@ public class QuestionPresenterImpl implements QuestionPresenter {
     }
 
     @Override
-    public QuestionPagerAdapter initAdapter() {
+    public QuestionPagerAdapter initAdapter(int technology) {
         return questionPagerAdapter = new QuestionPagerAdapter(((QuestionActivity) questionView.get()).getSupportFragmentManager(),
-                shuffledQuestionList);
+                shuffledQuestionList, technology);
     }
 }

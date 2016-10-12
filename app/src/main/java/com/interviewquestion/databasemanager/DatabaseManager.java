@@ -63,7 +63,7 @@ public class DatabaseManager {
         }
     }
 
-    public List<Android> fetchAndroidQuestionFromDB( boolean isShowAnsweredQuestion) {
+    public List<Android> fetchAndroidQuestionFromDB(boolean isShowAnsweredQuestion) {
         QueryBuilder<Android, Integer> queryBuilder = databaseHelper.getAndroidDao().queryBuilder();
         try {
             if (isShowAnsweredQuestion) {

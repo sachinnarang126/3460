@@ -13,7 +13,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.interviewquestion.R;
+import com.interviewquestion.databasemanager.DatabaseManager;
 import com.interviewquestion.dataholder.DataHolder;
+import com.interviewquestion.repository.databasemodel.Android;
+import com.interviewquestion.repository.databasemodel.Ios;
+import com.interviewquestion.repository.databasemodel.Java;
 import com.interviewquestion.repository.databasemodel.Questions;
 import com.interviewquestion.util.Constant;
 
@@ -21,10 +25,11 @@ public class QuestionFragment extends Fragment implements View.OnClickListener {
 
     private Questions question;
 
-    public static QuestionFragment getInstance(int pos, int total) {
+    public static QuestionFragment getInstance(int pos, int total, int technology) {
         Bundle bundle = new Bundle();
         bundle.putInt("pos", pos);
         bundle.putInt("total", total);
+        bundle.putInt("technology", technology);
         QuestionFragment questionFragment = new QuestionFragment();
         questionFragment.setArguments(bundle);
         return questionFragment;
@@ -135,13 +140,18 @@ public class QuestionFragment extends Fragment implements View.OnClickListener {
 
         final int answer = Integer.parseInt(question.getAnswer());
         textView.setTextColor(ContextCompat.getColor(getActivity(), android.R.color.white));
+
         question.setAttempted(true);
         question.setUserAnswer(selectedAnswer);
+        DatabaseManager databaseManager = DatabaseManager.getDataBaseManager(getActivity());
 
         if (selectedAnswer == answer) {
             textView.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.green));
             ((TextView) getView().findViewById(R.id.txtUserValue)).setText(getString(R.string.correct));
+
             question.setCorrectAnswerProvided(true);
+            updateSelectionInToDB(databaseManager);
+
         } else {
             question.setCorrectAnswerProvided(false);
             textView.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.red));
@@ -173,6 +183,24 @@ public class QuestionFragment extends Fragment implements View.OnClickListener {
                     }
                 }
             }, 100);
+            updateSelectionInToDB(databaseManager);
+        }
+    }
+
+    private void updateSelectionInToDB(DatabaseManager databaseManager) {
+        System.out.println("QuestionFragment.updateSelectionInToDB, " + getArguments().getInt("technology"));
+        switch (getArguments().getInt("technology")) {
+            case Constant.ANDROID:
+                databaseManager.updateAndroidQuestion((Android) question);
+                break;
+
+            case Constant.IOS:
+                databaseManager.updateIosQuestion((Ios) question);
+                break;
+
+            case Constant.JAVA:
+                databaseManager.updateJavaQuestion((Java) question);
+                break;
         }
     }
 

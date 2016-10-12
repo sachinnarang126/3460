@@ -13,7 +13,7 @@ import com.interviewquestion.view.SettingView;
 
 import java.lang.ref.WeakReference;
 
-public class SettingsFragment extends PreferenceFragment implements SettingView/*, SharedPreferences.OnSharedPreferenceChangeListener*/ {
+public class SettingsFragment extends PreferenceFragment implements SettingView {
 
     public static SettingsFragment getInstance() {
         return new SettingsFragment();
@@ -27,7 +27,7 @@ public class SettingsFragment extends PreferenceFragment implements SettingView/
 
         WeakReference<SettingView> weakReference = new WeakReference<SettingView>(this);
         SettingPresenter settingPresenter = new SettingPresenterImpl(weakReference);
-        Preference prefResetAll = findPreference("prefShowAnsweredQuestion");
+        Preference prefResetAll = findPreference("prefResetAll");
         prefResetAll.setOnPreferenceClickListener((SettingPresenterImpl) settingPresenter);
     }
 
@@ -35,9 +35,4 @@ public class SettingsFragment extends PreferenceFragment implements SettingView/
     public void showSnackBar(String text) {
         ((SettingsActivity) getActivity()).showSnackBar(text);
     }
-
-    /*@Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
-
-    }*/
 }

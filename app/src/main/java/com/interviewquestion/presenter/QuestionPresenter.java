@@ -28,6 +28,8 @@ public interface QuestionPresenter {
 
     void shuffleQuestion();
 
-    QuestionPagerAdapter initAdapter();
+    void shuffleQuestionAndResetAllLocally();
+
+    QuestionPagerAdapter initAdapter(int technology);
 
 }

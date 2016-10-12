@@ -10,7 +10,7 @@
             android:title="Reset All Question" />
 
         <SwitchPreference
-            android:defaultValue="true"
+            android:defaultValue="false"
             android:key="prefShowAnsweredQuestion"
             android:summary="Always show answered question"
             android:title="Show Answered Question" />

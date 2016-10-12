@@ -17,18 +17,19 @@ public class QuestionPagerAdapter extends FragmentStatePagerAdapter {
 
     //    private int size;
     private List<Questions> questionList;
+    private int technology;
 
-    public QuestionPagerAdapter(FragmentManager fm, List<Questions> questionList) {
+    public QuestionPagerAdapter(FragmentManager fm, List<Questions> questionList, int technology) {
         super(fm);
         this.questionList = questionList;
-//        size = questionList.size();
+        this.technology = technology;
     }
 
     @Override
     public Fragment getItem(int position) {
         QuestionFragment questionFragment = null;
         try {
-            questionFragment = QuestionFragment.getInstance(position, questionList.size());
+            questionFragment = QuestionFragment.getInstance(position, questionList.size(), technology);
         } catch (Exception e) {
             e.printStackTrace();
         }
