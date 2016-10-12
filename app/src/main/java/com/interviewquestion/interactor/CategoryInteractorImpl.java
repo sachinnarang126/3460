@@ -1,10 +1,13 @@
 package com.interviewquestion.interactor;
 
-import com.interviewquestion.repository.Question;
+import android.content.Context;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import com.interviewquestion.databasemanager.DatabaseManager;
+import com.interviewquestion.repository.databasemodel.Android;
+import com.interviewquestion.repository.databasemodel.Ios;
+import com.interviewquestion.repository.databasemodel.Java;
+
+import java.util.List;
 
 /**
  * Created by root on 28/9/16.
@@ -12,59 +15,40 @@ import retrofit2.Response;
 
 public class CategoryInteractorImpl implements CategoryInteractor {
 
-    @Override
-    public void getJavaQuestions(final OnQuestionResponseListener questionResponseListener, Call<Question> questionCall) {
-        questionCall.enqueue(new Callback<Question>() {
-            @Override
-            public void onResponse(Call<Question> call, Response<Question> response) {
-                if (response.isSuccessful()) {
-                    questionResponseListener.onSuccess(response.body().getResponse().get(0));
-                }
-            }
+    private Context context;
 
-            @Override
-            public void onFailure(Call<Question> call, Throwable t) {
-                t.printStackTrace();
-                questionResponseListener.onError(t.getMessage());
-            }
-        });
+    public CategoryInteractorImpl(Context context) {
+        this.context = context;
     }
 
     @Override
-    public void getAndroidQuestions(final OnQuestionResponseListener questionResponseListener, Call<Question> questionCall) {
-
-        questionCall.enqueue(new Callback<Question>() {
-            @Override
-            public void onResponse(Call<Question> call, Response<Question> response) {
-                if (response.isSuccessful()) {
-                    questionResponseListener.onSuccess(response.body().getResponse().get(0));
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Question> call, Throwable t) {
-                t.printStackTrace();
-                questionResponseListener.onError(t.getMessage());
-            }
-        });
+    public void getJavaQuestions(final OnQuestionResponseListener questionResponseListener) {
+        // get Java question from db
+        List<Java> javaQuestionList = DatabaseManager.getDataBaseManager(context).fetchJavaQuestionFromDB();
+        if (javaQuestionList.size() > 0) {
+            questionResponseListener.onSuccess(javaQuestionList);
+        } else {
+            questionResponseListener.onError("No Question found");
+        }
     }
 
     @Override
-    public void getIosQuestion(final OnQuestionResponseListener questionResponseListener, Call<Question> questionCall) {
+    public void getAndroidQuestions(final OnQuestionResponseListener questionResponseListener) {
+        List<Android> androidQuestionList = DatabaseManager.getDataBaseManager(context).fetchAndroidQuestionFromDB();
+        if (androidQuestionList.size() > 0) {
+            questionResponseListener.onSuccess(androidQuestionList);
+        } else {
+            questionResponseListener.onError("No Question found");
+        }
+    }
 
-        questionCall.enqueue(new Callback<Question>() {
-            @Override
-            public void onResponse(Call<Question> call, Response<Question> response) {
-                if (response.isSuccessful()) {
-                    questionResponseListener.onSuccess(response.body().getResponse().get(0));
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Question> call, Throwable t) {
-                t.printStackTrace();
-                questionResponseListener.onError(t.getMessage());
-            }
-        });
+    @Override
+    public void getIosQuestion(final OnQuestionResponseListener questionResponseListener) {
+        List<Ios> iosQuestionList = DatabaseManager.getDataBaseManager(context).fetchIosQuestionFromDB();
+        if (iosQuestionList.size() > 0) {
+            questionResponseListener.onSuccess(iosQuestionList);
+        } else {
+            questionResponseListener.onError("No Question found");
+        }
     }
 }

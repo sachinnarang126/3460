@@ -1,10 +1,8 @@
 package com.interviewquestion.interactor;
 
-import com.interviewquestion.repository.Question;
+import com.interviewquestion.repository.databasemodel.Questions;
 
 import java.util.List;
-
-import retrofit2.Call;
 
 /**
  * Created by root on 28/9/16.
@@ -12,14 +10,14 @@ import retrofit2.Call;
 
 public interface CategoryInteractor {
 
-    void getJavaQuestions(OnQuestionResponseListener questionResponseListener, Call<Question> questionCall);
+    void getJavaQuestions(OnQuestionResponseListener questionResponseListener);
 
-    void getAndroidQuestions(OnQuestionResponseListener questionResponseListener, Call<Question> questionCall);
+    void getAndroidQuestions(OnQuestionResponseListener questionResponseListener);
 
-    void getIosQuestion(OnQuestionResponseListener questionResponseListener, Call<Question> questionCall);
+    void getIosQuestion(OnQuestionResponseListener questionResponseListener);
 
     interface OnQuestionResponseListener {
-        void onSuccess(List<Question.Response> questionList);
+        <T extends Questions> void onSuccess(List<T> questionListFromDB);
 
         void onError(String error);
     }

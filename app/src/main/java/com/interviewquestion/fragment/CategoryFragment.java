@@ -27,7 +27,7 @@ import java.lang.ref.WeakReference;
 
 public class CategoryFragment extends AppCompatFragment implements CategoryView, OnItemClickListener.OnItemClickCallback {
 
-    private boolean isServiceExecuted, isServiceExecuting;
+    private boolean isDataFetchedFromDB;
     private FrameLayout progressBar;
     private CategoryPresenter categoryPresenter;
 
@@ -70,9 +70,9 @@ public class CategoryFragment extends AppCompatFragment implements CategoryView,
 
         recyclerView.setAdapter(categoryPresenter.initCategoryAdapter());
 
-        if (!isServiceExecuted) {
-            isServiceExecuted = true;
-            categoryPresenter.prepareToFetchQuestion(getArguments().getInt("serviceType"));
+        if (!isDataFetchedFromDB) {
+            isDataFetchedFromDB = true;
+            categoryPresenter.prepareToFetchQuestionFromDB(getArguments().getInt("serviceType"));
         }
     }
 
@@ -127,7 +127,7 @@ public class CategoryFragment extends AppCompatFragment implements CategoryView,
                 getActivity().setTitle(getString(R.string.android));
                 getActivity().invalidateOptionsMenu();
 
-                categoryPresenter.prepareToFetchQuestion(Constant.ANDROID);
+                categoryPresenter.prepareToFetchQuestionFromDB(Constant.ANDROID);
                 break;
 
             case R.id.action_ios:
@@ -136,7 +136,7 @@ public class CategoryFragment extends AppCompatFragment implements CategoryView,
                 getActivity().setTitle(getString(R.string.ios));
                 getActivity().invalidateOptionsMenu();
 
-                categoryPresenter.prepareToFetchQuestion(Constant.IOS);
+                categoryPresenter.prepareToFetchQuestionFromDB(Constant.IOS);
                 break;
 
             case R.id.action_java:
@@ -145,7 +145,7 @@ public class CategoryFragment extends AppCompatFragment implements CategoryView,
                 getActivity().setTitle(getString(R.string.java));
                 getActivity().invalidateOptionsMenu();
 
-                categoryPresenter.prepareToFetchQuestion(Constant.JAVA);
+                categoryPresenter.prepareToFetchQuestionFromDB(Constant.JAVA);
                 break;
         }
 
@@ -160,59 +160,28 @@ public class CategoryFragment extends AppCompatFragment implements CategoryView,
 
     @Override
     public void onItemClicked(View view, int position) {
-        if (!isServiceExecuting)
-            categoryPresenter.showQuestions(position);
+        categoryPresenter.showQuestions(position);
     }
 
-    private void showToast(String error) {
+    private void showSnackBar(String error) {
         getArguments().putInt("serviceType", Constant.SHOW_ALL);
         getActivity().invalidateOptionsMenu();
         Snackbar.make(getView().findViewById(R.id.relativeParent), error, Snackbar.LENGTH_LONG).show();
-
-        /*Snackbar snack = Snackbar.make(overViewRelLay, R.string.snackbar_text, Snackbar.LENGTH_LONG).
-                setCallback(new Snackbar.Callback() {
-                    @Override
-                    public void onDismissed(Snackbar snackbar, int event) {
-                        switch (event) {
-
-                            case Snackbar.Callback.DISMISS_EVENT_ACTION:
-
-                                break;
-
-                            case Snackbar.Callback.DISMISS_EVENT_TIMEOUT:
-
-                                break;
-                        }
-                    }
-
-                    @Override
-                    public void onShown(Snackbar snackbar) {
-
-                    }
-                }).setAction(R.string.snackbar_action_undo, new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
-        snack.show();*/
     }
 
     @Override
     public void showProgress() {
-        isServiceExecuting = true;
         progressBar.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void hideProgress() {
-        isServiceExecuting = false;
         progressBar.setVisibility(View.GONE);
     }
 
     @Override
     public void onError(String error) {
-        showToast(error);
+        showSnackBar(error);
     }
 
 }

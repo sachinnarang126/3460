@@ -1,28 +1,20 @@
 package com.interviewquestion.presenter;
 
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v7.app.AlertDialog;
 
-import com.interviewquestion.R;
-import com.interviewquestion.activity.HomeActivity;
 import com.interviewquestion.activity.QuestionActivity;
 import com.interviewquestion.adapter.CategoryAdapter;
 import com.interviewquestion.dataholder.DataHolder;
 import com.interviewquestion.fragment.CategoryFragment;
 import com.interviewquestion.interactor.CategoryInteractor;
 import com.interviewquestion.interactor.CategoryInteractorImpl;
-import com.interviewquestion.network.RetrofitApiService;
-import com.interviewquestion.network.RetrofitClient;
-import com.interviewquestion.repository.Question;
+import com.interviewquestion.repository.databasemodel.Questions;
 import com.interviewquestion.util.Constant;
 import com.interviewquestion.view.CategoryView;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
-
-import retrofit2.Call;
 
 /**
  * Created by root on 28/9/16.
@@ -33,11 +25,11 @@ public class CategoryPresenterImpl implements CategoryPresenter, CategoryInterac
     private WeakReference<CategoryView> categoryView;
     private CategoryInteractor categoryInteractor;
     private CategoryAdapter categoryAdapter;
-    private List<Question.Response> questionList;
+    private List<Questions> questionList;
 
     public CategoryPresenterImpl(WeakReference<CategoryView> categoryView) {
         this.categoryView = categoryView;
-        categoryInteractor = new CategoryInteractorImpl();
+        categoryInteractor = new CategoryInteractorImpl(((CategoryFragment) categoryView.get()).getContext());
     }
 
     @Override
@@ -49,49 +41,25 @@ public class CategoryPresenterImpl implements CategoryPresenter, CategoryInterac
     }
 
     @Override
-    public void prepareToFetchQuestion(int serviceType) {
+    public void prepareToFetchQuestionFromDB(int serviceType) {
         if (categoryView.get() != null) {
-            CategoryFragment context = ((CategoryFragment) categoryView.get());
-            if (((HomeActivity) context.getActivity()).isInternetAvailable()) {
+            categoryView.get().showProgress();
+            switch (serviceType) {
+                case Constant.ANDROID:
 
-                categoryView.get().showProgress();
-                RetrofitApiService apiService = RetrofitClient.getRetrofitClient();
-                Call<Question> questionCall;
-                switch (serviceType) {
-                    case Constant.ANDROID:
-                        if (context.isServiceCallExist(Constant.ANDROID_URL)) {
-                            questionCall = context.getServiceCallIfExist(Constant.ANDROID_URL);
-                        } else {
-                            questionCall = apiService.getAndroidQuestion();
-                            context.putServiceCallInServiceMap(questionCall, Constant.ANDROID_URL);
-                        }
-                        categoryInteractor.getAndroidQuestions(this, questionCall);
-                        break;
+                    categoryInteractor.getAndroidQuestions(this);
+                    break;
 
-                    case Constant.IOS:
-                        if (context.isServiceCallExist(Constant.IOS_URL)) {
-                            questionCall = context.getServiceCallIfExist(Constant.IOS_URL);
-                        } else {
-                            questionCall = apiService.getIosQuestion();
-                            context.putServiceCallInServiceMap(questionCall, Constant.IOS_URL);
-                        }
-                        categoryInteractor.getIosQuestion(this, questionCall);
-                        break;
+                case Constant.IOS:
 
-                    case Constant.JAVA:
-                        if (context.isServiceCallExist(Constant.JAVA_URL)) {
-                            questionCall = context.getServiceCallIfExist(Constant.JAVA_URL);
-                        } else {
-                            questionCall = apiService.getJavaQuestion();
-                            context.putServiceCallInServiceMap(questionCall, Constant.JAVA_URL);
-                        }
-                        categoryInteractor.getJavaQuestions(this, questionCall);
-                        break;
-                }
-            } else {
-                context.onError(context.getString(R.string.error_internet));
+                    categoryInteractor.getIosQuestion(this);
+                    break;
+
+                case Constant.JAVA:
+
+                    categoryInteractor.getJavaQuestions(this);
+                    break;
             }
-
         }
     }
 
@@ -100,10 +68,10 @@ public class CategoryPresenterImpl implements CategoryPresenter, CategoryInterac
         if (position == 0) {
             DataHolder.getInstance().setQuestionList(questionList);
         } else {
-            List<Question.Response> tempList = new ArrayList<>();
-            for (Question.Response response : questionList) {
-                if (response.getCategory().equalsIgnoreCase(categoryList.get(position))) {
-                    tempList.add(response);
+            List<Questions> tempList = new ArrayList<>();
+            for (Questions questions : questionList) {
+                if (questions.getCategory().equalsIgnoreCase(categoryList.get(position))) {
+                    tempList.add(questions);
                 }
             }
             DataHolder.getInstance().setQuestionList(tempList);
@@ -115,9 +83,9 @@ public class CategoryPresenterImpl implements CategoryPresenter, CategoryInterac
     }
 
     @Override
-    public void onSuccess(List<Question.Response> questionList) {
+    public <T extends Questions> void onSuccess(List<T> questionListFromDB) {
         if (categoryView.get() != null) {
-            updateUI(questionList);
+            updateUI(castToQuestions(questionListFromDB));
             categoryView.get().hideProgress();
         }
     }
@@ -126,62 +94,18 @@ public class CategoryPresenterImpl implements CategoryPresenter, CategoryInterac
     public void onError(String error) {
         if (categoryView.get() != null) {
             categoryView.get().hideProgress();
-            displayDataReloadAlert();
+            categoryView.get().onError(error);
         }
     }
 
     @Override
-    public void displayDataReloadAlert() {
-        try {
-            final CategoryFragment context = (CategoryFragment) categoryView.get();
-            if (context.isAdded() && context.getActivity() != null) {
-                new AlertDialog.Builder(context.getActivity())
-                        .setTitle("Error")
-                        .setMessage("Error receiving data from server, Reload Again...?")
-                        .setPositiveButton("Reload", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                                switch (context.getArguments().getInt("serviceType")) {
-                                    case Constant.ANDROID:
-                                        prepareToFetchQuestion(Constant.ANDROID);
-                                        break;
-
-                                    case Constant.IOS:
-                                        prepareToFetchQuestion(Constant.IOS);
-                                        break;
-
-                                    case Constant.JAVA:
-                                        prepareToFetchQuestion(Constant.JAVA);
-                                        break;
-                                }
-
-                            }
-                        })
-                        .setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                                context.getActivity().onBackPressed();
-                            }
-                        })
-                        .setCancelable(false)
-                        .create()
-                        .show();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    public void updateUI(List<Question.Response> responseList) {
+    public void updateUI(List<Questions> responseList) {
         questionList = responseList;
         categoryList.clear();
         categoryList.add("All Question");
-        for (Question.Response response : responseList) {
-            if (!categoryList.contains(response.getCategory()))
-                categoryList.add(response.getCategory());
+        for (Questions questions : responseList) {
+            if (!categoryList.contains(questions.getCategory()))
+                categoryList.add(questions.getCategory());
         }
 
         categoryAdapter.notifyDataSetChanged();
@@ -190,5 +114,14 @@ public class CategoryPresenterImpl implements CategoryPresenter, CategoryInterac
     @Override
     public CategoryAdapter initCategoryAdapter() {
         return categoryAdapter = new CategoryAdapter(categoryList, (CategoryFragment) categoryView.get());
+    }
+
+    @Override
+    public <T extends Questions> List<Questions> castToQuestions(List<T> questionListFromDB) {
+        List<Questions> questionsList = new ArrayList<>();
+        for (T t : questionListFromDB) {
+            questionsList.add(t);
+        }
+        return questionsList;
     }
 }

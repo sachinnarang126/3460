@@ -1,7 +1,7 @@
 package com.interviewquestion.presenter;
 
 import com.interviewquestion.adapter.QuestionPagerAdapter;
-import com.interviewquestion.repository.Question;
+import com.interviewquestion.repository.databasemodel.Questions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +12,7 @@ import java.util.List;
 
 public interface QuestionPresenter {
 
-    List<Question.Response> shuffledQuestionList = new ArrayList<>();
+    List<Questions> shuffledQuestionList = new ArrayList<>();
 
     void onDestroy();
 

@@ -14,12 +14,12 @@ import android.widget.TextView;
 
 import com.interviewquestion.R;
 import com.interviewquestion.dataholder.DataHolder;
-import com.interviewquestion.repository.Question;
+import com.interviewquestion.repository.databasemodel.Questions;
 import com.interviewquestion.util.Constant;
 
 public class QuestionFragment extends Fragment implements View.OnClickListener {
 
-    private Question.Response question;
+    private Questions question;
 
     public static QuestionFragment getInstance(int pos, int total) {
         Bundle bundle = new Bundle();
