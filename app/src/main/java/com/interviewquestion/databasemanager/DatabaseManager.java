@@ -103,7 +103,7 @@ public class DatabaseManager {
         try {
             List<Android> androidList = queryBuilder.selectColumns(Questions.ID).query();
             for (Android android : androidList) {
-                integerList.add(android.getId());
+                integerList.add(android.getQuestionId());
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -172,7 +172,7 @@ public class DatabaseManager {
         try {
             List<Ios> iosIdList = queryBuilder.selectColumns(Questions.ID).query();
             for (Ios ios : iosIdList) {
-                integerList.add(ios.getId());
+                integerList.add(ios.getQuestionId());
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -241,7 +241,7 @@ public class DatabaseManager {
         try {
             List<Java> javaIdList = queryBuilder.selectColumns(Questions.ID).query();
             for (Java java : javaIdList) {
-                integerList.add(java.getId());
+                integerList.add(java.getQuestionId());
             }
         } catch (SQLException e) {
             e.printStackTrace();

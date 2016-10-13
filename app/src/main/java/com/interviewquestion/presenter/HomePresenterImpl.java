@@ -53,6 +53,12 @@ public class HomePresenterImpl implements HomePresenter, HomeInteractor.OnIosQue
                 List<Integer> iosIdList = databaseManager.getIosIdList();
                 List<Integer> javaIdList = databaseManager.getJavaIdList();
 
+                System.out.println("androidIdList " + androidIdList);
+
+                System.out.println("iosIdList " + iosIdList);
+
+                System.out.println("javaIdList " + javaIdList);
+
                 RetrofitApiService apiService = RetrofitClient.getRetrofitClient();
                 Call<QuestionResponse> androidQuestionCall;
                 if (context.isServiceCallExist(Constant.ANDROID_POST_URL)) {
@@ -120,7 +126,7 @@ public class HomePresenterImpl implements HomePresenter, HomeInteractor.OnIosQue
         List<Android> androidList = new ArrayList<>();
         for (QuestionResponse.Response question : questionList) {
             Android android = new Android();
-            android.setId(Integer.parseInt(question.getId()));
+            android.setQuestionId(Integer.parseInt(question.getId()));
             android.setUserLevel(Integer.parseInt(question.getUserLevel()));
             android.setCategory(question.getCategory());
             android.setQuestion(question.getQuestion());
@@ -139,7 +145,7 @@ public class HomePresenterImpl implements HomePresenter, HomeInteractor.OnIosQue
 
         for (QuestionResponse.Response question : questionList) {
             Ios ios = new Ios();
-            ios.setId(Integer.parseInt(question.getId()));
+            ios.setQuestionId(Integer.parseInt(question.getId()));
             ios.setUserLevel(Integer.parseInt(question.getUserLevel()));
             ios.setCategory(question.getCategory());
             ios.setQuestion(question.getQuestion());
@@ -158,7 +164,7 @@ public class HomePresenterImpl implements HomePresenter, HomeInteractor.OnIosQue
 
         for (QuestionResponse.Response question : questionList) {
             Java java = new Java();
-            java.setId(Integer.parseInt(question.getId()));
+            java.setQuestionId(Integer.parseInt(question.getId()));
             java.setUserLevel(Integer.parseInt(question.getUserLevel()));
             java.setCategory(question.getCategory());
             java.setQuestion(question.getQuestion());

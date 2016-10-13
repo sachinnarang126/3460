@@ -8,7 +8,7 @@ import com.j256.ormlite.field.DatabaseField;
 
 public class Questions {
 
-    public static final String ID = "id";
+    public static final String ID = "question_id";
     public static final String CATEGORY = "category";
     public static final String USER_LEVEL = "user_level";
     public static final String QUESTION = "question";
@@ -21,8 +21,11 @@ public class Questions {
     public static final String IS_CORRECT_ANSWER_PROVIDED = "is_correct_answer_provided";
     public static final String USER_ANSWER = "user_answer";
 
-    @DatabaseField(columnName = ID, generatedId = true)
+    @DatabaseField(generatedId = true)
     protected int id;
+
+    @DatabaseField(columnName = ID)
+    protected int questionId;
 
     @DatabaseField(columnName = USER_LEVEL)
     protected int userLevel;
@@ -56,6 +59,14 @@ public class Questions {
 
     @DatabaseField(columnName = USER_ANSWER)
     protected int userAnswer;
+
+    public int getQuestionId() {
+        return questionId;
+    }
+
+    public void setQuestionId(int questionId) {
+        this.questionId = questionId;
+    }
 
     public int getId() {
         return id;

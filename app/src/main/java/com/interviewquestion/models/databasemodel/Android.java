@@ -10,6 +10,16 @@ import com.j256.ormlite.table.DatabaseTable;
 public class Android extends Questions {
 
     @Override
+    public int getQuestionId() {
+        return super.getQuestionId();
+    }
+
+    @Override
+    public void setQuestionId(int questionId) {
+        super.setQuestionId(questionId);
+    }
+
+    @Override
     public int getId() {
         return super.getId();
     }
