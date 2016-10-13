@@ -15,10 +15,10 @@ import android.widget.TextView;
 import com.interviewquestion.R;
 import com.interviewquestion.databasemanager.DatabaseManager;
 import com.interviewquestion.dataholder.DataHolder;
-import com.interviewquestion.repository.databasemodel.Android;
-import com.interviewquestion.repository.databasemodel.Ios;
-import com.interviewquestion.repository.databasemodel.Java;
-import com.interviewquestion.repository.databasemodel.Questions;
+import com.interviewquestion.models.databasemodel.Android;
+import com.interviewquestion.models.databasemodel.Ios;
+import com.interviewquestion.models.databasemodel.Java;
+import com.interviewquestion.models.databasemodel.Questions;
 import com.interviewquestion.util.Constant;
 
 public class QuestionFragment extends Fragment implements View.OnClickListener {

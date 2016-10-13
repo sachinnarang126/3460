@@ -1,7 +1,7 @@
-package com.interviewquestion.presenter;
+package com.interviewquestion.repositories.presenter;
 
 import com.interviewquestion.adapter.CategoryAdapter;
-import com.interviewquestion.repository.databasemodel.Questions;
+import com.interviewquestion.models.databasemodel.Questions;
 
 import java.util.ArrayList;
 import java.util.List;

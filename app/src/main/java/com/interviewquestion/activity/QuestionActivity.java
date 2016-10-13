@@ -9,8 +9,8 @@ import android.view.View;
 
 import com.interviewquestion.R;
 import com.interviewquestion.basecontroller.AppBaseCompatActivity;
-import com.interviewquestion.presenter.QuestionPresenter;
 import com.interviewquestion.presenter.QuestionPresenterImpl;
+import com.interviewquestion.repositories.presenter.QuestionPresenter;
 import com.interviewquestion.util.DepthPageTransformer;
 import com.interviewquestion.view.QuestionView;
 

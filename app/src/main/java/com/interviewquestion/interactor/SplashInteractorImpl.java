@@ -1,6 +1,7 @@
 package com.interviewquestion.interactor;
 
-import com.interviewquestion.repository.QuestionResponse;
+import com.interviewquestion.models.QuestionResponse;
+import com.interviewquestion.repositories.interactor.SplashInteractor;
 import com.interviewquestion.util.Constant;
 
 import retrofit2.Call;

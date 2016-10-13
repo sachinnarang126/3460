@@ -17,8 +17,8 @@ import com.interviewquestion.R;
 import com.interviewquestion.activity.HomeActivity;
 import com.interviewquestion.activity.SettingsActivity;
 import com.interviewquestion.basecontroller.AppCompatFragment;
-import com.interviewquestion.presenter.HomePresenter;
 import com.interviewquestion.presenter.HomePresenterImpl;
+import com.interviewquestion.repositories.presenter.HomePresenter;
 import com.interviewquestion.util.Constant;
 import com.interviewquestion.view.HomeView;
 

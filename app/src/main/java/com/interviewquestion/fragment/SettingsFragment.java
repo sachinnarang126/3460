@@ -7,8 +7,8 @@ import android.preference.PreferenceFragment;
 
 import com.interviewquestion.R;
 import com.interviewquestion.activity.SettingsActivity;
-import com.interviewquestion.presenter.SettingPresenter;
 import com.interviewquestion.presenter.SettingPresenterImpl;
+import com.interviewquestion.repositories.presenter.SettingPresenter;
 import com.interviewquestion.view.SettingView;
 
 import java.lang.ref.WeakReference;

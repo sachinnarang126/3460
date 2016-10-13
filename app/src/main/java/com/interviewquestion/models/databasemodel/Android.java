@@ -1,4 +1,4 @@
-package com.interviewquestion.repository.databasemodel;
+package com.interviewquestion.models.databasemodel;
 
 import com.j256.ormlite.table.DatabaseTable;
 

@@ -1,6 +1,6 @@
-package com.interviewquestion.presenter;
+package com.interviewquestion.repositories.presenter;
 
-import com.interviewquestion.repository.QuestionResponse;
+import com.interviewquestion.models.QuestionResponse;
 
 import java.util.List;
 

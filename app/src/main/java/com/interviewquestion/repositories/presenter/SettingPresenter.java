@@ -1,4 +1,4 @@
-package com.interviewquestion.presenter;
+package com.interviewquestion.repositories.presenter;
 
 import android.content.DialogInterface;
 

@@ -5,7 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.interviewquestion.fragment.QuestionFragment;
-import com.interviewquestion.repository.databasemodel.Questions;
+import com.interviewquestion.models.databasemodel.Questions;
 
 import java.util.List;
 

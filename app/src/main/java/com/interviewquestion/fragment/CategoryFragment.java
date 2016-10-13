@@ -18,8 +18,8 @@ import com.interviewquestion.R;
 import com.interviewquestion.activity.HomeActivity;
 import com.interviewquestion.basecontroller.AppCompatFragment;
 import com.interviewquestion.interfaces.OnItemClickListener;
-import com.interviewquestion.presenter.CategoryPresenter;
 import com.interviewquestion.presenter.CategoryPresenterImpl;
+import com.interviewquestion.repositories.presenter.CategoryPresenter;
 import com.interviewquestion.util.Constant;
 import com.interviewquestion.view.CategoryView;
 

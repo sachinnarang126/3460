@@ -3,7 +3,8 @@ package com.interviewquestion.presenter;
 import com.interviewquestion.activity.QuestionActivity;
 import com.interviewquestion.adapter.QuestionPagerAdapter;
 import com.interviewquestion.dataholder.DataHolder;
-import com.interviewquestion.repository.databasemodel.Questions;
+import com.interviewquestion.models.databasemodel.Questions;
+import com.interviewquestion.repositories.presenter.QuestionPresenter;
 import com.interviewquestion.view.QuestionView;
 
 import java.lang.ref.WeakReference;

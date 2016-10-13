@@ -1,6 +1,6 @@
-package com.interviewquestion.interactor;
+package com.interviewquestion.repositories.interactor;
 
-import com.interviewquestion.repository.databasemodel.Questions;
+import com.interviewquestion.models.databasemodel.Questions;
 
 import java.util.List;
 

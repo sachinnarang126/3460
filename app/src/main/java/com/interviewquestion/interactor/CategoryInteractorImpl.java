@@ -4,9 +4,10 @@ import android.content.Context;
 import android.preference.PreferenceManager;
 
 import com.interviewquestion.databasemanager.DatabaseManager;
-import com.interviewquestion.repository.databasemodel.Android;
-import com.interviewquestion.repository.databasemodel.Ios;
-import com.interviewquestion.repository.databasemodel.Java;
+import com.interviewquestion.models.databasemodel.Android;
+import com.interviewquestion.models.databasemodel.Ios;
+import com.interviewquestion.models.databasemodel.Java;
+import com.interviewquestion.repositories.interactor.CategoryInteractor;
 
 import java.util.List;
 

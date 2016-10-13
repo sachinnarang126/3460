@@ -1,4 +1,4 @@
-package com.interviewquestion.repository;
+package com.interviewquestion.models;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

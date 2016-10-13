@@ -1,6 +1,6 @@
 package com.interviewquestion.network;
 
-import com.interviewquestion.repository.QuestionResponse;
+import com.interviewquestion.models.QuestionResponse;
 import com.interviewquestion.util.Constant;
 
 import java.util.List;

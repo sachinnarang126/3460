@@ -2,10 +2,10 @@ package com.interviewquestion.databasemanager;
 
 import android.content.Context;
 
-import com.interviewquestion.repository.databasemodel.Android;
-import com.interviewquestion.repository.databasemodel.Ios;
-import com.interviewquestion.repository.databasemodel.Java;
-import com.interviewquestion.repository.databasemodel.Questions;
+import com.interviewquestion.models.databasemodel.Android;
+import com.interviewquestion.models.databasemodel.Ios;
+import com.interviewquestion.models.databasemodel.Java;
+import com.interviewquestion.models.databasemodel.Questions;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.stmt.UpdateBuilder;
 import com.j256.ormlite.table.TableUtils;

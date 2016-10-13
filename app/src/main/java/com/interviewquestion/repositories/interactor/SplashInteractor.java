@@ -1,6 +1,6 @@
-package com.interviewquestion.interactor;
+package com.interviewquestion.repositories.interactor;
 
-import com.interviewquestion.repository.QuestionResponse;
+import com.interviewquestion.models.QuestionResponse;
 
 import java.util.List;
 
@@ -10,7 +10,7 @@ import retrofit2.Call;
  * Created by root on 28/9/16.
  */
 
-public interface HomeInteractor {
+public interface SplashInteractor {
 
     void getJavaQuestions(OnJavaQuestionResponseListener questionResponseListener, Call<QuestionResponse> questionCall);
 
@@ -20,16 +20,19 @@ public interface HomeInteractor {
 
     interface OnJavaQuestionResponseListener {
         void onSuccess(List<QuestionResponse.Response> questionList, int serviceType);
+
         void onError(String error);
     }
 
     interface OnAndroidQuestionResponseListener {
         void onSuccess(List<QuestionResponse.Response> questionList, int serviceType);
+
         void onError(String error);
     }
 
     interface OnIosQuestionResponseListener {
         void onSuccess(List<QuestionResponse.Response> questionList, int serviceType);
+
         void onError(String error);
     }
 }

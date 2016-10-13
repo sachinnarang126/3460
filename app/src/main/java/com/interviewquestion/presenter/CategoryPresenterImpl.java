@@ -6,9 +6,10 @@ import com.interviewquestion.activity.QuestionActivity;
 import com.interviewquestion.adapter.CategoryAdapter;
 import com.interviewquestion.dataholder.DataHolder;
 import com.interviewquestion.fragment.CategoryFragment;
-import com.interviewquestion.interactor.CategoryInteractor;
 import com.interviewquestion.interactor.CategoryInteractorImpl;
-import com.interviewquestion.repository.databasemodel.Questions;
+import com.interviewquestion.models.databasemodel.Questions;
+import com.interviewquestion.repositories.interactor.CategoryInteractor;
+import com.interviewquestion.repositories.presenter.CategoryPresenter;
 import com.interviewquestion.util.Constant;
 import com.interviewquestion.view.CategoryView;
 

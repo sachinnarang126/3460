@@ -4,9 +4,9 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import com.interviewquestion.repository.databasemodel.Android;
-import com.interviewquestion.repository.databasemodel.Ios;
-import com.interviewquestion.repository.databasemodel.Java;
+import com.interviewquestion.models.databasemodel.Android;
+import com.interviewquestion.models.databasemodel.Ios;
+import com.interviewquestion.models.databasemodel.Java;
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.support.ConnectionSource;

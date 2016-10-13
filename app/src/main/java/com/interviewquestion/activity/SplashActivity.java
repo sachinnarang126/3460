@@ -11,8 +11,8 @@ import android.widget.ProgressBar;
 import com.interviewquestion.R;
 import com.interviewquestion.basecontroller.AppBaseCompatActivity;
 import com.interviewquestion.dataholder.DataHolder;
-import com.interviewquestion.presenter.SplashPresenter;
 import com.interviewquestion.presenter.SplashPresenterImpl;
+import com.interviewquestion.repositories.presenter.SplashPresenter;
 import com.interviewquestion.util.Constant;
 import com.interviewquestion.view.SplashView;
 

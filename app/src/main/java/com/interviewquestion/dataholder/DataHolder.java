@@ -3,7 +3,7 @@ package com.interviewquestion.dataholder;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.interviewquestion.repository.databasemodel.Questions;
+import com.interviewquestion.models.databasemodel.Questions;
 import com.interviewquestion.util.Constant;
 
 import java.util.List;

@@ -6,6 +6,7 @@ import android.support.v7.app.AlertDialog;
 
 import com.interviewquestion.databasemanager.DatabaseManager;
 import com.interviewquestion.fragment.SettingsFragment;
+import com.interviewquestion.repositories.presenter.SettingPresenter;
 import com.interviewquestion.view.SettingView;
 
 import java.lang.ref.WeakReference;
