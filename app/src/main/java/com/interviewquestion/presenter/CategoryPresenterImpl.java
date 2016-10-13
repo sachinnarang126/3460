@@ -119,6 +119,12 @@ public class CategoryPresenterImpl implements CategoryPresenter, CategoryInterac
     }
 
     @Override
+    public void clearCategoryAdapter() {
+        categoryList.clear();
+        categoryAdapter.notifyDataSetChanged();
+    }
+
+    @Override
     public <T extends Questions> List<Questions> castToQuestions(List<T> questionListFromDB) {
         List<Questions> questionsList = new ArrayList<>();
         for (T t : questionListFromDB) {
@@ -126,4 +132,6 @@ public class CategoryPresenterImpl implements CategoryPresenter, CategoryInterac
         }
         return questionsList;
     }
+
+
 }

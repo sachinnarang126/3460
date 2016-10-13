@@ -122,6 +122,7 @@ public class CategoryFragment extends AppCompatFragment implements CategoryView,
                 break;
 
             case R.id.action_android:
+                categoryPresenter.clearCategoryAdapter();
                 getArguments().putInt("serviceType", Constant.ANDROID);
                 getArguments().putString("technology", getString(R.string.android));
                 getActivity().setTitle(getString(R.string.android));
@@ -131,6 +132,7 @@ public class CategoryFragment extends AppCompatFragment implements CategoryView,
                 break;
 
             case R.id.action_ios:
+                categoryPresenter.clearCategoryAdapter();
                 getArguments().putInt("serviceType", Constant.IOS);
                 getArguments().putString("technology", getString(R.string.ios));
                 getActivity().setTitle(getString(R.string.ios));
@@ -140,6 +142,7 @@ public class CategoryFragment extends AppCompatFragment implements CategoryView,
                 break;
 
             case R.id.action_java:
+                categoryPresenter.clearCategoryAdapter();
                 getArguments().putInt("serviceType", Constant.JAVA);
                 getArguments().putString("technology", getString(R.string.java));
                 getActivity().setTitle(getString(R.string.java));
