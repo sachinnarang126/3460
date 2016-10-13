@@ -1,5 +1,7 @@
 package com.interviewquestion.repositories.presenter;
 
+import android.content.DialogInterface;
+
 import com.interviewquestion.adapter.CategoryAdapter;
 import com.interviewquestion.models.databasemodel.Questions;
 
@@ -17,6 +19,10 @@ public interface CategoryPresenter {
     void onDestroy();
 
     void prepareToFetchQuestionFromDB(int serviceType);
+
+    void prepareToFetchQuestionFromDB(int serviceType, boolean isShowAnsweredQuestion);
+
+    void showAnsweredQuestionDialog(String message, DialogInterface.OnClickListener okListener);
 
     void showQuestions(int position);
 

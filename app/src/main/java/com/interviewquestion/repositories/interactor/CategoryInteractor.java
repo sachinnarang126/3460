@@ -10,15 +10,15 @@ import java.util.List;
 
 public interface CategoryInteractor {
 
-    void getJavaQuestions(OnQuestionResponseListener questionResponseListener);
+    void getJavaQuestions(OnQuestionResponseListener questionResponseListener, boolean isShowAnsweredQuestion);
 
-    void getAndroidQuestions(OnQuestionResponseListener questionResponseListener);
+    void getAndroidQuestions(OnQuestionResponseListener questionResponseListener, boolean isShowAnsweredQuestion);
 
-    void getIosQuestion(OnQuestionResponseListener questionResponseListener);
+    void getIosQuestion(OnQuestionResponseListener questionResponseListener, boolean isShowAnsweredQuestion);
 
     interface OnQuestionResponseListener {
         <T extends Questions> void onSuccess(List<T> questionListFromDB);
 
-        void onError(String error);
+        void onError(String error, boolean hasToLoadQuestionFromDb);
     }
 }

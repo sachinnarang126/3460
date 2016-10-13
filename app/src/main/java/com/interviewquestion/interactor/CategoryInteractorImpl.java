@@ -1,7 +1,6 @@
 package com.interviewquestion.interactor;
 
 import android.content.Context;
-import android.preference.PreferenceManager;
 
 import com.interviewquestion.databasemanager.DatabaseManager;
 import com.interviewquestion.models.databasemodel.Android;
@@ -24,39 +23,48 @@ public class CategoryInteractorImpl implements CategoryInteractor {
     }
 
     @Override
-    public void getJavaQuestions(final OnQuestionResponseListener questionResponseListener) {
-        // get Java question from db
-        boolean isShowAnsweredQuestion = PreferenceManager
-                .getDefaultSharedPreferences(context).getBoolean("prefShowAnsweredQuestion", false);
+    public void getJavaQuestions(final OnQuestionResponseListener questionResponseListener, boolean isShowAnsweredQuestion) {
         List<Java> javaQuestionList = DatabaseManager.getDataBaseManager(context).fetchJavaQuestionFromDB(isShowAnsweredQuestion);
         if (javaQuestionList.size() > 0) {
             questionResponseListener.onSuccess(javaQuestionList);
+        } else if (!isShowAnsweredQuestion) {
+            if (DatabaseManager.getDataBaseManager(context).fetchCountOfAllJavaQuestion() > 0)
+                questionResponseListener.onError("No unanswered question found, Do you want to load answered question?", true);
+            else
+                questionResponseListener.onError("No question found..!!!", false);
         } else {
-            questionResponseListener.onError("No Question found");
+            questionResponseListener.onError("No question found..!!!", false);
         }
     }
 
     @Override
-    public void getAndroidQuestions(final OnQuestionResponseListener questionResponseListener) {
-        boolean isShowAnsweredQuestion = PreferenceManager
-                .getDefaultSharedPreferences(context).getBoolean("prefShowAnsweredQuestion", false);
+    public void getAndroidQuestions(final OnQuestionResponseListener questionResponseListener, boolean isShowAnsweredQuestion) {
+
         List<Android> androidQuestionList = DatabaseManager.getDataBaseManager(context).fetchAndroidQuestionFromDB(isShowAnsweredQuestion);
         if (androidQuestionList.size() > 0) {
             questionResponseListener.onSuccess(androidQuestionList);
+        } else if (!isShowAnsweredQuestion) {
+            if (DatabaseManager.getDataBaseManager(context).fetchCountOfAllAndroidQuestion() > 0)
+                questionResponseListener.onError("No unanswered question found, Do you want to load answered question?", true);
+            else
+                questionResponseListener.onError("No question found..!!!", false);
         } else {
-            questionResponseListener.onError("No Question found");
+            questionResponseListener.onError("No question found..!!!", false);
         }
     }
 
     @Override
-    public void getIosQuestion(final OnQuestionResponseListener questionResponseListener) {
-        boolean isShowAnsweredQuestion = PreferenceManager
-                .getDefaultSharedPreferences(context).getBoolean("prefShowAnsweredQuestion", false);
+    public void getIosQuestion(final OnQuestionResponseListener questionResponseListener, boolean isShowAnsweredQuestion) {
         List<Ios> iosQuestionList = DatabaseManager.getDataBaseManager(context).fetchIosQuestionFromDB(isShowAnsweredQuestion);
         if (iosQuestionList.size() > 0) {
             questionResponseListener.onSuccess(iosQuestionList);
+        } else if (!isShowAnsweredQuestion) {
+            if (DatabaseManager.getDataBaseManager(context).fetchCountOfAllIosQuestion() > 0)
+                questionResponseListener.onError("No unanswered question found, Do you want to load answered question?", true);
+            else
+                questionResponseListener.onError("No question found..!!!", false);
         } else {
-            questionResponseListener.onError("No Question found");
+            questionResponseListener.onError("No question found..!!!", false);
         }
     }
 }

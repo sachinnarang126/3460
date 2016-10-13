@@ -1,6 +1,9 @@
 package com.interviewquestion.presenter;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.preference.PreferenceManager;
+import android.support.v7.app.AlertDialog;
 
 import com.interviewquestion.activity.QuestionActivity;
 import com.interviewquestion.adapter.CategoryAdapter;
@@ -43,22 +46,48 @@ public class CategoryPresenterImpl implements CategoryPresenter, CategoryInterac
 
     @Override
     public void prepareToFetchQuestionFromDB(int serviceType) {
+        boolean isShowAnsweredQuestion = PreferenceManager
+                .getDefaultSharedPreferences(((CategoryFragment) categoryView.get()).getActivity()).getBoolean("prefShowAnsweredQuestion", false);
         if (categoryView.get() != null) {
             categoryView.get().showProgress();
             switch (serviceType) {
                 case Constant.ANDROID:
 
-                    categoryInteractor.getAndroidQuestions(this);
+                    categoryInteractor.getAndroidQuestions(this, isShowAnsweredQuestion);
                     break;
 
                 case Constant.IOS:
 
-                    categoryInteractor.getIosQuestion(this);
+                    categoryInteractor.getIosQuestion(this, isShowAnsweredQuestion);
                     break;
 
                 case Constant.JAVA:
 
-                    categoryInteractor.getJavaQuestions(this);
+                    categoryInteractor.getJavaQuestions(this, isShowAnsweredQuestion);
+                    break;
+            }
+        }
+    }
+
+    @Override
+    public void prepareToFetchQuestionFromDB(int serviceType, boolean isShowAnsweredQuestion) {
+
+        if (categoryView.get() != null) {
+            categoryView.get().showProgress();
+            switch (serviceType) {
+                case Constant.ANDROID:
+
+                    categoryInteractor.getAndroidQuestions(this, isShowAnsweredQuestion);
+                    break;
+
+                case Constant.IOS:
+
+                    categoryInteractor.getIosQuestion(this, isShowAnsweredQuestion);
+                    break;
+
+                case Constant.JAVA:
+
+                    categoryInteractor.getJavaQuestions(this, isShowAnsweredQuestion);
                     break;
             }
         }
@@ -93,10 +122,19 @@ public class CategoryPresenterImpl implements CategoryPresenter, CategoryInterac
     }
 
     @Override
-    public void onError(String error) {
+    public void onError(String error, boolean hasToLoadQuestionFromDb) {
         if (categoryView.get() != null) {
             categoryView.get().hideProgress();
-            categoryView.get().onError(error);
+            if (hasToLoadQuestionFromDb) {
+                showAnsweredQuestionDialog(error, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        prepareToFetchQuestionFromDB(((CategoryFragment) categoryView.get()).getArguments().getInt("serviceType"), true);
+                    }
+                });
+            } else {
+                showAnsweredQuestionDialog(error, null);
+            }
         }
     }
 
@@ -133,5 +171,15 @@ public class CategoryPresenterImpl implements CategoryPresenter, CategoryInterac
         return questionsList;
     }
 
+    @Override
+    public void showAnsweredQuestionDialog(String message, DialogInterface.OnClickListener okListener) {
+        new AlertDialog.Builder(((CategoryFragment) categoryView.get()).getActivity())
+                .setMessage(message)
+                .setPositiveButton("OK", okListener)
+                .setNegativeButton("Cancel", null)
+                .setCancelable(false)
+                .create()
+                .show();
+    }
 
 }

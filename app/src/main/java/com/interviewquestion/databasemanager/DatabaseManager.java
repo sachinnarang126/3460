@@ -111,6 +111,15 @@ public class DatabaseManager {
         return integerList;
     }
 
+    public long fetchCountOfAllAndroidQuestion(){
+        try {
+            return databaseHelper.getAndroidDao().queryBuilder().countOf();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
 
     /*
      **********************************IOS TABLE FUNCTIONS**********************************
@@ -180,6 +189,15 @@ public class DatabaseManager {
         return integerList;
     }
 
+    public long fetchCountOfAllIosQuestion(){
+        try {
+            return databaseHelper.getIosDao().queryBuilder().countOf();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
 
     /*
      **********************************JAVA TABLE FUNCTIONS**********************************
@@ -247,5 +265,14 @@ public class DatabaseManager {
             e.printStackTrace();
         }
         return integerList;
+    }
+
+    public long fetchCountOfAllJavaQuestion(){
+        try {
+            return databaseHelper.getJavaDao().queryBuilder().countOf();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 }
