@@ -25,7 +25,6 @@ public class AppCompatFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        System.out.println("--------->>>Destroying All services associated with this fragment<<<<--------");
         cancelAllServiceCalls(new ArrayList<>(mServiceCallsMap.values()));
         mServiceCallsMap = null;
     }
@@ -48,7 +47,7 @@ public class AppCompatFragment extends Fragment {
      * @return Returns the Generic type if exists otherwise null
      */
     final public <T> Call<T> getServiceCallIfExist(String key) {
-        if (mServiceCallsMap.containsKey(key))
+        if (mServiceCallsMap != null && mServiceCallsMap.containsKey(key))
             return mServiceCallsMap.get(key).clone();
         else
             return null;
