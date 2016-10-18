@@ -3,7 +3,6 @@ package com.interviewquestion.presenter;
 import android.content.Context;
 import android.content.Intent;
 
-import com.google.firebase.iid.FirebaseInstanceId;
 import com.interviewquestion.R;
 import com.interviewquestion.activity.HomeActivity;
 import com.interviewquestion.activity.SplashActivity;
@@ -193,11 +192,5 @@ public class SplashPresenterImpl implements SplashPresenter, SplashInteractor.On
         Intent intent = new Intent(context, HomeActivity.class);
         context.startActivity(intent);
         ((SplashActivity) context).finish();
-    }
-
-    @Override
-    public void registerUserForFcm() {
-        String token = FirebaseInstanceId.getInstance().getToken();
-        System.out.println("token " + token);
     }
 }

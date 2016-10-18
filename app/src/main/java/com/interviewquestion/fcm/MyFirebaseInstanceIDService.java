@@ -6,7 +6,7 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.interviewquestion.dataholder.DataHolder;
-import com.interviewquestion.models.bean.UserRegistration;
+import com.interviewquestion.models.bean.UserRegistor;
 import com.interviewquestion.network.RetrofitApiService;
 import com.interviewquestion.network.RetrofitClient;
 import com.interviewquestion.util.Constant;
@@ -38,7 +38,7 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
         // If you want to send messages to this application instance or
         // manage this apps subscriptions on the server side, send the
         // Instance ID token to your app server.
-//        sendRegistrationToServer(refreshedToken);
+        sendRegistrationToServer(refreshedToken);
     }
     // [END refresh_token]
 
@@ -52,24 +52,25 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
      */
     private void sendRegistrationToServer(String token) {
         DataHolder.getInstance().getPreferences(this).edit().putString(Constant.DEVICE_TOKEN, token).apply();
-
         // if connected to internet
 
         RetrofitApiService apiService = RetrofitClient.getRetrofitClient();
         FirebaseMessaging.getInstance().subscribeToTopic(Constant.FCM_TOPIC_UPDATE_QUESTION);
 
-        Call<UserRegistration> registrationCall = apiService.registerUserForFCM("a", token, Constant.ANDROID_DEVICE_TYPE);
+        Call<UserRegistor> registrationCall = apiService.registerUserForFCM("a", token, Constant.ANDROID_DEVICE_TYPE);
 
-        registrationCall.enqueue(new Callback<UserRegistration>() {
+        registrationCall.enqueue(new Callback<UserRegistor>() {
             @Override
-            public void onResponse(Call<UserRegistration> call, Response<UserRegistration> response) {
-                DataHolder.getInstance().getPreferences(MyFirebaseInstanceIDService.this).edit().
-                        putBoolean(Constant.IS_USER_REGISTERED, true).apply();
+            public void onResponse(Call<UserRegistor> call, Response<UserRegistor> response) {
+                if (response.isSuccessful() && response.body().getStatus() == 1)
+                    DataHolder.getInstance().getPreferences(MyFirebaseInstanceIDService.this).edit().
+                            putBoolean(Constant.IS_USER_REGISTERED, true).apply();
             }
 
             @Override
-            public void onFailure(Call<UserRegistration> call, Throwable t) {
-
+            public void onFailure(Call<UserRegistor> call, Throwable t) {
+                DataHolder.getInstance().getPreferences(MyFirebaseInstanceIDService.this).edit().
+                        putBoolean(Constant.IS_USER_REGISTERED, false).apply();
             }
         });
     }

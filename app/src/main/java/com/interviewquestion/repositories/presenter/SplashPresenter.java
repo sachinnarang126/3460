@@ -18,6 +18,4 @@ public interface SplashPresenter {
 
     void goToHomeActivity();
 
-    void registerUserForFcm();
-
 }
