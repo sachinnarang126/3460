@@ -1,18 +1,16 @@
 package com.interviewquestion.presenter;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v7.app.AlertDialog;
 
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.interviewquestion.R;
 import com.interviewquestion.activity.HomeActivity;
 import com.interviewquestion.activity.SplashActivity;
 import com.interviewquestion.databasemanager.DatabaseManager;
 import com.interviewquestion.dataholder.DataHolder;
-import com.interviewquestion.fragment.CategoryFragment;
 import com.interviewquestion.interactor.SplashInteractorImpl;
-import com.interviewquestion.models.QuestionResponse;
+import com.interviewquestion.models.bean.QuestionResponse;
 import com.interviewquestion.models.databasemodel.Android;
 import com.interviewquestion.models.databasemodel.Ios;
 import com.interviewquestion.models.databasemodel.Java;
@@ -108,50 +106,6 @@ public class SplashPresenterImpl implements SplashPresenter, SplashInteractor.On
     }
 
     @Override
-    public void displayDataReloadAlert() {
-        try {
-            final CategoryFragment context = (CategoryFragment) splashView.get();
-            if (context.isAdded() && context.getActivity() != null) {
-                new AlertDialog.Builder(context.getActivity())
-                        .setTitle("Error")
-                        .setMessage("Error receiving data from server, Reload Again...?")
-                        .setPositiveButton("Reload", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                                switch (context.getArguments().getInt("serviceType")) {
-                                    case Constant.ANDROID:
-//                                        prepareToFetchQuestionFromDB(Constant.ANDROID);
-                                        break;
-
-                                    case Constant.IOS:
-//                                        prepareToFetchQuestionFromDB(Constant.IOS);
-                                        break;
-
-                                    case Constant.JAVA:
-//                                        prepareToFetchQuestionFromDB(Constant.JAVA);
-                                        break;
-                                }
-
-                            }
-                        })
-                        .setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                                context.getActivity().onBackPressed();
-                            }
-                        })
-                        .setCancelable(false)
-                        .create()
-                        .show();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
     synchronized public void saveDataToDB(List<QuestionResponse.Response> questionList, int serviceType) {
         DatabaseManager databaseManager = DatabaseManager.getDataBaseManager((SplashActivity) splashView.get());
         switch (serviceType) {
@@ -239,5 +193,11 @@ public class SplashPresenterImpl implements SplashPresenter, SplashInteractor.On
         Intent intent = new Intent(context, HomeActivity.class);
         context.startActivity(intent);
         ((SplashActivity) context).finish();
+    }
+
+    @Override
+    public void registerUserForFcm() {
+        String token = FirebaseInstanceId.getInstance().getToken();
+        System.out.println("token " + token);
     }
 }

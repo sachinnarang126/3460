@@ -1,6 +1,7 @@
 package com.interviewquestion.network;
 
-import com.interviewquestion.models.QuestionResponse;
+import com.interviewquestion.models.bean.QuestionResponse;
+import com.interviewquestion.models.bean.UserRegistration;
 import com.interviewquestion.util.Constant;
 
 import java.util.List;
@@ -23,6 +24,11 @@ public interface RetrofitApiService {
 
     @GET(Constant.JAVA_URL)
     Call<QuestionResponse> getJavaQuestion();
+
+    @FormUrlEncoded
+    @POST(Constant.REGISTER_USER)
+    Call<UserRegistration> registerUserForFCM(@Field("device_id") String deviceID, @Field("device_token") String device_token,
+                                              @Field("device_type") String device_type);
 
     @FormUrlEncoded
     @POST(Constant.IOS_POST_URL)

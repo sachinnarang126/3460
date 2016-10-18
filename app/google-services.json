@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "821300422535",
+    "firebase_url": "https://interviewquestion-bd1ad.firebaseio.com",
+    "project_id": "interviewquestion-bd1ad",
+    "storage_bucket": "interviewquestion-bd1ad.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:821300422535:android:91bc6dad6820298b",
+        "android_client_info": {
+          "package_name": "com.iq"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "821300422535-6jt0uenpn0910gdd20nia15bqqsq1cgd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.iq",
+            "certificate_hash": "F0DA5AACC9E2CCC00C817391A325BFF6A0E91172"
+          }
+        },
+        {
+          "client_id": "821300422535-0bt44uulk5ih2t8itrtpgr99lpu92tp5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDPZvFRoG5Bm3hxNcuv4-jMZTxYuW5vdcM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "821300422535-0bt44uulk5ih2t8itrtpgr99lpu92tp5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

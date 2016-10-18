@@ -5,7 +5,7 @@ import com.interviewquestion.activity.HomeActivity;
 import com.interviewquestion.databasemanager.DatabaseManager;
 import com.interviewquestion.fragment.HomeFragment;
 import com.interviewquestion.interactor.HomeInteractorImpl;
-import com.interviewquestion.models.QuestionResponse;
+import com.interviewquestion.models.bean.QuestionResponse;
 import com.interviewquestion.models.databasemodel.Android;
 import com.interviewquestion.models.databasemodel.Ios;
 import com.interviewquestion.models.databasemodel.Java;

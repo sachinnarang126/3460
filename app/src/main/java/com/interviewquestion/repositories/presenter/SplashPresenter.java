@@ -1,6 +1,6 @@
 package com.interviewquestion.repositories.presenter;
 
-import com.interviewquestion.models.QuestionResponse;
+import com.interviewquestion.models.bean.QuestionResponse;
 
 import java.util.List;
 
@@ -14,10 +14,10 @@ public interface SplashPresenter {
 
     void prepareToFetchQuestion();
 
-    void displayDataReloadAlert();
-
     void saveDataToDB(List<QuestionResponse.Response> questionList, int serviceType);
 
     void goToHomeActivity();
+
+    void registerUserForFcm();
 
 }

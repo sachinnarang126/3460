@@ -1,6 +1,6 @@
 package com.interviewquestion.repositories.interactor;
 
-import com.interviewquestion.models.QuestionResponse;
+import com.interviewquestion.models.bean.QuestionResponse;
 
 import java.util.List;
 

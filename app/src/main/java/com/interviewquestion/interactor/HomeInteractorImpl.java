@@ -1,6 +1,6 @@
 package com.interviewquestion.interactor;
 
-import com.interviewquestion.models.QuestionResponse;
+import com.interviewquestion.models.bean.QuestionResponse;
 import com.interviewquestion.repositories.interactor.HomeInteractor;
 import com.interviewquestion.util.Constant;
 
