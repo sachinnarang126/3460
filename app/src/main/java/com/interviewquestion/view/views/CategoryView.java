@@ -1,4 +1,4 @@
-package com.interviewquestion.view;
+package com.interviewquestion.view.views;
 
 /**
  * Created by root on 28/9/16.

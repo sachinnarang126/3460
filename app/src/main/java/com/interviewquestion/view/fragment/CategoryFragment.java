@@ -1,4 +1,4 @@
-package com.interviewquestion.fragment;
+package com.interviewquestion.view.fragment;
 
 
 import android.os.Bundle;
@@ -15,13 +15,13 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import com.interviewquestion.R;
-import com.interviewquestion.activity.HomeActivity;
 import com.interviewquestion.basecontroller.AppCompatFragment;
 import com.interviewquestion.interfaces.OnItemClickListener;
 import com.interviewquestion.presenter.CategoryPresenterImpl;
 import com.interviewquestion.repositories.presenter.CategoryPresenter;
 import com.interviewquestion.util.Constant;
-import com.interviewquestion.view.CategoryView;
+import com.interviewquestion.view.activity.HomeActivity;
+import com.interviewquestion.view.views.CategoryView;
 
 import java.lang.ref.WeakReference;
 

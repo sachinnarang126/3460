@@ -1,6 +1,6 @@
 package com.interviewquestion.fcm;
 
-import android.util.Log;
+import android.provider.Settings;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;
@@ -33,14 +33,13 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
     public void onTokenRefresh() {
         // Get updated InstanceID token.
         String refreshedToken = FirebaseInstanceId.getInstance().getToken();
-        Log.d(TAG, "Refreshed token: " + refreshedToken);
 
         // If you want to send messages to this application instance or
         // manage this apps subscriptions on the server side, send the
         // Instance ID token to your app server.
         sendRegistrationToServer(refreshedToken);
     }
-    // [END refresh_token]
+
 
     /**
      * Persist token to third-party servers.
@@ -56,8 +55,9 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
 
         RetrofitApiService apiService = RetrofitClient.getRetrofitClient();
         FirebaseMessaging.getInstance().subscribeToTopic(Constant.FCM_TOPIC_UPDATE_QUESTION);
-
-        Call<UserRegistor> registrationCall = apiService.registerUserForFCM("a", token, Constant.ANDROID_DEVICE_TYPE);
+        String deviceID = Settings.Secure.getString(getContentResolver(),
+                Settings.Secure.ANDROID_ID);
+        Call<UserRegistor> registrationCall = apiService.registerUserForFCM(deviceID, token, Constant.ANDROID_DEVICE_TYPE);
 
         registrationCall.enqueue(new Callback<UserRegistor>() {
             @Override

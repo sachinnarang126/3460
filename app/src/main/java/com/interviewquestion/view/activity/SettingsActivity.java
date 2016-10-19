@@ -1,4 +1,4 @@
-package com.interviewquestion.activity;
+package com.interviewquestion.view.activity;
 
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -7,7 +7,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.interviewquestion.R;
-import com.interviewquestion.fragment.SettingsFragment;
+import com.interviewquestion.view.fragment.SettingsFragment;
 
 public class SettingsActivity extends AppCompatActivity {
 

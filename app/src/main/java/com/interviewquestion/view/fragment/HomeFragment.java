@@ -1,4 +1,4 @@
-package com.interviewquestion.fragment;
+package com.interviewquestion.view.fragment;
 
 
 import android.content.Intent;
@@ -14,13 +14,13 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.interviewquestion.R;
-import com.interviewquestion.activity.HomeActivity;
-import com.interviewquestion.activity.SettingsActivity;
 import com.interviewquestion.basecontroller.AppCompatFragment;
 import com.interviewquestion.presenter.HomePresenterImpl;
 import com.interviewquestion.repositories.presenter.HomePresenter;
 import com.interviewquestion.util.Constant;
-import com.interviewquestion.view.HomeView;
+import com.interviewquestion.view.activity.HomeActivity;
+import com.interviewquestion.view.activity.SettingsActivity;
+import com.interviewquestion.view.views.HomeView;
 
 import java.lang.ref.WeakReference;
 

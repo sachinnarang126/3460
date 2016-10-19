@@ -4,8 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.interviewquestion.R;
-import com.interviewquestion.activity.HomeActivity;
-import com.interviewquestion.activity.SplashActivity;
 import com.interviewquestion.databasemanager.DatabaseManager;
 import com.interviewquestion.dataholder.DataHolder;
 import com.interviewquestion.interactor.SplashInteractorImpl;
@@ -18,7 +16,9 @@ import com.interviewquestion.network.RetrofitClient;
 import com.interviewquestion.repositories.interactor.SplashInteractor;
 import com.interviewquestion.repositories.presenter.SplashPresenter;
 import com.interviewquestion.util.Constant;
-import com.interviewquestion.view.SplashView;
+import com.interviewquestion.view.activity.HomeActivity;
+import com.interviewquestion.view.activity.SplashActivity;
+import com.interviewquestion.view.views.SplashView;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;

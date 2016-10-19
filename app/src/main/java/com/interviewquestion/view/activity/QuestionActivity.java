@@ -1,4 +1,4 @@
-package com.interviewquestion.activity;
+package com.interviewquestion.view.activity;
 
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
@@ -12,7 +12,7 @@ import com.interviewquestion.basecontroller.AppBaseCompatActivity;
 import com.interviewquestion.presenter.QuestionPresenterImpl;
 import com.interviewquestion.repositories.presenter.QuestionPresenter;
 import com.interviewquestion.util.DepthPageTransformer;
-import com.interviewquestion.view.QuestionView;
+import com.interviewquestion.view.views.QuestionView;
 
 import java.lang.ref.WeakReference;
 

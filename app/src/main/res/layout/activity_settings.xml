@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:id="@+id/container"
     android:fitsSystemWindows="true"
-    tools:context="com.interviewquestion.activity.HomeActivity">
+    tools:context=".view.activity.HomeActivity">
 
     <LinearLayout
         android:layout_width="match_parent"

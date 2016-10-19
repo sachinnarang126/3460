@@ -1,11 +1,11 @@
 package com.interviewquestion.presenter;
 
-import com.interviewquestion.activity.QuestionActivity;
 import com.interviewquestion.adapter.QuestionPagerAdapter;
 import com.interviewquestion.dataholder.DataHolder;
 import com.interviewquestion.models.databasemodel.Questions;
 import com.interviewquestion.repositories.presenter.QuestionPresenter;
-import com.interviewquestion.view.QuestionView;
+import com.interviewquestion.view.activity.QuestionActivity;
+import com.interviewquestion.view.views.QuestionView;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;

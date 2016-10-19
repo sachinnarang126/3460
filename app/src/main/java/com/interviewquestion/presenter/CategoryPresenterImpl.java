@@ -5,16 +5,16 @@ import android.content.Intent;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 
-import com.interviewquestion.activity.QuestionActivity;
 import com.interviewquestion.adapter.CategoryAdapter;
 import com.interviewquestion.dataholder.DataHolder;
-import com.interviewquestion.fragment.CategoryFragment;
 import com.interviewquestion.interactor.CategoryInteractorImpl;
 import com.interviewquestion.models.databasemodel.Questions;
 import com.interviewquestion.repositories.interactor.CategoryInteractor;
 import com.interviewquestion.repositories.presenter.CategoryPresenter;
 import com.interviewquestion.util.Constant;
-import com.interviewquestion.view.CategoryView;
+import com.interviewquestion.view.activity.QuestionActivity;
+import com.interviewquestion.view.fragment.CategoryFragment;
+import com.interviewquestion.view.views.CategoryView;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;

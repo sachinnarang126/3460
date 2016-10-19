@@ -1,4 +1,4 @@
-package com.interviewquestion.activity;
+package com.interviewquestion.view.activity;
 
 import android.content.Intent;
 import android.os.Build;
@@ -14,7 +14,7 @@ import com.interviewquestion.dataholder.DataHolder;
 import com.interviewquestion.presenter.SplashPresenterImpl;
 import com.interviewquestion.repositories.presenter.SplashPresenter;
 import com.interviewquestion.util.Constant;
-import com.interviewquestion.view.SplashView;
+import com.interviewquestion.view.views.SplashView;
 
 import java.lang.ref.WeakReference;
 
@@ -26,6 +26,7 @@ public class SplashActivity extends AppBaseCompatActivity implements SplashView 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         if (Build.VERSION.SDK_INT < 16) {
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                     WindowManager.LayoutParams.FLAG_FULLSCREEN);

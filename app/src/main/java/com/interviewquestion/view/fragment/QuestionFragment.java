@@ -1,4 +1,4 @@
-package com.interviewquestion.fragment;
+package com.interviewquestion.view.fragment;
 
 
 import android.os.Bundle;

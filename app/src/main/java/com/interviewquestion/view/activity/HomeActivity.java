@@ -1,4 +1,4 @@
-package com.interviewquestion.activity;
+package com.interviewquestion.view.activity;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -10,7 +10,7 @@ import android.support.v7.widget.Toolbar;
 
 import com.interviewquestion.R;
 import com.interviewquestion.basecontroller.AppBaseCompatActivity;
-import com.interviewquestion.fragment.HomeFragment;
+import com.interviewquestion.view.fragment.HomeFragment;
 
 public class HomeActivity extends AppBaseCompatActivity {
 

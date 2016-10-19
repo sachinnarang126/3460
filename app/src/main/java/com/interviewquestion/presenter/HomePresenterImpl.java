@@ -1,10 +1,8 @@
 package com.interviewquestion.presenter;
 
 import com.interviewquestion.R;
-import com.interviewquestion.activity.HomeActivity;
 import com.interviewquestion.databasemanager.DatabaseManager;
 import com.interviewquestion.dataholder.DataHolder;
-import com.interviewquestion.fragment.HomeFragment;
 import com.interviewquestion.interactor.HomeInteractorImpl;
 import com.interviewquestion.models.bean.QuestionResponse;
 import com.interviewquestion.models.databasemodel.Android;
@@ -15,7 +13,9 @@ import com.interviewquestion.network.RetrofitClient;
 import com.interviewquestion.repositories.interactor.HomeInteractor;
 import com.interviewquestion.repositories.presenter.HomePresenter;
 import com.interviewquestion.util.Constant;
-import com.interviewquestion.view.HomeView;
+import com.interviewquestion.view.activity.HomeActivity;
+import com.interviewquestion.view.fragment.HomeFragment;
+import com.interviewquestion.view.views.HomeView;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;

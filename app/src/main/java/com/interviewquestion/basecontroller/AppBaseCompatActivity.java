@@ -13,7 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
-import com.interviewquestion.activity.SplashActivity;
+import com.interviewquestion.view.activity.SplashActivity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -49,7 +49,6 @@ public abstract class AppBaseCompatActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         if (mServiceCallsMap != null) {
-            System.out.println("--------->>>Destroying all services associated with this Activity<<<<--------");
             cancelAllServiceCalls(new ArrayList<>(mServiceCallsMap.values()));
             mServiceCallsMap = null;
         }
@@ -122,7 +121,7 @@ public abstract class AppBaseCompatActivity extends AppCompatActivity {
      */
 
     final public <T> Call<T> getServiceCallIfExist(String key) {
-        if (mServiceCallsMap.containsKey(key))
+        if (mServiceCallsMap != null && mServiceCallsMap.containsKey(key))
             return mServiceCallsMap.get(key).clone();
         else
             return null;
