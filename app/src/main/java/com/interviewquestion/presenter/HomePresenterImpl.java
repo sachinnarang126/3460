@@ -3,6 +3,7 @@ package com.interviewquestion.presenter;
 import com.interviewquestion.R;
 import com.interviewquestion.activity.HomeActivity;
 import com.interviewquestion.databasemanager.DatabaseManager;
+import com.interviewquestion.dataholder.DataHolder;
 import com.interviewquestion.fragment.HomeFragment;
 import com.interviewquestion.interactor.HomeInteractorImpl;
 import com.interviewquestion.models.bean.QuestionResponse;
@@ -44,7 +45,7 @@ public class HomePresenterImpl implements HomePresenter, HomeInteractor.OnIosQue
 
     @Override
     public void prepareToFetchQuestion() {
-        if (homeView.get() != null) {
+        if (hasToFetchQuestionFromServer() && homeView.get() != null) {
             HomeFragment context = (HomeFragment) homeView.get();
             if (((HomeActivity) context.getActivity()).isInternetAvailable()) {
 
@@ -97,6 +98,7 @@ public class HomePresenterImpl implements HomePresenter, HomeInteractor.OnIosQue
     @Override
     public void onSuccess(List<QuestionResponse.Response> questionList, int serviceType) {
         saveDataToDB(questionList, serviceType);
+        saveTimeToPreference();
     }
 
     @Override
@@ -120,6 +122,21 @@ public class HomePresenterImpl implements HomePresenter, HomeInteractor.OnIosQue
                 saveJavaQuestion(databaseManager, questionList);
                 break;
         }
+    }
+
+    @Override
+    public void saveTimeToPreference() {
+        DataHolder.getInstance().getPreferences(((HomeFragment) homeView.get()).getActivity()).edit().
+                putLong(Constant.UPDATED_QUESTION_TIME_IN_MILLIS, System.currentTimeMillis()).apply();
+    }
+
+    @Override
+    public boolean hasToFetchQuestionFromServer() {
+        long twoHour = 1000 * 60 * 60 * 2;
+        long savedTime = DataHolder.getInstance().getPreferences(((HomeFragment) homeView.get()).getActivity()).
+                getLong(Constant.UPDATED_QUESTION_TIME_IN_MILLIS, 0);
+
+        return System.currentTimeMillis() - savedTime > twoHour;
     }
 
     private void saveAndroidQuestion(DatabaseManager databaseManager, List<QuestionResponse.Response> questionList) {

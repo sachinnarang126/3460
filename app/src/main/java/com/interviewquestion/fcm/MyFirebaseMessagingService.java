@@ -4,6 +4,10 @@ import android.util.Log;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
+import com.interviewquestion.presenter.UpdateQuestionPresenterImpl;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 /**
  * Created by root on 17/10/16.
@@ -36,12 +40,28 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         // Check if message contains a data payload.
         if (remoteMessage.getData().size() > 0) {
-            Log.d(TAG, "Message data payload: " + remoteMessage.getData());
+            try {
+                int technology = Integer.parseInt(remoteMessage.getData().get("technology"));
+                UpdateQuestionPresenterImpl presenter = new UpdateQuestionPresenterImpl(this);
+                presenter.parseJson(new JSONArray(remoteMessage.getData().get("response")), technology);
+                JSONObject json = new JSONObject(remoteMessage.getData().toString());
+                System.out.println("payload " + json);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            //int technology = remoteMessage.getData().keySet();
         }
 
         // Check if message contains a notification payload.
-        if (remoteMessage.getNotification() != null) {
+        /*if (remoteMessage.getNotification() != null) {
             Log.d(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
+        }*/
+
+        if (remoteMessage.getFrom().equalsIgnoreCase("/topics/update_question")) {
+            // 1 android, 2 ios, 3 java
+            System.out.println("save update question to DB");
         }
 
         // Also if you intend on generating your own notifications as a result of a received FCM

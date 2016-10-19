@@ -111,13 +111,35 @@ public class DatabaseManager {
         return integerList;
     }
 
-    public long fetchCountOfAllAndroidQuestion(){
+    public long fetchCountOfAllAndroidQuestion() {
         try {
             return databaseHelper.getAndroidDao().queryBuilder().countOf();
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return 0;
+    }
+
+    public void updateAndroidQuestion(int questionID, String userLevel, String category, String question,
+                                      String optionA, String optionB, String optionC, String optionD, int answer) {
+        UpdateBuilder<Android, Integer> updateBuilder = databaseHelper.getAndroidDao().updateBuilder();
+        try {
+            updateBuilder.updateColumnValue(Questions.USER_LEVEL, userLevel).
+                    updateColumnValue(Questions.CATEGORY, category).
+                    updateColumnValue(Questions.QUESTION, question).
+                    updateColumnValue(Questions.OPTION_A, optionA).
+                    updateColumnValue(Questions.OPTION_B, optionB).
+                    updateColumnValue(Questions.OPTION_C, optionC).
+                    updateColumnValue(Questions.OPTION_D, optionD).
+                    updateColumnValue(Questions.ANSWER, answer).
+                    updateColumnValue(Questions.IS_ATTEMPTED, false).
+                    updateColumnValue(Questions.IS_CORRECT_ANSWER_PROVIDED, false).
+                    updateColumnValue(Questions.USER_ANSWER, 0);
+            updateBuilder.where().eq(Questions.ID, questionID);
+            updateBuilder.update();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -189,7 +211,7 @@ public class DatabaseManager {
         return integerList;
     }
 
-    public long fetchCountOfAllIosQuestion(){
+    public long fetchCountOfAllIosQuestion() {
         try {
             return databaseHelper.getIosDao().queryBuilder().countOf();
         } catch (SQLException e) {
@@ -197,6 +219,29 @@ public class DatabaseManager {
         }
         return 0;
     }
+
+    public void updateIosQuestion(int questionID, String userLevel, String category, String question,
+                                      String optionA, String optionB, String optionC, String optionD, int answer) {
+        UpdateBuilder<Ios, Integer> updateBuilder = databaseHelper.getIosDao().updateBuilder();
+        try {
+            updateBuilder.updateColumnValue(Questions.USER_LEVEL, userLevel).
+                    updateColumnValue(Questions.CATEGORY, category).
+                    updateColumnValue(Questions.QUESTION, question).
+                    updateColumnValue(Questions.OPTION_A, optionA).
+                    updateColumnValue(Questions.OPTION_B, optionB).
+                    updateColumnValue(Questions.OPTION_C, optionC).
+                    updateColumnValue(Questions.OPTION_D, optionD).
+                    updateColumnValue(Questions.ANSWER, answer).
+                    updateColumnValue(Questions.IS_ATTEMPTED, false).
+                    updateColumnValue(Questions.IS_CORRECT_ANSWER_PROVIDED, false).
+                    updateColumnValue(Questions.USER_ANSWER, 0);
+            updateBuilder.where().eq(Questions.ID, questionID);
+            updateBuilder.update();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 
 
     /*
@@ -267,12 +312,34 @@ public class DatabaseManager {
         return integerList;
     }
 
-    public long fetchCountOfAllJavaQuestion(){
+    public long fetchCountOfAllJavaQuestion() {
         try {
             return databaseHelper.getJavaDao().queryBuilder().countOf();
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return 0;
+    }
+
+    public void updateJavaQuestion(int questionID, String userLevel, String category, String question,
+                                      String optionA, String optionB, String optionC, String optionD, int answer) {
+        UpdateBuilder<Java, Integer> updateBuilder = databaseHelper.getJavaDao().updateBuilder();
+        try {
+            updateBuilder.updateColumnValue(Questions.USER_LEVEL, userLevel).
+                    updateColumnValue(Questions.CATEGORY, category).
+                    updateColumnValue(Questions.QUESTION, question).
+                    updateColumnValue(Questions.OPTION_A, optionA).
+                    updateColumnValue(Questions.OPTION_B, optionB).
+                    updateColumnValue(Questions.OPTION_C, optionC).
+                    updateColumnValue(Questions.OPTION_D, optionD).
+                    updateColumnValue(Questions.ANSWER, answer).
+                    updateColumnValue(Questions.IS_ATTEMPTED, false).
+                    updateColumnValue(Questions.IS_CORRECT_ANSWER_PROVIDED, false).
+                    updateColumnValue(Questions.USER_ANSWER, 0);
+            updateBuilder.where().eq(Questions.ID, questionID);
+            updateBuilder.update();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

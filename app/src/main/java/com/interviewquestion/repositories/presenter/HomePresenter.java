@@ -16,4 +16,8 @@ public interface HomePresenter {
 
     void saveDataToDB(List<QuestionResponse.Response> questionList, int serviceType);
 
+    void saveTimeToPreference();
+
+    boolean hasToFetchQuestionFromServer();
+
 }
