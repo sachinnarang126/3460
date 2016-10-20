@@ -15,3 +15,23 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+
+-keep class !com.j256.ormlite.** {
+    *;
+}
+-dontwarn com.j256.ormlite.**
+
+-keep class !com.google.android.gms.** {
+    *;
+}
+-dontwarn com.google.android.gms.**
+
+-keep class !okio.** {
+    *;
+}
+-dontwarn okio**
+
+-keep class !retrofit2.** {
+    *;
+}
+-dontwarn retrofit2.**
