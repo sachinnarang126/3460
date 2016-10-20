@@ -242,27 +242,28 @@ public class QuestionFragment extends Fragment implements View.OnClickListener, 
     public boolean onLongClick(View view) {
         switch (view.getId()) {
             case R.id.txtViewA:
-                showOptionDialog(question.getA());
+                showOptionDialog(question.getA(), "Option-A");
                 break;
 
             case R.id.txtViewB:
-                showOptionDialog(question.getB());
+                showOptionDialog(question.getB(), "Option-B");
                 break;
 
             case R.id.txtViewC:
-                showOptionDialog(question.getC());
+                showOptionDialog(question.getC(), "Option-C");
                 break;
 
             case R.id.txtViewD:
-                showOptionDialog(question.getD());
+                showOptionDialog(question.getD(), "Option-D");
                 break;
         }
         return false;
     }
 
-    public void showOptionDialog(String message) {
+    public void showOptionDialog(String message, String title) {
         new AlertDialog.Builder(getActivity())
                 .setMessage(message)
+                .setTitle(title)
                 .setPositiveButton("OK", null)
                 .create()
                 .show();
