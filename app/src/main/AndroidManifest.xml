@@ -71,6 +71,20 @@
         </service>
         <!-- [END firebase_iid_service] -->
 
+        <service android:name=".alarms.DailySchedulingService" />
+
+        <receiver android:name=".alarms.DailyAlarmReceiver" />
+
+        <receiver
+            android:name=".alarms.PhoneBootReceiver"
+            android:enabled="true">
+
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+
+        </receiver>
+
     </application>
 
 </manifest>

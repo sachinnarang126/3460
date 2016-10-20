@@ -142,6 +142,15 @@ public class DatabaseManager {
         }
     }
 
+    public long getUnansweredAndroidQuestionCount() {
+        try {
+            return databaseHelper.getAndroidDao().queryBuilder().where().eq(Questions.IS_ATTEMPTED, false).countOf();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
 
     /*
      **********************************IOS TABLE FUNCTIONS**********************************
@@ -221,7 +230,7 @@ public class DatabaseManager {
     }
 
     public void updateIosQuestion(int questionID, String userLevel, String category, String question,
-                                      String optionA, String optionB, String optionC, String optionD, int answer) {
+                                  String optionA, String optionB, String optionC, String optionD, int answer) {
         UpdateBuilder<Ios, Integer> updateBuilder = databaseHelper.getIosDao().updateBuilder();
         try {
             updateBuilder.updateColumnValue(Questions.USER_LEVEL, userLevel).
@@ -240,6 +249,15 @@ public class DatabaseManager {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public long getUnansweredIosQuestionCount() {
+        try {
+            return databaseHelper.getIosDao().queryBuilder().where().eq(Questions.IS_ATTEMPTED, false).countOf();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 
 
@@ -322,7 +340,7 @@ public class DatabaseManager {
     }
 
     public void updateJavaQuestion(int questionID, String userLevel, String category, String question,
-                                      String optionA, String optionB, String optionC, String optionD, int answer) {
+                                   String optionA, String optionB, String optionC, String optionD, int answer) {
         UpdateBuilder<Java, Integer> updateBuilder = databaseHelper.getJavaDao().updateBuilder();
         try {
             updateBuilder.updateColumnValue(Questions.USER_LEVEL, userLevel).
@@ -341,5 +359,14 @@ public class DatabaseManager {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public long getUnansweredJavaQuestionCount() {
+        try {
+            return databaseHelper.getJavaDao().queryBuilder().where().eq(Questions.IS_ATTEMPTED, false).countOf();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 }

@@ -46,8 +46,4 @@ public class QuestionPagerAdapter extends FragmentStatePagerAdapter {
         return POSITION_NONE;
     }
 
-    /*@Override
-    public void destroyItem(ViewGroup container, int position, Object object) {
-//        super.destroyItem(container, position, object);
-    }*/
 }

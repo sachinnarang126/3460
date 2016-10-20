@@ -33,5 +33,6 @@ public class Constant {
     public static final String IS_APP_FIRST_LAUNCH = "isAppFirstLaunch";
     public static final String FCM_TOPIC_UPDATE_QUESTION = "update_question";
     public static final String UPDATED_QUESTION_TIME_IN_MILLIS = "updateQuestionTime";
+    public static final String IS_ALARM_ACTIVATED = "isAlarmActivated";
 
 }
