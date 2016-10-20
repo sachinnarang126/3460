@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,7 +22,7 @@ import com.interviewquestion.models.databasemodel.Java;
 import com.interviewquestion.models.databasemodel.Questions;
 import com.interviewquestion.util.Constant;
 
-public class QuestionFragment extends Fragment implements View.OnClickListener {
+public class QuestionFragment extends Fragment implements View.OnClickListener, View.OnLongClickListener {
 
     private Questions question;
 
@@ -44,8 +45,11 @@ public class QuestionFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Bundle bundle = getArguments();
+        init(view);
+    }
 
+    private void init(View view) {
+        Bundle bundle = getArguments();
         question = DataHolder.getInstance().getShuffledQuestionList().get(bundle.getInt("pos"));
 
         TextView txtQuestion = (TextView) view.findViewById(R.id.txtQuestion);
@@ -75,6 +79,11 @@ public class QuestionFragment extends Fragment implements View.OnClickListener {
         txtViewC.setOnClickListener(this);
         txtViewD.setOnClickListener(this);
 
+        txtViewA.setOnLongClickListener(this);
+        txtViewB.setOnLongClickListener(this);
+        txtViewC.setOnLongClickListener(this);
+        txtViewD.setOnLongClickListener(this);
+
         if (question.isAttempted()) {
             TextView txtUserValue = (TextView) view.findViewById(R.id.txtUserValue);
             setUiCorrectAnswer(txtViewA, txtViewB, txtViewC, txtViewD);
@@ -85,7 +94,6 @@ public class QuestionFragment extends Fragment implements View.OnClickListener {
                 txtUserValue.setText(getString(R.string.correct));
             }
         }
-
     }
 
     private void setUiCorrectAnswer(TextView txtViewA, TextView txtViewB, TextView txtViewC, TextView txtViewD) {
@@ -228,5 +236,35 @@ public class QuestionFragment extends Fragment implements View.OnClickListener {
                     break;
             }
         }
+    }
+
+    @Override
+    public boolean onLongClick(View view) {
+        switch (view.getId()) {
+            case R.id.txtViewA:
+                showOptionDialog(question.getA());
+                break;
+
+            case R.id.txtViewB:
+                showOptionDialog(question.getB());
+                break;
+
+            case R.id.txtViewC:
+                showOptionDialog(question.getC());
+                break;
+
+            case R.id.txtViewD:
+                showOptionDialog(question.getD());
+                break;
+        }
+        return false;
+    }
+
+    public void showOptionDialog(String message) {
+        new AlertDialog.Builder(getActivity())
+                .setMessage(message)
+                .setPositiveButton("OK", null)
+                .create()
+                .show();
     }
 }

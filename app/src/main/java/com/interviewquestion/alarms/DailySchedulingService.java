@@ -2,6 +2,7 @@ package com.interviewquestion.alarms;
 
 import android.app.IntentService;
 import android.content.Intent;
+import android.preference.PreferenceManager;
 
 import com.interviewquestion.databasemanager.DatabaseManager;
 import com.interviewquestion.util.MyNotifications;
@@ -30,15 +31,17 @@ public class DailySchedulingService extends IntentService {
             /*Calendar calendar = Calendar.getInstance();
             int currentDayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
             int lastDayOfMonth = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);*/
-
-            String dataInformation = getDataInformationFromDB();
-            if (!dataInformation.isEmpty()) {
-                dataInformation = "Following Unanswered question found \n" + dataInformation + "\n Do you want to answer them?";
-                System.out.println("dataInformation " + dataInformation);
-                MyNotifications myNotifications = new MyNotifications();
-                myNotifications.sendNotification(dataInformation, this);
+            boolean prefReceiveNotification = PreferenceManager
+                    .getDefaultSharedPreferences(this).getBoolean("prefReceiveNotification", true);
+            if (prefReceiveNotification) {
+                String dataInformation = getDataInformationFromDB();
+                if (!dataInformation.isEmpty()) {
+                    dataInformation = "Following Unanswered question found \n" + dataInformation + "\n Do you want to answer them?";
+                    System.out.println("dataInformation " + dataInformation);
+                    MyNotifications myNotifications = new MyNotifications();
+                    myNotifications.sendNotification(dataInformation, this);
+                }
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         }

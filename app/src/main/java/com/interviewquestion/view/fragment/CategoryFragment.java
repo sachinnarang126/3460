@@ -50,7 +50,11 @@ public class CategoryFragment extends AppCompatFragment implements CategoryView,
         categoryPresenter = new CategoryPresenterImpl(reference);
 
         getActivity().setTitle(getArguments().getString("technology"));
-        ((HomeActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        try {
+            ((HomeActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
