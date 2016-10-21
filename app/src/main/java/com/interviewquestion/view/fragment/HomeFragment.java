@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.android.gms.ads.MobileAds;
 import com.interviewquestion.R;
 import com.interviewquestion.basecontroller.AppCompatFragment;
 import com.interviewquestion.databasemanager.DatabaseManager;
@@ -53,6 +54,9 @@ public class HomeFragment extends AppCompatFragment implements View.OnClickListe
         WeakReference<HomeView> weakReference = new WeakReference<HomeView>(this);
         homePresenter = new HomePresenterImpl(weakReference);
         homePresenter.prepareToFetchQuestion();
+
+        MobileAds.initialize(getActivity().getApplicationContext(), getString(R.string.home_footer));
+
     }
 
     @Override

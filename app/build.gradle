@@ -15,8 +15,8 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled true
-            shrinkResources true
+            minifyEnabled false
+            shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -40,6 +40,7 @@ dependencies {
     compile 'com.squareup.okhttp3:logging-interceptor:3.2.0'
     compile 'com.google.firebase:firebase-messaging:9.6.1'
     compile 'com.google.firebase:firebase-core:9.6.1'
+    compile 'com.google.firebase:firebase-ads:9.6.1'
     provided 'org.glassfish:javax.annotation:10.0-b28'
 
 
@@ -48,10 +49,4 @@ dependencies {
             compile 'com.squareup.retrofit2:adapter-rxjava:2.0.1'*/
     compile files('libs/ormlite-android-5.0.jar')
     compile files('libs/ormlite-core-5.0.jar')
-
-//    compile 'com.android.support:multidex:1.0.1'
-
-    /*compile('com.google.gms.google-services') {
-        exclude group: 'com.google.gms.google-services', module: 'multidex'
-    }*/
 }

@@ -29,5 +29,7 @@
 
     <string name="error_internet">Internet Not Available</string>
     <string name="error_internet_first_launch">Internet required to fetch question from server</string>
+    <string name="home_footer">ca-app-pub-9904475983820331/1350090808</string>
+
 
 </resources>
