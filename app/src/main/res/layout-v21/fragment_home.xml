@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
-    xmlns:ads="http://schemas.android.com/apk/res-auto"
     android:background="@color/appBackground"
     android:orientation="vertical"
     android:padding="1dp">
@@ -36,7 +36,6 @@
             android:background="#66000000"
             android:gravity="end"
             android:padding="2dp"
-            android:text="count"
             android:textColor="@android:color/white"
             android:textSize="14sp"
             android:textStyle="normal" />
@@ -72,7 +71,6 @@
             android:background="#66000000"
             android:gravity="end"
             android:padding="2dp"
-            android:text="count"
             android:textColor="@android:color/white"
             android:textSize="14sp"
             android:textStyle="normal" />
@@ -109,7 +107,6 @@
             android:background="#66000000"
             android:gravity="end"
             android:padding="2dp"
-            android:text="count"
             android:textColor="@android:color/white"
             android:textSize="14sp"
             android:textStyle="normal" />
@@ -117,15 +114,18 @@
 
     </RelativeLayout>
 
-    <com.google.android.gms.ads.AdView
-        android:id="@+id/adView"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"
-        ads:adSize="BANNER"
-        ads:adUnitId="@string/home_footer">
-    </com.google.android.gms.ads.AdView>
+        android:background="@drawable/decorator">
 
+        <com.google.android.gms.ads.AdView
+            android:id="@+id/adView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            ads:adSize="BANNER"
+            ads:adUnitId="@string/home_footer" />
+    </RelativeLayout>
 
 </LinearLayout>

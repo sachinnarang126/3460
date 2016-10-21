@@ -15,6 +15,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 import com.interviewquestion.R;
 import com.interviewquestion.basecontroller.AppCompatFragment;
@@ -68,6 +70,11 @@ public class HomeFragment extends AppCompatFragment implements View.OnClickListe
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        AdView mAdView = (AdView) view.findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
+
         TextView txtAndroid = (TextView) view.findViewById(R.id.txtAndroid);
         TextView txtJava = (TextView) view.findViewById(R.id.txtJava);
         TextView txtIos = (TextView) view.findViewById(R.id.txtIos);
@@ -147,19 +154,19 @@ public class HomeFragment extends AppCompatFragment implements View.OnClickListe
     public void setAnimationView() {
         AnimatorSet animatorSet = new AnimatorSet();
         ObjectAnimator scale = ObjectAnimator.ofFloat(getView().findViewById(R.id.androidContainer), "scaleX", 0.0f, 1.0f);
-        scale.setDuration(400);
+        scale.setDuration(200);
         animatorSet.play(scale);
         animatorSet.start();
 
         AnimatorSet animatorSet1 = new AnimatorSet();
         ObjectAnimator scale2 = ObjectAnimator.ofFloat(getView().findViewById(R.id.iosContainer), "scaleX", 0.0f, 1.0f);
-        scale2.setDuration(550);
+        scale2.setDuration(350);
         animatorSet1.play(scale2);
         animatorSet1.start();
 
         AnimatorSet animatorSet2 = new AnimatorSet();
         ObjectAnimator scale3 = ObjectAnimator.ofFloat(getView().findViewById(R.id.javaContainer), "scaleX", 0.0f, 1.0f);
-        scale3.setDuration(700);
+        scale3.setDuration(500);
         animatorSet2.play(scale3);
         animatorSet2.start();
 
