@@ -1,6 +1,8 @@
 package com.interviewquestion.view.fragment;
 
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -15,6 +17,7 @@ import android.widget.TextView;
 
 import com.interviewquestion.R;
 import com.interviewquestion.basecontroller.AppCompatFragment;
+import com.interviewquestion.databasemanager.DatabaseManager;
 import com.interviewquestion.presenter.HomePresenterImpl;
 import com.interviewquestion.repositories.presenter.HomePresenter;
 import com.interviewquestion.util.Constant;
@@ -40,7 +43,7 @@ public class HomeFragment extends AppCompatFragment implements View.OnClickListe
                              Bundle savedInstanceState) {
         setHasOptionsMenu(true);
         ((HomeActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-        getActivity().setTitle("Test your Skills");
+        getActivity().setTitle("Test ur Skills");
         return inflater.inflate(R.layout.fragment_home, container, false);
     }
 
@@ -64,9 +67,25 @@ public class HomeFragment extends AppCompatFragment implements View.OnClickListe
         TextView txtAndroid = (TextView) view.findViewById(R.id.txtAndroid);
         TextView txtJava = (TextView) view.findViewById(R.id.txtJava);
         TextView txtIos = (TextView) view.findViewById(R.id.txtIos);
+
+        TextView txtAndroidCount = (TextView) view.findViewById(R.id.txtAndroidCount);
+        TextView txtJavaCount = (TextView) view.findViewById(R.id.txtJavaCount);
+        TextView txtIosCount = (TextView) view.findViewById(R.id.txtIosCount);
+
+        DatabaseManager databaseManager = DatabaseManager.getDataBaseManager(getActivity());
+        String androidQuestionText = "Total: " + databaseManager.fetchCountOfAllAndroidQuestion() + ", Answered: " + databaseManager.getAnsweredAndroidQuestionCount();
+        String iosQuestionText = "Total: " + databaseManager.fetchCountOfAllIosQuestion() + ", Answered: " + databaseManager.getAnsweredIosQuestionCount();
+        String javaQuestionText = "Total: " + databaseManager.fetchCountOfAllJavaQuestion() + ", Answered: " + databaseManager.getAnsweredJavaQuestionCount();
+
+        txtAndroidCount.setText(androidQuestionText);
+        txtIosCount.setText(iosQuestionText);
+        txtJavaCount.setText(javaQuestionText);
+
         txtAndroid.setOnClickListener(this);
         txtJava.setOnClickListener(this);
         txtIos.setOnClickListener(this);
+
+        setAnimationView();
     }
 
     @Override
@@ -119,5 +138,29 @@ public class HomeFragment extends AppCompatFragment implements View.OnClickListe
     @Override
     public void onSuccess() {
 
+    }
+
+    public void setAnimationView() {
+        AnimatorSet animatorSet = new AnimatorSet();
+        ObjectAnimator scale = ObjectAnimator.ofFloat(getView().findViewById(R.id.androidContainer), "scaleX", 0.0f, 1.0f);
+        scale.setDuration(400);
+        animatorSet.play(scale);
+        animatorSet.start();
+
+        AnimatorSet animatorSet1 = new AnimatorSet();
+        ObjectAnimator scale2 = ObjectAnimator.ofFloat(getView().findViewById(R.id.iosContainer), "scaleX", 0.0f, 1.0f);
+        scale2.setDuration(550);
+        animatorSet1.play(scale2);
+        animatorSet1.start();
+
+        AnimatorSet animatorSet2 = new AnimatorSet();
+        ObjectAnimator scale3 = ObjectAnimator.ofFloat(getView().findViewById(R.id.javaContainer), "scaleX", 0.0f, 1.0f);
+        scale3.setDuration(700);
+        animatorSet2.play(scale3);
+        animatorSet2.start();
+
+//        animatorSet.play(scale).before(childSet);
+//        childSet.play(scale2).with(scale3);
+//        animatorSet.start();
     }
 }

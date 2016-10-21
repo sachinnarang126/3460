@@ -7,44 +7,107 @@
     android:orientation="vertical"
     android:padding="1dp">
 
-    <TextView
-        android:id="@+id/txtAndroid"
+    <RelativeLayout
+        android:id="@+id/androidContainer"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_margin="2dp"
-        android:layout_weight="1"
-        android:background="@drawable/android_bg"
-        android:gravity="center"
-        android:text="@string/android"
-        android:textColor="@android:color/black"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+        android:layout_weight="1">
 
-    <TextView
-        android:id="@+id/txtIos"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_margin="2dp"
-        android:layout_weight="1"
-        android:background="@drawable/ios_bg"
-        android:gravity="center"
-        android:text="@string/ios"
-        android:textColor="@android:color/black"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+        <TextView
+            android:id="@+id/txtAndroid"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/android_bg"
+            android:gravity="center"
+            android:text="@string/android"
+            android:textColor="@android:color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/txtJava"
+        <TextView
+            android:id="@+id/txtAndroidCount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="0dp"
+            android:background="#66000000"
+            android:gravity="end"
+            android:padding="2dp"
+            android:textColor="@android:color/white"
+            android:textSize="14sp"
+            android:textStyle="normal" />
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/iosContainer"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_margin="2dp"
-        android:layout_weight="1"
-        android:background="@drawable/java_bg"
-        android:gravity="center"
-        android:text="@string/java"
-        android:textColor="@android:color/black"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+        android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/txtIos"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/ios_bg"
+            android:gravity="center"
+            android:text="@string/ios"
+            android:textColor="@android:color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txtIosCount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="0dp"
+            android:background="#66000000"
+            android:gravity="end"
+            android:padding="2dp"
+            android:textColor="@android:color/white"
+            android:textSize="14sp"
+            android:textStyle="normal" />
+
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/javaContainer"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="2dp"
+        android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/txtJava"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/java_bg"
+            android:gravity="center"
+            android:text="@string/java"
+            android:textColor="@android:color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txtJavaCount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="0dp"
+            android:background="#66000000"
+            android:gravity="end"
+            android:padding="2dp"
+            android:textColor="@android:color/white"
+            android:textSize="14sp"
+            android:textStyle="normal" />
+
+    </RelativeLayout>
 
 
 </LinearLayout>

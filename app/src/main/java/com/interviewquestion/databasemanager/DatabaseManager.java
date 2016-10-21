@@ -152,6 +152,15 @@ public class DatabaseManager {
     }
 
 
+    public long getAnsweredAndroidQuestionCount() {
+        try {
+            return databaseHelper.getAndroidDao().queryBuilder().where().eq(Questions.IS_ATTEMPTED, true).countOf();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
     /*
      **********************************IOS TABLE FUNCTIONS**********************************
      */
@@ -254,6 +263,15 @@ public class DatabaseManager {
     public long getUnansweredIosQuestionCount() {
         try {
             return databaseHelper.getIosDao().queryBuilder().where().eq(Questions.IS_ATTEMPTED, false).countOf();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    public long getAnsweredIosQuestionCount() {
+        try {
+            return databaseHelper.getIosDao().queryBuilder().where().eq(Questions.IS_ATTEMPTED, true).countOf();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -364,6 +382,15 @@ public class DatabaseManager {
     public long getUnansweredJavaQuestionCount() {
         try {
             return databaseHelper.getJavaDao().queryBuilder().where().eq(Questions.IS_ATTEMPTED, false).countOf();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    public long getAnsweredJavaQuestionCount() {
+        try {
+            return databaseHelper.getJavaDao().queryBuilder().where().eq(Questions.IS_ATTEMPTED, true).countOf();
         } catch (SQLException e) {
             e.printStackTrace();
         }
