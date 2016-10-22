@@ -9,6 +9,12 @@
         app:showAsAction="never" />
 
     <item
+        android:id="@+id/action_add_free"
+        android:orderInCategory="100"
+        android:title="@string/add_free"
+        app:showAsAction="never" />
+
+    <item
         android:id="@+id/action_rate_us"
         android:orderInCategory="100"
         android:title="@string/action_rate_us"

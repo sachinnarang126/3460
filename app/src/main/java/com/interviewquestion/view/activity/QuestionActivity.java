@@ -7,6 +7,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 import com.interviewquestion.R;
 import com.interviewquestion.basecontroller.AppBaseCompatActivity;
 import com.interviewquestion.presenter.QuestionPresenterImpl;
@@ -24,6 +27,14 @@ public class QuestionActivity extends AppBaseCompatActivity implements QuestionV
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question);
+
+        MobileAds.initialize(getApplicationContext(), getString(R.string.question_footer));
+
+        AdView mAdView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                .addTestDevice("9210683FFFBDE1953CE613AB2FDE46E5").
+                        addTestDevice("F56162DD974939BBF71A8D3E8CC8A44A").build();
+        mAdView.loadAd(adRequest);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

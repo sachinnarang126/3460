@@ -74,7 +74,7 @@ public class HomeActivity extends AppBaseCompatActivity {
             }
 
             doubleBackToExitPressedOnce = true;
-            Snackbar.make(findViewById(R.id.fragment_container), "Please press BACK again to exit", 2000)/*.setDuration(2000)*/.show();
+            showSnackBar("Please press BACK again to exit");
 
             new Handler().postDelayed(new Runnable() {
 
@@ -86,5 +86,10 @@ public class HomeActivity extends AppBaseCompatActivity {
         } else {
             super.onBackPressed();
         }
+
+    }
+
+    public void showSnackBar(String text) {
+        Snackbar.make(findViewById(R.id.fragment_container), text, 2000)/*.setDuration(2000)*/.show();
     }
 }

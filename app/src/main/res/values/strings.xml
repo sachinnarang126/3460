@@ -1,8 +1,9 @@
 <resources>
-    <string name="app_name">Programming Question</string>
+    <string name="app_name">TechQuiz</string>
     <string name="title_activity_home">HomeActivity</string>
     <string name="action_settings">Settings</string>
     <string name="action_rate_us">Rate US</string>
+    <string name="add_free">Add Free Version?</string>
     <string name="action_show_all">Show All</string>
     <string name="action_show_answered">Show Answered</string>
     <string name="action_show_un_answered">Show Unanswered</string>
@@ -30,6 +31,10 @@
     <string name="error_internet">Internet Not Available</string>
     <string name="error_internet_first_launch">Internet required to fetch question from server</string>
     <string name="home_footer">ca-app-pub-9904475983820331/1350090808</string>
+    <string name="question_footer">ca-app-pub-9904475983820331/2737595609</string>
+    <string name="category_footer">ca-app-pub-9904475983820331/4074728009</string>
+    <string name="settings_interstitial_full_screen">ca-app-pub-9904475983820331/9702459207</string>
+
 
 
 </resources>

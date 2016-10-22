@@ -28,7 +28,7 @@ public class DailyAlarmReceiver extends WakefulBroadcastReceiver {
     }
 
     /**
-     * Sets a repeating alarm that runs once a day at approximately 9:00 pm . When the
+     * Sets a repeating alarm that runs once a day at approximately 5:00 pm . When the
      * alarm fires, the app broadcasts an Intent to this WakefulBroadcastReceiver.
      *
      * @param context alarm

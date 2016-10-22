@@ -14,6 +14,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 import com.interviewquestion.R;
 import com.interviewquestion.basecontroller.AppCompatFragment;
 import com.interviewquestion.interfaces.OnItemClickListener;
@@ -44,6 +47,7 @@ public class CategoryFragment extends AppCompatFragment implements CategoryView,
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        MobileAds.initialize(getActivity().getApplicationContext(), getString(R.string.category_footer));
         setHasOptionsMenu(true);
 
         WeakReference<CategoryView> reference = new WeakReference<CategoryView>(this);
@@ -66,6 +70,14 @@ public class CategoryFragment extends AppCompatFragment implements CategoryView,
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        AdView mAdView = (AdView) view.findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                .addTestDevice("9210683FFFBDE1953CE613AB2FDE46E5").
+                        addTestDevice("F56162DD974939BBF71A8D3E8CC8A44A").build();
+
+        mAdView.loadAd(adRequest);
+
         progressBar = (FrameLayout) view.findViewById(R.id.progressBarContainer);
 
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);

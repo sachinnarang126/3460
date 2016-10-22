@@ -11,7 +11,7 @@ import com.interviewquestion.util.MyNotifications;
 public class DailySchedulingService extends IntentService {
 
     public DailySchedulingService() {
-        super("DailyNightSchedulingService");
+        super("DailySchedulingService");
     }
 
     @Override

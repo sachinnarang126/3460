@@ -50,19 +50,17 @@ public class CategoryPresenterImpl implements CategoryPresenter, CategoryInterac
                 .getDefaultSharedPreferences(((CategoryFragment) categoryView.get()).getActivity()).getBoolean("prefShowAnsweredQuestion", false);
         if (categoryView.get() != null) {
             categoryView.get().showProgress();
+
             switch (serviceType) {
                 case Constant.ANDROID:
-
                     categoryInteractor.getAndroidQuestions(this, isShowAnsweredQuestion);
                     break;
 
                 case Constant.IOS:
-
                     categoryInteractor.getIosQuestion(this, isShowAnsweredQuestion);
                     break;
 
                 case Constant.JAVA:
-
                     categoryInteractor.getJavaQuestions(this, isShowAnsweredQuestion);
                     break;
             }

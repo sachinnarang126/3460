@@ -94,8 +94,10 @@ public class SplashPresenterImpl implements SplashPresenter, SplashInteractor.On
     public void onSuccess(List<QuestionResponse.Response> questionList, int serviceType) {
         serviceCount++;
         saveDataToDB(questionList, serviceType);
-        if (serviceCount == 3)
+        if (serviceCount == 3) {
             goToHomeActivity();
+            saveTimeToPreference();
+        }
     }
 
     @Override
@@ -192,5 +194,10 @@ public class SplashPresenterImpl implements SplashPresenter, SplashInteractor.On
         Intent intent = new Intent(context, HomeActivity.class);
         context.startActivity(intent);
         ((SplashActivity) context).finish();
+    }
+
+    private void saveTimeToPreference() {
+        DataHolder.getInstance().getPreferences((SplashActivity) splashView.get()).edit().
+                putLong(Constant.UPDATED_QUESTION_TIME_IN_MILLIS, System.currentTimeMillis()).apply();
     }
 }
