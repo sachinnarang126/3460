@@ -54,11 +54,11 @@ public class HomePresenterImpl implements HomePresenter, HomeInteractor.OnIosQue
                 List<Integer> iosIdList = databaseManager.getIosIdList();
                 List<Integer> javaIdList = databaseManager.getJavaIdList();
 
-                System.out.println("androidIdList " + androidIdList);
+//                System.out.println("androidIdList " + androidIdList);
 
-                System.out.println("iosIdList " + iosIdList);
+//                System.out.println("iosIdList " + iosIdList);
 
-                System.out.println("javaIdList " + javaIdList);
+//                System.out.println("javaIdList " + javaIdList);
 
                 RetrofitApiService apiService = RetrofitClient.getRetrofitClient();
                 Call<QuestionResponse> androidQuestionCall;

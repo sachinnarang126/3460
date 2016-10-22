@@ -196,7 +196,6 @@ public class QuestionFragment extends Fragment implements View.OnClickListener, 
     }
 
     private void updateSelectionInToDB(DatabaseManager databaseManager) {
-        System.out.println("QuestionFragment.updateSelectionInToDB, " + getArguments().getInt("technology"));
         switch (getArguments().getInt("technology")) {
             case Constant.ANDROID:
                 databaseManager.updateAndroidQuestion((Android) question);

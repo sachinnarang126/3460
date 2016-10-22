@@ -20,16 +20,19 @@ public interface HomeInteractor {
 
     interface OnJavaQuestionResponseListener {
         void onSuccess(List<QuestionResponse.Response> questionList, int serviceType);
+
         void onError(String error);
     }
 
     interface OnAndroidQuestionResponseListener {
         void onSuccess(List<QuestionResponse.Response> questionList, int serviceType);
+
         void onError(String error);
     }
 
     interface OnIosQuestionResponseListener {
         void onSuccess(List<QuestionResponse.Response> questionList, int serviceType);
+
         void onError(String error);
     }
 }

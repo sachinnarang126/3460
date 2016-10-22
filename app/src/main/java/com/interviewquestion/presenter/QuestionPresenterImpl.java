@@ -95,7 +95,7 @@ public class QuestionPresenterImpl implements QuestionPresenter {
         List<String> shuffledOptionList = new ArrayList<>();
         for (Questions question : shuffledQuestionList) {
             shuffledOptionList.clear();
-            if (!question.isAttempted()){
+            if (!question.isAttempted()) {
                 String answer = "";
                 switch (question.getAnswer()) {
                     case "1":

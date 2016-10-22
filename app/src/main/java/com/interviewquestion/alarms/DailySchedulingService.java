@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.preference.PreferenceManager;
 
 import com.interviewquestion.databasemanager.DatabaseManager;
+import com.interviewquestion.dataholder.DataHolder;
 import com.interviewquestion.util.MyNotifications;
 
 
@@ -16,8 +17,8 @@ public class DailySchedulingService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-
-        dailySchedulingTask();
+        if (DataHolder.getInstance().getInstance() == null)
+            dailySchedulingTask();
 
         // Release the wake lock provided by the BroadcastReceiver.
         DailyAlarmReceiver.completeWakefulIntent(intent);
@@ -37,7 +38,6 @@ public class DailySchedulingService extends IntentService {
                 String dataInformation = getDataInformationFromDB();
                 if (!dataInformation.isEmpty()) {
                     dataInformation = "Following Unanswered question found \n" + dataInformation + "\n Do you want to answer them?";
-                    System.out.println("dataInformation " + dataInformation);
                     MyNotifications myNotifications = new MyNotifications();
                     myNotifications.sendNotification(dataInformation, this);
                 }
@@ -51,8 +51,8 @@ public class DailySchedulingService extends IntentService {
 
         DatabaseManager databaseManager = DatabaseManager.getDataBaseManager(this);
         long unansweredAndroidQuestion = databaseManager.getUnansweredAndroidQuestionCount();
-        long unansweredIosQuestion = databaseManager.getUnansweredAndroidQuestionCount();
-        long unansweredJavaQuestion = databaseManager.getUnansweredAndroidQuestionCount();
+        long unansweredIosQuestion = databaseManager.getUnansweredIosQuestionCount();
+        long unansweredJavaQuestion = databaseManager.getUnansweredJavaQuestionCount();
 
         String dataInformation = "";
 

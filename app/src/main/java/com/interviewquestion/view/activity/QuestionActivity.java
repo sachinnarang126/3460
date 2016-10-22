@@ -31,9 +31,9 @@ public class QuestionActivity extends AppBaseCompatActivity implements QuestionV
         MobileAds.initialize(getApplicationContext(), getString(R.string.question_footer));
 
         AdView mAdView = (AdView) findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+        AdRequest adRequest = new AdRequest.Builder()/*.addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
                 .addTestDevice("9210683FFFBDE1953CE613AB2FDE46E5").
-                        addTestDevice("F56162DD974939BBF71A8D3E8CC8A44A").build();
+                        addTestDevice("F56162DD974939BBF71A8D3E8CC8A44A")*/.build();
         mAdView.loadAd(adRequest);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);

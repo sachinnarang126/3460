@@ -36,7 +36,7 @@ public class SettingsActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void showSnackBar(String text){
+    public void showSnackBar(String text) {
         Snackbar.make(findViewById(R.id.container), text, Snackbar.LENGTH_LONG).show();
     }
 }

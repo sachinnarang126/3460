@@ -8,18 +8,18 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:821300422535:android:91bc6dad6820298b",
+        "mobilesdk_app_id": "1:821300422535:android:f8f7d7a62531d4bf",
         "android_client_info": {
-          "package_name": "com.iq"
+          "package_name": "com.tech.quiz"
         }
       },
       "oauth_client": [
         {
-          "client_id": "821300422535-6jt0uenpn0910gdd20nia15bqqsq1cgd.apps.googleusercontent.com",
+          "client_id": "821300422535-utot10ooib6tumb7kdmr6c168tvvkhjo.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.iq",
-            "certificate_hash": "F0DA5AACC9E2CCC00C817391A325BFF6A0E91172"
+            "package_name": "com.tech.quiz",
+            "certificate_hash": "932EE0E18593A103C1D9BB83305857E36427993B"
           }
         },
         {

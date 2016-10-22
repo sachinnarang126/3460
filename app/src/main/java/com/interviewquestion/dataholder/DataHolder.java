@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 
 import com.interviewquestion.models.databasemodel.Questions;
 import com.interviewquestion.util.Constant;
+import com.interviewquestion.view.activity.HomeActivity;
 
 import java.util.List;
 
@@ -12,6 +13,8 @@ public class DataHolder {
     private static DataHolder dataHolder;
     private List<Questions> questionList;
     private List<Questions> shuffledQuestionList;
+    private HomeActivity instance;
+
 
     private DataHolder() {
         //singleton
@@ -22,6 +25,10 @@ public class DataHolder {
             dataHolder = new DataHolder();
         }
         return dataHolder;
+    }
+
+    public void setInstance(HomeActivity instance) {
+        this.instance = instance;
     }
 
     public List<Questions> getShuffledQuestionList() {

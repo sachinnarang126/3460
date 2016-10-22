@@ -38,9 +38,9 @@ public class SettingsFragment extends PreferenceFragment implements SettingView 
         // set the ad unit ID
         mInterstitialAd.setAdUnitId(getString(R.string.settings_interstitial_full_screen));
 
-        AdRequest adRequest = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+        AdRequest adRequest = new AdRequest.Builder()/*.addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
                 .addTestDevice("9210683FFFBDE1953CE613AB2FDE46E5").
-                        addTestDevice("F56162DD974939BBF71A8D3E8CC8A44A").build();
+                        addTestDevice("F56162DD974939BBF71A8D3E8CC8A44A")*/.build();
 
         // Load ads into Interstitial Ads
         mInterstitialAd.loadAd(adRequest);

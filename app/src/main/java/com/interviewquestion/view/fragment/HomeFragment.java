@@ -72,9 +72,9 @@ public class HomeFragment extends AppCompatFragment implements View.OnClickListe
         super.onViewCreated(view, savedInstanceState);
 
         AdView mAdView = (AdView) view.findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+        AdRequest adRequest = new AdRequest.Builder()/*.addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
                 .addTestDevice("9210683FFFBDE1953CE613AB2FDE46E5").
-                        addTestDevice("F56162DD974939BBF71A8D3E8CC8A44A").build();
+                        addTestDevice("F56162DD974939BBF71A8D3E8CC8A44A")*/.build();
 
         mAdView.loadAd(adRequest);
 
