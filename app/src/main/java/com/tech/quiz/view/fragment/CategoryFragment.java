@@ -76,6 +76,7 @@ public class CategoryFragment extends AppCompatFragment implements CategoryView,
         AdRequest adRequest = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
                 .addTestDevice("9210683FFFBDE1953CE613AB2FDE46E5").
                         addTestDevice("F56162DD974939BBF71A8D3E8CC8A44A").
+                        addTestDevice("1FBF7D7CF19C0C11158AF44FDA595121").
                         addTestDevice("F58DA099F52C8D53E4DD635D0C5EB709").build();
 
         mAdView.loadAd(adRequest);

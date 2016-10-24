@@ -9,7 +9,6 @@
     <string name="action_show_un_answered">Show Unanswered</string>
     <string name="action_reset_all">Reset All</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="home_fragment">HomeFragment</string>
     <string name="settings_fragment">SettingsFragment</string>
     <string name="category_fragment">CategoryFragment</string>
