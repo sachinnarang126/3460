@@ -1,25 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.interviewquestion">
+    package="com.tech">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
-    <!-- gcm permission-->
-    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
-    <permission
-        android:name="com.interviewquestion"
-        android:protectionLevel="signature" />
-
     <application
-        android:name=".appcontroller.AppController"
+        android:name="com.tech.quiz.appcontroller.AppController"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
         <activity
-            android:name=".view.activity.SplashActivity"
+            android:name="com.tech.quiz.view.activity.SplashActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,29 +22,22 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".view.activity.HomeActivity"
+            android:name="com.tech.quiz.view.activity.HomeActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar">
-            <!--<intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
-
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".view.activity.QuestionActivity"
+            android:name="com.tech.quiz.view.activity.QuestionActivity"
             android:label=""
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".view.activity.SettingsActivity"
+            android:name="com.tech.quiz.view.activity.SettingsActivity"
             android:label="@string/title_activity_settings"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <!--<receiver
-            android:name="com.interviewquestion.network.NetworkChangeReceiver"
+            android:name="com.interviewquestion.quiz.network.NetworkChangeReceiver"
             android:label="NetworkChangeReceiver">
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
@@ -58,25 +45,25 @@
         </receiver>-->
 
         <!-- [START firebase_service] -->
-        <service android:name=".fcm.MyFirebaseMessagingService">
+        <service android:name="com.tech.quiz.fcm.MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
 
-        <service android:name=".fcm.MyFirebaseInstanceIDService">
+        <service android:name="com.tech.quiz.fcm.MyFirebaseInstanceIDService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
         <!-- [END firebase_iid_service] -->
 
-        <service android:name=".alarms.DailySchedulingService" />
+        <service android:name="com.tech.quiz.alarms.DailySchedulingService" />
 
-        <receiver android:name=".alarms.DailyAlarmReceiver" />
+        <receiver android:name="com.tech.quiz.alarms.DailyAlarmReceiver" />
 
         <receiver
-            android:name=".alarms.PhoneBootReceiver"
+            android:name="com.tech.quiz.alarms.PhoneBootReceiver"
             android:enabled="true">
 
             <intent-filter>
