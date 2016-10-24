@@ -8,6 +8,9 @@ import com.tech.quiz.databasemanager.DatabaseManager;
 import com.tech.quiz.dataholder.DataHolder;
 import com.tech.quiz.util.MyNotifications;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class DailySchedulingService extends IntentService {
 
@@ -17,7 +20,7 @@ public class DailySchedulingService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        if (DataHolder.getInstance().getInstance() == null)
+        if (DataHolder.getInstance().getHomeActivityInstance() == null)
             dailySchedulingTask();
 
         // Release the wake lock provided by the BroadcastReceiver.
@@ -35,11 +38,11 @@ public class DailySchedulingService extends IntentService {
             boolean prefReceiveNotification = PreferenceManager
                     .getDefaultSharedPreferences(this).getBoolean("prefReceiveNotification", true);
             if (prefReceiveNotification) {
-                String dataInformation = getDataInformationFromDB();
-                if (!dataInformation.isEmpty()) {
-                    dataInformation = "Following Unanswered question found \n" + dataInformation + "\n Do you want to answer them?";
+                List<String> dataInformation = getDataInformationFromDB();
+                if (dataInformation.size() > 0) {
+                    String title = "Following Unanswered question found";
                     MyNotifications myNotifications = new MyNotifications();
-                    myNotifications.sendNotification(dataInformation, this);
+                    myNotifications.sendBigLayoutNotification(dataInformation, this, title);
                 }
             }
         } catch (Exception e) {
@@ -47,25 +50,25 @@ public class DailySchedulingService extends IntentService {
         }
     }
 
-    private String getDataInformationFromDB() {
+    private List<String> getDataInformationFromDB() {
 
         DatabaseManager databaseManager = DatabaseManager.getDataBaseManager(this);
         long unansweredAndroidQuestion = databaseManager.getUnansweredAndroidQuestionCount();
         long unansweredIosQuestion = databaseManager.getUnansweredIosQuestionCount();
         long unansweredJavaQuestion = databaseManager.getUnansweredJavaQuestionCount();
 
-        String dataInformation = "";
+        List<String> dataInformation = new ArrayList<>();
 
         if (unansweredAndroidQuestion > 0) {
-            dataInformation = "Android Question " + unansweredAndroidQuestion + "\n";
+            dataInformation.add("Android Question: " + unansweredAndroidQuestion);
         }
 
         if (unansweredIosQuestion > 0) {
-            dataInformation = dataInformation + "Ios Question " + unansweredIosQuestion + "\n";
+            dataInformation.add("Ios Question: " + unansweredIosQuestion);
         }
 
         if (unansweredJavaQuestion > 0) {
-            dataInformation = dataInformation + "Java Question " + unansweredJavaQuestion + "\n";
+            dataInformation.add("Java Question: " + unansweredJavaQuestion);
         }
 
         return dataInformation;

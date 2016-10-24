@@ -27,7 +27,11 @@ public class DataHolder {
         return dataHolder;
     }
 
-    public void setInstance(HomeActivity instance) {
+    public HomeActivity getHomeActivityInstance() {
+        return instance;
+    }
+
+    public void setHomeActivityInstance(HomeActivity instance) {
         this.instance = instance;
     }
 

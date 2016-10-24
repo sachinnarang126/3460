@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 
 import com.tech.R;
 import com.tech.quiz.basecontroller.AppBaseCompatActivity;
+import com.tech.quiz.dataholder.DataHolder;
 import com.tech.quiz.view.fragment.HomeFragment;
 
 public class HomeActivity extends AppBaseCompatActivity {
@@ -19,6 +20,7 @@ public class HomeActivity extends AppBaseCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        DataHolder.getInstance().setHomeActivityInstance(this);
         setContentView(R.layout.activity_home);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -91,5 +93,11 @@ public class HomeActivity extends AppBaseCompatActivity {
 
     public void showSnackBar(String text) {
         Snackbar.make(findViewById(R.id.fragment_container), text, 2000)/*.setDuration(2000)*/.show();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        DataHolder.getInstance().setHomeActivityInstance(this);
     }
 }
