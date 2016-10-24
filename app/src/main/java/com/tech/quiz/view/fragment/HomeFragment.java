@@ -122,6 +122,10 @@ public class HomeFragment extends AppCompatFragment implements View.OnClickListe
             case R.id.action_add_free:
                 ((HomeActivity) getActivity()).showSnackBar("You will get the add free version on next update");
                 break;
+
+            case R.id.action_rate_us:
+                ((HomeActivity) getActivity()).openPlayStoreForRating("com.tech.quiz");
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
