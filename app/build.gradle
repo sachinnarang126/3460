@@ -8,8 +8,8 @@ android {
         applicationId 'com.tech.quiz'
         minSdkVersion 15
         targetSdkVersion 25
-        versionCode 2
-        versionName "1.0.1"
+        versionCode 3
+        versionName "1.0.2"
 //        vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
     }
