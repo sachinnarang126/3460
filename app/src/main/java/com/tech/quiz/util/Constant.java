@@ -35,4 +35,9 @@ public class Constant {
     public static final String UPDATED_QUESTION_TIME_IN_MILLIS = "updateQuestionTime";
     public static final String IS_ALARM_ACTIVATED = "isAlarmActivated";
 
+    public static final String IS_SUBSCRIBED_USER = "isSubscribedUser";
+    public static final String PURCHASE_TIME = "purchaseTime";
+    public static final String SKU = "sku";
+    public static final String TOKEN = "token";
+
 }

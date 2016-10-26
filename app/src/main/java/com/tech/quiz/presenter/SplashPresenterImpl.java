@@ -196,6 +196,85 @@ public class SplashPresenterImpl implements SplashPresenter, SplashInteractor.On
         ((SplashActivity) context).finish();
     }
 
+    @Override
+    public void queryInventory() {
+
+        /*final IabHelper mHelper = new IabHelper(this, Constant.base64EncodedPublicKey);
+
+        final IabHelper.QueryInventoryFinishedListener mGotInventoryListener = new IabHelper.QueryInventoryFinishedListener() {
+            public void onQueryInventoryFinished(IabResult result, Inventory inventory) {
+                Log.d(TAG, "Query inventory finished.");
+                // Is it a failure?
+                if (result.isFailure()) {
+                    return;
+                }
+
+                Log.d(TAG, "Query inventory was successful.");
+
+                SharedPreferences sharedPreferences = DataHolder.getInstance().getPreferences(SplashActivity.this);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+
+                Purchase purchase = inventory.getPurchase("one_year");
+                String deviceId = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
+                System.out.println("deviceId " + deviceId);
+
+                if (purchase != null) {
+                    System.out.println("you own this product");
+                    System.out.println("purchase time in millis " + purchase.getPurchaseTime());
+                    editor.putBoolean(Constants.IS_SUBSCRIBED_USER, true);
+                    editor.putLong(Constants.PURCHASE_TIME, purchase.getPurchaseTime());
+                    editor.putString(Constants.TOKEN, purchase.getToken());
+                    editor.putString(Constants.SKU, purchase.getSku());
+                    editor.apply();
+
+                    //incase google return old subscription detail we should allow only after
+                    //checking the validity
+                    long purchaseDateInMillis = sharedPreferences.getLong(Constants.PURCHASE_TIME, 0);
+                    Calendar calendar = Calendar.getInstance();
+                    long currentTimeInMillis = calendar.getTimeInMillis();
+                    calendar.setTimeInMillis(purchaseDateInMillis);
+                    calendar.add(Calendar.YEAR, 1);
+                    calendar.add(Calendar.DAY_OF_YEAR, 1); // add a day to handle time zone issue
+
+                    editor.putBoolean(Constants.IS_AUTHORISED_USER, currentTimeInMillis <= calendar.getTimeInMillis()).apply();
+
+                    // user is subscribed user, and storing the product detail on server
+                    new StoreActivationDetail(SplashActivity.this, SplashActivity.this).prepareApiRequest(deviceId);
+
+                } else {
+                    System.out.println("you don't own this product");
+                    // here user is not authorised so we are getting the activation detail from server if exists
+                    // if detail is not exist on server then saving the details on the server
+                    new GetActivationDetail(SplashActivity.this, SplashActivity.this).prepareApiRequest(deviceId);
+                }
+
+            }
+        };
+
+        Log.d("SubscriptionData", "Creating IAB helper.");
+        // Create the helper, passing it our context and the public key to verify signatures with
+        // enable debug logging (for a production application, you should set this to false).
+        mHelper.enableDebugLogging(false);
+
+
+        // Start setup. This is asynchronous and the specified listener
+        // will be called once setup completes.
+        mHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
+            public void onIabSetupFinished(IabResult result) {
+                System.out.println("setup finished");
+
+                if (!result.isSuccess()) {
+                    // Oh noes, there was a problem.
+                    return;
+                }
+
+                // IAB is fully set up. Now, let's get an inventory of stuff we own.
+                Log.d(TAG, "Setup successful. Querying inventory.");
+                mHelper.queryInventoryAsync(mGotInventoryListener);
+            }
+        });*/
+    }
+
     private void saveTimeToPreference() {
         DataHolder.getInstance().getPreferences((SplashActivity) splashView.get()).edit().
                 putLong(Constant.UPDATED_QUESTION_TIME_IN_MILLIS, System.currentTimeMillis()).apply();
