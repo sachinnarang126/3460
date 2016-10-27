@@ -75,11 +75,11 @@ public class HomeFragment extends AppCompatFragment implements View.OnClickListe
         if (!((HomeActivity) getActivity()).isSubscribedUser()) {
 
             mAdView.setVisibility(View.VISIBLE);
-            AdRequest adRequest = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+            AdRequest adRequest = new AdRequest.Builder()/*
                     .addTestDevice("9210683FFFBDE1953CE613AB2FDE46E5").
                             addTestDevice("F56162DD974939BBF71A8D3E8CC8A44A").
                             addTestDevice("1FBF7D7CF19C0C11158AF44FDA595121").
-                            addTestDevice("F58DA099F52C8D53E4DD635D0C5EB709").build();
+                            addTestDevice("F58DA099F52C8D53E4DD635D0C5EB709")*/.build();
 
             mAdView.loadAd(adRequest);
         } else {

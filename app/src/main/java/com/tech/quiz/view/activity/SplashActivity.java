@@ -3,6 +3,7 @@ package com.tech.quiz.view.activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.view.WindowManager;
@@ -64,6 +65,17 @@ public class SplashActivity extends AppBaseCompatActivity implements SplashView 
     @Override
     public void onError(String error) {
         showSnackBar(error);
+        closeApplication();
+
+    }
+
+    private void closeApplication() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                finish();
+            }
+        }, 3000);
     }
 
     @Override

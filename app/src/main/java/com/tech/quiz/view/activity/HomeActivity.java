@@ -88,16 +88,15 @@ public class HomeActivity extends AppBaseCompatActivity {
         } else {
             super.onBackPressed();
         }
-
     }
 
     public void showSnackBar(String text) {
-        Snackbar.make(findViewById(R.id.fragment_container), text, 2000)/*.setDuration(2000)*/.show();
+        Snackbar.make(findViewById(R.id.fragment_container), text, 2000).show();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        DataHolder.getInstance().setHomeActivityInstance(this);
+        DataHolder.getInstance().setHomeActivityInstance(null);
     }
 }

@@ -28,13 +28,10 @@ public class DailySchedulingService extends IntentService {
     }
 
     /**
-     * This function is called daily at 9:00 PM
+     * This function is called daily at 5:00 PM
      */
     private void dailySchedulingTask() {
         try {
-            /*Calendar calendar = Calendar.getInstance();
-            int currentDayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
-            int lastDayOfMonth = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);*/
             boolean prefReceiveNotification = PreferenceManager
                     .getDefaultSharedPreferences(this).getBoolean("prefReceiveNotification", true);
             if (prefReceiveNotification) {

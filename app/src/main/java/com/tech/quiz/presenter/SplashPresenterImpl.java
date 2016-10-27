@@ -110,7 +110,6 @@ public class SplashPresenterImpl implements SplashPresenter, SplashInteractor.On
     @Override
     public void onError(String error) {
         serviceCount--;
-//        displayDataReloadAlert();
     }
 
     @Override
