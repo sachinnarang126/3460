@@ -18,7 +18,7 @@ import com.tech.quiz.util.Constant;
 public class SubscriptionDataActivity extends AppBaseCompatActivity {
 
     private static final int REQUEST_CODE_GOOGLE_WALLET = 10001;
-    public static final String ITEM_SKU = "ad_free";
+    public final static String ITEM_SKU = "ad_free";
     private String TAG = "com.tech.quiz";
     /*IabHelper.OnConsumeFinishedListener mConsumeFinishedListener =
             new IabHelper.OnConsumeFinishedListener() {
