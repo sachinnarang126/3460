@@ -40,4 +40,6 @@ public class Constant {
     public static final String SKU = "sku";
     public static final String TOKEN = "token";
 
+    public static final String BASE_64 = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAlDOzEcwwY/hOmqsmAY+rxN9XawgPpUmc/zdgPihvfm4Yr/zGJQBTq5YP8hBTFV+MH3l7KWa5KAsvFhSvOl4vNo0VSjNQ7ifc/2lGmiWl45GxcY/4knXK3JFpDMBRGiLANMruWVQ0zM1Iz5O14brCqmaJh88KJjklK7tQg3ckm8OPH8iggdrWgHM4Gy7KEkQLwaQVDMrsJgGx8TPxZ9fhK3NbM5SvalbheHwG3NLaSKYVxgP99Cazu4NFrmhm4UHTQeSCH0/oDtXS4rNyMKZ1vJmh7dKs5xLtqdnFosTUSxslwPxb4HBkSAECTuVrcT9sAoqmZgmpmmrvPqPlvllUFQIDAQAB";
+
 }

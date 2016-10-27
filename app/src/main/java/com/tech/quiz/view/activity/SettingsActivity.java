@@ -2,14 +2,14 @@ package com.tech.quiz.view.activity;
 
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.tech.R;
+import com.tech.quiz.basecontroller.AppBaseCompatActivity;
 import com.tech.quiz.view.fragment.SettingsFragment;
 
-public class SettingsActivity extends AppCompatActivity {
+public class SettingsActivity extends AppBaseCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

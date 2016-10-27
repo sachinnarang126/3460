@@ -26,6 +26,7 @@ import com.tech.quiz.repositories.presenter.HomePresenter;
 import com.tech.quiz.util.Constant;
 import com.tech.quiz.view.activity.HomeActivity;
 import com.tech.quiz.view.activity.SettingsActivity;
+import com.tech.quiz.view.activity.SubscriptionDataActivity;
 import com.tech.quiz.view.views.HomeView;
 
 import java.lang.ref.WeakReference;
@@ -57,8 +58,8 @@ public class HomeFragment extends AppCompatFragment implements View.OnClickListe
         homePresenter = new HomePresenterImpl(weakReference);
         homePresenter.prepareToFetchQuestion();
 
-        MobileAds.initialize(getActivity().getApplicationContext(), getString(R.string.home_footer));
-
+        if (!((HomeActivity) getActivity()).isSubscribedUser())
+            MobileAds.initialize(getActivity().getApplicationContext(), getString(R.string.home_footer));
     }
 
     @Override
@@ -70,16 +71,21 @@ public class HomeFragment extends AppCompatFragment implements View.OnClickListe
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         AdView mAdView = (AdView) view.findViewById(R.id.adView);
-//        mAdView.setVisibility(View.GONE);
-        AdRequest adRequest = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-                .addTestDevice("9210683FFFBDE1953CE613AB2FDE46E5").
-                        addTestDevice("F56162DD974939BBF71A8D3E8CC8A44A").
-                        addTestDevice("1FBF7D7CF19C0C11158AF44FDA595121").
-                        addTestDevice("F58DA099F52C8D53E4DD635D0C5EB709").build();
+        if (!((HomeActivity) getActivity()).isSubscribedUser()) {
 
-        mAdView.loadAd(adRequest);
+            mAdView.setVisibility(View.VISIBLE);
+            AdRequest adRequest = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                    .addTestDevice("9210683FFFBDE1953CE613AB2FDE46E5").
+                            addTestDevice("F56162DD974939BBF71A8D3E8CC8A44A").
+                            addTestDevice("1FBF7D7CF19C0C11158AF44FDA595121").
+                            addTestDevice("F58DA099F52C8D53E4DD635D0C5EB709").build();
+
+            mAdView.loadAd(adRequest);
+        } else {
+            mAdView.setVisibility(View.GONE);
+        }
+
 
         TextView txtAndroid = (TextView) view.findViewById(R.id.txtAndroid);
         TextView txtJava = (TextView) view.findViewById(R.id.txtJava);
@@ -112,6 +118,16 @@ public class HomeFragment extends AppCompatFragment implements View.OnClickListe
     }
 
     @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+        if (((HomeActivity) getActivity()).isSubscribedUser()) {
+            menu.findItem(R.id.action_add_free).setVisible(false);
+        } else {
+            menu.findItem(R.id.action_add_free).setVisible(true);
+        }
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_settings:
@@ -120,7 +136,8 @@ public class HomeFragment extends AppCompatFragment implements View.OnClickListe
                 break;
 
             case R.id.action_add_free:
-                ((HomeActivity) getActivity()).showSnackBar("You will get the add free version on next update");
+                startActivity(new Intent(getActivity(), SubscriptionDataActivity.class));
+                //((HomeActivity) getActivity()).showSnackBar("You will get the add free version on next update");
                 break;
 
             case R.id.action_rate_us:

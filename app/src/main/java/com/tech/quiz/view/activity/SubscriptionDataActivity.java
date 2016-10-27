@@ -18,7 +18,7 @@ import com.tech.quiz.util.Constant;
 public class SubscriptionDataActivity extends AppBaseCompatActivity {
 
     private static final int REQUEST_CODE_GOOGLE_WALLET = 10001;
-    final String ITEM_SKU = "ad_free";
+    public static final String ITEM_SKU = "ad_free";
     private String TAG = "com.tech.quiz";
     /*IabHelper.OnConsumeFinishedListener mConsumeFinishedListener =
             new IabHelper.OnConsumeFinishedListener() {
@@ -36,18 +36,12 @@ public class SubscriptionDataActivity extends AppBaseCompatActivity {
             = new IabHelper.OnIabPurchaseFinishedListener() {
         public void onIabPurchaseFinished(IabResult result, Purchase purchase) {
 
-            /*Log.d(TAG, "Purchase finished:" + result + "purchase: "
-                    + purchase);*/
-
             // if we were disposed of in the meantime, quit.
             if (mHelper == null)
                 return;
 
-            /*if (verifyDeveloperPayload(purchase)) {
-                Utils.showToast(SubscriptionDataActivity.this, "Error purchasing. Authenticity verification failed.");
-            }*/
             if (result.isFailure()) {
-//                Utils.showToast(SubscriptionDataActivity.this, getString(R.string.generic_error));
+                System.out.println("result failure");
             } else if (purchase != null) {
                 Log.d(TAG, "Purchase is premium upgrade. Congratulating user");
 
@@ -67,16 +61,17 @@ public class SubscriptionDataActivity extends AppBaseCompatActivity {
     IabHelper.QueryInventoryFinishedListener mGotInventoryListener = new IabHelper.QueryInventoryFinishedListener() {
         public void onQueryInventoryFinished(IabResult result, Inventory inventory) {
 
-//            Log.d(TAG, "Query inventory finished.");
+            Log.d(TAG, "Query inventory finished.");
             // Have we been disposed of in the meantime? If so, quit.
             if (mHelper == null) return;
 
             // Is it a failure?
             if (result.isFailure()) {
 //                Utils.showToast(SubscriptionDataActivity.this, "Failed to query inventory: " + result);
-                return;
+                finish();
             }
-//            Log.d(TAG, "Query inventory was successful.");
+            System.out.println(inventory.getAllSkus());
+            Log.d(TAG, "Query inventory was successful.");
 
             /*
              * Check for items we own. Notice that for each purchase, we check
@@ -114,20 +109,6 @@ public class SubscriptionDataActivity extends AppBaseCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_subcription_data);
 
-/*
-        if (getIntent().getBooleanExtra("isShowTitle", false)) {
-            txt_title.setVisibility(View.VISIBLE);
-            boolean isSubscribedUser = DataHolder.getInstance().getPreferences(this).
-                    getBoolean(Constants.IS_SUBSCRIBED_USER, false);
-            if (isSubscribedUser) {
-                txt_title.setText("Your Subscription has been expired please subscribe to continue");
-            } else {
-                txt_title.setText("Your Trial period has been expired please subscribe to continue");
-            }
-        } else {
-            txt_title.setVisibility(View.GONE);
-        }
-*/
         initiateGoogleWallet();
     }
 
@@ -143,9 +124,9 @@ public class SubscriptionDataActivity extends AppBaseCompatActivity {
 
         Log.d("SubscriptionData", "Creating IAB helper.");
         // Create the helper, passing it our context and the public key to verify signatures with
-//        mHelper = new IabHelper(this, Constant.base64EncodedPublicKey);
+        mHelper = new IabHelper(this, Constant.BASE_64);
         // enable debug logging (for a production application, you should set this to false).
-        mHelper.enableDebugLogging(false);
+        mHelper.enableDebugLogging(true);
 
 
         // Start setup. This is asynchronous and the specified listener
@@ -231,8 +212,9 @@ public class SubscriptionDataActivity extends AppBaseCompatActivity {
         try {
             if (mHelper != null) {
                 mHelper.flagEndAsync();
-                mHelper.launchSubscriptionPurchaseFlow(this, ITEM_SKU, REQUEST_CODE_GOOGLE_WALLET,
+                mHelper.launchPurchaseFlow(this, ITEM_SKU, REQUEST_CODE_GOOGLE_WALLET,
                         mPurchaseFinishedListener, payload);
+
             }
         } catch (Exception e) {
             e.printStackTrace();

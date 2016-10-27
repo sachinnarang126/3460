@@ -13,6 +13,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
+import com.tech.quiz.dataholder.DataHolder;
+import com.tech.quiz.util.Constant;
 import com.tech.quiz.view.activity.SplashActivity;
 
 import java.util.ArrayList;
@@ -161,5 +163,9 @@ public abstract class AppBaseCompatActivity extends AppCompatActivity {
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
         finish();
+    }
+
+    public boolean isSubscribedUser() {
+        return DataHolder.getInstance().getPreferences(this).getBoolean(Constant.IS_SUBSCRIBED_USER, false);
     }
 }

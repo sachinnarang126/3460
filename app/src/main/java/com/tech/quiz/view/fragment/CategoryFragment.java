@@ -47,7 +47,11 @@ public class CategoryFragment extends AppCompatFragment implements CategoryView,
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        MobileAds.initialize(getActivity().getApplicationContext(), getString(R.string.category_footer));
+
+        if (!((HomeActivity) getActivity()).isSubscribedUser()) {
+            MobileAds.initialize(getActivity().getApplicationContext(), getString(R.string.category_footer));
+        }
+
         setHasOptionsMenu(true);
 
         WeakReference<CategoryView> reference = new WeakReference<CategoryView>(this);
@@ -72,14 +76,18 @@ public class CategoryFragment extends AppCompatFragment implements CategoryView,
         super.onViewCreated(view, savedInstanceState);
 
         AdView mAdView = (AdView) view.findViewById(R.id.adView);
-//        mAdView.setVisibility(View.GONE);
-        AdRequest adRequest = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-                .addTestDevice("9210683FFFBDE1953CE613AB2FDE46E5").
-                        addTestDevice("F56162DD974939BBF71A8D3E8CC8A44A").
-                        addTestDevice("1FBF7D7CF19C0C11158AF44FDA595121").
-                        addTestDevice("F58DA099F52C8D53E4DD635D0C5EB709").build();
+        if (!((HomeActivity) getActivity()).isSubscribedUser()) {
+            mAdView.setVisibility(View.VISIBLE);
+            AdRequest adRequest = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                    .addTestDevice("9210683FFFBDE1953CE613AB2FDE46E5").
+                            addTestDevice("F56162DD974939BBF71A8D3E8CC8A44A").
+                            addTestDevice("1FBF7D7CF19C0C11158AF44FDA595121").
+                            addTestDevice("F58DA099F52C8D53E4DD635D0C5EB709").build();
 
-        mAdView.loadAd(adRequest);
+            mAdView.loadAd(adRequest);
+        } else {
+            mAdView.setVisibility(View.GONE);
+        }
 
         progressBar = (FrameLayout) view.findViewById(R.id.progressBarContainer);
 
