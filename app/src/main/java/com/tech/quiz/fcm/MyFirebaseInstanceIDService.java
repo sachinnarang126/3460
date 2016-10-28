@@ -56,7 +56,7 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
 
         RetrofitApiService apiService = RetrofitClient.getRetrofitClient();
         FirebaseMessaging.getInstance().subscribeToTopic(Constant.FCM_TOPIC_UPDATE_QUESTION);
-        if (BuildConfig.DEBUG) {
+        if (!BuildConfig.DEBUG) {
             String deviceID = Settings.Secure.getString(getContentResolver(),
                     Settings.Secure.ANDROID_ID);
             Call<UserRegistor> registrationCall = apiService.registerUserForFCM(deviceID, token, Constant.ANDROID_DEVICE_TYPE);
