@@ -18,6 +18,10 @@ public interface CategoryPresenter {
 
     void onDestroy();
 
+    void onCreate();
+
+    void onStart();
+
     void prepareToFetchQuestionFromDB(int serviceType);
 
     void prepareToFetchQuestionFromDB(int serviceType, boolean isShowAnsweredQuestion);

@@ -1,9 +1,14 @@
 package com.tech.quiz.presenter;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.preference.PreferenceManager;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
+import android.view.View;
 
 import com.tech.quiz.adapter.CategoryAdapter;
 import com.tech.quiz.dataholder.DataHolder;
@@ -30,6 +35,17 @@ public class CategoryPresenterImpl implements CategoryPresenter, CategoryInterac
     private CategoryInteractor categoryInteractor;
     private CategoryAdapter categoryAdapter;
     private List<Questions> questionList;
+    private boolean hasToShowRecyclerView;
+
+    private BroadcastReceiver receiver = new BroadcastReceiver() {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            categoryView.get().manageRecyclerView(View.VISIBLE);
+            categoryView.get().hideProgress();
+            hasToShowRecyclerView = true;
+        }
+    };
 
     public CategoryPresenterImpl(WeakReference<CategoryView> categoryView) {
         this.categoryView = categoryView;
@@ -38,10 +54,29 @@ public class CategoryPresenterImpl implements CategoryPresenter, CategoryInterac
 
     @Override
     public void onDestroy() {
+        hasToShowRecyclerView = false;
+        LocalBroadcastManager.getInstance(((CategoryFragment) categoryView.get()).getActivity()).unregisterReceiver(receiver);
         categoryList.clear();
         questionList = null;
         categoryView.clear();
         categoryAdapter = null;
+    }
+
+    @Override
+    public void onCreate() {
+        hasToShowRecyclerView = true;
+        LocalBroadcastManager.getInstance(((CategoryFragment) categoryView.get()).getActivity()).registerReceiver(receiver, new IntentFilter(Constant.CATEGORY_RECEIVER));
+    }
+
+    @Override
+    public void onStart() {
+        if (!hasToShowRecyclerView) {
+            categoryView.get().showProgress();
+            categoryView.get().manageRecyclerView(View.INVISIBLE);
+        } else {
+            categoryView.get().hideProgress();
+            categoryView.get().manageRecyclerView(View.VISIBLE);
+        }
     }
 
     @Override
@@ -109,6 +144,7 @@ public class CategoryPresenterImpl implements CategoryPresenter, CategoryInterac
         intent.putExtra("title", categoryList.get(position));
         intent.putExtra("technology", ((CategoryFragment) categoryView.get()).getArguments().getInt("serviceType"));
         context.startActivity(intent);
+        hasToShowRecyclerView = false;
     }
 
     @Override

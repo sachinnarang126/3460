@@ -38,15 +38,15 @@ public class DailyAlarmReceiver extends WakefulBroadcastReceiver {
 
         try {
             Calendar calendar = Calendar.getInstance();
-            /*calendar.set(Calendar.HOUR_OF_DAY, 17);
+            calendar.set(Calendar.HOUR_OF_DAY, 17);
             calendar.set(Calendar.MINUTE, 0);
             calendar.set(Calendar.SECOND, 0);
-            calendar.add(Calendar.MINUTE, 1);*/
-            calendar.roll(Calendar.MINUTE, 1);
+            calendar.add(Calendar.MINUTE, 1);
+//            calendar.roll(Calendar.MINUTE, 1);
 
             long todayTimeInMillis = calendar.getTimeInMillis();
 
-            long intervalTimeInMillis = 1000 * 60; //* 60 * 24; // 1 day
+            long intervalTimeInMillis = 1000 * 20 * 60 * 24; // 1 day
             AlarmManager alarmMgr = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
             Intent intent = new Intent(context, DailyAlarmReceiver.class);
             PendingIntent alarmIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
