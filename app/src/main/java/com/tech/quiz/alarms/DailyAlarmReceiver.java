@@ -65,7 +65,6 @@ public class DailyAlarmReceiver extends WakefulBroadcastReceiver {
 
         } catch (Exception e) {
             e.printStackTrace();
-            
         }
     }
 
