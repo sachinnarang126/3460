@@ -19,8 +19,8 @@ import library.mvp.MvpBasePresenter;
 
 public class SubscriptionDataActivity extends AppBaseCompatActivity {
 
-    private static final int REQUEST_CODE_GOOGLE_WALLET = 10001;
     public final static String ITEM_SKU = "ad_free";
+    private static final int REQUEST_CODE_GOOGLE_WALLET = 10001;
     private String TAG = "com.tech.quiz";
     /*IabHelper.OnConsumeFinishedListener mConsumeFinishedListener =
             new IabHelper.OnConsumeFinishedListener() {
