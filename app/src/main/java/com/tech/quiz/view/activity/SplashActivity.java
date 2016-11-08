@@ -20,7 +20,7 @@ import library.basecontroller.AppBaseCompatActivity;
 public class SplashActivity extends AppBaseCompatActivity<SplashPresenterImpl> implements SplashView {
 
     private ProgressBar progressBar;
-    
+
 
     @Override
     protected SplashPresenterImpl createPresenter() {
