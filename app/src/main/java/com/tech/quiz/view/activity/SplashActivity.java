@@ -21,7 +21,6 @@ public class SplashActivity extends AppBaseCompatActivity<SplashPresenterImpl> i
 
     private ProgressBar progressBar;
 
-
     @Override
     protected SplashPresenterImpl createPresenter() {
         return new SplashPresenterImpl(this, this);
