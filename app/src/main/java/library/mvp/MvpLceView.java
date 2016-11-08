@@ -18,7 +18,7 @@ public interface MvpLceView<M> extends MvpView {
 
     /**
      * Show the content view.
-     *
+     * <p>
      * <b>The content view must have the id = R.id.contentView</b>
      */
     @UiThread
@@ -28,9 +28,9 @@ public interface MvpLceView<M> extends MvpView {
      * Show the error view.
      * <b>The error view must be a TextView with the id = R.id.errorView</b>
      *
-     * @param e The Throwable that has caused this error
+     * @param e             The Throwable that has caused this error
      * @param pullToRefresh true, if the exception was thrown during pull-to-refresh, otherwise
-     * false.
+     *                      false.
      */
     @UiThread
     public void showError(Throwable e, boolean pullToRefresh);
