@@ -14,11 +14,6 @@ import retrofit2.Call;
 public abstract class AppCompatFragment<T extends MvpBasePresenter> extends Fragment {
 
     private T presenter;
-
-    public T getPresenter() {
-        return presenter;
-    }
-
     /**
      * holds the executing or executed service call instances
      */
@@ -29,6 +24,10 @@ public abstract class AppCompatFragment<T extends MvpBasePresenter> extends Frag
      */
     public AppCompatFragment() {
         mServiceCallsMap = new HashMap<>();
+    }
+
+    public T getPresenter() {
+        return presenter;
     }
 
     abstract protected T createPresenter();
