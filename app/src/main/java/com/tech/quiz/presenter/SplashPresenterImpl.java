@@ -43,14 +43,14 @@ public class SplashPresenterImpl extends MvpBasePresenter<SplashView> implements
     private SplashInteractor splashInteractor;
     private int serviceCount;
 
-    public SplashPresenterImpl(SplashView view) {
-        attachView(view);
+    public SplashPresenterImpl(SplashView view, Context context) {
+        attachView(view, context);
         splashInteractor = new SplashInteractorImpl();
     }
 
     @Override
     public void onCreate() {
-        System.out.println("SplashPresenterImpl.onCreate");
+
     }
 
     @Override
@@ -81,10 +81,12 @@ public class SplashPresenterImpl extends MvpBasePresenter<SplashView> implements
     @Override
     public void prepareToFetchQuestion() {
         if (isViewAttached()) {
-            SplashActivity context = (SplashActivity) getView();
+            SplashActivity context = (SplashActivity) getContext();
             if (context.isInternetAvailable()) {
+
                 queryInventory();
                 getView().showProgress();
+
                 RetrofitApiService apiService = RetrofitClient.getRetrofitClient();
                 Call<QuestionResponse> androidQuestionCall;
                 if (context.isServiceCallExist(Constant.ANDROID_URL)) {
@@ -138,7 +140,7 @@ public class SplashPresenterImpl extends MvpBasePresenter<SplashView> implements
 
     @Override
     synchronized public void saveDataToDB(List<QuestionResponse.Response> questionList, int serviceType) {
-        DatabaseManager databaseManager = DatabaseManager.getDataBaseManager((SplashActivity) getView());
+        DatabaseManager databaseManager = DatabaseManager.getDataBaseManager(getContext());
         switch (serviceType) {
             case Constant.ANDROID:
                 saveAndroidQuestion(databaseManager, questionList);
@@ -219,19 +221,17 @@ public class SplashPresenterImpl extends MvpBasePresenter<SplashView> implements
     @Override
     public void goToHomeActivity() {
         if (isViewAttached()) {
-            Context context = (SplashActivity) getView();
-            DataHolder.getInstance().getPreferences(context).edit().putBoolean(Constant.IS_APP_FIRST_LAUNCH, false).apply();
+            DataHolder.getInstance().getPreferences(getContext()).edit().putBoolean(Constant.IS_APP_FIRST_LAUNCH, false).apply();
             getView().hideProgress();
-            Intent intent = new Intent(context, HomeActivity.class);
-            context.startActivity(intent);
-            ((SplashActivity) context).finish();
+            Intent intent = new Intent(getContext(), HomeActivity.class);
+            getContext().startActivity(intent);
+            ((SplashActivity) getContext()).finish();
         }
     }
 
     @Override
     public void queryInventory() {
-        final Context context = (SplashActivity) getView();
-        final IabHelper mHelper = new IabHelper(context, Constant.BASE_64);
+        final IabHelper mHelper = new IabHelper(getContext(), Constant.BASE_64);
 
         final IabHelper.QueryInventoryFinishedListener mGotInventoryListener = new IabHelper.QueryInventoryFinishedListener() {
             public void onQueryInventoryFinished(IabResult result, Inventory inventory) {
@@ -240,7 +240,7 @@ public class SplashPresenterImpl extends MvpBasePresenter<SplashView> implements
                     return;
                 }
 
-                SharedPreferences sharedPreferences = DataHolder.getInstance().getPreferences(context);
+                SharedPreferences sharedPreferences = DataHolder.getInstance().getPreferences(getContext());
                 SharedPreferences.Editor editor = sharedPreferences.edit();
 
                 Purchase purchase = inventory.getPurchase(SubscriptionDataActivity.ITEM_SKU);
@@ -254,13 +254,8 @@ public class SplashPresenterImpl extends MvpBasePresenter<SplashView> implements
                     editor.putString(Constant.SKU, purchase.getSku());
                     editor.apply();
 
-                } else {
-                    System.out.println("you don't own this product");
                 }
-
-                if (mHelper != null) {
-                    mHelper.dispose();
-                }
+                mHelper.dispose();
             }
         };
 
@@ -290,7 +285,7 @@ public class SplashPresenterImpl extends MvpBasePresenter<SplashView> implements
 
     private void saveTimeToPreference() {
         if (isViewAttached())
-            DataHolder.getInstance().getPreferences((SplashActivity) getView()).edit().
+            DataHolder.getInstance().getPreferences(getContext()).edit().
                     putLong(Constant.UPDATED_QUESTION_TIME_IN_MILLIS, System.currentTimeMillis()).apply();
     }
 }

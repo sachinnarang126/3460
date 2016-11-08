@@ -1,12 +1,12 @@
 package com.tech.quiz.presenter;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.preference.Preference;
 import android.support.v7.app.AlertDialog;
 
 import com.tech.quiz.databasemanager.DatabaseManager;
 import com.tech.quiz.repositories.presenter.SettingPresenter;
-import com.tech.quiz.view.fragment.SettingsFragment;
 import com.tech.quiz.view.views.SettingView;
 
 import library.mvp.MvpBasePresenter;
@@ -17,9 +17,13 @@ import library.mvp.MvpBasePresenter;
 
 public class SettingPresenterImpl extends MvpBasePresenter<SettingView> implements SettingPresenter, Preference.OnPreferenceClickListener {
 
+    public SettingPresenterImpl(SettingView view, Context context) {
+        attachView(view, context);
+    }
+
     @Override
     public void showResetAllQuestionDialog(String message, DialogInterface.OnClickListener okListener) {
-        new AlertDialog.Builder(((SettingsFragment) getView()).getActivity())
+        new AlertDialog.Builder(getContext())
                 .setMessage(message)
                 .setPositiveButton("OK", okListener)
                 .setNegativeButton("Cancel", null)
@@ -29,7 +33,7 @@ public class SettingPresenterImpl extends MvpBasePresenter<SettingView> implemen
 
     @Override
     public void resetAllQuestion() {
-        DatabaseManager databaseManager = DatabaseManager.getDataBaseManager(((SettingsFragment) getView()).getActivity());
+        DatabaseManager databaseManager = DatabaseManager.getDataBaseManager(getContext());
         databaseManager.initDefaultValueToAllQuestion();
     }
 

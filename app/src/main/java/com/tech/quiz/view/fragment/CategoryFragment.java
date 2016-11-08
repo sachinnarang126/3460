@@ -43,7 +43,7 @@ public class CategoryFragment extends AppCompatFragment<CategoryPresenterImpl> i
 
     @Override
     protected CategoryPresenterImpl createPresenter() {
-        return new CategoryPresenterImpl(this);
+        return new CategoryPresenterImpl(this, getContext());
     }
 
     @Override

@@ -25,9 +25,6 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     private OnItemClickListener.OnItemClickCallback onItemClickCallback;
     private int lastPosition = -1;
 
-    
-
-
     public CategoryAdapter(List<String> categoryList, OnItemClickListener.OnItemClickCallback onItemClickCallback) {
         this.categoryList = categoryList;
         this.onItemClickCallback = onItemClickCallback;

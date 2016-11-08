@@ -26,10 +26,6 @@ import java.util.List;
 
 import library.mvp.MvpBasePresenter;
 
-/**
- * Created by root on 28/9/16.
- */
-
 public class CategoryPresenterImpl extends MvpBasePresenter<CategoryView> implements CategoryPresenter, CategoryInteractor.OnQuestionResponseListener {
 
     private CategoryInteractor categoryInteractor;
@@ -49,15 +45,16 @@ public class CategoryPresenterImpl extends MvpBasePresenter<CategoryView> implem
         }
     };
 
-    public CategoryPresenterImpl(CategoryView view) {
-        attachView(view);
-        categoryInteractor = new CategoryInteractorImpl(((CategoryFragment) getView()).getContext());
+    public CategoryPresenterImpl(CategoryView view, Context context) {
+        attachView(view, context);
+        categoryInteractor = new CategoryInteractorImpl(context);
     }
 
     @Override
     public void onDestroy() {
         hasToShowRecyclerView = false;
-        LocalBroadcastManager.getInstance(((CategoryFragment) getView()).getActivity()).unregisterReceiver(receiver);
+        if (isViewAttached())
+            LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(receiver);
         categoryList.clear();
         questionList = null;
         categoryAdapter = null;
@@ -67,7 +64,7 @@ public class CategoryPresenterImpl extends MvpBasePresenter<CategoryView> implem
     @Override
     public void onCreate() {
         hasToShowRecyclerView = true;
-        LocalBroadcastManager.getInstance(((CategoryFragment) getView()).getActivity()).registerReceiver(receiver, new IntentFilter(Constant.CATEGORY_RECEIVER));
+        LocalBroadcastManager.getInstance(getContext()).registerReceiver(receiver, new IntentFilter(Constant.CATEGORY_RECEIVER));
     }
 
     @Override
@@ -102,8 +99,8 @@ public class CategoryPresenterImpl extends MvpBasePresenter<CategoryView> implem
     public void prepareToFetchQuestionFromDB(int serviceType) {
         if (isViewAttached()) {
             boolean isShowAnsweredQuestion = PreferenceManager
-                    .getDefaultSharedPreferences(((CategoryFragment) getView()).getActivity()).getBoolean("prefShowAnsweredQuestion", false);
-            if (getView() != null) {
+                    .getDefaultSharedPreferences(getContext()).getBoolean("prefShowAnsweredQuestion", false);
+            if (isViewAttached()) {
                 getView().showProgress();
 
                 switch (serviceType) {
@@ -163,7 +160,7 @@ public class CategoryPresenterImpl extends MvpBasePresenter<CategoryView> implem
         CategoryFragment context = ((CategoryFragment) getView());
         Intent intent = new Intent(context.getActivity(), QuestionActivity.class);
         intent.putExtra("title", categoryList.get(position));
-        intent.putExtra("technology", ((CategoryFragment) getView()).getArguments().getInt("serviceType"));
+        intent.putExtra("technology", context.getArguments().getInt("serviceType"));
         context.startActivity(intent);
         hasToShowRecyclerView = false;
     }
@@ -228,7 +225,7 @@ public class CategoryPresenterImpl extends MvpBasePresenter<CategoryView> implem
 
     @Override
     public void showAnsweredQuestionDialog(String message, DialogInterface.OnClickListener okListener) {
-        new AlertDialog.Builder(((CategoryFragment) getView()).getActivity())
+        new AlertDialog.Builder(getContext())
                 .setMessage(message)
                 .setPositiveButton("OK", okListener)
                 .setNegativeButton("Cancel", null)
@@ -236,5 +233,4 @@ public class CategoryPresenterImpl extends MvpBasePresenter<CategoryView> implem
                 .create()
                 .show();
     }
-
 }

@@ -24,7 +24,7 @@ public class QuestionActivity extends AppBaseCompatActivity<QuestionPresenterImp
 
     @Override
     protected QuestionPresenterImpl createPresenter() {
-        return new QuestionPresenterImpl(this);
+        return new QuestionPresenterImpl(this, this);
     }
 
     @Override

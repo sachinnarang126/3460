@@ -24,7 +24,7 @@ public class SplashActivity extends AppBaseCompatActivity<SplashPresenterImpl> i
 
     @Override
     protected SplashPresenterImpl createPresenter() {
-        return new SplashPresenterImpl(this);
+        return new SplashPresenterImpl(this, this);
     }
 
     @Override

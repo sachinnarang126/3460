@@ -22,7 +22,7 @@ public class SettingsFragment extends PreferenceCompatFragment<SettingPresenterI
 
     @Override
     protected SettingPresenterImpl createPresenter() {
-        return new SettingPresenterImpl();
+        return new SettingPresenterImpl(this, getActivity());
     }
 
     @Override

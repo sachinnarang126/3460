@@ -1,6 +1,6 @@
 package library.mvp;
 
-import android.support.annotation.Nullable;
+import android.content.Context;
 import android.support.annotation.UiThread;
 
 import java.lang.ref.WeakReference;
@@ -11,12 +11,14 @@ import java.lang.ref.WeakReference;
 
 abstract public class MvpBasePresenter<V extends MvpView> implements MvpPresenter<V> {
 
+    private Context context;
     private WeakReference<V> viewRef;
 
     @UiThread
     @Override
-    public void attachView(V view) {
+    public void attachView(V view, Context context) {
         viewRef = new WeakReference<>(view);
+        this.context = context;
     }
 
     /**
@@ -27,7 +29,6 @@ abstract public class MvpBasePresenter<V extends MvpView> implements MvpPresente
      * @return <code>null</code>, if view is not attached, otherwise the concrete view instance
      */
     @UiThread
-    @Nullable
     public V getView() {
         return viewRef == null ? null : viewRef.get();
     }
@@ -38,6 +39,7 @@ abstract public class MvpBasePresenter<V extends MvpView> implements MvpPresente
         if (viewRef != null) {
             viewRef.clear();
             viewRef = null;
+            context = null;
         }
     }
 
@@ -48,5 +50,9 @@ abstract public class MvpBasePresenter<V extends MvpView> implements MvpPresente
     @UiThread
     public boolean isViewAttached() {
         return viewRef != null && viewRef.get() != null;
+    }
+
+    protected Context getContext() {
+        return context;
     }
 }

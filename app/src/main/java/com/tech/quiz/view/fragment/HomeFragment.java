@@ -49,7 +49,7 @@ public class HomeFragment extends AppCompatFragment<HomePresenterImpl> implement
 
     @Override
     protected HomePresenterImpl createPresenter() {
-        return new HomePresenterImpl(this);
+        return new HomePresenterImpl(this, getContext());
     }
 
     @Override

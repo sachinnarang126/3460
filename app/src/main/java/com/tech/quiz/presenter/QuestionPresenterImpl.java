@@ -1,5 +1,7 @@
 package com.tech.quiz.presenter;
 
+import android.content.Context;
+
 import com.tech.quiz.adapter.QuestionPagerAdapter;
 import com.tech.quiz.dataholder.DataHolder;
 import com.tech.quiz.models.databasemodel.Questions;
@@ -22,8 +24,8 @@ public class QuestionPresenterImpl extends MvpBasePresenter<QuestionView> implem
 
     private QuestionPagerAdapter questionPagerAdapter;
 
-    public QuestionPresenterImpl(QuestionView view) {
-        attachView(view);
+    public QuestionPresenterImpl(QuestionView view, Context context) {
+        attachView(view, context);
     }
 
     @Override

@@ -1,5 +1,7 @@
 package com.tech.quiz.presenter;
 
+import android.content.Context;
+
 import com.tech.R;
 import com.tech.quiz.databasemanager.DatabaseManager;
 import com.tech.quiz.dataholder.DataHolder;
@@ -32,8 +34,8 @@ public class HomePresenterImpl extends MvpBasePresenter<HomeView> implements Hom
 
     private HomeInteractor homeInteractor;
 
-    public HomePresenterImpl(HomeView view) {
-        attachView(view);
+    public HomePresenterImpl(HomeView view, Context context) {
+        attachView(view, context);
         homeInteractor = new HomeInteractorImpl();
     }
 
@@ -71,7 +73,7 @@ public class HomePresenterImpl extends MvpBasePresenter<HomeView> implements Hom
     public void prepareToFetchQuestion() {
         if (hasToFetchQuestionFromServer() && isViewAttached()) {
             HomeFragment context = (HomeFragment) getView();
-            if (((HomeActivity) context.getActivity()).isInternetAvailable()) {
+            if (((HomeActivity) getContext()).isInternetAvailable()) {
 
                 DatabaseManager databaseManager = DatabaseManager.getDataBaseManager(context.getActivity());
                 List<Integer> androidIdList = databaseManager.getAndroidIdList();
@@ -132,7 +134,7 @@ public class HomePresenterImpl extends MvpBasePresenter<HomeView> implements Hom
 
     @Override
     synchronized public void saveDataToDB(List<QuestionResponse.Response> questionList, int serviceType) {
-        DatabaseManager databaseManager = DatabaseManager.getDataBaseManager(((HomeFragment) getView()).getActivity());
+        DatabaseManager databaseManager = DatabaseManager.getDataBaseManager(getContext());
         switch (serviceType) {
             case Constant.ANDROID:
                 saveAndroidQuestion(databaseManager, questionList);
@@ -150,14 +152,14 @@ public class HomePresenterImpl extends MvpBasePresenter<HomeView> implements Hom
 
     @Override
     public void saveTimeToPreference() {
-        DataHolder.getInstance().getPreferences(((HomeFragment) getView()).getActivity()).edit().
+        DataHolder.getInstance().getPreferences(getContext()).edit().
                 putLong(Constant.UPDATED_QUESTION_TIME_IN_MILLIS, System.currentTimeMillis()).apply();
     }
 
     @Override
     public boolean hasToFetchQuestionFromServer() {
         long twoHour = 1000 * 60 * 60 * 2;
-        long savedTime = DataHolder.getInstance().getPreferences(((HomeFragment) getView()).getActivity()).
+        long savedTime = DataHolder.getInstance().getPreferences(getContext()).
                 getLong(Constant.UPDATED_QUESTION_TIME_IN_MILLIS, 0);
 
         return System.currentTimeMillis() - savedTime > twoHour;
