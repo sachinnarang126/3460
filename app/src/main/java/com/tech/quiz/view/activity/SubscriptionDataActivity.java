@@ -7,13 +7,15 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.tech.R;
-import com.tech.quiz.basecontroller.AppBaseCompatActivity;
 import com.tech.quiz.billing.IabHelper;
 import com.tech.quiz.billing.IabResult;
 import com.tech.quiz.billing.Inventory;
 import com.tech.quiz.billing.Purchase;
 import com.tech.quiz.dataholder.DataHolder;
 import com.tech.quiz.util.Constant;
+
+import library.basecontroller.AppBaseCompatActivity;
+import library.mvp.MvpBasePresenter;
 
 public class SubscriptionDataActivity extends AppBaseCompatActivity {
 
@@ -103,6 +105,11 @@ public class SubscriptionDataActivity extends AppBaseCompatActivity {
                     mConsumeFinishedListener);*/
         }
     };
+
+    @Override
+    protected MvpBasePresenter createPresenter() {
+        return null;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

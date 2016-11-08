@@ -21,17 +21,17 @@ import com.tech.quiz.view.activity.QuestionActivity;
 import com.tech.quiz.view.fragment.CategoryFragment;
 import com.tech.quiz.view.views.CategoryView;
 
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
+
+import library.mvp.MvpBasePresenter;
 
 /**
  * Created by root on 28/9/16.
  */
 
-public class CategoryPresenterImpl implements CategoryPresenter, CategoryInteractor.OnQuestionResponseListener {
+public class CategoryPresenterImpl extends MvpBasePresenter<CategoryView> implements CategoryPresenter, CategoryInteractor.OnQuestionResponseListener {
 
-    private WeakReference<CategoryView> categoryView;
     private CategoryInteractor categoryInteractor;
     private CategoryAdapter categoryAdapter;
     private List<Questions> questionList;
@@ -41,63 +41,84 @@ public class CategoryPresenterImpl implements CategoryPresenter, CategoryInterac
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            categoryView.get().manageRecyclerView(View.VISIBLE);
-            categoryView.get().hideProgress();
-            hasToShowRecyclerView = true;
+            if (isViewAttached()) {
+                getView().manageRecyclerView(View.VISIBLE);
+                getView().hideProgress();
+                hasToShowRecyclerView = true;
+            }
         }
     };
 
-    public CategoryPresenterImpl(WeakReference<CategoryView> categoryView) {
-        this.categoryView = categoryView;
-        categoryInteractor = new CategoryInteractorImpl(((CategoryFragment) categoryView.get()).getContext());
+    public CategoryPresenterImpl(CategoryView view) {
+        attachView(view);
+        categoryInteractor = new CategoryInteractorImpl(((CategoryFragment) getView()).getContext());
     }
 
     @Override
     public void onDestroy() {
         hasToShowRecyclerView = false;
-        LocalBroadcastManager.getInstance(((CategoryFragment) categoryView.get()).getActivity()).unregisterReceiver(receiver);
+        LocalBroadcastManager.getInstance(((CategoryFragment) getView()).getActivity()).unregisterReceiver(receiver);
         categoryList.clear();
         questionList = null;
-        categoryView.clear();
         categoryAdapter = null;
+        detachView();
     }
 
     @Override
     public void onCreate() {
         hasToShowRecyclerView = true;
-        LocalBroadcastManager.getInstance(((CategoryFragment) categoryView.get()).getActivity()).registerReceiver(receiver, new IntentFilter(Constant.CATEGORY_RECEIVER));
+        LocalBroadcastManager.getInstance(((CategoryFragment) getView()).getActivity()).registerReceiver(receiver, new IntentFilter(Constant.CATEGORY_RECEIVER));
     }
 
     @Override
     public void onStart() {
-        if (!hasToShowRecyclerView) {
-            categoryView.get().showProgress();
-            categoryView.get().manageRecyclerView(View.INVISIBLE);
-        } else {
-            categoryView.get().hideProgress();
-            categoryView.get().manageRecyclerView(View.VISIBLE);
+        if (isViewAttached()) {
+            if (!hasToShowRecyclerView) {
+                getView().showProgress();
+                getView().manageRecyclerView(View.INVISIBLE);
+            } else {
+                getView().hideProgress();
+                getView().manageRecyclerView(View.VISIBLE);
+            }
         }
     }
 
     @Override
+    public void onResume() {
+
+    }
+
+    @Override
+    public void onPause() {
+
+    }
+
+    @Override
+    public void onStop() {
+
+    }
+
+    @Override
     public void prepareToFetchQuestionFromDB(int serviceType) {
-        boolean isShowAnsweredQuestion = PreferenceManager
-                .getDefaultSharedPreferences(((CategoryFragment) categoryView.get()).getActivity()).getBoolean("prefShowAnsweredQuestion", false);
-        if (categoryView.get() != null) {
-            categoryView.get().showProgress();
+        if (isViewAttached()) {
+            boolean isShowAnsweredQuestion = PreferenceManager
+                    .getDefaultSharedPreferences(((CategoryFragment) getView()).getActivity()).getBoolean("prefShowAnsweredQuestion", false);
+            if (getView() != null) {
+                getView().showProgress();
 
-            switch (serviceType) {
-                case Constant.ANDROID:
-                    categoryInteractor.getAndroidQuestions(this, isShowAnsweredQuestion);
-                    break;
+                switch (serviceType) {
+                    case Constant.ANDROID:
+                        categoryInteractor.getAndroidQuestions(this, isShowAnsweredQuestion);
+                        break;
 
-                case Constant.IOS:
-                    categoryInteractor.getIosQuestion(this, isShowAnsweredQuestion);
-                    break;
+                    case Constant.IOS:
+                        categoryInteractor.getIosQuestion(this, isShowAnsweredQuestion);
+                        break;
 
-                case Constant.JAVA:
-                    categoryInteractor.getJavaQuestions(this, isShowAnsweredQuestion);
-                    break;
+                    case Constant.JAVA:
+                        categoryInteractor.getJavaQuestions(this, isShowAnsweredQuestion);
+                        break;
+                }
             }
         }
     }
@@ -105,8 +126,8 @@ public class CategoryPresenterImpl implements CategoryPresenter, CategoryInterac
     @Override
     public void prepareToFetchQuestionFromDB(int serviceType, boolean isShowAnsweredQuestion) {
 
-        if (categoryView.get() != null) {
-            categoryView.get().showProgress();
+        if (isViewAttached()) {
+            getView().showProgress();
             switch (serviceType) {
                 case Constant.ANDROID:
 
@@ -139,31 +160,31 @@ public class CategoryPresenterImpl implements CategoryPresenter, CategoryInterac
             }
             DataHolder.getInstance().setQuestionList(tempList);
         }
-        CategoryFragment context = ((CategoryFragment) categoryView.get());
+        CategoryFragment context = ((CategoryFragment) getView());
         Intent intent = new Intent(context.getActivity(), QuestionActivity.class);
         intent.putExtra("title", categoryList.get(position));
-        intent.putExtra("technology", ((CategoryFragment) categoryView.get()).getArguments().getInt("serviceType"));
+        intent.putExtra("technology", ((CategoryFragment) getView()).getArguments().getInt("serviceType"));
         context.startActivity(intent);
         hasToShowRecyclerView = false;
     }
 
     @Override
     public <T extends Questions> void onSuccess(List<T> questionListFromDB) {
-        if (categoryView.get() != null) {
+        if (isViewAttached()) {
             updateUI(castToQuestions(questionListFromDB));
-            categoryView.get().hideProgress();
+            getView().hideProgress();
         }
     }
 
     @Override
     public void onError(String error, boolean hasToLoadQuestionFromDb) {
-        if (categoryView.get() != null) {
-            categoryView.get().hideProgress();
+        if (isViewAttached()) {
+            getView().hideProgress();
             if (hasToLoadQuestionFromDb) {
                 showAnsweredQuestionDialog(error, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        prepareToFetchQuestionFromDB(((CategoryFragment) categoryView.get()).getArguments().getInt("serviceType"), true);
+                        prepareToFetchQuestionFromDB(((CategoryFragment) getView()).getArguments().getInt("serviceType"), true);
                     }
                 });
             } else {
@@ -187,7 +208,7 @@ public class CategoryPresenterImpl implements CategoryPresenter, CategoryInterac
 
     @Override
     public CategoryAdapter initCategoryAdapter() {
-        return categoryAdapter = new CategoryAdapter(categoryList, (CategoryFragment) categoryView.get());
+        return categoryAdapter = new CategoryAdapter(categoryList, (CategoryFragment) getView());
     }
 
     @Override
@@ -207,7 +228,7 @@ public class CategoryPresenterImpl implements CategoryPresenter, CategoryInterac
 
     @Override
     public void showAnsweredQuestionDialog(String message, DialogInterface.OnClickListener okListener) {
-        new AlertDialog.Builder(((CategoryFragment) categoryView.get()).getActivity())
+        new AlertDialog.Builder(((CategoryFragment) getView()).getActivity())
                 .setMessage(message)
                 .setPositiveButton("OK", okListener)
                 .setNegativeButton("Cancel", null)

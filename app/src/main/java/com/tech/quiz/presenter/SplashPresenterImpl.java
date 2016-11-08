@@ -27,40 +27,64 @@ import com.tech.quiz.view.activity.SplashActivity;
 import com.tech.quiz.view.activity.SubscriptionDataActivity;
 import com.tech.quiz.view.views.SplashView;
 
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
+import library.mvp.MvpBasePresenter;
 import retrofit2.Call;
 
 /**
  * Created by root on 28/9/16.
  */
 
-public class SplashPresenterImpl implements SplashPresenter, SplashInteractor.OnIosQuestionResponseListener,
+public class SplashPresenterImpl extends MvpBasePresenter<SplashView> implements SplashPresenter, SplashInteractor.OnIosQuestionResponseListener,
         SplashInteractor.OnAndroidQuestionResponseListener, SplashInteractor.OnJavaQuestionResponseListener {
 
-    private WeakReference<SplashView> splashView;
     private SplashInteractor splashInteractor;
     private int serviceCount;
 
-    public SplashPresenterImpl(WeakReference<SplashView> splashView) {
-        this.splashView = splashView;
+    public SplashPresenterImpl(SplashView view) {
+        attachView(view);
         splashInteractor = new SplashInteractorImpl();
     }
 
     @Override
+    public void onCreate() {
+        System.out.println("SplashPresenterImpl.onCreate");
+    }
+
+    @Override
+    public void onStart() {
+
+    }
+
+    @Override
+    public void onResume() {
+
+    }
+
+    @Override
+    public void onPause() {
+
+    }
+
+    @Override
+    public void onStop() {
+
+    }
+
+    @Override
     public void onDestroy() {
-        splashView.clear();
+        detachView();
     }
 
     @Override
     public void prepareToFetchQuestion() {
-        if (splashView.get() != null) {
-            SplashActivity context = (SplashActivity) splashView.get();
+        if (isViewAttached()) {
+            SplashActivity context = (SplashActivity) getView();
             if (context.isInternetAvailable()) {
                 queryInventory();
-                splashView.get().showProgress();
+                getView().showProgress();
                 RetrofitApiService apiService = RetrofitClient.getRetrofitClient();
                 Call<QuestionResponse> androidQuestionCall;
                 if (context.isServiceCallExist(Constant.ANDROID_URL)) {
@@ -114,7 +138,7 @@ public class SplashPresenterImpl implements SplashPresenter, SplashInteractor.On
 
     @Override
     synchronized public void saveDataToDB(List<QuestionResponse.Response> questionList, int serviceType) {
-        DatabaseManager databaseManager = DatabaseManager.getDataBaseManager((SplashActivity) splashView.get());
+        DatabaseManager databaseManager = DatabaseManager.getDataBaseManager((SplashActivity) getView());
         switch (serviceType) {
             case Constant.ANDROID:
                 saveAndroidQuestion(databaseManager, questionList);
@@ -194,17 +218,19 @@ public class SplashPresenterImpl implements SplashPresenter, SplashInteractor.On
 
     @Override
     public void goToHomeActivity() {
-        Context context = (SplashActivity) splashView.get();
-        DataHolder.getInstance().getPreferences(context).edit().putBoolean(Constant.IS_APP_FIRST_LAUNCH, false).apply();
-        splashView.get().hideProgress();
-        Intent intent = new Intent(context, HomeActivity.class);
-        context.startActivity(intent);
-        ((SplashActivity) context).finish();
+        if (isViewAttached()) {
+            Context context = (SplashActivity) getView();
+            DataHolder.getInstance().getPreferences(context).edit().putBoolean(Constant.IS_APP_FIRST_LAUNCH, false).apply();
+            getView().hideProgress();
+            Intent intent = new Intent(context, HomeActivity.class);
+            context.startActivity(intent);
+            ((SplashActivity) context).finish();
+        }
     }
 
     @Override
     public void queryInventory() {
-        final Context context = (SplashActivity) splashView.get();
+        final Context context = (SplashActivity) getView();
         final IabHelper mHelper = new IabHelper(context, Constant.BASE_64);
 
         final IabHelper.QueryInventoryFinishedListener mGotInventoryListener = new IabHelper.QueryInventoryFinishedListener() {
@@ -263,7 +289,8 @@ public class SplashPresenterImpl implements SplashPresenter, SplashInteractor.On
     }
 
     private void saveTimeToPreference() {
-        DataHolder.getInstance().getPreferences((SplashActivity) splashView.get()).edit().
-                putLong(Constant.UPDATED_QUESTION_TIME_IN_MILLIS, System.currentTimeMillis()).apply();
+        if (isViewAttached())
+            DataHolder.getInstance().getPreferences((SplashActivity) getView()).edit().
+                    putLong(Constant.UPDATED_QUESTION_TIME_IN_MILLIS, System.currentTimeMillis()).apply();
     }
 }

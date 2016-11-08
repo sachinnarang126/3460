@@ -9,13 +9,20 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
 
 import com.tech.R;
-import com.tech.quiz.basecontroller.AppBaseCompatActivity;
 import com.tech.quiz.dataholder.DataHolder;
 import com.tech.quiz.view.fragment.HomeFragment;
+
+import library.basecontroller.AppBaseCompatActivity;
+import library.mvp.MvpBasePresenter;
 
 public class HomeActivity extends AppBaseCompatActivity {
 
     private boolean doubleBackToExitPressedOnce;
+
+    @Override
+    protected MvpBasePresenter createPresenter() {
+        return null;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

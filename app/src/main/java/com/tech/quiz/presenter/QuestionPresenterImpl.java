@@ -7,23 +7,23 @@ import com.tech.quiz.repositories.presenter.QuestionPresenter;
 import com.tech.quiz.view.activity.QuestionActivity;
 import com.tech.quiz.view.views.QuestionView;
 
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+import library.mvp.MvpBasePresenter;
+
 /**
  * Created by root on 28/9/16.
  */
 
-public class QuestionPresenterImpl implements QuestionPresenter {
+public class QuestionPresenterImpl extends MvpBasePresenter<QuestionView> implements QuestionPresenter {
 
-    private WeakReference<QuestionView> questionView;
     private QuestionPagerAdapter questionPagerAdapter;
 
-    public QuestionPresenterImpl(WeakReference<QuestionView> questionView) {
-        this.questionView = questionView;
+    public QuestionPresenterImpl(QuestionView view) {
+        attachView(view);
     }
 
     @Override
@@ -35,59 +35,88 @@ public class QuestionPresenterImpl implements QuestionPresenter {
     }
 
     @Override
+    public void onStart() {
+
+    }
+
+    @Override
+    public void onResume() {
+
+    }
+
+    @Override
+    public void onPause() {
+
+    }
+
+    @Override
+    public void onStop() {
+
+    }
+
+    @Override
     public void onDestroy() {
         questionPagerAdapter = null;
-        questionView.clear();
+        detachView();
         shuffledQuestionList.clear();
     }
 
     @Override
     public void prepareListToShowAllQuestion() {
-        questionView.get().showProgress();
-        shuffledQuestionList.clear();
-        shuffledQuestionList.addAll(DataHolder.getInstance().getQuestionList());
-        questionPagerAdapter.notifyDataSetChanged();
-        questionView.get().hideProgress();
+        if (isViewAttached()) {
+            getView().showProgress();
+            shuffledQuestionList.clear();
+            shuffledQuestionList.addAll(DataHolder.getInstance().getQuestionList());
+            questionPagerAdapter.notifyDataSetChanged();
+            getView().hideProgress();
+        }
     }
 
     @Override
     public void prepareListToShowUnansweredQuestion() {
-        questionView.get().showProgress();
-        shuffledQuestionList.clear();
-        shuffledQuestionList.addAll(DataHolder.getInstance().getQuestionList());
-        Iterator<Questions> iterator = shuffledQuestionList.iterator();
-        while (iterator.hasNext()) {
-            Questions response = iterator.next();
-            if (response.isAttempted())
-                iterator.remove();
+        if (isViewAttached()) {
+            getView().showProgress();
+            shuffledQuestionList.clear();
+            shuffledQuestionList.addAll(DataHolder.getInstance().getQuestionList());
+            Iterator<Questions> iterator = shuffledQuestionList.iterator();
+            while (iterator.hasNext()) {
+                Questions response = iterator.next();
+                if (response.isAttempted())
+                    iterator.remove();
+            }
+            questionPagerAdapter.notifyDataSetChanged();
+            getView().hideProgress();
         }
-        questionPagerAdapter.notifyDataSetChanged();
-        questionView.get().hideProgress();
     }
 
     @Override
     public void prepareListToShowAnsweredQuestion() {
-        questionView.get().showProgress();
-        shuffledQuestionList.clear();
-        shuffledQuestionList.addAll(DataHolder.getInstance().getQuestionList());
-        Iterator<Questions> iterator = shuffledQuestionList.iterator();
-        while (iterator.hasNext()) {
-            Questions response = iterator.next();
-            if (!response.isAttempted())
-                iterator.remove();
+        if (isViewAttached()) {
+            getView().showProgress();
+            shuffledQuestionList.clear();
+            shuffledQuestionList.addAll(DataHolder.getInstance().getQuestionList());
+            Iterator<Questions> iterator = shuffledQuestionList.iterator();
+            while (iterator.hasNext()) {
+                Questions response = iterator.next();
+                if (!response.isAttempted())
+                    iterator.remove();
+            }
+            questionPagerAdapter.notifyDataSetChanged();
+            getView().hideProgress();
         }
-        questionPagerAdapter.notifyDataSetChanged();
-        questionView.get().hideProgress();
     }
 
     @Override
     public void prepareListToResetAll() {
-        questionView.get().showProgress();
-        shuffledQuestionList.clear();
-        shuffledQuestionList.addAll(DataHolder.getInstance().getQuestionList());
-        shuffleQuestionAndResetAllLocally();
-        questionPagerAdapter.notifyDataSetChanged();
-        questionView.get().hideProgress();
+        if (isViewAttached()) {
+            getView().showProgress();
+            shuffledQuestionList.clear();
+            shuffledQuestionList.addAll(DataHolder.getInstance().getQuestionList());
+            shuffleQuestionAndResetAllLocally();
+            questionPagerAdapter.notifyDataSetChanged();
+            getView().hideProgress();
+
+        }
     }
 
     @Override
@@ -181,7 +210,7 @@ public class QuestionPresenterImpl implements QuestionPresenter {
 
     @Override
     public QuestionPagerAdapter initAdapter(int technology) {
-        return questionPagerAdapter = new QuestionPagerAdapter(((QuestionActivity) questionView.get()).getSupportFragmentManager(),
+        return questionPagerAdapter = new QuestionPagerAdapter(((QuestionActivity) getView()).getSupportFragmentManager(),
                 shuffledQuestionList, technology);
     }
 }

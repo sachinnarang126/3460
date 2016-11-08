@@ -17,36 +17,60 @@ import com.tech.quiz.view.activity.HomeActivity;
 import com.tech.quiz.view.fragment.HomeFragment;
 import com.tech.quiz.view.views.HomeView;
 
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
+import library.mvp.MvpBasePresenter;
 import retrofit2.Call;
 
 /**
  * Created by root on 28/9/16.
  */
 
-public class HomePresenterImpl implements HomePresenter, HomeInteractor.OnIosQuestionResponseListener,
+public class HomePresenterImpl extends MvpBasePresenter<HomeView> implements HomePresenter, HomeInteractor.OnIosQuestionResponseListener,
         HomeInteractor.OnAndroidQuestionResponseListener, HomeInteractor.OnJavaQuestionResponseListener {
 
-    private WeakReference<HomeView> homeView;
     private HomeInteractor homeInteractor;
 
-    public HomePresenterImpl(WeakReference<HomeView> homeView) {
-        this.homeView = homeView;
+    public HomePresenterImpl(HomeView view) {
+        attachView(view);
         homeInteractor = new HomeInteractorImpl();
     }
 
     @Override
+    public void onCreate() {
+        prepareToFetchQuestion();
+    }
+
+    @Override
+    public void onStart() {
+
+    }
+
+    @Override
+    public void onResume() {
+
+    }
+
+    @Override
+    public void onPause() {
+
+    }
+
+    @Override
+    public void onStop() {
+
+    }
+
+    @Override
     public void onDestroy() {
-        homeView.clear();
+        detachView();
     }
 
     @Override
     public void prepareToFetchQuestion() {
-        if (hasToFetchQuestionFromServer() && homeView.get() != null) {
-            HomeFragment context = (HomeFragment) homeView.get();
+        if (hasToFetchQuestionFromServer() && isViewAttached()) {
+            HomeFragment context = (HomeFragment) getView();
             if (((HomeActivity) context.getActivity()).isInternetAvailable()) {
 
                 DatabaseManager databaseManager = DatabaseManager.getDataBaseManager(context.getActivity());
@@ -108,7 +132,7 @@ public class HomePresenterImpl implements HomePresenter, HomeInteractor.OnIosQue
 
     @Override
     synchronized public void saveDataToDB(List<QuestionResponse.Response> questionList, int serviceType) {
-        DatabaseManager databaseManager = DatabaseManager.getDataBaseManager(((HomeFragment) homeView.get()).getActivity());
+        DatabaseManager databaseManager = DatabaseManager.getDataBaseManager(((HomeFragment) getView()).getActivity());
         switch (serviceType) {
             case Constant.ANDROID:
                 saveAndroidQuestion(databaseManager, questionList);
@@ -126,14 +150,14 @@ public class HomePresenterImpl implements HomePresenter, HomeInteractor.OnIosQue
 
     @Override
     public void saveTimeToPreference() {
-        DataHolder.getInstance().getPreferences(((HomeFragment) homeView.get()).getActivity()).edit().
+        DataHolder.getInstance().getPreferences(((HomeFragment) getView()).getActivity()).edit().
                 putLong(Constant.UPDATED_QUESTION_TIME_IN_MILLIS, System.currentTimeMillis()).apply();
     }
 
     @Override
     public boolean hasToFetchQuestionFromServer() {
         long twoHour = 1000 * 60 * 60 * 2;
-        long savedTime = DataHolder.getInstance().getPreferences(((HomeFragment) homeView.get()).getActivity()).
+        long savedTime = DataHolder.getInstance().getPreferences(((HomeFragment) getView()).getActivity()).
                 getLong(Constant.UPDATED_QUESTION_TIME_IN_MILLIS, 0);
 
         return System.currentTimeMillis() - savedTime > twoHour;

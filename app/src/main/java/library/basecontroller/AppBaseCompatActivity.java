@@ -1,4 +1,4 @@
-package com.tech.quiz.basecontroller;
+package library.basecontroller;
 
 import android.Manifest;
 import android.content.Context;
@@ -10,7 +10,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.tech.quiz.dataholder.DataHolder;
@@ -21,16 +20,24 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import library.mvp.MvpBasePresenter;
 import retrofit2.Call;
 
 
-public abstract class AppBaseCompatActivity extends AppCompatActivity {
+public abstract class AppBaseCompatActivity<T extends MvpBasePresenter> extends AppCompatActivity {
 
+    private T presenter;
     /**
      * holds the executing or executed service call instances
      */
 
     private HashMap<String, Call> mServiceCallsMap;
+
+    public T getPresenter() {
+        return presenter;
+    }
+
+    abstract protected T createPresenter();
 
     /**
      * this function will cancel all the service which can have an asynchronous response from server
@@ -45,11 +52,44 @@ public abstract class AppBaseCompatActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mServiceCallsMap = new HashMap<>();
+        presenter = createPresenter();
+        if (presenter != null)
+            presenter.onCreate();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (presenter != null)
+            presenter.onStart();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (presenter != null)
+            presenter.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (presenter != null)
+            presenter.onPause();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (presenter != null)
+            presenter.onStop();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        if (presenter != null)
+            presenter.onDestroy();
         if (mServiceCallsMap != null) {
             cancelAllServiceCalls(new ArrayList<>(mServiceCallsMap.values()));
             mServiceCallsMap = null;
@@ -64,20 +104,6 @@ public abstract class AppBaseCompatActivity extends AppCompatActivity {
 
     public void showToast(String text) {
         Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
-    }
-
-
-    /**
-     * hide keyboard without checking visible or not
-     */
-
-    public void hideKeyboard() {
-        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-        if (inputMethodManager != null) {
-            if (getCurrentFocus() != null) {
-                inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
-            }
-        }
     }
 
     /**
@@ -152,10 +178,9 @@ public abstract class AppBaseCompatActivity extends AppCompatActivity {
         return mServiceCallsMap.containsKey(key);
     }
 
-    /**
-     * restart the APP if singleton(DataHolder.getInstance()) instance is null
-     * Basically check when user open the app from background after some time
-     */
+    public boolean isSubscribedUser() {
+        return DataHolder.getInstance().getPreferences(this).getBoolean(Constant.IS_SUBSCRIBED_USER, false);
+    }
 
     public void restartApp() {
         Intent intent = new Intent(this, SplashActivity.class);
@@ -163,9 +188,5 @@ public abstract class AppBaseCompatActivity extends AppCompatActivity {
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
         finish();
-    }
-
-    public boolean isSubscribedUser() {
-        return DataHolder.getInstance().getPreferences(this).getBoolean(Constant.IS_SUBSCRIBED_USER, false);
     }
 }

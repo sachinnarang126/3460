@@ -18,21 +18,18 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 import com.tech.R;
-import com.tech.quiz.basecontroller.AppCompatFragment;
 import com.tech.quiz.interfaces.OnItemClickListener;
 import com.tech.quiz.presenter.CategoryPresenterImpl;
-import com.tech.quiz.repositories.presenter.CategoryPresenter;
 import com.tech.quiz.util.Constant;
 import com.tech.quiz.view.activity.HomeActivity;
 import com.tech.quiz.view.views.CategoryView;
 
-import java.lang.ref.WeakReference;
+import library.basecontroller.AppCompatFragment;
 
-public class CategoryFragment extends AppCompatFragment implements CategoryView, OnItemClickListener.OnItemClickCallback {
+public class CategoryFragment extends AppCompatFragment<CategoryPresenterImpl> implements CategoryView, OnItemClickListener.OnItemClickCallback {
 
     private boolean isDataFetchedFromDB;
     private FrameLayout progressBar;
-    private CategoryPresenter categoryPresenter;
 
     public static CategoryFragment getInstance(String technology, int serviceType) {
         CategoryFragment categoryFragment = new CategoryFragment();
@@ -45,6 +42,11 @@ public class CategoryFragment extends AppCompatFragment implements CategoryView,
     }
 
     @Override
+    protected CategoryPresenterImpl createPresenter() {
+        return new CategoryPresenterImpl(this);
+    }
+
+    @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -53,11 +55,6 @@ public class CategoryFragment extends AppCompatFragment implements CategoryView,
         }
 
         setHasOptionsMenu(true);
-
-        WeakReference<CategoryView> reference = new WeakReference<CategoryView>(this);
-        categoryPresenter = new CategoryPresenterImpl(reference);
-        categoryPresenter.onCreate();
-
         getActivity().setTitle(getArguments().getString("technology"));
         try {
             ((HomeActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -96,11 +93,11 @@ public class CategoryFragment extends AppCompatFragment implements CategoryView,
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        recyclerView.setAdapter(categoryPresenter.initCategoryAdapter());
+        recyclerView.setAdapter(getPresenter().initCategoryAdapter());
 
         if (!isDataFetchedFromDB) {
             isDataFetchedFromDB = true;
-            categoryPresenter.prepareToFetchQuestionFromDB(getArguments().getInt("serviceType"));
+            getPresenter().prepareToFetchQuestionFromDB(getArguments().getInt("serviceType"));
         }
     }
 
@@ -140,7 +137,6 @@ public class CategoryFragment extends AppCompatFragment implements CategoryView,
         }
     }
 
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -150,33 +146,33 @@ public class CategoryFragment extends AppCompatFragment implements CategoryView,
                 break;
 
             case R.id.action_android:
-                categoryPresenter.clearCategoryAdapter();
+                getPresenter().clearCategoryAdapter();
                 getArguments().putInt("serviceType", Constant.ANDROID);
                 getArguments().putString("technology", getString(R.string.android));
                 getActivity().setTitle(getString(R.string.android));
                 getActivity().invalidateOptionsMenu();
 
-                categoryPresenter.prepareToFetchQuestionFromDB(Constant.ANDROID);
+                getPresenter().prepareToFetchQuestionFromDB(Constant.ANDROID);
                 break;
 
             case R.id.action_ios:
-                categoryPresenter.clearCategoryAdapter();
+                getPresenter().clearCategoryAdapter();
                 getArguments().putInt("serviceType", Constant.IOS);
                 getArguments().putString("technology", getString(R.string.ios));
                 getActivity().setTitle(getString(R.string.ios));
                 getActivity().invalidateOptionsMenu();
 
-                categoryPresenter.prepareToFetchQuestionFromDB(Constant.IOS);
+                getPresenter().prepareToFetchQuestionFromDB(Constant.IOS);
                 break;
 
             case R.id.action_java:
-                categoryPresenter.clearCategoryAdapter();
+                getPresenter().clearCategoryAdapter();
                 getArguments().putInt("serviceType", Constant.JAVA);
                 getArguments().putString("technology", getString(R.string.java));
                 getActivity().setTitle(getString(R.string.java));
                 getActivity().invalidateOptionsMenu();
 
-                categoryPresenter.prepareToFetchQuestionFromDB(Constant.JAVA);
+                getPresenter().prepareToFetchQuestionFromDB(Constant.JAVA);
                 break;
         }
 
@@ -184,20 +180,8 @@ public class CategoryFragment extends AppCompatFragment implements CategoryView,
     }
 
     @Override
-    public void onStart() {
-        categoryPresenter.onStart();
-        super.onStart();
-    }
-
-    @Override
-    public void onDestroy() {
-        categoryPresenter.onDestroy();
-        super.onDestroy();
-    }
-
-    @Override
     public void onItemClicked(View view, int position) {
-        categoryPresenter.showQuestions(position);
+        getPresenter().showQuestions(position);
     }
 
     private void showSnackBar(String error) {
