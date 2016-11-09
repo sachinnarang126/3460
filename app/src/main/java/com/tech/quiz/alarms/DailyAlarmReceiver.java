@@ -19,7 +19,6 @@ public class DailyAlarmReceiver extends WakefulBroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
 
         try {
-            System.out.println("-------starting service");
             Intent service = new Intent(context, DailySchedulingService.class);
             // Start the service, keeping the device awake while it is launching.
             startWakefulService(context, service);
@@ -38,22 +37,21 @@ public class DailyAlarmReceiver extends WakefulBroadcastReceiver {
     public void setAlarm(Context context) {
 
         try {
-            System.out.println("-------setting alarm");
             Calendar calendar = Calendar.getInstance();
-            /*calendar.set(Calendar.HOUR_OF_DAY, 17);
+            calendar.set(Calendar.HOUR_OF_DAY, 17);
             calendar.set(Calendar.MINUTE, 0);
             calendar.set(Calendar.SECOND, 0);
-            calendar.add(Calendar.MINUTE, 1);*/
-            calendar.roll(Calendar.MINUTE, 1);
+            calendar.add(Calendar.MINUTE, 1);
+//            calendar.roll(Calendar.MINUTE, 1);
 
             long todayTimeInMillis = calendar.getTimeInMillis();
 
-            long intervalTimeInMillis = 1000 * 30; //* 60 * 24; // 1 day
+            long intervalTimeInMillis = 1000 * 20 * 60 * 24; // 1 day
             AlarmManager alarmMgr = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
             Intent intent = new Intent(context, DailyAlarmReceiver.class);
             PendingIntent alarmIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-            alarmMgr.setInexactRepeating(AlarmManager.RTC_WAKEUP, todayTimeInMillis, intervalTimeInMillis, alarmIntent);
+            alarmMgr.setRepeating(AlarmManager.RTC_WAKEUP, todayTimeInMillis, intervalTimeInMillis, alarmIntent);
 //            alarmMgr.set(AlarmManager.RTC_WAKEUP, todayTime, alarmIntent);
 
             // Enable {@code SampleBootReceiver} to automatically restart the alarm when the
@@ -65,22 +63,6 @@ public class DailyAlarmReceiver extends WakefulBroadcastReceiver {
                     PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
                     PackageManager.DONT_KILL_APP);
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static void setRepeatingSync(Context context) {
-        try {
-
-            AlarmManager alarmMgr = (AlarmManager) context
-                    .getSystemService(Context.ALARM_SERVICE);
-            Intent intent = new Intent(context, DailyAlarmReceiver.class);
-            PendingIntent alarmIntent = PendingIntent.getBroadcast(context, 0, intent,
-                    PendingIntent.FLAG_UPDATE_CURRENT);
-            alarmMgr.setInexactRepeating(AlarmManager.RTC_WAKEUP,
-                    System.currentTimeMillis(), (24 * 1000 * 60 * 60),
-                    alarmIntent); //every 24 hours
         } catch (Exception e) {
             e.printStackTrace();
         }

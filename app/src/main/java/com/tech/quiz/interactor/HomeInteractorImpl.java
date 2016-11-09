@@ -32,6 +32,7 @@ public class HomeInteractorImpl implements HomeInteractor {
         });
     }
 
+
     @Override
     public void getAndroidQuestions(final OnAndroidQuestionResponseListener questionResponseListener, Call<QuestionResponse> questionCall) {
 

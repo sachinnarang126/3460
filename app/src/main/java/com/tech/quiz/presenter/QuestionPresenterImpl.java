@@ -36,9 +36,9 @@ public class QuestionPresenterImpl implements QuestionPresenter {
 
     @Override
     public void onDestroy() {
+        questionPagerAdapter = null;
         questionView.clear();
         shuffledQuestionList.clear();
-        questionPagerAdapter = null;
     }
 
     @Override

@@ -10,4 +10,6 @@ public interface CategoryView {
     void hideProgress();
 
     void onError(String error);
+
+    void manageRecyclerView(int visibility);
 }
