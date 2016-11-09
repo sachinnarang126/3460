@@ -144,11 +144,11 @@ public abstract class AppBaseCompatActivity<T extends MvpBasePresenter> extends 
      * returns the service call object from service map, you can not override this method.
      *
      * @param key key value of the service call (Basically the url)
-     * @param <T> Generic type of the service call
+     * @param <V> Generic type of the service call
      * @return Returns the Generic type if exists otherwise null
      */
 
-    final public <T> Call<T> getServiceCallIfExist(String key) {
+    final public <V> Call<V> getServiceCallIfExist(String key) {
         if (mServiceCallsMap != null && mServiceCallsMap.containsKey(key))
             return mServiceCallsMap.get(key).clone();
         else
