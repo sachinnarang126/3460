@@ -19,24 +19,20 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 import com.tech.R;
-import com.tech.quiz.basecontroller.AppCompatFragment;
 import com.tech.quiz.databasemanager.DatabaseManager;
 import com.tech.quiz.presenter.HomePresenterImpl;
-import com.tech.quiz.repositories.presenter.HomePresenter;
 import com.tech.quiz.util.Constant;
 import com.tech.quiz.view.activity.HomeActivity;
 import com.tech.quiz.view.activity.SettingsActivity;
 import com.tech.quiz.view.activity.SubscriptionDataActivity;
 import com.tech.quiz.view.views.HomeView;
 
-import java.lang.ref.WeakReference;
+import library.basecontroller.AppCompatFragment;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class HomeFragment extends AppCompatFragment implements View.OnClickListener, HomeView {
-
-    private HomePresenter homePresenter;
+public class HomeFragment extends AppCompatFragment<HomePresenterImpl> implements View.OnClickListener, HomeView {
 
     public static HomeFragment getInstance() {
         return new HomeFragment();
@@ -52,20 +48,15 @@ public class HomeFragment extends AppCompatFragment implements View.OnClickListe
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        WeakReference<HomeView> weakReference = new WeakReference<HomeView>(this);
-        homePresenter = new HomePresenterImpl(weakReference);
-        homePresenter.prepareToFetchQuestion();
-
-        if (!((HomeActivity) getActivity()).isSubscribedUser())
-            MobileAds.initialize(getActivity().getApplicationContext(), getString(R.string.home_footer));
+    protected HomePresenterImpl createPresenter() {
+        return new HomePresenterImpl(this, getContext());
     }
 
     @Override
-    public void onDestroy() {
-        homePresenter.onDestroy();
-        super.onDestroy();
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (!((HomeActivity) getActivity()).isSubscribedUser())
+            MobileAds.initialize(getActivity().getApplicationContext(), getString(R.string.home_footer));
     }
 
     @Override

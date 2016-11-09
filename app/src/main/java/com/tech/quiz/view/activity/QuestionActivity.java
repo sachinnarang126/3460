@@ -13,18 +13,19 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 import com.tech.R;
-import com.tech.quiz.basecontroller.AppBaseCompatActivity;
 import com.tech.quiz.presenter.QuestionPresenterImpl;
-import com.tech.quiz.repositories.presenter.QuestionPresenter;
 import com.tech.quiz.util.Constant;
 import com.tech.quiz.util.DepthPageTransformer;
 import com.tech.quiz.view.views.QuestionView;
 
-import java.lang.ref.WeakReference;
+import library.basecontroller.AppBaseCompatActivity;
 
-public class QuestionActivity extends AppBaseCompatActivity implements QuestionView {
+public class QuestionActivity extends AppBaseCompatActivity<QuestionPresenterImpl> implements QuestionView {
 
-    private QuestionPresenter questionPresenter;
+    @Override
+    protected QuestionPresenterImpl createPresenter() {
+        return new QuestionPresenterImpl(this, this);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,14 +55,10 @@ public class QuestionActivity extends AppBaseCompatActivity implements QuestionV
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
 
-        WeakReference<QuestionView> reference = new WeakReference<QuestionView>(this);
-        questionPresenter = new QuestionPresenterImpl(reference);
-
         showProgress();
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
         viewPager.setPageTransformer(true, new DepthPageTransformer());
-        questionPresenter.onCreate();
-        viewPager.setAdapter(questionPresenter.initAdapter(getIntent().getIntExtra("technology", 0)));
+        viewPager.setAdapter(getPresenter().initAdapter(getIntent().getIntExtra("technology", 0)));
         hideProgress();
     }
 
@@ -80,22 +77,22 @@ public class QuestionActivity extends AppBaseCompatActivity implements QuestionV
 
             case R.id.action_show_answered:
                 getSupportActionBar().setSubtitle(getString(R.string.answered));
-                questionPresenter.prepareListToShowAnsweredQuestion();
+                getPresenter().prepareListToShowAnsweredQuestion();
                 break;
 
             case R.id.action_show_unanswered:
                 getSupportActionBar().setSubtitle(getString(R.string.unanswered));
-                questionPresenter.prepareListToShowUnansweredQuestion();
+                getPresenter().prepareListToShowUnansweredQuestion();
                 break;
 
             case R.id.action_show_all:
                 getSupportActionBar().setSubtitle(getString(R.string.all));
-                questionPresenter.prepareListToShowAllQuestion();
+                getPresenter().prepareListToShowAllQuestion();
                 break;
 
             case R.id.action_reset_all:
                 getSupportActionBar().setSubtitle(getString(R.string.reset));
-                questionPresenter.prepareListToResetAll();
+                getPresenter().prepareListToResetAll();
                 break;
         }
 
@@ -115,8 +112,7 @@ public class QuestionActivity extends AppBaseCompatActivity implements QuestionV
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        questionPresenter.onDestroy();
-        questionPresenter = null;
+        getPresenter().onDestroy();
         LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(Constant.CATEGORY_RECEIVER));
     }
 }

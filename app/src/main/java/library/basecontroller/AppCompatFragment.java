@@ -1,15 +1,19 @@
-package com.tech.quiz.basecontroller;
+package library.basecontroller;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import library.mvp.MvpBasePresenter;
 import retrofit2.Call;
 
-public class AppCompatFragment extends Fragment {
+public abstract class AppCompatFragment<T extends MvpBasePresenter> extends Fragment {
 
+    private T presenter;
     /**
      * holds the executing or executed service call instances
      */
@@ -22,9 +26,47 @@ public class AppCompatFragment extends Fragment {
         mServiceCallsMap = new HashMap<>();
     }
 
+    public T getPresenter() {
+        return presenter;
+    }
+
+    abstract protected T createPresenter();
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        presenter = createPresenter();
+        presenter.onCreate();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        presenter.onStart();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        presenter.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        presenter.onPause();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        presenter.onStop();
+    }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
+        presenter.onDestroy();
         cancelAllServiceCalls(new ArrayList<>(mServiceCallsMap.values()));
         mServiceCallsMap = null;
     }

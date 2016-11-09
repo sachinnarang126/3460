@@ -6,10 +6,17 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.tech.R;
-import com.tech.quiz.basecontroller.AppBaseCompatActivity;
 import com.tech.quiz.view.fragment.SettingsFragment;
 
+import library.basecontroller.AppBaseCompatActivity;
+import library.mvp.MvpBasePresenter;
+
 public class SettingsActivity extends AppBaseCompatActivity {
+
+    @Override
+    protected MvpBasePresenter createPresenter() {
+        return null;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

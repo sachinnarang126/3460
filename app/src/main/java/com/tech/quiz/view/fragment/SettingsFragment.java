@@ -3,23 +3,26 @@ package com.tech.quiz.view.fragment;
 
 import android.os.Bundle;
 import android.preference.Preference;
-import android.preference.PreferenceFragment;
 
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
 import com.tech.R;
 import com.tech.quiz.presenter.SettingPresenterImpl;
-import com.tech.quiz.repositories.presenter.SettingPresenter;
 import com.tech.quiz.view.activity.SettingsActivity;
 import com.tech.quiz.view.views.SettingView;
 
-import java.lang.ref.WeakReference;
+import library.basecontroller.PreferenceCompatFragment;
 
-public class SettingsFragment extends PreferenceFragment implements SettingView {
+public class SettingsFragment extends PreferenceCompatFragment<SettingPresenterImpl> implements SettingView {
 
     public static SettingsFragment getInstance() {
         return new SettingsFragment();
+    }
+
+    @Override
+    protected SettingPresenterImpl createPresenter() {
+        return new SettingPresenterImpl(this, getActivity());
     }
 
     @Override
@@ -28,10 +31,8 @@ public class SettingsFragment extends PreferenceFragment implements SettingView 
 //        SwitchPreference prefRemoveQuestion = (SwitchPreference) findPreference("prefRemoveQuestion");
         addPreferencesFromResource(R.xml.settings);
 
-        WeakReference<SettingView> weakReference = new WeakReference<SettingView>(this);
-        SettingPresenter settingPresenter = new SettingPresenterImpl(weakReference);
         Preference prefResetAll = findPreference("prefResetAll");
-        prefResetAll.setOnPreferenceClickListener((SettingPresenterImpl) settingPresenter);
+        prefResetAll.setOnPreferenceClickListener(getPresenter());
 
         final InterstitialAd mInterstitialAd = new InterstitialAd(getActivity());
         if (!((SettingsActivity) getActivity()).isSubscribedUser()) {

@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.tech.R;
-import com.tech.quiz.basecontroller.AppBaseCompatActivity;
 import com.tech.quiz.billing.IabHelper;
 import com.tech.quiz.billing.IabResult;
 import com.tech.quiz.billing.Inventory;
@@ -15,10 +14,13 @@ import com.tech.quiz.billing.Purchase;
 import com.tech.quiz.dataholder.DataHolder;
 import com.tech.quiz.util.Constant;
 
+import library.basecontroller.AppBaseCompatActivity;
+import library.mvp.MvpBasePresenter;
+
 public class SubscriptionDataActivity extends AppBaseCompatActivity {
 
-    private static final int REQUEST_CODE_GOOGLE_WALLET = 10001;
     public final static String ITEM_SKU = "ad_free";
+    private static final int REQUEST_CODE_GOOGLE_WALLET = 10001;
     private String TAG = "com.tech.quiz";
     /*IabHelper.OnConsumeFinishedListener mConsumeFinishedListener =
             new IabHelper.OnConsumeFinishedListener() {
@@ -103,6 +105,11 @@ public class SubscriptionDataActivity extends AppBaseCompatActivity {
                     mConsumeFinishedListener);*/
         }
     };
+
+    @Override
+    protected MvpBasePresenter createPresenter() {
+        return null;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

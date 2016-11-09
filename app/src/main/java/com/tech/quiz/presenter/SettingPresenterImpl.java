@@ -1,31 +1,29 @@
 package com.tech.quiz.presenter;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.preference.Preference;
 import android.support.v7.app.AlertDialog;
 
 import com.tech.quiz.databasemanager.DatabaseManager;
 import com.tech.quiz.repositories.presenter.SettingPresenter;
-import com.tech.quiz.view.fragment.SettingsFragment;
 import com.tech.quiz.view.views.SettingView;
 
-import java.lang.ref.WeakReference;
+import library.mvp.MvpBasePresenter;
 
 /**
  * Created by root on 12/10/16.
  */
 
-public class SettingPresenterImpl implements SettingPresenter, Preference.OnPreferenceClickListener {
+public class SettingPresenterImpl extends MvpBasePresenter<SettingView> implements SettingPresenter, Preference.OnPreferenceClickListener {
 
-    private WeakReference<SettingView> settingView;
-
-    public SettingPresenterImpl(WeakReference<SettingView> settingView) {
-        this.settingView = settingView;
+    public SettingPresenterImpl(SettingView view, Context context) {
+        attachView(view, context);
     }
 
     @Override
     public void showResetAllQuestionDialog(String message, DialogInterface.OnClickListener okListener) {
-        new AlertDialog.Builder(((SettingsFragment) settingView.get()).getActivity())
+        new AlertDialog.Builder(getContext())
                 .setMessage(message)
                 .setPositiveButton("OK", okListener)
                 .setNegativeButton("Cancel", null)
@@ -35,7 +33,7 @@ public class SettingPresenterImpl implements SettingPresenter, Preference.OnPref
 
     @Override
     public void resetAllQuestion() {
-        DatabaseManager databaseManager = DatabaseManager.getDataBaseManager(((SettingsFragment) settingView.get()).getActivity());
+        DatabaseManager databaseManager = DatabaseManager.getDataBaseManager(getContext());
         databaseManager.initDefaultValueToAllQuestion();
     }
 
@@ -48,11 +46,41 @@ public class SettingPresenterImpl implements SettingPresenter, Preference.OnPref
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         resetAllQuestion();
-                        settingView.get().showSnackBar("Question reset successfully");
+                        getView().showSnackBar("Question reset successfully");
                     }
                 });
                 break;
         }
         return false;
+    }
+
+    @Override
+    public void onCreate() {
+
+    }
+
+    @Override
+    public void onStart() {
+
+    }
+
+    @Override
+    public void onResume() {
+
+    }
+
+    @Override
+    public void onPause() {
+
+    }
+
+    @Override
+    public void onStop() {
+
+    }
+
+    @Override
+    public void onDestroy() {
+        detachView();
     }
 }

@@ -10,19 +10,21 @@ import android.view.WindowManager;
 import android.widget.ProgressBar;
 
 import com.tech.R;
-import com.tech.quiz.basecontroller.AppBaseCompatActivity;
 import com.tech.quiz.dataholder.DataHolder;
 import com.tech.quiz.presenter.SplashPresenterImpl;
-import com.tech.quiz.repositories.presenter.SplashPresenter;
 import com.tech.quiz.util.Constant;
 import com.tech.quiz.view.views.SplashView;
 
-import java.lang.ref.WeakReference;
+import library.basecontroller.AppBaseCompatActivity;
 
-public class SplashActivity extends AppBaseCompatActivity implements SplashView {
+public class SplashActivity extends AppBaseCompatActivity<SplashPresenterImpl> implements SplashView {
 
     private ProgressBar progressBar;
-    private SplashPresenter splashPresenter;
+
+    @Override
+    protected SplashPresenterImpl createPresenter() {
+        return new SplashPresenterImpl(this, this);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,14 +40,12 @@ public class SplashActivity extends AppBaseCompatActivity implements SplashView 
             decorView.setSystemUiVisibility(uiOptions);
         }
         setContentView(R.layout.activity_splash);
-        WeakReference<SplashView> splashViewWeakReference = new WeakReference<SplashView>(this);
-        splashPresenter = new SplashPresenterImpl(splashViewWeakReference);
 
         if (DataHolder.getInstance().getPreferences(this).
                 getBoolean(Constant.IS_APP_FIRST_LAUNCH, true)) {
             progressBar = (ProgressBar) findViewById(R.id.progressBar);
             // fetch all data from server and save it to local DB
-            splashPresenter.prepareToFetchQuestion();
+            getPresenter().prepareToFetchQuestion();
         } else {
             startActivity(new Intent(SplashActivity.this, HomeActivity.class));
             finish();
@@ -80,7 +80,7 @@ public class SplashActivity extends AppBaseCompatActivity implements SplashView 
 
     @Override
     protected void onDestroy() {
-        splashPresenter.onDestroy();
+        getPresenter().onDestroy();
         super.onDestroy();
     }
 

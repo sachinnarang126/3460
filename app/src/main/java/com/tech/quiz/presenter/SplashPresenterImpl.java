@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
 
-import com.tech.BuildConfig;
 import com.tech.R;
 import com.tech.quiz.billing.IabHelper;
 import com.tech.quiz.billing.IabResult;
@@ -28,40 +27,66 @@ import com.tech.quiz.view.activity.SplashActivity;
 import com.tech.quiz.view.activity.SubscriptionDataActivity;
 import com.tech.quiz.view.views.SplashView;
 
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
+import library.mvp.MvpBasePresenter;
 import retrofit2.Call;
 
 /**
  * Created by root on 28/9/16.
  */
 
-public class SplashPresenterImpl implements SplashPresenter, SplashInteractor.OnIosQuestionResponseListener,
+public class SplashPresenterImpl extends MvpBasePresenter<SplashView> implements SplashPresenter, SplashInteractor.OnIosQuestionResponseListener,
         SplashInteractor.OnAndroidQuestionResponseListener, SplashInteractor.OnJavaQuestionResponseListener {
 
-    private WeakReference<SplashView> splashView;
     private SplashInteractor splashInteractor;
     private int serviceCount;
 
-    public SplashPresenterImpl(WeakReference<SplashView> splashView) {
-        this.splashView = splashView;
+    public SplashPresenterImpl(SplashView view, Context context) {
+        attachView(view, context);
         splashInteractor = new SplashInteractorImpl();
     }
 
     @Override
+    public void onCreate() {
+
+    }
+
+    @Override
+    public void onStart() {
+
+    }
+
+    @Override
+    public void onResume() {
+
+    }
+
+    @Override
+    public void onPause() {
+
+    }
+
+    @Override
+    public void onStop() {
+
+    }
+
+    @Override
     public void onDestroy() {
-        splashView.clear();
+        detachView();
     }
 
     @Override
     public void prepareToFetchQuestion() {
-        if (splashView.get() != null) {
-            SplashActivity context = (SplashActivity) splashView.get();
+        if (isViewAttached()) {
+            SplashActivity context = (SplashActivity) getContext();
             if (context.isInternetAvailable()) {
+
                 queryInventory();
-                splashView.get().showProgress();
+                getView().showProgress();
+
                 RetrofitApiService apiService = RetrofitClient.getRetrofitClient();
                 Call<QuestionResponse> androidQuestionCall;
                 if (context.isServiceCallExist(Constant.ANDROID_URL)) {
@@ -115,7 +140,7 @@ public class SplashPresenterImpl implements SplashPresenter, SplashInteractor.On
 
     @Override
     synchronized public void saveDataToDB(List<QuestionResponse.Response> questionList, int serviceType) {
-        DatabaseManager databaseManager = DatabaseManager.getDataBaseManager((SplashActivity) splashView.get());
+        DatabaseManager databaseManager = DatabaseManager.getDataBaseManager(getContext());
         switch (serviceType) {
             case Constant.ANDROID:
                 saveAndroidQuestion(databaseManager, questionList);
@@ -195,79 +220,72 @@ public class SplashPresenterImpl implements SplashPresenter, SplashInteractor.On
 
     @Override
     public void goToHomeActivity() {
-        Context context = (SplashActivity) splashView.get();
-        DataHolder.getInstance().getPreferences(context).edit().putBoolean(Constant.IS_APP_FIRST_LAUNCH, false).apply();
-        splashView.get().hideProgress();
-        Intent intent = new Intent(context, HomeActivity.class);
-        context.startActivity(intent);
-        ((SplashActivity) context).finish();
+        if (isViewAttached()) {
+            DataHolder.getInstance().getPreferences(getContext()).edit().putBoolean(Constant.IS_APP_FIRST_LAUNCH, false).apply();
+            getView().hideProgress();
+            Intent intent = new Intent(getContext(), HomeActivity.class);
+            getContext().startActivity(intent);
+            ((SplashActivity) getContext()).finish();
+        }
     }
 
     @Override
     public void queryInventory() {
-        if (!BuildConfig.DEBUG) {
-            final Context context = (SplashActivity) splashView.get();
-            final IabHelper mHelper = new IabHelper(context, Constant.BASE_64);
+        final IabHelper mHelper = new IabHelper(getContext(), Constant.BASE_64);
 
-            final IabHelper.QueryInventoryFinishedListener mGotInventoryListener = new IabHelper.QueryInventoryFinishedListener() {
-                public void onQueryInventoryFinished(IabResult result, Inventory inventory) {
+        final IabHelper.QueryInventoryFinishedListener mGotInventoryListener = new IabHelper.QueryInventoryFinishedListener() {
+            public void onQueryInventoryFinished(IabResult result, Inventory inventory) {
 
-                    if (result.isFailure()) {
-                        return;
-                    }
-
-                    SharedPreferences sharedPreferences = DataHolder.getInstance().getPreferences(context);
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-
-                    Purchase purchase = inventory.getPurchase(SubscriptionDataActivity.ITEM_SKU);
-
-                    if (purchase != null) {
-                        System.out.println("you own this product");
-                        System.out.println("purchase time in millis " + purchase.getPurchaseTime());
-                        editor.putBoolean(Constant.IS_SUBSCRIBED_USER, true);
-                        editor.putLong(Constant.PURCHASE_TIME, purchase.getPurchaseTime());
-                        editor.putString(Constant.TOKEN, purchase.getToken());
-                        editor.putString(Constant.SKU, purchase.getSku());
-                        editor.apply();
-
-                    } else {
-                        System.out.println("you don't own this product");
-                    }
-
-                    if (mHelper != null) {
-                        mHelper.dispose();
-                    }
+                if (result.isFailure()) {
+                    return;
                 }
-            };
 
-            Log.d("SubscriptionData", "Creating IAB helper.");
-            // Create the helper, passing it our context and the public key to verify signatures with
-            // enable debug logging (for a production application, you should set this to false).
-            mHelper.enableDebugLogging(true);
+                SharedPreferences sharedPreferences = DataHolder.getInstance().getPreferences(getContext());
+                SharedPreferences.Editor editor = sharedPreferences.edit();
 
+                Purchase purchase = inventory.getPurchase(SubscriptionDataActivity.ITEM_SKU);
 
-            // Start setup. This is asynchronous and the specified listener
-            // will be called once setup completes.
-            mHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
-                public void onIabSetupFinished(IabResult result) {
-                    System.out.println("setup finished");
+                if (purchase != null) {
+                    System.out.println("you own this product");
+                    System.out.println("purchase time in millis " + purchase.getPurchaseTime());
+                    editor.putBoolean(Constant.IS_SUBSCRIBED_USER, true);
+                    editor.putLong(Constant.PURCHASE_TIME, purchase.getPurchaseTime());
+                    editor.putString(Constant.TOKEN, purchase.getToken());
+                    editor.putString(Constant.SKU, purchase.getSku());
+                    editor.apply();
 
-                    if (!result.isSuccess()) {
-                        // Oh noes, there was a problem.
-                        return;
-                    }
-
-                    // IAB is fully set up. Now, let's get an inventory of stuff we own.
-                    Log.d("SubscriptionData", "Setup successful. Querying inventory.");
-                    mHelper.queryInventoryAsync(mGotInventoryListener);
                 }
-            });
+                mHelper.dispose();
+            }
+        };
 
-        }
+        Log.d("SubscriptionData", "Creating IAB helper.");
+        // Create the helper, passing it our context and the public key to verify signatures with
+        // enable debug logging (for a production application, you should set this to false).
+        mHelper.enableDebugLogging(true);
+
+
+        // Start setup. This is asynchronous and the specified listener
+        // will be called once setup completes.
+        mHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
+            public void onIabSetupFinished(IabResult result) {
+                System.out.println("setup finished");
+
+                if (!result.isSuccess()) {
+                    // Oh noes, there was a problem.
+                    return;
+                }
+
+                // IAB is fully set up. Now, let's get an inventory of stuff we own.
+                Log.d("SubscriptionData", "Setup successful. Querying inventory.");
+                mHelper.queryInventoryAsync(mGotInventoryListener);
+            }
+        });
     }
 
     private void saveTimeToPreference() {
-        DataHolder.getInstance().getPreferences((SplashActivity) splashView.get()).edit().
-                putLong(Constant.UPDATED_QUESTION_TIME_IN_MILLIS, System.currentTimeMillis()).apply();
+        if (isViewAttached())
+            DataHolder.getInstance().getPreferences(getContext()).edit().
+                    putLong(Constant.UPDATED_QUESTION_TIME_IN_MILLIS, System.currentTimeMillis()).apply();
     }
 }
