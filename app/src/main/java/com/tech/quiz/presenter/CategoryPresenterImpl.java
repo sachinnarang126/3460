@@ -22,7 +22,9 @@ import com.tech.quiz.view.fragment.CategoryFragment;
 import com.tech.quiz.view.views.CategoryView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import library.mvp.MvpBasePresenter;
 
@@ -32,6 +34,7 @@ public class CategoryPresenterImpl extends MvpBasePresenter<CategoryView> implem
     private CategoryAdapter categoryAdapter;
     private List<Questions> questionList;
     private boolean hasToShowRecyclerView;
+    private Map<String, Integer> categoryMap;
 
     private BroadcastReceiver receiver = new BroadcastReceiver() {
 
@@ -48,6 +51,7 @@ public class CategoryPresenterImpl extends MvpBasePresenter<CategoryView> implem
     public CategoryPresenterImpl(CategoryView view, Context context) {
         attachView(view, context);
         categoryInteractor = new CategoryInteractorImpl(context);
+        categoryMap = new HashMap<>();
     }
 
     @Override
@@ -56,6 +60,7 @@ public class CategoryPresenterImpl extends MvpBasePresenter<CategoryView> implem
         if (isViewAttached())
             LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(receiver);
         categoryList.clear();
+        categoryMap.clear();
         questionList = null;
         categoryAdapter = null;
         detachView();
@@ -193,24 +198,35 @@ public class CategoryPresenterImpl extends MvpBasePresenter<CategoryView> implem
     @Override
     public void updateUI(List<Questions> responseList) {
         questionList = responseList;
+        categoryMap.clear();
         categoryList.clear();
         categoryList.add("All Question");
+        categoryMap.put("All Question", 0);
+        int allQuestionCount = 0;
         for (Questions questions : responseList) {
-            if (!categoryList.contains(questions.getCategory()))
+            allQuestionCount++;
+            if (categoryMap.containsKey(questions.getCategory())) {
+                categoryMap.put(questions.getCategory(), categoryMap.get(questions.getCategory()) + 1);
+            } else {
                 categoryList.add(questions.getCategory());
+                categoryMap.put(questions.getCategory(), 1);
+            }
+            /*if (!categoryList.contains(questions.getCategory()))
+                categoryList.add(questions.getCategory());*/
         }
-
+        categoryMap.put("All Question", allQuestionCount);
         categoryAdapter.notifyDataSetChanged();
     }
 
     @Override
     public CategoryAdapter initCategoryAdapter() {
-        return categoryAdapter = new CategoryAdapter(categoryList, (CategoryFragment) getView());
+        return categoryAdapter = new CategoryAdapter(categoryList, categoryMap, (CategoryFragment) getView());
     }
 
     @Override
     public void clearCategoryAdapter() {
         categoryList.clear();
+        categoryMap.clear();
         categoryAdapter.notifyDataSetChanged();
     }
 
