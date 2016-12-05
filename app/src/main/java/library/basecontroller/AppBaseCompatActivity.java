@@ -22,6 +22,7 @@ import java.util.List;
 
 import library.mvp.MvpBasePresenter;
 import retrofit2.Call;
+import rx.Subscription;
 
 
 public abstract class AppBaseCompatActivity<T extends MvpBasePresenter> extends AppCompatActivity {
@@ -32,6 +33,7 @@ public abstract class AppBaseCompatActivity<T extends MvpBasePresenter> extends 
      */
 
     private HashMap<String, Call> mServiceCallsMap;
+    private HashMap<String, Subscription> mRxSubscriberMap;
 
     public T getPresenter() {
         return presenter;
@@ -48,10 +50,23 @@ public abstract class AppBaseCompatActivity<T extends MvpBasePresenter> extends 
             if (call != null) call.cancel();
     }
 
+    private void unSubscribeAllRxSubscriber(List<Subscription> subscriberList) {
+        /*Observable.from(subscriberList).subscribe(new Action1<Subscriber>() {
+            @Override
+            public void call(Subscriber subscriber) {
+                subscriber.unsubscribe();
+            }
+        });*/
+        System.out.println("canceling all web services");
+        for (Subscription subscription : subscriberList)
+            if (subscription != null) subscription.unsubscribe();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mServiceCallsMap = new HashMap<>();
+        mRxSubscriberMap = new HashMap<>();
         presenter = createPresenter();
         if (presenter != null)
             presenter.onCreate();
@@ -93,6 +108,11 @@ public abstract class AppBaseCompatActivity<T extends MvpBasePresenter> extends 
         if (mServiceCallsMap != null) {
             cancelAllServiceCalls(new ArrayList<>(mServiceCallsMap.values()));
             mServiceCallsMap = null;
+        }
+
+        if (mRxSubscriberMap != null) {
+            unSubscribeAllRxSubscriber(new ArrayList<>(mRxSubscriberMap.values()));
+            mRxSubscriberMap = null;
         }
     }
 
@@ -165,6 +185,10 @@ public abstract class AppBaseCompatActivity<T extends MvpBasePresenter> extends 
 
     final public <T> void putServiceCallInServiceMap(Call<T> call, String key) {
         mServiceCallsMap.put(key, call);
+    }
+
+    final public <T> void putSubscriberInMap(Subscription subscription, String key) {
+        mRxSubscriberMap.put(key, subscription);
     }
 
     /**

@@ -35,7 +35,6 @@ public class QuestionActivity extends AppBaseCompatActivity<QuestionPresenterImp
         if (!isSubscribedUser()) {
             MobileAds.initialize(getApplicationContext(), getString(R.string.question_footer));
 
-
             mAdView.setVisibility(View.VISIBLE);
             AdRequest adRequest = new AdRequest.Builder()
                     .addTestDevice("9210683FFFBDE1953CE613AB2FDE46E5").
@@ -76,22 +75,26 @@ public class QuestionActivity extends AppBaseCompatActivity<QuestionPresenterImp
                 break;
 
             case R.id.action_show_answered:
-                getSupportActionBar().setSubtitle(getString(R.string.answered));
+                if (getSupportActionBar() != null)
+                    getSupportActionBar().setSubtitle(getString(R.string.answered));
                 getPresenter().prepareListToShowAnsweredQuestion();
                 break;
 
             case R.id.action_show_unanswered:
-                getSupportActionBar().setSubtitle(getString(R.string.unanswered));
+                if (getSupportActionBar() != null)
+                    getSupportActionBar().setSubtitle(getString(R.string.unanswered));
                 getPresenter().prepareListToShowUnansweredQuestion();
                 break;
 
             case R.id.action_show_all:
-                getSupportActionBar().setSubtitle(getString(R.string.all));
+                if (getSupportActionBar() != null)
+                    getSupportActionBar().setSubtitle(getString(R.string.all));
                 getPresenter().prepareListToShowAllQuestion();
                 break;
 
             case R.id.action_reset_all:
-                getSupportActionBar().setSubtitle(getString(R.string.reset));
+                if (getSupportActionBar() != null)
+                    getSupportActionBar().setSubtitle(getString(R.string.reset));
                 getPresenter().prepareListToResetAll();
                 break;
         }

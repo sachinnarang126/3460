@@ -11,10 +11,13 @@ import com.tech.quiz.view.views.QuestionView;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 
 import library.mvp.MvpBasePresenter;
+import rx.Observable;
+import rx.Subscriber;
+import rx.functions.Action1;
+import rx.functions.Func1;
 
 /**
  * Created by root on 28/9/16.
@@ -30,10 +33,7 @@ public class QuestionPresenterImpl extends MvpBasePresenter<QuestionView> implem
 
     @Override
     public void onCreate() {
-        shuffledQuestionList.addAll(DataHolder.getInstance().getQuestionList());
         shuffleQuestion();
-        Collections.shuffle(shuffledQuestionList);
-        DataHolder.getInstance().setShuffledQuestionList(shuffledQuestionList);
     }
 
     @Override
@@ -68,9 +68,27 @@ public class QuestionPresenterImpl extends MvpBasePresenter<QuestionView> implem
         if (isViewAttached()) {
             getView().showProgress();
             shuffledQuestionList.clear();
-            shuffledQuestionList.addAll(DataHolder.getInstance().getQuestionList());
+            Observable.from(DataHolder.getInstance().getQuestionList()).
+                    subscribe(new Subscriber<Questions>() {
+                        @Override
+                        public void onCompleted() {
+                            questionPagerAdapter.notifyDataSetChanged();
+                            getView().hideProgress();
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+
+                        }
+
+                        @Override
+                        public void onNext(Questions questions) {
+                            shuffledQuestionList.add(questions);
+                        }
+                    });
+            /*shuffledQuestionList.addAll(DataHolder.getInstance().getQuestionList());
             questionPagerAdapter.notifyDataSetChanged();
-            getView().hideProgress();
+            getView().hideProgress();*/
         }
     }
 
@@ -79,7 +97,31 @@ public class QuestionPresenterImpl extends MvpBasePresenter<QuestionView> implem
         if (isViewAttached()) {
             getView().showProgress();
             shuffledQuestionList.clear();
-            shuffledQuestionList.addAll(DataHolder.getInstance().getQuestionList());
+            Observable.from(DataHolder.getInstance().getQuestionList()).
+                    filter(new Func1<Questions, Boolean>() {
+                        @Override
+                        public Boolean call(Questions questions) {
+                            return !questions.isAttempted();
+                        }
+                    }).
+                    subscribe(new Subscriber<Questions>() {
+                        @Override
+                        public void onCompleted() {
+                            questionPagerAdapter.notifyDataSetChanged();
+                            getView().hideProgress();
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+
+                        }
+
+                        @Override
+                        public void onNext(Questions questions) {
+                            shuffledQuestionList.add(questions);
+                        }
+                    });
+            /*shuffledQuestionList.addAll(DataHolder.getInstance().getQuestionList());
             Iterator<Questions> iterator = shuffledQuestionList.iterator();
             while (iterator.hasNext()) {
                 Questions response = iterator.next();
@@ -87,7 +129,7 @@ public class QuestionPresenterImpl extends MvpBasePresenter<QuestionView> implem
                     iterator.remove();
             }
             questionPagerAdapter.notifyDataSetChanged();
-            getView().hideProgress();
+            getView().hideProgress();*/
         }
     }
 
@@ -96,7 +138,31 @@ public class QuestionPresenterImpl extends MvpBasePresenter<QuestionView> implem
         if (isViewAttached()) {
             getView().showProgress();
             shuffledQuestionList.clear();
-            shuffledQuestionList.addAll(DataHolder.getInstance().getQuestionList());
+            Observable.from(DataHolder.getInstance().getQuestionList()).
+                    filter(new Func1<Questions, Boolean>() {
+                        @Override
+                        public Boolean call(Questions questions) {
+                            return questions.isAttempted();
+                        }
+                    }).
+                    subscribe(new Subscriber<Questions>() {
+                        @Override
+                        public void onCompleted() {
+                            questionPagerAdapter.notifyDataSetChanged();
+                            getView().hideProgress();
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+
+                        }
+
+                        @Override
+                        public void onNext(Questions questions) {
+                            shuffledQuestionList.add(questions);
+                        }
+                    });
+            /*shuffledQuestionList.addAll(DataHolder.getInstance().getQuestionList());
             Iterator<Questions> iterator = shuffledQuestionList.iterator();
             while (iterator.hasNext()) {
                 Questions response = iterator.next();
@@ -104,7 +170,7 @@ public class QuestionPresenterImpl extends MvpBasePresenter<QuestionView> implem
                     iterator.remove();
             }
             questionPagerAdapter.notifyDataSetChanged();
-            getView().hideProgress();
+            getView().hideProgress();*/
         }
     }
 
@@ -113,17 +179,144 @@ public class QuestionPresenterImpl extends MvpBasePresenter<QuestionView> implem
         if (isViewAttached()) {
             getView().showProgress();
             shuffledQuestionList.clear();
-            shuffledQuestionList.addAll(DataHolder.getInstance().getQuestionList());
+            Observable.from(DataHolder.getInstance().getQuestionList()).
+                    map(new Func1<Questions, Questions>() {
+                        @Override
+                        public Questions call(Questions questions) {
+                            List<String> shuffledOptionList = new ArrayList<>();
+                            questions.setAttempted(false);
+                            questions.setCorrectAnswerProvided(false);
+                            questions.setUserAnswer(0);
+                            String answer = "";
+                            switch (questions.getAnswer()) {
+                                case "1":
+                                    answer = questions.getA();
+                                    break;
+
+                                case "2":
+                                    answer = questions.getB();
+                                    break;
+
+                                case "3":
+                                    answer = questions.getC();
+                                    break;
+
+                                case "4":
+                                    answer = questions.getD();
+                                    break;
+                            }
+
+                            shuffledOptionList.add(questions.getA());
+                            shuffledOptionList.add(questions.getB());
+                            shuffledOptionList.add(questions.getC());
+                            shuffledOptionList.add(questions.getD());
+
+                            Collections.shuffle(shuffledOptionList);
+
+                            int answerIndex = shuffledOptionList.indexOf(answer);
+
+                            questions.setAnswer(String.valueOf(answerIndex + 1));
+
+                            questions.setA(shuffledOptionList.get(0));
+                            questions.setB(shuffledOptionList.get(1));
+                            questions.setC(shuffledOptionList.get(2));
+                            questions.setD(shuffledOptionList.get(3));
+
+                            return questions;
+                        }
+                    }).
+                    subscribe(new Subscriber<Questions>() {
+                        @Override
+                        public void onCompleted() {
+                            questionPagerAdapter.notifyDataSetChanged();
+                            getView().hideProgress();
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+
+                        }
+
+                        @Override
+                        public void onNext(Questions questions) {
+                            shuffledQuestionList.add(questions);
+                        }
+                    });
+            /*shuffledQuestionList.addAll(DataHolder.getInstance().getQuestionList());
             shuffleQuestionAndResetAllLocally();
             questionPagerAdapter.notifyDataSetChanged();
-            getView().hideProgress();
+            getView().hideProgress();*/
 
         }
     }
 
     @Override
     public void shuffleQuestion() {
-        List<String> shuffledOptionList = new ArrayList<>();
+        Observable.from(DataHolder.getInstance().getQuestionList()).
+                map(new Func1<Questions, Questions>() {
+                    @Override
+                    public Questions call(Questions question) {
+
+                        List<String> shuffledOptionList = new ArrayList<>();
+                        if (!question.isAttempted()) {
+                            String answer = "";
+                            switch (question.getAnswer()) {
+                                case "1":
+                                    answer = question.getA();
+                                    break;
+
+                                case "2":
+                                    answer = question.getB();
+                                    break;
+
+                                case "3":
+                                    answer = question.getC();
+                                    break;
+
+                                case "4":
+                                    answer = question.getD();
+                                    break;
+                            }
+
+                            shuffledOptionList.add(question.getA());
+                            shuffledOptionList.add(question.getB());
+                            shuffledOptionList.add(question.getC());
+                            shuffledOptionList.add(question.getD());
+
+                            Collections.shuffle(shuffledOptionList);
+
+                            int answerIndex = shuffledOptionList.indexOf(answer);
+
+                            question.setAnswer(String.valueOf(answerIndex + 1));
+
+                            question.setA(shuffledOptionList.get(0));
+                            question.setB(shuffledOptionList.get(1));
+                            question.setC(shuffledOptionList.get(2));
+                            question.setD(shuffledOptionList.get(3));
+                        }
+
+                        return question;
+                    }
+                }).
+                subscribe(new Subscriber<Questions>() {
+                    @Override
+                    public void onCompleted() {
+                        Collections.shuffle(shuffledQuestionList);
+                        DataHolder.getInstance().setShuffledQuestionList(shuffledQuestionList);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(Questions questions) {
+                        shuffledQuestionList.add(questions);
+                    }
+                });
+
+        /*List<String> shuffledOptionList = new ArrayList<>();
         for (Questions question : shuffledQuestionList) {
             shuffledOptionList.clear();
             if (!question.isAttempted()) {
@@ -162,13 +355,66 @@ public class QuestionPresenterImpl extends MvpBasePresenter<QuestionView> implem
                 question.setC(shuffledOptionList.get(2));
                 question.setD(shuffledOptionList.get(3));
             }
-        }
+        }*/
     }
 
     @Override
     public void shuffleQuestionAndResetAllLocally() {
-        List<String> shuffledOptionList = new ArrayList<>();
-        for (Questions response : shuffledQuestionList) {
+        Observable.from(shuffledQuestionList).
+                map(new Func1<Questions, Questions>() {
+                    @Override
+                    public Questions call(Questions questions) {
+                        List<String> shuffledOptionList = new ArrayList<>();
+                        questions.setAttempted(false);
+                        questions.setCorrectAnswerProvided(false);
+                        questions.setUserAnswer(0);
+                        String answer = "";
+                        switch (questions.getAnswer()) {
+                            case "1":
+                                answer = questions.getA();
+                                break;
+
+                            case "2":
+                                answer = questions.getB();
+                                break;
+
+                            case "3":
+                                answer = questions.getC();
+                                break;
+
+                            case "4":
+                                answer = questions.getD();
+                                break;
+                        }
+
+                        shuffledOptionList.add(questions.getA());
+                        shuffledOptionList.add(questions.getB());
+                        shuffledOptionList.add(questions.getC());
+                        shuffledOptionList.add(questions.getD());
+
+                        Collections.shuffle(shuffledOptionList);
+
+                        int answerIndex = shuffledOptionList.indexOf(answer);
+
+                        questions.setAnswer(String.valueOf(answerIndex + 1));
+
+                        questions.setA(shuffledOptionList.get(0));
+                        questions.setB(shuffledOptionList.get(1));
+                        questions.setC(shuffledOptionList.get(2));
+                        questions.setD(shuffledOptionList.get(3));
+
+                        return questions;
+                    }
+                }).
+                subscribe(new Action1<Questions>() {
+                    @Override
+                    public void call(Questions questions) {
+
+                    }
+                });
+
+        //List<String> shuffledOptionList = new ArrayList<>();
+        /*for (Questions response : shuffledQuestionList) {
             shuffledOptionList.clear();
             response.setAttempted(false);
             response.setCorrectAnswerProvided(false);
@@ -207,12 +453,12 @@ public class QuestionPresenterImpl extends MvpBasePresenter<QuestionView> implem
             response.setB(shuffledOptionList.get(1));
             response.setC(shuffledOptionList.get(2));
             response.setD(shuffledOptionList.get(3));
-        }
+        }*/
     }
 
     @Override
     public QuestionPagerAdapter initAdapter(int technology) {
-        return questionPagerAdapter = new QuestionPagerAdapter(((QuestionActivity) getView()).getSupportFragmentManager(),
+        return questionPagerAdapter = new QuestionPagerAdapter(((QuestionActivity) getContext()).getSupportFragmentManager(),
                 shuffledQuestionList, technology);
     }
 }

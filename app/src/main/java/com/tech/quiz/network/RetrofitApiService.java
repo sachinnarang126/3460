@@ -12,6 +12,7 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
+import rx.Observable;
 
 public interface RetrofitApiService {
 
@@ -19,11 +20,20 @@ public interface RetrofitApiService {
     @POST(Constant.ANDROID_URL)
     Call<QuestionResponse> getAndroidQuestion();
 
+    @POST(Constant.ANDROID_URL)
+    Observable<QuestionResponse> getAndroidQuestion1();
+
     @GET(Constant.IOS_URL)
     Call<QuestionResponse> getIosQuestion();
 
+    @GET(Constant.IOS_URL)
+    Observable<QuestionResponse> getIosQuestion1();
+
     @GET(Constant.JAVA_URL)
     Call<QuestionResponse> getJavaQuestion();
+
+    @GET(Constant.JAVA_URL)
+    Observable<QuestionResponse> getJavaQuestion1();
 
     @FormUrlEncoded
     @POST(Constant.REGISTER_USER)

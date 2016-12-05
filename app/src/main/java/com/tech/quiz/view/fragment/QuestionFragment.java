@@ -213,7 +213,6 @@ public class QuestionFragment extends Fragment implements View.OnClickListener, 
 
     @Override
     public void onClick(View view) {
-
         if (!question.isAttempted()) {
             question.setAttempted(true);
 

@@ -187,7 +187,13 @@ public class CategoryFragment extends AppCompatFragment<CategoryPresenterImpl> i
     private void showSnackBar(String error) {
         getArguments().putInt("serviceType", Constant.SHOW_ALL);
         getActivity().invalidateOptionsMenu();
-        Snackbar.make(getView().findViewById(R.id.relativeParent), error, Snackbar.LENGTH_LONG).show();
+        try {
+            Snackbar.make(getView().findViewById(R.id.relativeParent), error, Snackbar.LENGTH_LONG).show();
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
+
+
     }
 
     @Override

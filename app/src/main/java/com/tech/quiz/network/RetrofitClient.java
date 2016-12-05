@@ -9,7 +9,9 @@ import java.util.concurrent.TimeUnit;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
+import rx.schedulers.Schedulers;
 
 public class RetrofitClient {
 
@@ -30,9 +32,11 @@ public class RetrofitClient {
 
     public static RetrofitApiService getRetrofitClient() {
         if (mRetrofit == null) {
+            RxJavaCallAdapterFactory rxAdapter = RxJavaCallAdapterFactory.createWithScheduler(Schedulers.io());
             mRetrofit = new Retrofit.Builder()
                     .baseUrl(Constant.BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create())
+                    .addCallAdapterFactory(rxAdapter)
                     .client(getClient())
                     .build();
         }

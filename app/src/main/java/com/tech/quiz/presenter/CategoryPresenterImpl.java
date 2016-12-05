@@ -162,12 +162,7 @@ public class CategoryPresenterImpl extends MvpBasePresenter<CategoryView> implem
             }
             DataHolder.getInstance().setQuestionList(tempList);
         }
-        CategoryFragment context = ((CategoryFragment) getView());
-        Intent intent = new Intent(context.getActivity(), QuestionActivity.class);
-        intent.putExtra("title", categoryList.get(position));
-        intent.putExtra("technology", context.getArguments().getInt("serviceType"));
-        context.startActivity(intent);
-        hasToShowRecyclerView = false;
+        showTestModeDialog(position);
     }
 
     @Override
@@ -211,8 +206,6 @@ public class CategoryPresenterImpl extends MvpBasePresenter<CategoryView> implem
                 categoryList.add(questions.getCategory());
                 categoryMap.put(questions.getCategory(), 1);
             }
-            /*if (!categoryList.contains(questions.getCategory()))
-                categoryList.add(questions.getCategory());*/
         }
         categoryMap.put("All Question", allQuestionCount);
         categoryAdapter.notifyDataSetChanged();
@@ -246,6 +239,31 @@ public class CategoryPresenterImpl extends MvpBasePresenter<CategoryView> implem
                 .setPositiveButton("OK", okListener)
                 .setNegativeButton("Cancel", null)
                 .setCancelable(false)
+                .create()
+                .show();
+    }
+
+    private void showTestModeDialog(final int position) {
+        new AlertDialog.Builder(getContext())
+                .setMessage("Quiz Mode?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        CategoryFragment context = ((CategoryFragment) getView());
+                        Intent intent = new Intent(context.getActivity(), QuestionActivity.class);
+                        intent.putExtra("title", categoryList.get(position));
+                        intent.putExtra("technology", context.getArguments().getInt("serviceType"));
+                        context.startActivity(intent);
+                        hasToShowRecyclerView = false;
+                    }
+                })
+                .setNeutralButton("Cancel", null)
                 .create()
                 .show();
     }

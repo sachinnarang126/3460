@@ -10,6 +10,8 @@ import java.util.List;
 
 import library.mvp.MvpBasePresenter;
 import retrofit2.Call;
+import rx.Subscriber;
+import rx.Subscription;
 
 public abstract class AppCompatFragment<T extends MvpBasePresenter> extends Fragment {
 
@@ -18,12 +20,14 @@ public abstract class AppCompatFragment<T extends MvpBasePresenter> extends Frag
      * holds the executing or executed service call instances
      */
     private HashMap<String, Call> mServiceCallsMap;
+    private HashMap<String, Subscription> mRxSubscriberMap;
 
     /**
      * Empty constructor to initialize the service map
      */
     public AppCompatFragment() {
         mServiceCallsMap = new HashMap<>();
+        mRxSubscriberMap = new HashMap<>();
     }
 
     public T getPresenter() {
@@ -68,6 +72,8 @@ public abstract class AppCompatFragment<T extends MvpBasePresenter> extends Frag
         super.onDestroy();
         presenter.onDestroy();
         cancelAllServiceCalls(new ArrayList<>(mServiceCallsMap.values()));
+        unSubscribeAllRxSubscriber(new ArrayList<>(mRxSubscriberMap.values()));
+        mServiceCallsMap = null;
         mServiceCallsMap = null;
     }
 
@@ -79,6 +85,17 @@ public abstract class AppCompatFragment<T extends MvpBasePresenter> extends Frag
     private void cancelAllServiceCalls(List<Call> serviceCallList) {
         for (Call call : serviceCallList)
             if (call != null) call.cancel();
+    }
+
+    private void unSubscribeAllRxSubscriber(List<Subscription> subscriptionList) {
+        /*Observable.from(subscriberList).subscribe(new Action1<Subscriber>() {
+            @Override
+            public void call(Subscriber subscriber) {
+                subscriber.unsubscribe();
+            }
+        });*/
+        for (Subscription subscription : subscriptionList)
+            if (subscription != null) subscription.unsubscribe();
     }
 
     /**
@@ -104,6 +121,10 @@ public abstract class AppCompatFragment<T extends MvpBasePresenter> extends Frag
      */
     final public <T> void putServiceCallInServiceMap(Call<T> call, String key) {
         mServiceCallsMap.put(key, call);
+    }
+
+    final public <T> void putServiceCallInServiceMap(Subscriber<T> subscriber, String key) {
+        mRxSubscriberMap.put(key, subscriber);
     }
 
     /**
