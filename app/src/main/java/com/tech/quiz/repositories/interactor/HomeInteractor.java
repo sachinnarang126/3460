@@ -4,7 +4,8 @@ import com.tech.quiz.models.bean.QuestionResponse;
 
 import java.util.List;
 
-import retrofit2.Call;
+import rx.Observable;
+import rx.Subscription;
 
 /**
  * Created by root on 28/9/16.
@@ -12,11 +13,11 @@ import retrofit2.Call;
 
 public interface HomeInteractor {
 
-    void getJavaQuestions(OnJavaQuestionResponseListener questionResponseListener, Call<QuestionResponse> questionCall);
+    Subscription getJavaQuestions(OnJavaQuestionResponseListener questionResponseListener, Observable<QuestionResponse> questionCall);
 
-    void getAndroidQuestions(OnAndroidQuestionResponseListener questionResponseListener, Call<QuestionResponse> questionCall);
+    Subscription getAndroidQuestions(OnAndroidQuestionResponseListener questionResponseListener, Observable<QuestionResponse> questionCall);
 
-    void getIosQuestion(OnIosQuestionResponseListener questionResponseListener, Call<QuestionResponse> questionCall);
+    Subscription getIosQuestion(OnIosQuestionResponseListener questionResponseListener, Observable<QuestionResponse> questionCall);
 
     interface OnJavaQuestionResponseListener {
         void onSuccess(List<QuestionResponse.Response> questionList, int serviceType);

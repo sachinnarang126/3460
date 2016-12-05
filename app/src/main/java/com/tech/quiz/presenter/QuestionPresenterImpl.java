@@ -16,7 +16,6 @@ import java.util.List;
 import library.mvp.MvpBasePresenter;
 import rx.Observable;
 import rx.Subscriber;
-import rx.functions.Action1;
 import rx.functions.Func1;
 
 /**
@@ -86,9 +85,6 @@ public class QuestionPresenterImpl extends MvpBasePresenter<QuestionView> implem
                             shuffledQuestionList.add(questions);
                         }
                     });
-            /*shuffledQuestionList.addAll(DataHolder.getInstance().getQuestionList());
-            questionPagerAdapter.notifyDataSetChanged();
-            getView().hideProgress();*/
         }
     }
 
@@ -121,15 +117,6 @@ public class QuestionPresenterImpl extends MvpBasePresenter<QuestionView> implem
                             shuffledQuestionList.add(questions);
                         }
                     });
-            /*shuffledQuestionList.addAll(DataHolder.getInstance().getQuestionList());
-            Iterator<Questions> iterator = shuffledQuestionList.iterator();
-            while (iterator.hasNext()) {
-                Questions response = iterator.next();
-                if (response.isAttempted())
-                    iterator.remove();
-            }
-            questionPagerAdapter.notifyDataSetChanged();
-            getView().hideProgress();*/
         }
     }
 
@@ -162,15 +149,7 @@ public class QuestionPresenterImpl extends MvpBasePresenter<QuestionView> implem
                             shuffledQuestionList.add(questions);
                         }
                     });
-            /*shuffledQuestionList.addAll(DataHolder.getInstance().getQuestionList());
-            Iterator<Questions> iterator = shuffledQuestionList.iterator();
-            while (iterator.hasNext()) {
-                Questions response = iterator.next();
-                if (!response.isAttempted())
-                    iterator.remove();
-            }
-            questionPagerAdapter.notifyDataSetChanged();
-            getView().hideProgress();*/
+
         }
     }
 
@@ -242,10 +221,6 @@ public class QuestionPresenterImpl extends MvpBasePresenter<QuestionView> implem
                             shuffledQuestionList.add(questions);
                         }
                     });
-            /*shuffledQuestionList.addAll(DataHolder.getInstance().getQuestionList());
-            shuffleQuestionAndResetAllLocally();
-            questionPagerAdapter.notifyDataSetChanged();
-            getView().hideProgress();*/
 
         }
     }
@@ -315,47 +290,6 @@ public class QuestionPresenterImpl extends MvpBasePresenter<QuestionView> implem
                         shuffledQuestionList.add(questions);
                     }
                 });
-
-        /*List<String> shuffledOptionList = new ArrayList<>();
-        for (Questions question : shuffledQuestionList) {
-            shuffledOptionList.clear();
-            if (!question.isAttempted()) {
-                String answer = "";
-                switch (question.getAnswer()) {
-                    case "1":
-                        answer = question.getA();
-                        break;
-
-                    case "2":
-                        answer = question.getB();
-                        break;
-
-                    case "3":
-                        answer = question.getC();
-                        break;
-
-                    case "4":
-                        answer = question.getD();
-                        break;
-                }
-
-                shuffledOptionList.add(question.getA());
-                shuffledOptionList.add(question.getB());
-                shuffledOptionList.add(question.getC());
-                shuffledOptionList.add(question.getD());
-
-                Collections.shuffle(shuffledOptionList);
-
-                int answerIndex = shuffledOptionList.indexOf(answer);
-
-                question.setAnswer(String.valueOf(answerIndex + 1));
-
-                question.setA(shuffledOptionList.get(0));
-                question.setB(shuffledOptionList.get(1));
-                question.setC(shuffledOptionList.get(2));
-                question.setD(shuffledOptionList.get(3));
-            }
-        }*/
     }
 
     @Override
@@ -406,54 +340,12 @@ public class QuestionPresenterImpl extends MvpBasePresenter<QuestionView> implem
                         return questions;
                     }
                 }).
-                subscribe(new Action1<Questions>() {
+                subscribe(/*new Action1<Questions>() {
                     @Override
                     public void call(Questions questions) {
 
                     }
-                });
-
-        //List<String> shuffledOptionList = new ArrayList<>();
-        /*for (Questions response : shuffledQuestionList) {
-            shuffledOptionList.clear();
-            response.setAttempted(false);
-            response.setCorrectAnswerProvided(false);
-            response.setUserAnswer(0);
-            String answer = "";
-            switch (response.getAnswer()) {
-                case "1":
-                    answer = response.getA();
-                    break;
-
-                case "2":
-                    answer = response.getB();
-                    break;
-
-                case "3":
-                    answer = response.getC();
-                    break;
-
-                case "4":
-                    answer = response.getD();
-                    break;
-            }
-
-            shuffledOptionList.add(response.getA());
-            shuffledOptionList.add(response.getB());
-            shuffledOptionList.add(response.getC());
-            shuffledOptionList.add(response.getD());
-
-            Collections.shuffle(shuffledOptionList);
-
-            int answerIndex = shuffledOptionList.indexOf(answer);
-
-            response.setAnswer(String.valueOf(answerIndex + 1));
-
-            response.setA(shuffledOptionList.get(0));
-            response.setB(shuffledOptionList.get(1));
-            response.setC(shuffledOptionList.get(2));
-            response.setD(shuffledOptionList.get(3));
-        }*/
+                }*/);
     }
 
     @Override

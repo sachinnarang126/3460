@@ -12,9 +12,10 @@ import com.tech.quiz.network.RetrofitApiService;
 import com.tech.quiz.network.RetrofitClient;
 import com.tech.quiz.util.Constant;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import rx.Observable;
+import rx.Observer;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by root on 17/10/16.
@@ -59,20 +60,25 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
         if (!BuildConfig.DEBUG) {
             String deviceID = Settings.Secure.getString(getContentResolver(),
                     Settings.Secure.ANDROID_ID);
-            Call<UserRegistor> registrationCall = apiService.registerUserForFCM(deviceID, token, Constant.ANDROID_DEVICE_TYPE);
-
-            registrationCall.enqueue(new Callback<UserRegistor>() {
+            Observable<UserRegistor> registrationCall = apiService.registerUserForFCM(deviceID, token, Constant.ANDROID_DEVICE_TYPE);
+            registrationCall.subscribeOn(Schedulers.io()).
+                    observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<UserRegistor>() {
                 @Override
-                public void onResponse(Call<UserRegistor> call, Response<UserRegistor> response) {
-                    if (response.isSuccessful() && response.body().getStatus() == 1)
-                        DataHolder.getInstance().getPreferences(MyFirebaseInstanceIDService.this).edit().
-                                putBoolean(Constant.IS_USER_REGISTERED, true).apply();
+                public void onCompleted() {
+
                 }
 
                 @Override
-                public void onFailure(Call<UserRegistor> call, Throwable t) {
+                public void onError(Throwable e) {
                     DataHolder.getInstance().getPreferences(MyFirebaseInstanceIDService.this).edit().
                             putBoolean(Constant.IS_USER_REGISTERED, false).apply();
+                }
+
+                @Override
+                public void onNext(UserRegistor userRegistor) {
+                    if (userRegistor.getStatus() == 1)
+                        DataHolder.getInstance().getPreferences(MyFirebaseInstanceIDService.this).edit().
+                                putBoolean(Constant.IS_USER_REGISTERED, true).apply();
                 }
             });
         }

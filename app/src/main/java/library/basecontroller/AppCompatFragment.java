@@ -10,7 +10,6 @@ import java.util.List;
 
 import library.mvp.MvpBasePresenter;
 import retrofit2.Call;
-import rx.Subscriber;
 import rx.Subscription;
 
 public abstract class AppCompatFragment<T extends MvpBasePresenter> extends Fragment {
@@ -123,8 +122,8 @@ public abstract class AppCompatFragment<T extends MvpBasePresenter> extends Frag
         mServiceCallsMap.put(key, call);
     }
 
-    final public <T> void putServiceCallInServiceMap(Subscriber<T> subscriber, String key) {
-        mRxSubscriberMap.put(key, subscriber);
+    final public <T> void putSubscriberInMap(Subscription subscription, String key) {
+        mRxSubscriberMap.put(key, subscription);
     }
 
     /**

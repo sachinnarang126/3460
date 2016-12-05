@@ -88,38 +88,13 @@ public class SplashPresenterImpl extends MvpBasePresenter<SplashView> implements
                 getView().showProgress();
 
                 RetrofitApiService apiService = RetrofitClient.getRetrofitClient();
-                /*Call<QuestionResponse> androidQuestionCall;
-                if (context.isServiceCallExist(Constant.ANDROID_URL)) {
-                    androidQuestionCall = context.getServiceCallIfExist(Constant.ANDROID_URL);
-                } else {
-                    androidQuestionCall = apiService.getAndroidQuestion();
-                    context.putServiceCallInServiceMap(androidQuestionCall, Constant.ANDROID_URL);
-                }*/
+                Observable<QuestionResponse> androidQuestion = apiService.getAndroidQuestion();
+                Observable<QuestionResponse> javaQuestion = apiService.getJavaQuestion();
+                Observable<QuestionResponse> iosQuestion = apiService.getIosQuestion();
 
-                Observable<QuestionResponse> android = apiService.getAndroidQuestion1();
-
-                /*Call<QuestionResponse> iosQuestionCall;
-                if (context.isServiceCallExist(Constant.IOS_URL)) {
-                    iosQuestionCall = context.getServiceCallIfExist(Constant.IOS_URL);
-                } else {
-                    iosQuestionCall = apiService.getIosQuestion();
-                    context.putServiceCallInServiceMap(iosQuestionCall, Constant.IOS_URL);
-                }*/
-
-                Observable<QuestionResponse> java = apiService.getJavaQuestion1();
-
-                /*Call<QuestionResponse> javaQuestionCall;
-                if (context.isServiceCallExist(Constant.JAVA_URL)) {
-                    javaQuestionCall = context.getServiceCallIfExist(Constant.JAVA_URL);
-                } else {
-                    javaQuestionCall = apiService.getJavaQuestion();
-                    context.putServiceCallInServiceMap(javaQuestionCall, Constant.JAVA_URL);
-                }*/
-
-                Observable<QuestionResponse> ios = apiService.getIosQuestion1();
-                context.putSubscriberInMap(splashInteractor.getAndroidQuestions(this, android),Constant.ANDROID_URL);
-                context.putSubscriberInMap(splashInteractor.getIosQuestion(this, ios),Constant.IOS_URL);
-                context.putSubscriberInMap(splashInteractor.getJavaQuestions(this, java),Constant.JAVA_URL);
+                context.putSubscriberInMap(splashInteractor.getAndroidQuestions(this, androidQuestion), Constant.ANDROID_URL);
+                context.putSubscriberInMap(splashInteractor.getIosQuestion(this, iosQuestion), Constant.IOS_URL);
+                context.putSubscriberInMap(splashInteractor.getJavaQuestions(this, javaQuestion), Constant.JAVA_URL);
             } else {
                 context.onError(context.getString(R.string.error_internet_first_launch));
             }

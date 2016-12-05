@@ -23,7 +23,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import library.mvp.MvpBasePresenter;
-import retrofit2.Call;
+import rx.Observable;
+import rx.Observer;
+import rx.functions.Func1;
 
 /**
  * Created by root on 28/9/16.
@@ -87,37 +89,18 @@ public class HomePresenterImpl extends MvpBasePresenter<HomeView> implements Hom
 //                System.out.println("javaIdList " + javaIdList);
 
                 RetrofitApiService apiService = RetrofitClient.getRetrofitClient();
-                Call<QuestionResponse> androidQuestionCall;
-                if (context.isServiceCallExist(Constant.ANDROID_POST_URL)) {
-                    androidQuestionCall = context.getServiceCallIfExist(Constant.ANDROID_POST_URL);
-                } else {
-                    androidQuestionCall = apiService.getAndroidSelectedQuestion(androidIdList);
-                    context.putServiceCallInServiceMap(androidQuestionCall, Constant.ANDROID_POST_URL);
-                }
 
-                Call<QuestionResponse> iosQuestionCall;
-                if (context.isServiceCallExist(Constant.IOS_POST_URL)) {
-                    iosQuestionCall = context.getServiceCallIfExist(Constant.IOS_POST_URL);
-                } else {
-                    iosQuestionCall = apiService.getIosSelectedQuestion(iosIdList);
-                    context.putServiceCallInServiceMap(iosQuestionCall, Constant.IOS_POST_URL);
-                }
+                Observable<QuestionResponse> androidQuestion = apiService.getAndroidSelectedQuestion(androidIdList);
+                Observable<QuestionResponse> javaQuestion = apiService.getJavaSelectedQuestion(javaIdList);
+                Observable<QuestionResponse> iosQuestion = apiService.getIosSelectedQuestion(iosIdList);
 
-                Call<QuestionResponse> javaQuestionCall;
-                if (context.isServiceCallExist(Constant.JAVA_POST_URL)) {
-                    javaQuestionCall = context.getServiceCallIfExist(Constant.JAVA_POST_URL);
-                } else {
-                    javaQuestionCall = apiService.getJavaSelectedQuestion(javaIdList);
-                    context.putServiceCallInServiceMap(javaQuestionCall, Constant.JAVA_POST_URL);
-                }
+                context.putSubscriberInMap(homeInteractor.getAndroidQuestions(this, androidQuestion), Constant.ANDROID_URL);
+                context.putSubscriberInMap(homeInteractor.getIosQuestion(this, iosQuestion), Constant.IOS_URL);
+                context.putSubscriberInMap(homeInteractor.getJavaQuestions(this, javaQuestion), Constant.JAVA_URL);
 
-                homeInteractor.getAndroidQuestions(this, androidQuestionCall);
-                homeInteractor.getIosQuestion(this, iosQuestionCall);
-                homeInteractor.getJavaQuestions(this, javaQuestionCall);
             } else {
                 context.onError(context.getString(R.string.error_internet_first_launch));
             }
-
         }
     }
 
@@ -165,59 +148,115 @@ public class HomePresenterImpl extends MvpBasePresenter<HomeView> implements Hom
         return System.currentTimeMillis() - savedTime > twoHour;
     }
 
-    private void saveAndroidQuestion(DatabaseManager databaseManager, List<QuestionResponse.Response> questionList) {
-        List<Android> androidList = new ArrayList<>();
-        for (QuestionResponse.Response question : questionList) {
-            Android android = new Android();
-            android.setQuestionId(Integer.parseInt(question.getId()));
-            android.setUserLevel(Integer.parseInt(question.getUserLevel()));
-            android.setCategory(question.getCategory());
-            android.setQuestion(question.getQuestion());
-            android.setA(question.getA());
-            android.setB(question.getB());
-            android.setC(question.getC());
-            android.setD(question.getD());
-            android.setAnswer(question.getAnswer());
-            androidList.add(android);
-        }
-        databaseManager.saveQuestionToAndroidTable(androidList);
+    private void saveAndroidQuestion(final DatabaseManager databaseManager, List<QuestionResponse.Response> questionList) {
+        final List<Android> androidList = new ArrayList<>();
+
+        Observable.from(questionList).
+                map(new Func1<QuestionResponse.Response, Android>() {
+                    @Override
+                    public Android call(QuestionResponse.Response question) {
+                        Android android = new Android();
+                        android.setQuestionId(Integer.parseInt(question.getId()));
+                        android.setUserLevel(Integer.parseInt(question.getUserLevel()));
+                        android.setCategory(question.getCategory());
+                        android.setQuestion(question.getQuestion());
+                        android.setA(question.getA());
+                        android.setB(question.getB());
+                        android.setC(question.getC());
+                        android.setD(question.getD());
+                        android.setAnswer(question.getAnswer());
+                        return android;
+                    }
+                }).
+                subscribe(new Observer<Android>() {
+                    @Override
+                    public void onCompleted() {
+                        databaseManager.saveQuestionToAndroidTable(androidList);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(Android android) {
+                        androidList.add(android);
+                    }
+                });
     }
 
-    private void saveIosQuestion(DatabaseManager databaseManager, List<QuestionResponse.Response> questionList) {
-        List<Ios> iosList = new ArrayList<>();
+    private void saveIosQuestion(final DatabaseManager databaseManager, List<QuestionResponse.Response> questionList) {
+        final List<Ios> iosList = new ArrayList<>();
+        Observable.from(questionList).
+                map(new Func1<QuestionResponse.Response, Ios>() {
+                    @Override
+                    public Ios call(QuestionResponse.Response question) {
+                        Ios ios = new Ios();
+                        ios.setQuestionId(Integer.parseInt(question.getId()));
+                        ios.setUserLevel(Integer.parseInt(question.getUserLevel()));
+                        ios.setCategory(question.getCategory());
+                        ios.setQuestion(question.getQuestion());
+                        ios.setA(question.getA());
+                        ios.setB(question.getB());
+                        ios.setC(question.getC());
+                        ios.setD(question.getD());
+                        ios.setAnswer(question.getAnswer());
+                        return ios;
+                    }
+                }).
+                subscribe(new Observer<Ios>() {
+                    @Override
+                    public void onCompleted() {
+                        databaseManager.saveQuestionToIosTable(iosList);
+                    }
 
-        for (QuestionResponse.Response question : questionList) {
-            Ios ios = new Ios();
-            ios.setQuestionId(Integer.parseInt(question.getId()));
-            ios.setUserLevel(Integer.parseInt(question.getUserLevel()));
-            ios.setCategory(question.getCategory());
-            ios.setQuestion(question.getQuestion());
-            ios.setA(question.getA());
-            ios.setB(question.getB());
-            ios.setC(question.getC());
-            ios.setD(question.getD());
-            ios.setAnswer(question.getAnswer());
-            iosList.add(ios);
-        }
-        databaseManager.saveQuestionToIosTable(iosList);
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(Ios ios) {
+                        iosList.add(ios);
+                    }
+                });
     }
 
-    private void saveJavaQuestion(DatabaseManager databaseManager, List<QuestionResponse.Response> questionList) {
-        List<Java> javaList = new ArrayList<>();
+    private void saveJavaQuestion(final DatabaseManager databaseManager, List<QuestionResponse.Response> questionList) {
+        final List<Java> javaList = new ArrayList<>();
+        Observable.from(questionList).
+                map(new Func1<QuestionResponse.Response, Java>() {
+                    @Override
+                    public Java call(QuestionResponse.Response question) {
+                        Java java = new Java();
+                        java.setQuestionId(Integer.parseInt(question.getId()));
+                        java.setUserLevel(Integer.parseInt(question.getUserLevel()));
+                        java.setCategory(question.getCategory());
+                        java.setQuestion(question.getQuestion());
+                        java.setA(question.getA());
+                        java.setB(question.getB());
+                        java.setC(question.getC());
+                        java.setD(question.getD());
+                        java.setAnswer(question.getAnswer());
+                        return java;
+                    }
+                }).
+                subscribe(new Observer<Java>() {
+                    @Override
+                    public void onCompleted() {
+                        databaseManager.saveQuestionToJavaTable(javaList);
+                    }
 
-        for (QuestionResponse.Response question : questionList) {
-            Java java = new Java();
-            java.setQuestionId(Integer.parseInt(question.getId()));
-            java.setUserLevel(Integer.parseInt(question.getUserLevel()));
-            java.setCategory(question.getCategory());
-            java.setQuestion(question.getQuestion());
-            java.setA(question.getA());
-            java.setB(question.getB());
-            java.setC(question.getC());
-            java.setD(question.getD());
-            java.setAnswer(question.getAnswer());
-            javaList.add(java);
-        }
-        databaseManager.saveQuestionToJavaTable(javaList);
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(Java java) {
+                        javaList.add(java);
+                    }
+                });
     }
 }
