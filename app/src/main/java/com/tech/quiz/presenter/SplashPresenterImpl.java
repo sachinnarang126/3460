@@ -32,6 +32,8 @@ import java.util.List;
 
 import library.mvp.MvpBasePresenter;
 import rx.Observable;
+import rx.Observer;
+import rx.functions.Func1;
 
 /**
  * Created by root on 28/9/16.
@@ -135,66 +137,121 @@ public class SplashPresenterImpl extends MvpBasePresenter<SplashView> implements
         }
     }
 
-    private void saveAndroidQuestion(DatabaseManager databaseManager, List<QuestionResponse.Response> questionList) {
-        List<Android> androidList = new ArrayList<>();
-        for (QuestionResponse.Response question : questionList) {
-            Android android = new Android();
-            android.setQuestionId(Integer.parseInt(question.getId()));
-            android.setUserLevel(Integer.parseInt(question.getUserLevel()));
-            android.setCategory(question.getCategory());
-            android.setQuestion(question.getQuestion());
-            android.setA(question.getA());
-            android.setB(question.getB());
-            android.setC(question.getC());
-            android.setD(question.getD());
-            android.setAnswer(question.getAnswer());
-            androidList.add(android);
-        }
-        databaseManager.clearAndroidTableData();
-        databaseManager.saveQuestionToAndroidTable(androidList);
+    private void saveAndroidQuestion(final DatabaseManager databaseManager, List<QuestionResponse.Response> questionList) {
+        final List<Android> androidList = new ArrayList<>();
+
+        Observable.from(questionList).
+                map(new Func1<QuestionResponse.Response, Android>() {
+                    @Override
+                    public Android call(QuestionResponse.Response question) {
+                        Android android = new Android();
+                        android.setQuestionId(Integer.parseInt(question.getId()));
+                        android.setUserLevel(Integer.parseInt(question.getUserLevel()));
+                        android.setCategory(question.getCategory());
+                        android.setQuestion(question.getQuestion());
+                        android.setA(question.getA());
+                        android.setB(question.getB());
+                        android.setC(question.getC());
+                        android.setD(question.getD());
+                        android.setAnswer(question.getAnswer());
+                        return android;
+                    }
+                }).
+                subscribe(new Observer<Android>() {
+                    @Override
+                    public void onCompleted() {
+                        databaseManager.clearAndroidTableData();
+                        databaseManager.saveQuestionToAndroidTable(androidList);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(Android android) {
+                        androidList.add(android);
+                    }
+                });
 
     }
 
-    private void saveIosQuestion(DatabaseManager databaseManager, List<QuestionResponse.Response> questionList) {
-        List<Ios> iosList = new ArrayList<>();
+    private void saveIosQuestion(final DatabaseManager databaseManager, List<QuestionResponse.Response> questionList) {
+        final List<Ios> iosList = new ArrayList<>();
+        Observable.from(questionList).
+                map(new Func1<QuestionResponse.Response, Ios>() {
+                    @Override
+                    public Ios call(QuestionResponse.Response question) {
+                        Ios ios = new Ios();
+                        ios.setQuestionId(Integer.parseInt(question.getId()));
+                        ios.setUserLevel(Integer.parseInt(question.getUserLevel()));
+                        ios.setCategory(question.getCategory());
+                        ios.setQuestion(question.getQuestion());
+                        ios.setA(question.getA());
+                        ios.setB(question.getB());
+                        ios.setC(question.getC());
+                        ios.setD(question.getD());
+                        ios.setAnswer(question.getAnswer());
+                        return ios;
+                    }
+                }).
+                subscribe(new Observer<Ios>() {
+                    @Override
+                    public void onCompleted() {
+                        databaseManager.clearIosTableData();
+                        databaseManager.saveQuestionToIosTable(iosList);
+                    }
 
-        for (QuestionResponse.Response question : questionList) {
-            Ios ios = new Ios();
-            ios.setQuestionId(Integer.parseInt(question.getId()));
-            ios.setUserLevel(Integer.parseInt(question.getUserLevel()));
-            ios.setCategory(question.getCategory());
-            ios.setQuestion(question.getQuestion());
-            ios.setA(question.getA());
-            ios.setB(question.getB());
-            ios.setC(question.getC());
-            ios.setD(question.getD());
-            ios.setAnswer(question.getAnswer());
-            iosList.add(ios);
-        }
-        databaseManager.clearIosTableData();
-        databaseManager.saveQuestionToIosTable(iosList);
+                    @Override
+                    public void onError(Throwable e) {
 
+                    }
+
+                    @Override
+                    public void onNext(Ios ios) {
+                        iosList.add(ios);
+                    }
+                });
     }
 
-    private void saveJavaQuestion(DatabaseManager databaseManager, List<QuestionResponse.Response> questionList) {
-        List<Java> javaList = new ArrayList<>();
+    private void saveJavaQuestion(final DatabaseManager databaseManager, List<QuestionResponse.Response> questionList) {
+        final List<Java> javaList = new ArrayList<>();
 
-        for (QuestionResponse.Response question : questionList) {
-            Java java = new Java();
-            java.setQuestionId(Integer.parseInt(question.getId()));
-            java.setUserLevel(Integer.parseInt(question.getUserLevel()));
-            java.setCategory(question.getCategory());
-            java.setQuestion(question.getQuestion());
-            java.setA(question.getA());
-            java.setB(question.getB());
-            java.setC(question.getC());
-            java.setD(question.getD());
-            java.setAnswer(question.getAnswer());
-            javaList.add(java);
-        }
-        databaseManager.clearJavaTableData();
-        databaseManager.saveQuestionToJavaTable(javaList);
+        Observable.from(questionList).
+                map(new Func1<QuestionResponse.Response, Java>() {
+                    @Override
+                    public Java call(QuestionResponse.Response question) {
+                        Java java = new Java();
+                        java.setQuestionId(Integer.parseInt(question.getId()));
+                        java.setUserLevel(Integer.parseInt(question.getUserLevel()));
+                        java.setCategory(question.getCategory());
+                        java.setQuestion(question.getQuestion());
+                        java.setA(question.getA());
+                        java.setB(question.getB());
+                        java.setC(question.getC());
+                        java.setD(question.getD());
+                        java.setAnswer(question.getAnswer());
+                        return java;
+                    }
+                }).
+                subscribe(new Observer<Java>() {
+                    @Override
+                    public void onCompleted() {
+                        databaseManager.clearJavaTableData();
+                        databaseManager.saveQuestionToJavaTable(javaList);
+                    }
 
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                    }
+
+                    @Override
+                    public void onNext(Java java) {
+                        javaList.add(java);
+                    }
+                });
     }
 
     @Override

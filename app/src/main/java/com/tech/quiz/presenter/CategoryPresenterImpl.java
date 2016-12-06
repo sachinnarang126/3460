@@ -27,6 +27,9 @@ import java.util.List;
 import java.util.Map;
 
 import library.mvp.MvpBasePresenter;
+import rx.Observable;
+import rx.Observer;
+import rx.functions.Func1;
 
 public class CategoryPresenterImpl extends MvpBasePresenter<CategoryView> implements CategoryPresenter, CategoryInteractor.OnQuestionResponseListener {
 
@@ -191,24 +194,45 @@ public class CategoryPresenterImpl extends MvpBasePresenter<CategoryView> implem
     }
 
     @Override
-    public void updateUI(List<Questions> responseList) {
+    public void updateUI(final List<Questions> responseList) {
         questionList = responseList;
         categoryMap.clear();
         categoryList.clear();
         categoryList.add("All Question");
         categoryMap.put("All Question", 0);
-        int allQuestionCount = 0;
-        for (Questions questions : responseList) {
-            allQuestionCount++;
-            if (categoryMap.containsKey(questions.getCategory())) {
-                categoryMap.put(questions.getCategory(), categoryMap.get(questions.getCategory()) + 1);
-            } else {
-                categoryList.add(questions.getCategory());
-                categoryMap.put(questions.getCategory(), 1);
-            }
-        }
-        categoryMap.put("All Question", allQuestionCount);
-        categoryAdapter.notifyDataSetChanged();
+
+        Observable.from(responseList).
+                map(new Func1<Questions, Questions>() {
+                    @Override
+                    public Questions call(Questions questions) {
+
+                        if (categoryMap.containsKey(questions.getCategory())) {
+                            categoryMap.put(questions.getCategory(), categoryMap.get(questions.getCategory()) + 1);
+                        } else {
+                            categoryList.add(questions.getCategory());
+                            categoryMap.put(questions.getCategory(), 1);
+                        }
+                        return questions;
+                    }
+                }).
+                subscribe(new Observer<Questions>() {
+                    @Override
+                    public void onCompleted() {
+                        categoryMap.put("All Question", responseList.size());
+                        categoryAdapter.notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(Questions questions) {
+
+                    }
+                });
+
     }
 
     @Override
@@ -225,10 +249,16 @@ public class CategoryPresenterImpl extends MvpBasePresenter<CategoryView> implem
 
     @Override
     public <T extends Questions> List<Questions> castToQuestions(List<T> questionListFromDB) {
-        List<Questions> questionsList = new ArrayList<>();
-        for (T t : questionListFromDB) {
-            questionsList.add(t);
-        }
+        final List<Questions> questionsList = new ArrayList<>();
+
+        Observable.from(questionListFromDB).map(new Func1<T, Void>() {
+            @Override
+            public Void call(T t) {
+                questionsList.add(t);
+                return null;
+            }
+        }).subscribe();
+
         return questionsList;
     }
 

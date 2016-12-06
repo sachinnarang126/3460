@@ -52,8 +52,6 @@ public class UpdateQuestionPresenterImpl implements UpdateQuestionPresenter {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-//        QuestionResponse response = gson.fromJson(json, QuestionResponse.class);
     }
 
     private void updateQuestionInDB(List<HashMap<String, String>> hashMapList, int technology) {

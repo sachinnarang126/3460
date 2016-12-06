@@ -339,13 +339,7 @@ public class QuestionPresenterImpl extends MvpBasePresenter<QuestionView> implem
 
                         return questions;
                     }
-                }).
-                subscribe(/*new Action1<Questions>() {
-                    @Override
-                    public void call(Questions questions) {
-
-                    }
-                }*/);
+                }).subscribe();
     }
 
     @Override
