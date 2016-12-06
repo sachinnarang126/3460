@@ -94,6 +94,10 @@ public class SplashPresenterImpl extends MvpBasePresenter<SplashView> implements
                 Observable<QuestionResponse> javaQuestion = apiService.getJavaQuestion();
                 Observable<QuestionResponse> iosQuestion = apiService.getIosQuestion();
 
+                context.unSubscribeFromSubscriptionIfSubscribed(Constant.ANDROID_URL);
+                context.unSubscribeFromSubscriptionIfSubscribed(Constant.IOS_URL);
+                context.unSubscribeFromSubscriptionIfSubscribed(Constant.JAVA_URL);
+
                 context.putSubscriberInMap(splashInteractor.getAndroidQuestions(this, androidQuestion), Constant.ANDROID_URL);
                 context.putSubscriberInMap(splashInteractor.getIosQuestion(this, iosQuestion), Constant.IOS_URL);
                 context.putSubscriberInMap(splashInteractor.getJavaQuestions(this, javaQuestion), Constant.JAVA_URL);

@@ -21,7 +21,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import library.mvp.MvpBasePresenter;
-import retrofit2.Call;
 import rx.Subscription;
 
 
@@ -32,7 +31,7 @@ public abstract class AppBaseCompatActivity<T extends MvpBasePresenter> extends 
      * holds the executing or executed service call instances
      */
 
-    private HashMap<String, Call> mServiceCallsMap;
+//    private HashMap<String, Call> mServiceCallsMap;
     private HashMap<String, Subscription> mRxSubscriberMap;
 
     public T getPresenter() {
@@ -45,27 +44,23 @@ public abstract class AppBaseCompatActivity<T extends MvpBasePresenter> extends 
      * this function will cancel all the service which can have an asynchronous response from server
      */
 
-    private void cancelAllServiceCalls(List<Call> serviceCallList) {
+    /*private void cancelAllServiceCalls(List<Call> serviceCallList) {
         for (Call call : serviceCallList)
             if (call != null) call.cancel();
-    }
-
-    private void unSubscribeAllRxSubscriber(List<Subscription> subscriberList) {
-        /*Observable.from(subscriberList).subscribe(new Action1<Subscriber>() {
-            @Override
-            public void call(Subscriber subscriber) {
-                subscriber.unsubscribe();
+    }*/
+    private void unSubscribeAllRxSubscriber(List<Subscription> subscriptionList) {
+        for (Subscription subscription : subscriptionList)
+            try {
+                if (!subscription.isUnsubscribed()) subscription.unsubscribe();
+            } catch (NullPointerException e) {
+                e.printStackTrace();
             }
-        });*/
-        System.out.println("canceling all web services");
-        for (Subscription subscription : subscriberList)
-            if (subscription != null) subscription.unsubscribe();
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mServiceCallsMap = new HashMap<>();
+//        mServiceCallsMap = new HashMap<>();
         mRxSubscriberMap = new HashMap<>();
         presenter = createPresenter();
         if (presenter != null)
@@ -105,10 +100,10 @@ public abstract class AppBaseCompatActivity<T extends MvpBasePresenter> extends 
         super.onDestroy();
         if (presenter != null)
             presenter.onDestroy();
-        if (mServiceCallsMap != null) {
+        /*if (mServiceCallsMap != null) {
             cancelAllServiceCalls(new ArrayList<>(mServiceCallsMap.values()));
             mServiceCallsMap = null;
-        }
+        }*/
 
         if (mRxSubscriberMap != null) {
             unSubscribeAllRxSubscriber(new ArrayList<>(mRxSubscriberMap.values()));
@@ -168,25 +163,25 @@ public abstract class AppBaseCompatActivity<T extends MvpBasePresenter> extends 
      * @return Returns the Generic type if exists otherwise null
      */
 
-    final public <V> Call<V> getServiceCallIfExist(String key) {
+    /*final public <V> Call<V> getServiceCallIfExist(String key) {
         if (mServiceCallsMap != null && mServiceCallsMap.containsKey(key))
             return mServiceCallsMap.get(key).clone();
         else
             return null;
-    }
+    }*/
 
     /**
      * create Call Service and put it in Service Map, you can not override this method.
+     * <p>
+     * //* @param call Call Service object
      *
-     * @param call Call Service object
-     * @param key  key value of Call Service (Basically URL)
-     * @param <T>  Generic type of Call Service
+     * @param key key value of Call Service (Basically URL)
+     * @param <T> Generic type of Call Service
      */
 
-    final public <T> void putServiceCallInServiceMap(Call<T> call, String key) {
+    /*final public <T> void putServiceCallInServiceMap(Call<T> call, String key) {
         mServiceCallsMap.put(key, call);
-    }
-
+    }*/
     final public <T> void putSubscriberInMap(Subscription subscription, String key) {
         mRxSubscriberMap.put(key, subscription);
     }
@@ -198,8 +193,14 @@ public abstract class AppBaseCompatActivity<T extends MvpBasePresenter> extends 
      * @return true or false
      */
 
-    final public boolean isServiceCallExist(String key) {
+    /*final public boolean isServiceCallExist(String key) {
         return mServiceCallsMap.containsKey(key);
+    }*/
+    final public void unSubscribeFromSubscriptionIfSubscribed(String key) {
+        if (mRxSubscriberMap.containsKey(key) && !mRxSubscriberMap.get(key).isUnsubscribed()) {
+            mRxSubscriberMap.get(key).unsubscribe();
+            mRxSubscriberMap.remove(key);
+        }
     }
 
     public boolean isSubscribedUser() {

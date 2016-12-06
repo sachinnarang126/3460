@@ -94,9 +94,13 @@ public class HomePresenterImpl extends MvpBasePresenter<HomeView> implements Hom
                 Observable<QuestionResponse> javaQuestion = apiService.getJavaSelectedQuestion(javaIdList);
                 Observable<QuestionResponse> iosQuestion = apiService.getIosSelectedQuestion(iosIdList);
 
-                context.putSubscriberInMap(homeInteractor.getAndroidQuestions(this, androidQuestion), Constant.ANDROID_URL);
-                context.putSubscriberInMap(homeInteractor.getIosQuestion(this, iosQuestion), Constant.IOS_URL);
-                context.putSubscriberInMap(homeInteractor.getJavaQuestions(this, javaQuestion), Constant.JAVA_URL);
+                context.unSubscribeFromSubscriptionIfSubscribed(Constant.ANDROID_POST_URL);
+                context.unSubscribeFromSubscriptionIfSubscribed(Constant.IOS_POST_URL);
+                context.unSubscribeFromSubscriptionIfSubscribed(Constant.JAVA_POST_URL);
+
+                context.putSubscriberInMap(homeInteractor.getAndroidQuestions(this, androidQuestion), Constant.ANDROID_POST_URL);
+                context.putSubscriberInMap(homeInteractor.getIosQuestion(this, iosQuestion), Constant.IOS_POST_URL);
+                context.putSubscriberInMap(homeInteractor.getJavaQuestions(this, javaQuestion), Constant.JAVA_POST_URL);
 
             } else {
                 context.onError(context.getString(R.string.error_internet_first_launch));

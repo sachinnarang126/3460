@@ -9,7 +9,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import library.mvp.MvpBasePresenter;
-import retrofit2.Call;
 import rx.Subscription;
 
 public abstract class AppCompatFragment<T extends MvpBasePresenter> extends Fragment {
@@ -18,14 +17,14 @@ public abstract class AppCompatFragment<T extends MvpBasePresenter> extends Frag
     /**
      * holds the executing or executed service call instances
      */
-    private HashMap<String, Call> mServiceCallsMap;
+//    private HashMap<String, Call> mServiceCallsMap;
     private HashMap<String, Subscription> mRxSubscriberMap;
 
     /**
      * Empty constructor to initialize the service map
      */
     public AppCompatFragment() {
-        mServiceCallsMap = new HashMap<>();
+//        mServiceCallsMap = new HashMap<>();
         mRxSubscriberMap = new HashMap<>();
     }
 
@@ -70,31 +69,40 @@ public abstract class AppCompatFragment<T extends MvpBasePresenter> extends Frag
     public void onDestroy() {
         super.onDestroy();
         presenter.onDestroy();
-        cancelAllServiceCalls(new ArrayList<>(mServiceCallsMap.values()));
-        unSubscribeAllRxSubscriber(new ArrayList<>(mRxSubscriberMap.values()));
-        mServiceCallsMap = null;
-        mServiceCallsMap = null;
+        /*if (mServiceCallsMap != null) {
+            cancelAllServiceCalls(new ArrayList<>(mServiceCallsMap.values()));
+            mServiceCallsMap = null;
+        }*/
+
+        if (mRxSubscriberMap != null) {
+            unSubscribeAllRxSubscriber(new ArrayList<>(mRxSubscriberMap.values()));
+            mRxSubscriberMap = null;
+        }
     }
 
     /**
-     * this function will cancel all the service which can have an asynchronous response from server
-     *
-     * @param serviceCallList pass the list of service you want to cancel
+     * this function will can cel all the service which can have an asynchronous response from server
+     * <p>
+     * //* @param serviceCallList pass the list of service you want to cancel
      */
-    private void cancelAllServiceCalls(List<Call> serviceCallList) {
+    /*private void cancelAllServiceCalls(List<Call> serviceCallList) {
         for (Call call : serviceCallList)
             if (call != null) call.cancel();
+    }*/
+    private void unSubscribeAllRxSubscriber(List<Subscription> subscriptionList) {
+        for (Subscription subscription : subscriptionList)
+            try {
+                if (!subscription.isUnsubscribed()) subscription.unsubscribe();
+            } catch (NullPointerException e) {
+                e.printStackTrace();
+            }
     }
 
-    private void unSubscribeAllRxSubscriber(List<Subscription> subscriptionList) {
-        /*Observable.from(subscriberList).subscribe(new Action1<Subscriber>() {
-            @Override
-            public void call(Subscriber subscriber) {
-                subscriber.unsubscribe();
-            }
-        });*/
-        for (Subscription subscription : subscriptionList)
-            if (subscription != null) subscription.unsubscribe();
+    final public void unSubscribeFromSubscriptionIfSubscribed(String key) {
+        if (mRxSubscriberMap.containsKey(key) && !mRxSubscriberMap.get(key).isUnsubscribed()) {
+            mRxSubscriberMap.get(key).unsubscribe();
+            mRxSubscriberMap.remove(key);
+        }
     }
 
     /**
@@ -104,24 +112,24 @@ public abstract class AppCompatFragment<T extends MvpBasePresenter> extends Frag
      * @param <T> Generic type of the service call
      * @return Returns the Generic type if exists otherwise null
      */
-    final public <T> Call<T> getServiceCallIfExist(String key) {
+    /*final public <T> Call<T> getServiceCallIfExist(String key) {
         if (mServiceCallsMap != null && mServiceCallsMap.containsKey(key))
             return mServiceCallsMap.get(key).clone();
         else
             return null;
-    }
+    }*/
 
     /**
      * create Call Service and put it in Service Map
+     * <p>
+     * //* @param call Call Service object
      *
-     * @param call Call Service object
-     * @param key  key value of Call Service (Basically URL)
-     * @param <T>  Generic type of Call Service
+     * @param key key value of Call Service (Basically URL)
+     * @param <T> Generic type of Call Service
      */
-    final public <T> void putServiceCallInServiceMap(Call<T> call, String key) {
+    /*final public <T> void putServiceCallInServiceMap(Call<T> call, String key) {
         mServiceCallsMap.put(key, call);
-    }
-
+    }*/
     final public <T> void putSubscriberInMap(Subscription subscription, String key) {
         mRxSubscriberMap.put(key, subscription);
     }
@@ -132,7 +140,7 @@ public abstract class AppCompatFragment<T extends MvpBasePresenter> extends Frag
      * @param key key of call service (Basicallly URL)
      * @return true or false
      */
-    final public boolean isServiceCallExist(String key) {
+    /*final public boolean isServiceCallExist(String key) {
         return mServiceCallsMap.containsKey(key);
-    }
+    }*/
 }
