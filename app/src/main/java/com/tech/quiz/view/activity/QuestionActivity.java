@@ -54,11 +54,10 @@ public class QuestionActivity extends AppBaseCompatActivity<QuestionPresenterImp
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
 
-        showProgress();
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
         viewPager.setPageTransformer(true, new DepthPageTransformer());
         viewPager.setAdapter(getPresenter().initAdapter(getIntent().getIntExtra("technology", 0)));
-        hideProgress();
+        getPresenter().shuffleQuestion();
     }
 
     @Override
@@ -115,7 +114,6 @@ public class QuestionActivity extends AppBaseCompatActivity<QuestionPresenterImp
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        getPresenter().onDestroy();
         LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(Constant.CATEGORY_RECEIVER));
     }
 }

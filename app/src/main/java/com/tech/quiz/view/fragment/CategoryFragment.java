@@ -213,7 +213,11 @@ public class CategoryFragment extends AppCompatFragment<CategoryPresenterImpl> i
 
     @Override
     public void manageRecyclerView(int visibility) {
-        getView().findViewById(R.id.recyclerView).setVisibility(visibility);
+        try {
+            getView().findViewById(R.id.recyclerView).setVisibility(visibility);
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
     }
 
 }

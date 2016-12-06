@@ -29,7 +29,9 @@ import java.util.Map;
 import library.mvp.MvpBasePresenter;
 import rx.Observable;
 import rx.Observer;
+import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;
+import rx.schedulers.Schedulers;
 
 public class CategoryPresenterImpl extends MvpBasePresenter<CategoryView> implements CategoryPresenter, CategoryInteractor.OnQuestionResponseListener {
 
@@ -153,26 +155,45 @@ public class CategoryPresenterImpl extends MvpBasePresenter<CategoryView> implem
     }
 
     @Override
-    public void showQuestions(int position) {
+    public void showQuestions(final int position) {
         if (position == 0) {
             DataHolder.getInstance().setQuestionList(questionList);
+            showTestModeDialog(position);
         } else {
-            List<Questions> tempList = new ArrayList<>();
-            for (Questions questions : questionList) {
-                if (questions.getCategory().equalsIgnoreCase(categoryList.get(position))) {
-                    tempList.add(questions);
-                }
-            }
-            DataHolder.getInstance().setQuestionList(tempList);
+            final List<Questions> tempList = new ArrayList<>();
+            Observable.from(questionList).
+                    subscribeOn(Schedulers.io()).
+                    observeOn(AndroidSchedulers.mainThread()).
+                    filter(new Func1<Questions, Boolean>() {
+                        @Override
+                        public Boolean call(Questions questions) {
+                            return questions.getCategory().equalsIgnoreCase(categoryList.get(position));
+                        }
+                    }).
+                    subscribe(new Observer<Questions>() {
+                        @Override
+                        public void onCompleted() {
+                            DataHolder.getInstance().setQuestionList(tempList);
+                            showTestModeDialog(position);
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+
+                        }
+
+                        @Override
+                        public void onNext(Questions questions) {
+                            tempList.add(questions);
+                        }
+                    });
         }
-        showTestModeDialog(position);
     }
 
     @Override
     public <T extends Questions> void onSuccess(List<T> questionListFromDB) {
         if (isViewAttached()) {
-            updateUI(castToQuestions(questionListFromDB));
-            getView().hideProgress();
+            castToQuestions(questionListFromDB);
         }
     }
 
@@ -202,6 +223,8 @@ public class CategoryPresenterImpl extends MvpBasePresenter<CategoryView> implem
         categoryMap.put("All Question", 0);
 
         Observable.from(responseList).
+                subscribeOn(Schedulers.io()).
+                observeOn(AndroidSchedulers.mainThread()).
                 map(new Func1<Questions, Questions>() {
                     @Override
                     public Questions call(Questions questions) {
@@ -220,11 +243,12 @@ public class CategoryPresenterImpl extends MvpBasePresenter<CategoryView> implem
                     public void onCompleted() {
                         categoryMap.put("All Question", responseList.size());
                         categoryAdapter.notifyDataSetChanged();
+                        getView().hideProgress();
                     }
 
                     @Override
                     public void onError(Throwable e) {
-
+                        getView().hideProgress();
                     }
 
                     @Override
@@ -251,13 +275,32 @@ public class CategoryPresenterImpl extends MvpBasePresenter<CategoryView> implem
     public <T extends Questions> List<Questions> castToQuestions(List<T> questionListFromDB) {
         final List<Questions> questionsList = new ArrayList<>();
 
-        Observable.from(questionListFromDB).map(new Func1<T, Void>() {
-            @Override
-            public Void call(T t) {
-                questionsList.add(t);
-                return null;
-            }
-        }).subscribe();
+        Observable.from(questionListFromDB).
+                subscribeOn(Schedulers.io()).
+                observeOn(AndroidSchedulers.mainThread()).
+                map(new Func1<T, Void>() {
+                    @Override
+                    public Void call(T t) {
+                        questionsList.add(t);
+                        return null;
+                    }
+                }).
+                subscribe(new Observer<Void>() {
+                    @Override
+                    public void onCompleted() {
+                        updateUI(questionsList);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                    }
+
+                    @Override
+                    public void onNext(Void aVoid) {
+
+                    }
+                });
 
         return questionsList;
     }

@@ -18,7 +18,8 @@ public class SplashInteractorImpl implements SplashInteractor {
 
     @Override
     public Subscription getJavaQuestions(final OnJavaQuestionResponseListener questionResponseListener, Observable<QuestionResponse> questionCall) {
-        return questionCall.subscribeOn(Schedulers.io()).
+        return questionCall.
+                subscribeOn(Schedulers.io()).
                 observeOn(AndroidSchedulers.mainThread()).
                 subscribe(new Observer<QuestionResponse>() {
                     @Override

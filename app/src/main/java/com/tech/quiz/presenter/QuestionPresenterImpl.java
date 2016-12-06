@@ -16,7 +16,9 @@ import java.util.List;
 import library.mvp.MvpBasePresenter;
 import rx.Observable;
 import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by root on 28/9/16.
@@ -32,7 +34,7 @@ public class QuestionPresenterImpl extends MvpBasePresenter<QuestionView> implem
 
     @Override
     public void onCreate() {
-        shuffleQuestion();
+//        shuffleQuestion();
     }
 
     @Override
@@ -67,7 +69,11 @@ public class QuestionPresenterImpl extends MvpBasePresenter<QuestionView> implem
         if (isViewAttached()) {
             getView().showProgress();
             shuffledQuestionList.clear();
+            questionPagerAdapter.notifyDataSetChanged();
+
             Observable.from(DataHolder.getInstance().getQuestionList()).
+                    subscribeOn(Schedulers.io()).
+                    observeOn(AndroidSchedulers.mainThread()).
                     subscribe(new Subscriber<Questions>() {
                         @Override
                         public void onCompleted() {
@@ -77,7 +83,7 @@ public class QuestionPresenterImpl extends MvpBasePresenter<QuestionView> implem
 
                         @Override
                         public void onError(Throwable e) {
-
+                            getView().hideProgress();
                         }
 
                         @Override
@@ -93,7 +99,11 @@ public class QuestionPresenterImpl extends MvpBasePresenter<QuestionView> implem
         if (isViewAttached()) {
             getView().showProgress();
             shuffledQuestionList.clear();
+            questionPagerAdapter.notifyDataSetChanged();
+
             Observable.from(DataHolder.getInstance().getQuestionList()).
+                    subscribeOn(Schedulers.io()).
+                    observeOn(AndroidSchedulers.mainThread()).
                     filter(new Func1<Questions, Boolean>() {
                         @Override
                         public Boolean call(Questions questions) {
@@ -109,7 +119,7 @@ public class QuestionPresenterImpl extends MvpBasePresenter<QuestionView> implem
 
                         @Override
                         public void onError(Throwable e) {
-
+                            getView().hideProgress();
                         }
 
                         @Override
@@ -125,7 +135,11 @@ public class QuestionPresenterImpl extends MvpBasePresenter<QuestionView> implem
         if (isViewAttached()) {
             getView().showProgress();
             shuffledQuestionList.clear();
+            questionPagerAdapter.notifyDataSetChanged();
+
             Observable.from(DataHolder.getInstance().getQuestionList()).
+                    subscribeOn(Schedulers.io()).
+                    observeOn(AndroidSchedulers.mainThread()).
                     filter(new Func1<Questions, Boolean>() {
                         @Override
                         public Boolean call(Questions questions) {
@@ -141,7 +155,7 @@ public class QuestionPresenterImpl extends MvpBasePresenter<QuestionView> implem
 
                         @Override
                         public void onError(Throwable e) {
-
+                            getView().hideProgress();
                         }
 
                         @Override
@@ -158,7 +172,11 @@ public class QuestionPresenterImpl extends MvpBasePresenter<QuestionView> implem
         if (isViewAttached()) {
             getView().showProgress();
             shuffledQuestionList.clear();
+            questionPagerAdapter.notifyDataSetChanged();
+
             Observable.from(DataHolder.getInstance().getQuestionList()).
+                    subscribeOn(Schedulers.io()).
+                    observeOn(AndroidSchedulers.mainThread()).
                     map(new Func1<Questions, Questions>() {
                         @Override
                         public Questions call(Questions questions) {
@@ -213,7 +231,7 @@ public class QuestionPresenterImpl extends MvpBasePresenter<QuestionView> implem
 
                         @Override
                         public void onError(Throwable e) {
-
+                            getView().hideProgress();
                         }
 
                         @Override
@@ -227,7 +245,11 @@ public class QuestionPresenterImpl extends MvpBasePresenter<QuestionView> implem
 
     @Override
     public void shuffleQuestion() {
+        getView().showProgress();
+        final List<Questions> tempList = new ArrayList<>();
         Observable.from(DataHolder.getInstance().getQuestionList()).
+                subscribeOn(Schedulers.io()).
+                observeOn(AndroidSchedulers.mainThread()).
                 map(new Func1<Questions, Questions>() {
                     @Override
                     public Questions call(Questions question) {
@@ -276,18 +298,22 @@ public class QuestionPresenterImpl extends MvpBasePresenter<QuestionView> implem
                 subscribe(new Subscriber<Questions>() {
                     @Override
                     public void onCompleted() {
+                        shuffledQuestionList.addAll(tempList);
                         Collections.shuffle(shuffledQuestionList);
                         DataHolder.getInstance().setShuffledQuestionList(shuffledQuestionList);
+                        questionPagerAdapter.notifyDataSetChanged();
+                        getView().hideProgress();
                     }
 
                     @Override
                     public void onError(Throwable e) {
-
+                        getView().hideProgress();
                     }
 
                     @Override
                     public void onNext(Questions questions) {
-                        shuffledQuestionList.add(questions);
+                        tempList.add(questions);
+                        //shuffledQuestionList.add(questions);
                     }
                 });
     }
@@ -295,6 +321,8 @@ public class QuestionPresenterImpl extends MvpBasePresenter<QuestionView> implem
     @Override
     public void shuffleQuestionAndResetAllLocally() {
         Observable.from(shuffledQuestionList).
+                subscribeOn(Schedulers.io()).
+                observeOn(AndroidSchedulers.mainThread()).
                 map(new Func1<Questions, Questions>() {
                     @Override
                     public Questions call(Questions questions) {
