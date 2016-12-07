@@ -35,3 +35,8 @@
     *;
 }
 -dontwarn retrofit2.**
+
+-keep class !rx.** {
+    *;
+}
+-dontwarn rx.**
