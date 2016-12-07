@@ -44,14 +44,6 @@
             android:label="Subscription"
             android:screenOrientation="portrait" />
 
-        <!--<receiver
-            android:name="com.interviewquestion.quiz.network.NetworkChangeReceiver"
-            android:label="NetworkChangeReceiver">
-            <intent-filter>
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
-            </intent-filter>
-        </receiver>-->
-
         <!-- [START firebase_service] -->
         <service android:name="com.tech.quiz.fcm.MyFirebaseMessagingService">
             <intent-filter>

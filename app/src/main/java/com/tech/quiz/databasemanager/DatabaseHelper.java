@@ -14,7 +14,7 @@ import com.tech.quiz.models.databasemodel.Java;
 
 import java.sql.SQLException;
 
-public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
+class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
     // Name of the database file for your application -- change to something appropriate for your app
     private static final String DATABASE_NAME = "IQ_DB";
@@ -92,7 +92,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 */
     }
 
-    public Dao<Android, Integer> getAndroidDao() {
+    Dao<Android, Integer> getAndroidDao() {
         if (androidDao == null) {
             try {
                 androidDao = getDao(Android.class);
@@ -103,7 +103,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         return androidDao;
     }
 
-    public Dao<Ios, Integer> getIosDao() {
+    Dao<Ios, Integer> getIosDao() {
         if (iosDao == null) {
             try {
                 iosDao = getDao(Ios.class);
@@ -114,7 +114,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         return iosDao;
     }
 
-    public Dao<Java, Integer> getJavaDao() {
+    Dao<Java, Integer> getJavaDao() {
         if (javaDao == null) {
             try {
                 javaDao = getDao(Java.class);
@@ -126,7 +126,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     }
 
 
-    public void clearAllTableData() {
+    /*public void clearAllTableData() {
         try {
             TableUtils.clearTable(connectionSource, Java.class);
             TableUtils.clearTable(connectionSource, Ios.class);
@@ -134,7 +134,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
     @Override
     public void close() {

@@ -5,9 +5,6 @@ import com.google.gson.annotations.SerializedName;
 
 import javax.annotation.Generated;
 
-/**
- * Created by root on 18/10/16.
- */
 @Generated("org.jsonschema2pojo")
 public class UserRegistor {
     @SerializedName("status")

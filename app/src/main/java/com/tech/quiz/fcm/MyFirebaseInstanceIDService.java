@@ -17,13 +17,7 @@ import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-/**
- * Created by root on 17/10/16.
- */
-
 public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
-
-    private static final String TAG = "MyFirebaseIIDService";
 
     /**
      * Called if InstanceID token is updated. This may occur if the security of

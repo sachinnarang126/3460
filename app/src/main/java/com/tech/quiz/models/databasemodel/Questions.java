@@ -2,10 +2,6 @@ package com.tech.quiz.models.databasemodel;
 
 import com.j256.ormlite.field.DatabaseField;
 
-/**
- * Created by sachin on 11/10/16.
- */
-
 public class Questions {
 
     public static final String ID = "question_id";
@@ -22,43 +18,43 @@ public class Questions {
     public static final String USER_ANSWER = "user_answer";
 
     @DatabaseField(generatedId = true)
-    protected int id;
+    private int id;
 
     @DatabaseField(columnName = ID)
-    protected int questionId;
+    private int questionId;
 
     @DatabaseField(columnName = USER_LEVEL)
-    protected int userLevel;
+    private int userLevel;
 
     @DatabaseField(columnName = CATEGORY, columnDefinition = "text collate nocase")
-    protected String category;
+    private String category;
 
     @DatabaseField(columnName = QUESTION)
-    protected String question;
+    private String question;
 
     @DatabaseField(columnName = OPTION_A)
-    protected String a;
+    private String a;
 
     @DatabaseField(columnName = OPTION_B)
-    protected String b;
+    private String b;
 
     @DatabaseField(columnName = OPTION_C)
-    protected String c;
+    private String c;
 
     @DatabaseField(columnName = OPTION_D)
-    protected String d;
+    private String d;
 
     @DatabaseField(columnName = ANSWER)
-    protected String answer;
+    private String answer;
 
     @DatabaseField(columnName = IS_ATTEMPTED)
-    protected boolean isAttempted;
+    private boolean isAttempted;
 
     @DatabaseField(columnName = IS_CORRECT_ANSWER_PROVIDED)
-    protected boolean isCorrectAnswerProvided;
+    private boolean isCorrectAnswerProvided;
 
     @DatabaseField(columnName = USER_ANSWER)
-    protected int userAnswer;
+    private int userAnswer;
 
     public int getQuestionId() {
         return questionId;
@@ -74,10 +70,6 @@ public class Questions {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public int getUserLevel() {
-        return userLevel;
     }
 
     public void setUserLevel(int userLevel) {

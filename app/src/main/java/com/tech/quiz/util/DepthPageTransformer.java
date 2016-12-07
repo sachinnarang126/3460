@@ -3,10 +3,6 @@ package com.tech.quiz.util;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 
-/**
- * Created by root on 5/10/16.
- */
-
 public class DepthPageTransformer implements ViewPager.PageTransformer {
     private static final float MIN_SCALE = 0.75f;
 

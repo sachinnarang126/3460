@@ -6,13 +6,7 @@ import com.tech.quiz.presenter.UpdateQuestionPresenterImpl;
 
 import org.json.JSONArray;
 
-/**
- * Created by root on 17/10/16.
- */
-
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
-    private static final String TAG = "MyFirebaseMsgService";
-
     /**
      * Called when message is received.
      *

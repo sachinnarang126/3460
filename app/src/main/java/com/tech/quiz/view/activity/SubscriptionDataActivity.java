@@ -163,14 +163,14 @@ public class SubscriptionDataActivity extends AppBaseCompatActivity {
         });
     }
 
-    public void consumeItem() {
+    /*public void consumeItem() {
         mHelper.queryInventoryAsync(mGotInventoryListener);
-    }
+    }*/
 
-    boolean verifyDeveloperPayload(Purchase p) {
+    /*boolean verifyDeveloperPayload(Purchase p) {
 //        String payload = p.getDeveloperPayload();
 
-        /*
+        *//*
          * TODO: verify that the developer payload of the purchase is correct. It will be
          * the same one that you sent when initiating the purchase.
          *
@@ -191,10 +191,10 @@ public class SubscriptionDataActivity extends AppBaseCompatActivity {
          *
          * Using your own server to store and verify developer payloads across app
          * installations is recommended.
-         */
+         *//*
 
         return true;
-    }
+    }*/
 
     @Override
     public void onDestroy() {

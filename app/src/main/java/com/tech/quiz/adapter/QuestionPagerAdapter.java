@@ -9,13 +9,8 @@ import com.tech.quiz.view.fragment.QuestionFragment;
 
 import java.util.List;
 
-/**
- * Created by sachin on 25/09/16.
- */
-
 public class QuestionPagerAdapter extends FragmentStatePagerAdapter {
 
-    //    private int size;
     private List<Questions> questionList;
     private int technology;
 

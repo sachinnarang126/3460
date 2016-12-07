@@ -10,10 +10,6 @@ import com.tech.quiz.repositories.interactor.CategoryInteractor;
 
 import java.util.List;
 
-/**
- * Created by root on 28/9/16.
- */
-
 public class CategoryInteractorImpl implements CategoryInteractor {
 
     private Context context;

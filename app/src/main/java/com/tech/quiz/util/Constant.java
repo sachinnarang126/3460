@@ -1,9 +1,5 @@
 package com.tech.quiz.util;
 
-/**
- * Created by sachin on 25/09/16.
- */
-
 public class Constant {
 
     public static final String BASE_URL = "http://skrillsystems.com/api/";

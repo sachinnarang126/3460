@@ -7,10 +7,6 @@ import java.util.List;
 import rx.Observable;
 import rx.Subscription;
 
-/**
- * Created by root on 28/9/16.
- */
-
 public interface SplashInteractor {
 
     Subscription getJavaQuestions(OnJavaQuestionResponseListener questionResponseListener, Observable<QuestionResponse> questionCall);

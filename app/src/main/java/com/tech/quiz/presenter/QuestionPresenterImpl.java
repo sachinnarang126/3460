@@ -20,10 +20,6 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
-/**
- * Created by root on 28/9/16.
- */
-
 public class QuestionPresenterImpl extends MvpBasePresenter<QuestionView> implements QuestionPresenter {
 
     private QuestionPagerAdapter questionPagerAdapter;

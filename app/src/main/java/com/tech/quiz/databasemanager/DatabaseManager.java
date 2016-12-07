@@ -29,9 +29,9 @@ public class DatabaseManager {
         return instance;
     }
 
-    public DatabaseHelper getDatabaseHelper() {
+    /*public DatabaseHelper getDatabaseHelper() {
         return databaseHelper;
-    }
+    }*/
 
     /*
      **********************************COMMON FUNCTIONS**********************************
@@ -77,7 +77,7 @@ public class DatabaseManager {
         return null;
     }
 
-    public void initDefaultValueToAndroidQuestion() {
+    private void initDefaultValueToAndroidQuestion() {
         UpdateBuilder<Android, Integer> updateBuilder = databaseHelper.getAndroidDao().updateBuilder();
 
         try {
@@ -195,7 +195,7 @@ public class DatabaseManager {
         return null;
     }
 
-    public void initDefaultValueToIosQuestion() {
+    private void initDefaultValueToIosQuestion() {
         UpdateBuilder<Ios, Integer> updateBuilder = databaseHelper.getIosDao().updateBuilder();
 
         try {
@@ -314,7 +314,7 @@ public class DatabaseManager {
         return null;
     }
 
-    public void initDefaultValueToJavaQuestion() {
+    private void initDefaultValueToJavaQuestion() {
         UpdateBuilder<Java, Integer> updateBuilder = databaseHelper.getJavaDao().updateBuilder();
 
         try {

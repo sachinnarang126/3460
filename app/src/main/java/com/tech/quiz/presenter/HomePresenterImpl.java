@@ -27,10 +27,6 @@ import rx.Observable;
 import rx.Observer;
 import rx.functions.Func1;
 
-/**
- * Created by root on 28/9/16.
- */
-
 public class HomePresenterImpl extends MvpBasePresenter<HomeView> implements HomePresenter, HomeInteractor.OnIosQuestionResponseListener,
         HomeInteractor.OnAndroidQuestionResponseListener, HomeInteractor.OnJavaQuestionResponseListener {
 

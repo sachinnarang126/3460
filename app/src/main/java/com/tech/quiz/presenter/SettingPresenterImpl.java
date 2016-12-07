@@ -11,10 +11,6 @@ import com.tech.quiz.view.views.SettingView;
 
 import library.mvp.MvpBasePresenter;
 
-/**
- * Created by root on 12/10/16.
- */
-
 public class SettingPresenterImpl extends MvpBasePresenter<SettingView> implements SettingPresenter, Preference.OnPreferenceClickListener {
 
     public SettingPresenterImpl(SettingView view, Context context) {

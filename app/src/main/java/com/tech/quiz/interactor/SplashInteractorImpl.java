@@ -10,10 +10,6 @@ import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-/**
- * Created by root on 28/9/16.
- */
-
 public class SplashInteractorImpl implements SplashInteractor {
 
     @Override

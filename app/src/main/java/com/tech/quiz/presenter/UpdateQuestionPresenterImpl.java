@@ -14,10 +14,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-/**
- * Created by root on 19/10/16.
- */
-
 public class UpdateQuestionPresenterImpl implements UpdateQuestionPresenter {
 
     private Context context;

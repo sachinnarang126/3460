@@ -4,10 +4,6 @@ import com.tech.quiz.models.bean.QuestionResponse;
 
 import java.util.List;
 
-/**
- * Created by root on 28/9/16.
- */
-
 public interface HomePresenter {
 
     void onDestroy();

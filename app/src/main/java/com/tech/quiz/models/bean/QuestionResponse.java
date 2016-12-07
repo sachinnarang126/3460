@@ -8,11 +8,6 @@ import java.util.List;
 
 import javax.annotation.Generated;
 
-/**
- * Created by sachin on 25/09/16.
- */
-
-
 @Generated("org.jsonschema2pojo")
 public class QuestionResponse {
 

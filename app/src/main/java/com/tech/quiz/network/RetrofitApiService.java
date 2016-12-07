@@ -42,5 +42,4 @@ public interface RetrofitApiService {
     @FormUrlEncoded
     @POST(Constant.JAVA_POST_URL)
     Observable<QuestionResponse> getJavaSelectedQuestion(@Field("id[]") List<Integer> id);
-
 }
