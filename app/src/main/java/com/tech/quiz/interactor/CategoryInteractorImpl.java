@@ -10,8 +10,8 @@ import com.tech.quiz.repositories.interactor.CategoryInteractor;
 
 import java.util.List;
 
-import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 public class CategoryInteractorImpl implements CategoryInteractor {
@@ -27,19 +27,9 @@ public class CategoryInteractorImpl implements CategoryInteractor {
         DatabaseManager.getDataBaseManager(context).fetchJavaQuestionFromDB(isShowAnsweredQuestion).
                 subscribeOn(Schedulers.io()).
                 observeOn(AndroidSchedulers.mainThread()).
-                subscribe(new Observer<List<Java>>() {
+                subscribe(new Action1<List<Java>>() {
                     @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onNext(List<Java> javaList) {
+                    public void call(List<Java> javaList) {
                         if (javaList.size() > 0) {
                             questionResponseListener.onSuccess(javaList);
                         } else if (!isShowAnsweredQuestion) {
@@ -59,19 +49,9 @@ public class CategoryInteractorImpl implements CategoryInteractor {
         DatabaseManager.getDataBaseManager(context).fetchAndroidQuestionFromDB(isShowAnsweredQuestion).
                 subscribeOn(Schedulers.io()).
                 observeOn(AndroidSchedulers.mainThread()).
-                subscribe(new Observer<List<Android>>() {
+                subscribe(new Action1<List<Android>>() {
                     @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onNext(List<Android> androidList) {
+                    public void call(List<Android> androidList) {
                         if (androidList.size() > 0) {
                             questionResponseListener.onSuccess(androidList);
                         } else if (!isShowAnsweredQuestion) {
@@ -91,19 +71,9 @@ public class CategoryInteractorImpl implements CategoryInteractor {
         DatabaseManager.getDataBaseManager(context).fetchIosQuestionFromDB(isShowAnsweredQuestion).
                 subscribeOn(Schedulers.io()).
                 observeOn(AndroidSchedulers.mainThread()).
-                subscribe(new Observer<List<Ios>>() {
+                subscribe(new Action1<List<Ios>>() {
                     @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onNext(List<Ios> iosList) {
+                    public void call(List<Ios> iosList) {
                         if (iosList.size() > 0) {
                             questionResponseListener.onSuccess(iosList);
                         } else if (!isShowAnsweredQuestion) {
