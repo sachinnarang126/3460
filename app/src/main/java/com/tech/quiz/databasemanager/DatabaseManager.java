@@ -13,6 +13,7 @@ import com.tech.quiz.models.databasemodel.Questions;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
 
 import rx.Observable;
 
@@ -65,18 +66,21 @@ public class DatabaseManager {
         }
     }
 
-    public Observable<List<Android>> fetchAndroidQuestionFromDB(boolean isShowAnsweredQuestion) {
-        QueryBuilder<Android, Integer> queryBuilder = databaseHelper.getAndroidDao().queryBuilder();
-        try {
-            if (isShowAnsweredQuestion) {
-                return Observable.just(queryBuilder.query());
-            } else {
-                return Observable.just(queryBuilder.where().eq(Questions.IS_ATTEMPTED, false).query());
+    public Observable<List<Android>> fetchAndroidQuestionFromDB(final boolean isShowAnsweredQuestion) {
+        final QueryBuilder<Android, Integer> queryBuilder = databaseHelper.getAndroidDao().queryBuilder();
+        return Observable.fromCallable(new Callable<List<Android>>() {
+            public List<Android> call() throws Exception {
+                try {
+                    if (isShowAnsweredQuestion)
+                        return queryBuilder.query();
+                    else
+                        return queryBuilder.where().eq(Questions.IS_ATTEMPTED, false).query();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                return null;
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
+        });
     }
 
     private void initDefaultValueToAndroidQuestion() {
@@ -183,18 +187,21 @@ public class DatabaseManager {
         }
     }
 
-    public Observable<List<Ios>> fetchIosQuestionFromDB(boolean isShowAnsweredQuestion) {
-        QueryBuilder<Ios, Integer> queryBuilder = databaseHelper.getIosDao().queryBuilder();
-        try {
-            if (isShowAnsweredQuestion) {
-                return Observable.just(queryBuilder.query());
-            } else {
-                return Observable.just(queryBuilder.where().eq(Questions.IS_ATTEMPTED, false).query());
+    public Observable<List<Ios>> fetchIosQuestionFromDB(final boolean isShowAnsweredQuestion) {
+        final QueryBuilder<Ios, Integer> queryBuilder = databaseHelper.getIosDao().queryBuilder();
+        return Observable.fromCallable(new Callable<List<Ios>>() {
+            public List<Ios> call() throws Exception {
+                try {
+                    if (isShowAnsweredQuestion)
+                        return queryBuilder.query();
+                    else
+                        return queryBuilder.where().eq(Questions.IS_ATTEMPTED, false).query();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                return null;
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
+        });
     }
 
     private void initDefaultValueToIosQuestion() {
@@ -300,17 +307,21 @@ public class DatabaseManager {
         }
     }
 
-    public Observable<List<Java>> fetchJavaQuestionFromDB(boolean isShowAnsweredQuestion) {
-        QueryBuilder<Java, Integer> queryBuilder = databaseHelper.getJavaDao().queryBuilder();
-        try {
-            if (isShowAnsweredQuestion)
-                return Observable.just(queryBuilder.query());
-            else
-                return Observable.just(queryBuilder.where().eq(Questions.IS_ATTEMPTED, false).query());
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
+    public Observable<List<Java>> fetchJavaQuestionFromDB(final boolean isShowAnsweredQuestion) {
+        final QueryBuilder<Java, Integer> queryBuilder = databaseHelper.getJavaDao().queryBuilder();
+        return Observable.fromCallable(new Callable<List<Java>>() {
+            public List<Java> call() throws Exception {
+                try {
+                    if (isShowAnsweredQuestion)
+                        return queryBuilder.query();
+                    else
+                        return queryBuilder.where().eq(Questions.IS_ATTEMPTED, false).query();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+        });
     }
 
     private void initDefaultValueToJavaQuestion() {
