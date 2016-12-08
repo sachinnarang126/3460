@@ -32,5 +32,5 @@ public interface CategoryPresenter {
 
     void clearCategoryAdapter();
 
-    <T extends Questions> List<Questions> castToQuestions(List<T> questionListFromDB);
+    <T extends Questions> void castToQuestions(List<T> questionListFromDB);
 }

@@ -14,6 +14,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import rx.Observable;
+
 public class DatabaseManager {
     private static DatabaseManager instance;
     private DatabaseHelper databaseHelper;
@@ -63,13 +65,13 @@ public class DatabaseManager {
         }
     }
 
-    public List<Android> fetchAndroidQuestionFromDB(boolean isShowAnsweredQuestion) {
+    public Observable<List<Android>> fetchAndroidQuestionFromDB(boolean isShowAnsweredQuestion) {
         QueryBuilder<Android, Integer> queryBuilder = databaseHelper.getAndroidDao().queryBuilder();
         try {
             if (isShowAnsweredQuestion) {
-                return queryBuilder.query();
+                return Observable.just(queryBuilder.query());
             } else {
-                return queryBuilder.where().eq(Questions.IS_ATTEMPTED, false).query();
+                return Observable.just(queryBuilder.where().eq(Questions.IS_ATTEMPTED, false).query());
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -181,13 +183,13 @@ public class DatabaseManager {
         }
     }
 
-    public List<Ios> fetchIosQuestionFromDB(boolean isShowAnsweredQuestion) {
+    public Observable<List<Ios>> fetchIosQuestionFromDB(boolean isShowAnsweredQuestion) {
         QueryBuilder<Ios, Integer> queryBuilder = databaseHelper.getIosDao().queryBuilder();
         try {
             if (isShowAnsweredQuestion) {
-                return queryBuilder.query();
+                return Observable.just(queryBuilder.query());
             } else {
-                return queryBuilder.where().eq(Questions.IS_ATTEMPTED, false).query();
+                return Observable.just(queryBuilder.where().eq(Questions.IS_ATTEMPTED, false).query());
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -278,8 +280,6 @@ public class DatabaseManager {
         return 0;
     }
 
-
-
     /*
      **********************************JAVA TABLE FUNCTIONS**********************************
      */
@@ -300,14 +300,13 @@ public class DatabaseManager {
         }
     }
 
-    public List<Java> fetchJavaQuestionFromDB(boolean isShowAnsweredQuestion) {
+    public Observable<List<Java>> fetchJavaQuestionFromDB(boolean isShowAnsweredQuestion) {
         QueryBuilder<Java, Integer> queryBuilder = databaseHelper.getJavaDao().queryBuilder();
         try {
-            if (isShowAnsweredQuestion) {
-                return queryBuilder.query();
-            } else {
-                return queryBuilder.where().eq(Questions.IS_ATTEMPTED, false).query();
-            }
+            if (isShowAnsweredQuestion)
+                return Observable.just(queryBuilder.query());
+            else
+                return Observable.just(queryBuilder.where().eq(Questions.IS_ATTEMPTED, false).query());
         } catch (SQLException e) {
             e.printStackTrace();
         }

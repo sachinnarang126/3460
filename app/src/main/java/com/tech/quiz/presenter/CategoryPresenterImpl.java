@@ -272,7 +272,7 @@ public class CategoryPresenterImpl extends MvpBasePresenter<CategoryView> implem
     }
 
     @Override
-    public <T extends Questions> List<Questions> castToQuestions(List<T> questionListFromDB) {
+    public <T extends Questions> void castToQuestions(List<T> questionListFromDB) {
         final List<Questions> questionsList = new ArrayList<>();
 
         Observable.from(questionListFromDB).
@@ -301,8 +301,6 @@ public class CategoryPresenterImpl extends MvpBasePresenter<CategoryView> implem
 
                     }
                 });
-
-        return questionsList;
     }
 
     @Override
