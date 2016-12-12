@@ -203,6 +203,10 @@ public abstract class AppBaseCompatActivity<T extends MvpBasePresenter> extends 
         }
     }
 
+    final public Subscription getSubscription(String key){
+        return mRxSubscriberMap.get(key);
+    }
+
     public boolean isSubscribedUser() {
         return DataHolder.getInstance().getPreferences(this).getBoolean(Constant.IS_SUBSCRIBED_USER, false);
     }

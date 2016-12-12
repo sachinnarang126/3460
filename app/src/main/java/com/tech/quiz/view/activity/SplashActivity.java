@@ -66,7 +66,6 @@ public class SplashActivity extends AppBaseCompatActivity<SplashPresenterImpl> i
     public void onError(String error) {
         showSnackBar(error);
         closeApplication();
-
     }
 
     private void closeApplication() {

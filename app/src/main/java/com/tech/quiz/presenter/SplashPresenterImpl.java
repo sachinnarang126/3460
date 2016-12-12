@@ -3,7 +3,6 @@ package com.tech.quiz.presenter;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.util.Log;
 
 import com.tech.R;
 import com.tech.quiz.billing.IabHelper;
@@ -97,15 +96,16 @@ public class SplashPresenterImpl extends MvpBasePresenter<SplashView> implements
                 context.putSubscriberInMap(splashInteractor.getAndroidQuestions(this, androidQuestion), Constant.ANDROID_URL);
                 context.putSubscriberInMap(splashInteractor.getIosQuestion(this, iosQuestion), Constant.IOS_URL);
                 context.putSubscriberInMap(splashInteractor.getJavaQuestions(this, javaQuestion), Constant.JAVA_URL);
+
             } else {
                 context.onError(context.getString(R.string.error_internet_first_launch));
             }
-
         }
     }
 
     @Override
     public void onSuccess(List<QuestionResponse.Response> questionList, int serviceType) {
+
         serviceCount++;
         saveDataToDB(questionList, serviceType);
         if (serviceCount == 3) {
@@ -282,8 +282,6 @@ public class SplashPresenterImpl extends MvpBasePresenter<SplashView> implements
                 Purchase purchase = inventory.getPurchase(SubscriptionDataActivity.ITEM_SKU);
 
                 if (purchase != null) {
-                    System.out.println("you own this product");
-                    System.out.println("purchase time in millis " + purchase.getPurchaseTime());
                     editor.putBoolean(Constant.IS_SUBSCRIBED_USER, true);
                     editor.putLong(Constant.PURCHASE_TIME, purchase.getPurchaseTime());
                     editor.putString(Constant.TOKEN, purchase.getToken());
@@ -295,25 +293,21 @@ public class SplashPresenterImpl extends MvpBasePresenter<SplashView> implements
             }
         };
 
-        Log.d("SubscriptionData", "Creating IAB helper.");
         // Create the helper, passing it our context and the public key to verify signatures with
         // enable debug logging (for a production application, you should set this to false).
-        mHelper.enableDebugLogging(true);
+        mHelper.enableDebugLogging(false);
 
 
         // Start setup. This is asynchronous and the specified listener
         // will be called once setup completes.
         mHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
             public void onIabSetupFinished(IabResult result) {
-                System.out.println("setup finished");
-
                 if (!result.isSuccess()) {
                     // Oh noes, there was a problem.
                     return;
                 }
 
                 // IAB is fully set up. Now, let's get an inventory of stuff we own.
-                Log.d("SubscriptionData", "Setup successful. Querying inventory.");
                 mHelper.queryInventoryAsync(mGotInventoryListener);
             }
         });
