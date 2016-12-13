@@ -113,8 +113,6 @@ public class QuestionActivity extends AppBaseCompatActivity<QuestionPresenterImp
                 break;
 
             case R.id.action_show_result:
-                /*if (getSupportActionBar() != null)
-                    getSupportActionBar().setSubtitle(getString(R.string.reset));*/
                 getPresenter().showResult();
                 break;
         }
@@ -130,6 +128,23 @@ public class QuestionActivity extends AppBaseCompatActivity<QuestionPresenterImp
     @Override
     public void hideProgress() {
         findViewById(R.id.progressBar).setVisibility(View.GONE);
+    }
+
+    @Override
+    public String getTechnology() {
+        switch (getIntent().getIntExtra("technology", 0)) {
+            case Constant.ANDROID:
+                return getString(R.string.android);
+
+            case Constant.IOS:
+                return getString(R.string.ios);
+
+            case Constant.JAVA:
+                return getString(R.string.java);
+
+            default:
+                return "";
+        }
     }
 
     @Override

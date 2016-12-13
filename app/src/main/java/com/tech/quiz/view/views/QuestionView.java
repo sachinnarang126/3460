@@ -11,4 +11,6 @@ public interface QuestionView extends MvpView {
     void showProgress();
 
     void hideProgress();
+
+    String getTechnology();
 }

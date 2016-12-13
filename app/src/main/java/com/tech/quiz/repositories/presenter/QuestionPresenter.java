@@ -24,12 +24,14 @@ public interface QuestionPresenter {
 
     void shuffleQuestion();
 
-    void shuffleQuestionAndResetAllLocally();
+//    void shuffleQuestionAndResetAllLocally();
 
     void showResult();
 
     BaseAdapter initAdapter(int technology);
 
     BaseAdapter initAdapter();
+
+    void checkForQuizCompletion();
 
 }

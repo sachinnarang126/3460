@@ -28,7 +28,7 @@ import rx.schedulers.Schedulers;
 public class QuestionPresenterImpl extends MvpBasePresenter<QuestionView> implements QuestionPresenter {
 
     private BaseAdapter questionPagerAdapter;
-    public int attemptedQuestion = 0;
+    private int attemptedQuestion = 0;
 
     public QuestionPresenterImpl(QuestionView view, Context context) {
         attachView(view, context);
@@ -321,58 +321,6 @@ public class QuestionPresenterImpl extends MvpBasePresenter<QuestionView> implem
     }
 
     @Override
-    public void shuffleQuestionAndResetAllLocally() {
-        Observable.from(shuffledQuestionList).
-                subscribeOn(Schedulers.io()).
-                observeOn(AndroidSchedulers.mainThread()).
-                map(new Func1<Questions, Questions>() {
-                    @Override
-                    public Questions call(Questions questions) {
-                        List<String> shuffledOptionList = new ArrayList<>();
-                        questions.setAttempted(false);
-                        questions.setCorrectAnswerProvided(false);
-                        questions.setUserAnswer(0);
-                        String answer = "";
-                        switch (questions.getAnswer()) {
-                            case "1":
-                                answer = questions.getA();
-                                break;
-
-                            case "2":
-                                answer = questions.getB();
-                                break;
-
-                            case "3":
-                                answer = questions.getC();
-                                break;
-
-                            case "4":
-                                answer = questions.getD();
-                                break;
-                        }
-
-                        shuffledOptionList.add(questions.getA());
-                        shuffledOptionList.add(questions.getB());
-                        shuffledOptionList.add(questions.getC());
-                        shuffledOptionList.add(questions.getD());
-
-                        Collections.shuffle(shuffledOptionList);
-
-                        int answerIndex = shuffledOptionList.indexOf(answer);
-
-                        questions.setAnswer(String.valueOf(answerIndex + 1));
-
-                        questions.setA(shuffledOptionList.get(0));
-                        questions.setB(shuffledOptionList.get(1));
-                        questions.setC(shuffledOptionList.get(2));
-                        questions.setD(shuffledOptionList.get(3));
-
-                        return questions;
-                    }
-                }).subscribe();
-    }
-
-    @Override
     public void showResult() {
         final int totalQuestion = shuffledQuestionList.size();
         final int[] correctAnswerCount = {0};
@@ -397,8 +345,9 @@ public class QuestionPresenterImpl extends MvpBasePresenter<QuestionView> implem
                                 .setMessage("Total Question: " + totalQuestion + "\n" +
                                         "Attempted Question: " + attemptedQuestion + "\n" +
                                         "Correct Answer: " + correctAnswerCount[0] + "\n" +
+                                        "In-Correct Answer: " + (totalQuestion - correctAnswerCount[0]) + "\n" +
                                         "Percentage: " + percentage + "%")
-                                .setTitle("Result")
+                                .setTitle(getView().getTechnology() + " Quiz Result")
                                 .setCancelable(false)
                                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                     @Override
@@ -432,5 +381,14 @@ public class QuestionPresenterImpl extends MvpBasePresenter<QuestionView> implem
     public BaseAdapter initAdapter() {
         return questionPagerAdapter = new QuizPagerAdapter(((QuestionActivity) getContext()).getSupportFragmentManager(),
                 shuffledQuestionList);
+    }
+
+    @Override
+    public void checkForQuizCompletion() {
+        attemptedQuestion++;
+        System.out.println("attemp " + attemptedQuestion + " shuffledQuestionList.size() " + shuffledQuestionList.size());
+        if (attemptedQuestion == shuffledQuestionList.size()) {
+            showResult();
+        }
     }
 }

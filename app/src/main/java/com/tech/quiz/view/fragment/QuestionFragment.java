@@ -170,23 +170,27 @@ public class QuestionFragment extends Fragment implements View.OnClickListener, 
 
                     switch (answer) {
                         case Constant.OPTION_A:
-                            getView().findViewById(R.id.parentA).setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.green));
-                            ((TextView) getView().findViewById(R.id.txtViewA)).setTextColor(ContextCompat.getColor(getActivity(), android.R.color.white));
+                            TextView txtViewA = ((TextView) getView().findViewById(R.id.txtViewA));
+                            txtViewA.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.green));
+                            txtViewA.setTextColor(ContextCompat.getColor(getActivity(), android.R.color.white));
                             break;
 
                         case Constant.OPTION_B:
-                            getView().findViewById(R.id.parentB).setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.green));
-                            ((TextView) getView().findViewById(R.id.txtViewB)).setTextColor(ContextCompat.getColor(getActivity(), android.R.color.white));
+                            TextView txtViewB = ((TextView) getView().findViewById(R.id.txtViewB));
+                            txtViewB.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.green));
+                            txtViewB.setTextColor(ContextCompat.getColor(getActivity(), android.R.color.white));
                             break;
 
                         case Constant.OPTION_C:
-                            getView().findViewById(R.id.parentC).setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.green));
-                            ((TextView) getView().findViewById(R.id.txtViewC)).setTextColor(ContextCompat.getColor(getActivity(), android.R.color.white));
+                            TextView txtViewC = ((TextView) getView().findViewById(R.id.txtViewC));
+                            txtViewC.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.green));
+                            txtViewC.setTextColor(ContextCompat.getColor(getActivity(), android.R.color.white));
                             break;
 
                         case Constant.OPTION_D:
-                            getView().findViewById(R.id.parentD).setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.green));
-                            ((TextView) getView().findViewById(R.id.txtViewD)).setTextColor(ContextCompat.getColor(getActivity(), android.R.color.white));
+                            TextView txtViewD = ((TextView) getView().findViewById(R.id.txtViewD));
+                            txtViewD.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.green));
+                            txtViewD.setTextColor(ContextCompat.getColor(getActivity(), android.R.color.white));
                             break;
                     }
                 }

@@ -46,7 +46,9 @@ public class CategoryPresenterImpl extends MvpBasePresenter<CategoryView> implem
         @Override
         public void onReceive(Context context, Intent intent) {
             if (isViewAttached()) {
-                resetToDefaultValue(intent.getStringExtra("category"));
+                getView().manageRecyclerView(View.VISIBLE);
+                getView().hideProgress();
+                hasToShowRecyclerView = true;
             }
         }
     };
@@ -154,10 +156,16 @@ public class CategoryPresenterImpl extends MvpBasePresenter<CategoryView> implem
 
     @Override
     public void showQuestions(final int position) {
+        showTestModeDialog(position);
+    }
+
+    private void filterListToShowQuestion(final int position) {
         if (position == 0) {
             DataHolder.getInstance().setQuestionList(questionList);
-            showTestModeDialog(position);
+            goToQuestionActivity(position, false);
         } else {
+            getView().manageRecyclerView(View.INVISIBLE);
+            getView().showProgress();
             final List<Questions> tempList = new ArrayList<>();
             Observable.from(questionList).
                     subscribeOn(Schedulers.io()).
@@ -172,7 +180,9 @@ public class CategoryPresenterImpl extends MvpBasePresenter<CategoryView> implem
                         @Override
                         public void onCompleted() {
                             DataHolder.getInstance().setQuestionList(tempList);
-                            showTestModeDialog(position);
+                            getView().manageRecyclerView(View.VISIBLE);
+                            getView().hideProgress();
+                            goToQuestionActivity(position, false);
                         }
 
                         @Override
@@ -318,13 +328,13 @@ public class CategoryPresenterImpl extends MvpBasePresenter<CategoryView> implem
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        goToQuestionActivity(position, true);
+                        resetToDefaultValue(position, categoryList.get(position));
                     }
                 })
                 .setNegativeButton("No", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        goToQuestionActivity(position, false);
+                        filterListToShowQuestion(position);
                     }
                 })
                 .setNeutralButton("Cancel", null)
@@ -342,7 +352,10 @@ public class CategoryPresenterImpl extends MvpBasePresenter<CategoryView> implem
         hasToShowRecyclerView = false;
     }
 
-    private void resetToDefaultValue(final String category) {
+    private void resetToDefaultValue(final int position, final String category) {
+        final List<Questions> tempList = new ArrayList<>();
+        getView().manageRecyclerView(View.INVISIBLE);
+        getView().showProgress();
         Observable.from(questionList).
                 subscribeOn(Schedulers.io()).
                 observeOn(AndroidSchedulers.mainThread()).
@@ -365,22 +378,20 @@ public class CategoryPresenterImpl extends MvpBasePresenter<CategoryView> implem
                 subscribe(new Observer<Questions>() {
                     @Override
                     public void onCompleted() {
+                        DataHolder.getInstance().setQuestionList(tempList);
                         getView().manageRecyclerView(View.VISIBLE);
                         getView().hideProgress();
-                        hasToShowRecyclerView = true;
+                        goToQuestionActivity(position, true);
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        e.printStackTrace();
-                        getView().manageRecyclerView(View.VISIBLE);
                         getView().hideProgress();
-                        hasToShowRecyclerView = true;
                     }
 
                     @Override
                     public void onNext(Questions questions) {
-
+                        tempList.add(questions);
                     }
                 });
     }
