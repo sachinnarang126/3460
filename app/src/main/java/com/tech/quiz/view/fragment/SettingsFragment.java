@@ -28,7 +28,6 @@ public class SettingsFragment extends PreferenceCompatFragment<SettingPresenterI
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        SwitchPreference prefRemoveQuestion = (SwitchPreference) findPreference("prefRemoveQuestion");
         addPreferencesFromResource(R.xml.settings);
 
         Preference prefResetAll = findPreference("prefResetAll");
