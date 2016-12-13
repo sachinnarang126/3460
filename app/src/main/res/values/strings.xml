@@ -7,6 +7,7 @@
     <string name="action_show_all">Show All</string>
     <string name="action_show_answered">Show Answered</string>
     <string name="action_show_un_answered">Show Unanswered</string>
+    <string name="action_show_result">Show Result</string>
     <string name="action_reset_all">Reset All</string>
 
     <string name="home_fragment">HomeFragment</string>

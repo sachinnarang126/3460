@@ -46,9 +46,7 @@ public class CategoryPresenterImpl extends MvpBasePresenter<CategoryView> implem
         @Override
         public void onReceive(Context context, Intent intent) {
             if (isViewAttached()) {
-                getView().manageRecyclerView(View.VISIBLE);
-                getView().hideProgress();
-                hasToShowRecyclerView = true;
+                resetToDefaultValue(intent.getStringExtra("category"));
             }
         }
     };
@@ -320,22 +318,70 @@ public class CategoryPresenterImpl extends MvpBasePresenter<CategoryView> implem
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-
+                        goToQuestionActivity(position, true);
                     }
                 })
                 .setNegativeButton("No", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        CategoryFragment context = ((CategoryFragment) getView());
-                        Intent intent = new Intent(context.getActivity(), QuestionActivity.class);
-                        intent.putExtra("title", categoryList.get(position));
-                        intent.putExtra("technology", context.getArguments().getInt("serviceType"));
-                        context.startActivity(intent);
-                        hasToShowRecyclerView = false;
+                        goToQuestionActivity(position, false);
                     }
                 })
                 .setNeutralButton("Cancel", null)
                 .create()
                 .show();
+    }
+
+    private void goToQuestionActivity(int position, boolean isQuizMode) {
+        CategoryFragment context = ((CategoryFragment) getView());
+        Intent intent = new Intent(context.getActivity(), QuestionActivity.class);
+        intent.putExtra("title", categoryList.get(position));
+        intent.putExtra("isQuizMode", isQuizMode);
+        intent.putExtra("technology", context.getArguments().getInt("serviceType"));
+        context.startActivity(intent);
+        hasToShowRecyclerView = false;
+    }
+
+    private void resetToDefaultValue(final String category) {
+        Observable.from(questionList).
+                subscribeOn(Schedulers.io()).
+                observeOn(AndroidSchedulers.mainThread()).
+                filter(new Func1<Questions, Boolean>() {
+                    @Override
+                    public Boolean call(Questions questions) {
+                        return category.equalsIgnoreCase("All Question") ||
+                                category.equalsIgnoreCase(questions.getCategory());
+                    }
+                }).
+                map(new Func1<Questions, Questions>() {
+                    @Override
+                    public Questions call(Questions questions) {
+                        questions.setAttempted(false);
+                        questions.setUserAnswer(0);
+                        questions.setCorrectAnswerProvided(false);
+                        return questions;
+                    }
+                }).
+                subscribe(new Observer<Questions>() {
+                    @Override
+                    public void onCompleted() {
+                        getView().manageRecyclerView(View.VISIBLE);
+                        getView().hideProgress();
+                        hasToShowRecyclerView = true;
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                        getView().manageRecyclerView(View.VISIBLE);
+                        getView().hideProgress();
+                        hasToShowRecyclerView = true;
+                    }
+
+                    @Override
+                    public void onNext(Questions questions) {
+
+                    }
+                });
     }
 }

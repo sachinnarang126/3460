@@ -56,7 +56,13 @@ public class QuestionActivity extends AppBaseCompatActivity<QuestionPresenterImp
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
         viewPager.setPageTransformer(true, new DepthPageTransformer());
-        viewPager.setAdapter(getPresenter().initAdapter(getIntent().getIntExtra("technology", 0)));
+
+        if (getIntent().getBooleanExtra("isQuizMode", false)) {
+            viewPager.setAdapter(getPresenter().initAdapter());
+        } else {
+            viewPager.setAdapter(getPresenter().initAdapter(getIntent().getIntExtra("technology", 0)));
+        }
+
         getPresenter().shuffleQuestion();
     }
 
@@ -64,6 +70,15 @@ public class QuestionActivity extends AppBaseCompatActivity<QuestionPresenterImp
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_question, menu);
         return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        if (getIntent().getBooleanExtra("isQuizMode", false))
+            menu.findItem(R.id.action_show_result).setVisible(true);
+        else menu.findItem(R.id.action_show_result).setVisible(false);
+
+        return super.onPrepareOptionsMenu(menu);
     }
 
     @Override
@@ -96,6 +111,12 @@ public class QuestionActivity extends AppBaseCompatActivity<QuestionPresenterImp
                     getSupportActionBar().setSubtitle(getString(R.string.reset));
                 getPresenter().prepareListToResetAll();
                 break;
+
+            case R.id.action_show_result:
+                /*if (getSupportActionBar() != null)
+                    getSupportActionBar().setSubtitle(getString(R.string.reset));*/
+                getPresenter().showResult();
+                break;
         }
 
         return super.onOptionsItemSelected(item);
@@ -114,6 +135,6 @@ public class QuestionActivity extends AppBaseCompatActivity<QuestionPresenterImp
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(Constant.CATEGORY_RECEIVER));
+        LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(Constant.CATEGORY_RECEIVER).putExtra("category", getIntent().getStringExtra("title")));
     }
 }

@@ -1,6 +1,6 @@
 package com.tech.quiz.repositories.presenter;
 
-import com.tech.quiz.adapter.QuestionPagerAdapter;
+import com.tech.quiz.adapter.BaseAdapter;
 import com.tech.quiz.models.databasemodel.Questions;
 
 import java.util.ArrayList;
@@ -26,6 +26,10 @@ public interface QuestionPresenter {
 
     void shuffleQuestionAndResetAllLocally();
 
-    QuestionPagerAdapter initAdapter(int technology);
+    void showResult();
+
+    BaseAdapter initAdapter(int technology);
+
+    BaseAdapter initAdapter();
 
 }

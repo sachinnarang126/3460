@@ -1,8 +1,12 @@
 package com.tech.quiz.presenter;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
 
+import com.tech.quiz.adapter.BaseAdapter;
 import com.tech.quiz.adapter.QuestionPagerAdapter;
+import com.tech.quiz.adapter.QuizPagerAdapter;
 import com.tech.quiz.dataholder.DataHolder;
 import com.tech.quiz.models.databasemodel.Questions;
 import com.tech.quiz.repositories.presenter.QuestionPresenter;
@@ -15,6 +19,7 @@ import java.util.List;
 
 import library.mvp.MvpBasePresenter;
 import rx.Observable;
+import rx.Observer;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;
@@ -22,7 +27,8 @@ import rx.schedulers.Schedulers;
 
 public class QuestionPresenterImpl extends MvpBasePresenter<QuestionView> implements QuestionPresenter {
 
-    private QuestionPagerAdapter questionPagerAdapter;
+    private BaseAdapter questionPagerAdapter;
+    public int attemptedQuestion = 0;
 
     public QuestionPresenterImpl(QuestionView view, Context context) {
         attachView(view, context);
@@ -367,8 +373,64 @@ public class QuestionPresenterImpl extends MvpBasePresenter<QuestionView> implem
     }
 
     @Override
-    public QuestionPagerAdapter initAdapter(int technology) {
+    public void showResult() {
+        final int totalQuestion = shuffledQuestionList.size();
+        final int[] correctAnswerCount = {0};
+        Observable.from(shuffledQuestionList).
+                filter(new Func1<Questions, Boolean>() {
+                    @Override
+                    public Boolean call(Questions questions) {
+                        return questions.isCorrectAnswerProvided();
+                    }
+                }).
+                map(new Func1<Questions, Integer>() {
+                    @Override
+                    public Integer call(Questions questions) {
+                        return correctAnswerCount[0]++;
+                    }
+                }).
+                subscribe(new Observer<Integer>() {
+                    @Override
+                    public void onCompleted() {
+                        int percentage = (correctAnswerCount[0] * 100) / totalQuestion;
+                        new AlertDialog.Builder(getContext())
+                                .setMessage("Total Question: " + totalQuestion + "\n" +
+                                        "Attempted Question: " + attemptedQuestion + "\n" +
+                                        "Correct Answer: " + correctAnswerCount[0] + "\n" +
+                                        "Percentage: " + percentage + "%")
+                                .setTitle("Result")
+                                .setCancelable(false)
+                                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        ((QuestionActivity) getContext()).finish();
+                                    }
+                                })
+                                .create()
+                                .show();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                    }
+
+                    @Override
+                    public void onNext(Integer integer) {
+
+                    }
+                });
+    }
+
+    @Override
+    public BaseAdapter initAdapter(int technology) {
         return questionPagerAdapter = new QuestionPagerAdapter(((QuestionActivity) getContext()).getSupportFragmentManager(),
                 shuffledQuestionList, technology);
+    }
+
+    @Override
+    public BaseAdapter initAdapter() {
+        return questionPagerAdapter = new QuizPagerAdapter(((QuestionActivity) getContext()).getSupportFragmentManager(),
+                shuffledQuestionList);
     }
 }
