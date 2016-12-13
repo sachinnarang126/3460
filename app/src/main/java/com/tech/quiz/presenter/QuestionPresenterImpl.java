@@ -36,7 +36,7 @@ public class QuestionPresenterImpl extends MvpBasePresenter<QuestionView> implem
 
     @Override
     public void onCreate() {
-//        shuffleQuestion();
+
     }
 
     @Override
@@ -315,7 +315,6 @@ public class QuestionPresenterImpl extends MvpBasePresenter<QuestionView> implem
                     @Override
                     public void onNext(Questions questions) {
                         tempList.add(questions);
-                        //shuffledQuestionList.add(questions);
                     }
                 });
     }
@@ -340,13 +339,11 @@ public class QuestionPresenterImpl extends MvpBasePresenter<QuestionView> implem
                 subscribe(new Observer<Integer>() {
                     @Override
                     public void onCompleted() {
-                        int percentage = (correctAnswerCount[0] * 100) / totalQuestion;
                         new AlertDialog.Builder(getContext())
                                 .setMessage("Total Question: " + totalQuestion + "\n" +
-                                        "Attempted Question: " + attemptedQuestion + "\n" +
+                                        "Attempted Question: " + attemptedQuestion + "\n\n" +
                                         "Correct Answer: " + correctAnswerCount[0] + "\n" +
-                                        "In-Correct Answer: " + (totalQuestion - correctAnswerCount[0]) + "\n" +
-                                        "Percentage: " + percentage + "%")
+                                        "In-Correct Answer: " + (totalQuestion - correctAnswerCount[0]))
                                 .setTitle(getView().getTechnology() + " Quiz Result")
                                 .setCancelable(false)
                                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -386,7 +383,6 @@ public class QuestionPresenterImpl extends MvpBasePresenter<QuestionView> implem
     @Override
     public void checkForQuizCompletion() {
         attemptedQuestion++;
-        System.out.println("attemp " + attemptedQuestion + " shuffledQuestionList.size() " + shuffledQuestionList.size());
         if (attemptedQuestion == shuffledQuestionList.size()) {
             showResult();
         }

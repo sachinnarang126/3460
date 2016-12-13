@@ -1,5 +1,6 @@
 package com.tech.quiz.adapter;
 
+import android.support.v4.util.ArrayMap;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,17 +14,16 @@ import com.tech.R;
 import com.tech.quiz.interfaces.OnItemClickListener;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder> {
 
-    private Map<String, Integer> categoryMap;
+    private ArrayMap<String, Integer> categoryMap;
     private List<String> categoryList;
     private OnItemClickListener.OnItemClickCallback onItemClickCallback;
     private int lastPosition = -1;
 
-    public CategoryAdapter(List<String> categoryList, Map<String, Integer> categoryMap, OnItemClickListener.OnItemClickCallback onItemClickCallback) {
+    public CategoryAdapter(List<String> categoryList, ArrayMap<String, Integer> categoryMap, OnItemClickListener.OnItemClickCallback onItemClickCallback) {
         this.categoryList = categoryList;
         this.onItemClickCallback = onItemClickCallback;
         this.categoryMap = categoryMap;

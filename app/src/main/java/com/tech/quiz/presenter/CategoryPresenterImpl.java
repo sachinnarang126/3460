@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.preference.PreferenceManager;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v4.util.ArrayMap;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
 
@@ -22,9 +23,7 @@ import com.tech.quiz.view.fragment.CategoryFragment;
 import com.tech.quiz.view.views.CategoryView;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import library.mvp.MvpBasePresenter;
 import rx.Observable;
@@ -39,7 +38,7 @@ public class CategoryPresenterImpl extends MvpBasePresenter<CategoryView> implem
     private CategoryAdapter categoryAdapter;
     private List<Questions> questionList;
     private boolean hasToShowRecyclerView;
-    private Map<String, Integer> categoryMap;
+    private ArrayMap<String, Integer> categoryMap;
 
     private BroadcastReceiver receiver = new BroadcastReceiver() {
 
@@ -56,7 +55,7 @@ public class CategoryPresenterImpl extends MvpBasePresenter<CategoryView> implem
     public CategoryPresenterImpl(CategoryView view, Context context) {
         attachView(view, context);
         categoryInteractor = new CategoryInteractorImpl(context);
-        categoryMap = new HashMap<>();
+        categoryMap = new ArrayMap<>();
     }
 
     @Override

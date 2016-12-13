@@ -1,6 +1,7 @@
 package com.tech.quiz.presenter;
 
 import android.content.Context;
+import android.support.v4.util.ArrayMap;
 
 import com.tech.quiz.databasemanager.DatabaseManager;
 import com.tech.quiz.models.databasemodel.Questions;
@@ -11,7 +12,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class UpdateQuestionPresenterImpl implements UpdateQuestionPresenter {
@@ -24,70 +24,70 @@ public class UpdateQuestionPresenterImpl implements UpdateQuestionPresenter {
 
     @Override
     public void parseJson(JSONArray jsonArray, int technology) {
-        List<HashMap<String, String>> hashMapList = new ArrayList<>();
+        List<ArrayMap<String, String>> arrayMapList = new ArrayList<>();
         try {
 
             JSONArray questionArray = jsonArray.getJSONArray(0);
 
             for (int i = 0; i < questionArray.length(); i++) {
                 JSONObject jsonObject = questionArray.optJSONObject(i);
-                HashMap<String, String> hashMap = new HashMap<>();
-                hashMap.put(Questions.ID, jsonObject.optString("id"));
-                hashMap.put(Questions.USER_LEVEL, jsonObject.optString("question_type").trim());
-                hashMap.put(Questions.CATEGORY, jsonObject.optString("category").trim());
-                hashMap.put(Questions.QUESTION, jsonObject.optString("question").trim());
-                hashMap.put(Questions.OPTION_A, jsonObject.optString("a").trim());
-                hashMap.put(Questions.OPTION_B, jsonObject.optString("b").trim());
-                hashMap.put(Questions.OPTION_C, jsonObject.optString("c").trim());
-                hashMap.put(Questions.OPTION_D, jsonObject.optString("d").trim());
-                hashMap.put(Questions.ANSWER, jsonObject.optString("answer"));
-                hashMapList.add(hashMap);
+                ArrayMap<String, String> arrayMap = new ArrayMap<>();
+                arrayMap.put(Questions.ID, jsonObject.optString("id"));
+                arrayMap.put(Questions.USER_LEVEL, jsonObject.optString("question_type").trim());
+                arrayMap.put(Questions.CATEGORY, jsonObject.optString("category").trim());
+                arrayMap.put(Questions.QUESTION, jsonObject.optString("question").trim());
+                arrayMap.put(Questions.OPTION_A, jsonObject.optString("a").trim());
+                arrayMap.put(Questions.OPTION_B, jsonObject.optString("b").trim());
+                arrayMap.put(Questions.OPTION_C, jsonObject.optString("c").trim());
+                arrayMap.put(Questions.OPTION_D, jsonObject.optString("d").trim());
+                arrayMap.put(Questions.ANSWER, jsonObject.optString("answer"));
+                arrayMapList.add(arrayMap);
             }
 
-            updateQuestionInDB(hashMapList, technology);
+            updateQuestionInDB(arrayMapList, technology);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    private void updateQuestionInDB(List<HashMap<String, String>> hashMapList, int technology) {
+    private void updateQuestionInDB(List<ArrayMap<String, String>> arrayMapList, int technology) {
         DatabaseManager databaseManager = DatabaseManager.getDataBaseManager(context);
         switch (technology) {
             case Constant.ANDROID:
-                saveAndroidQuestion(databaseManager, hashMapList);
+                saveAndroidQuestion(databaseManager, arrayMapList);
                 break;
 
             case Constant.IOS:
-                saveIosQuestion(databaseManager, hashMapList);
+                saveIosQuestion(databaseManager, arrayMapList);
                 break;
 
             case Constant.JAVA:
-                saveJavaQuestion(databaseManager, hashMapList);
+                saveJavaQuestion(databaseManager, arrayMapList);
                 break;
         }
     }
 
-    private void saveAndroidQuestion(DatabaseManager databaseManager, List<HashMap<String, String>> hashMapList) {
-        for (HashMap<String, String> hashMap : hashMapList) {
-            databaseManager.updateAndroidQuestion(Integer.parseInt(hashMap.get(Questions.ID)), hashMap.get(Questions.USER_LEVEL),
-                    hashMap.get(Questions.CATEGORY), hashMap.get(Questions.QUESTION), hashMap.get(Questions.OPTION_A), hashMap.get(Questions.OPTION_B),
-                    hashMap.get(Questions.OPTION_C), hashMap.get(Questions.OPTION_D), Integer.parseInt(hashMap.get(Questions.ANSWER)));
+    private void saveAndroidQuestion(DatabaseManager databaseManager, List<ArrayMap<String, String>> arrayMapList) {
+        for (ArrayMap<String, String> arrayMap : arrayMapList) {
+            databaseManager.updateAndroidQuestion(Integer.parseInt(arrayMap.get(Questions.ID)), arrayMap.get(Questions.USER_LEVEL),
+                    arrayMap.get(Questions.CATEGORY), arrayMap.get(Questions.QUESTION), arrayMap.get(Questions.OPTION_A), arrayMap.get(Questions.OPTION_B),
+                    arrayMap.get(Questions.OPTION_C), arrayMap.get(Questions.OPTION_D), Integer.parseInt(arrayMap.get(Questions.ANSWER)));
         }
     }
 
-    private void saveIosQuestion(DatabaseManager databaseManager, List<HashMap<String, String>> hashMapList) {
-        for (HashMap<String, String> hashMap : hashMapList) {
-            databaseManager.updateIosQuestion(Integer.parseInt(hashMap.get(Questions.ID)), hashMap.get(Questions.USER_LEVEL),
-                    hashMap.get(Questions.CATEGORY), hashMap.get(Questions.QUESTION), hashMap.get(Questions.OPTION_A), hashMap.get(Questions.OPTION_B),
-                    hashMap.get(Questions.OPTION_C), hashMap.get(Questions.OPTION_D), Integer.parseInt(hashMap.get(Questions.ANSWER)));
+    private void saveIosQuestion(DatabaseManager databaseManager, List<ArrayMap<String, String>> arrayMapList) {
+        for (ArrayMap<String, String> arrayMap : arrayMapList) {
+            databaseManager.updateIosQuestion(Integer.parseInt(arrayMap.get(Questions.ID)), arrayMap.get(Questions.USER_LEVEL),
+                    arrayMap.get(Questions.CATEGORY), arrayMap.get(Questions.QUESTION), arrayMap.get(Questions.OPTION_A), arrayMap.get(Questions.OPTION_B),
+                    arrayMap.get(Questions.OPTION_C), arrayMap.get(Questions.OPTION_D), Integer.parseInt(arrayMap.get(Questions.ANSWER)));
         }
     }
 
-    private void saveJavaQuestion(DatabaseManager databaseManager, List<HashMap<String, String>> hashMapList) {
-        for (HashMap<String, String> hashMap : hashMapList) {
-            databaseManager.updateJavaQuestion(Integer.parseInt(hashMap.get(Questions.ID)), hashMap.get(Questions.USER_LEVEL),
-                    hashMap.get(Questions.CATEGORY), hashMap.get(Questions.QUESTION), hashMap.get(Questions.OPTION_A), hashMap.get(Questions.OPTION_B),
-                    hashMap.get(Questions.OPTION_C), hashMap.get(Questions.OPTION_D), Integer.parseInt(hashMap.get(Questions.ANSWER)));
+    private void saveJavaQuestion(DatabaseManager databaseManager, List<ArrayMap<String, String>> arrayMapList) {
+        for (ArrayMap<String, String> arrayMap : arrayMapList) {
+            databaseManager.updateJavaQuestion(Integer.parseInt(arrayMap.get(Questions.ID)), arrayMap.get(Questions.USER_LEVEL),
+                    arrayMap.get(Questions.CATEGORY), arrayMap.get(Questions.QUESTION), arrayMap.get(Questions.OPTION_A), arrayMap.get(Questions.OPTION_B),
+                    arrayMap.get(Questions.OPTION_C), arrayMap.get(Questions.OPTION_D), Integer.parseInt(arrayMap.get(Questions.ANSWER)));
         }
     }
 }

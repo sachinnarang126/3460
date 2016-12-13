@@ -41,7 +41,6 @@ public class DailyAlarmReceiver extends WakefulBroadcastReceiver {
             calendar.set(Calendar.HOUR_OF_DAY, 17);
             calendar.set(Calendar.MINUTE, 0);
             calendar.set(Calendar.SECOND, 0);
-            calendar.add(Calendar.MINUTE, 1);
 //            calendar.roll(Calendar.MINUTE, 1);
 
             long todayTimeInMillis = calendar.getTimeInMillis();

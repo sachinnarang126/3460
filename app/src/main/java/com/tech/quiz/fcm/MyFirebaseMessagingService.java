@@ -41,8 +41,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                     int technology = Integer.parseInt(remoteMessage.getData().get("technology"));
                     UpdateQuestionPresenterImpl presenter = new UpdateQuestionPresenterImpl(this);
                     presenter.parseJson(new JSONArray(remoteMessage.getData().get("response")), technology);
-                    /*JSONObject json = new JSONObject(remoteMessage.getData().toString());
-                    System.out.println("payload " + json);*/
 
                 } catch (Exception e) {
                     e.printStackTrace();

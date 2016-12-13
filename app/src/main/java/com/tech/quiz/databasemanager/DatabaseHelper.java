@@ -2,7 +2,6 @@ package com.tech.quiz.databasemanager;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.dao.Dao;
@@ -39,7 +38,6 @@ class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             TableUtils.createTable(connectionSource, Ios.class);
             TableUtils.createTable(connectionSource, Java.class);
         } catch (SQLException e) {
-            Log.e(DatabaseHelper.class.getName(), "Can't Create Database", e);
             e.printStackTrace();
         }
     }
@@ -48,7 +46,6 @@ class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, ConnectionSource connectionSource, int oldVersion, int newVersion) {
 
 /*
-        System.out.println("onUpgrade :" + oldVersion + " new:" + newVersion);
         try {
             if(oldVersion == 6 && newVersion == 7) {
                 sqLiteDatabase.execSQL("ALTER TABLE `TEMPSMS` ADD COLUMN isSmsParsed BOOLEAN;");

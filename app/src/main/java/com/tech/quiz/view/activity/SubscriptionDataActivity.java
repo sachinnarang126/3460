@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 
 import com.tech.R;
 import com.tech.quiz.billing.IabHelper;
@@ -42,13 +41,7 @@ public class SubscriptionDataActivity extends AppBaseCompatActivity {
             if (mHelper == null)
                 return;
 
-            if (result.isFailure()) {
-                System.out.println("result failure");
-            } else if (purchase != null) {
-                Log.d(TAG, "Purchase is premium upgrade. Congratulating user");
-
-                Log.d(TAG, "Purchase successful");
-
+            if (purchase != null) {
                 SharedPreferences sharedPreferences = DataHolder.getInstance().getPreferences(SubscriptionDataActivity.this);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putBoolean(Constant.IS_SUBSCRIBED_USER, true);
@@ -62,8 +55,6 @@ public class SubscriptionDataActivity extends AppBaseCompatActivity {
     // Listener that's called when we finish querying the items and subscriptions we own
     IabHelper.QueryInventoryFinishedListener mGotInventoryListener = new IabHelper.QueryInventoryFinishedListener() {
         public void onQueryInventoryFinished(IabResult result, Inventory inventory) {
-
-            Log.d(TAG, "Query inventory finished.");
             // Have we been disposed of in the meantime? If so, quit.
             if (mHelper == null) return;
 
@@ -72,8 +63,6 @@ public class SubscriptionDataActivity extends AppBaseCompatActivity {
 //                Utils.showToast(SubscriptionDataActivity.this, "Failed to query inventory: " + result);
                 finish();
             }
-            System.out.println(inventory.getAllSkus());
-            Log.d(TAG, "Query inventory was successful.");
 
             /*
              * Check for items we own. Notice that for each purchase, we check
@@ -84,18 +73,14 @@ public class SubscriptionDataActivity extends AppBaseCompatActivity {
             Purchase purchase = inventory.getPurchase(ITEM_SKU);
 
             if (purchase != null) {
-                System.out.println("you own this product");
-
                 SharedPreferences sharedPreferences = DataHolder.getInstance().getPreferences(SubscriptionDataActivity.this);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
-
                 editor.putBoolean(Constant.IS_SUBSCRIBED_USER, true);
                 editor.putLong(Constant.PURCHASE_TIME, purchase.getPurchaseTime());
                 editor.putString(Constant.TOKEN, purchase.getToken());
                 editor.putString(Constant.SKU, purchase.getSku());
                 editor.apply();
             } else {
-                System.out.println("you don't own this product");
                 launchPurchaseFlow();
                 // enableSubscribeButton();
             }
@@ -128,19 +113,16 @@ public class SubscriptionDataActivity extends AppBaseCompatActivity {
     }
 
     private void initiateGoogleWallet() {
-
-        Log.d("SubscriptionData", "Creating IAB helper.");
         // Create the helper, passing it our context and the public key to verify signatures with
         mHelper = new IabHelper(this, Constant.BASE_64);
         // enable debug logging (for a production application, you should set this to false).
-        mHelper.enableDebugLogging(true);
+        mHelper.enableDebugLogging(false);
 
 
         // Start setup. This is asynchronous and the specified listener
         // will be called once setup completes.
         mHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
             public void onIabSetupFinished(IabResult result) {
-                System.out.println("setup finished");
 
                 if (!result.isSuccess()) {
                     // Oh noes, there was a problem.
@@ -235,8 +217,6 @@ public class SubscriptionDataActivity extends AppBaseCompatActivity {
                 if (!mHelper.handleActivityResult(requestCode,
                         resultCode, data)) {
                     super.onActivityResult(requestCode, resultCode, data);
-                } else {
-                    Log.d("", "onActivityResult handled by IABUtil.");
                 }
             } else {
                 //when google does not provide option to buy, we need to finish the

@@ -20,13 +20,7 @@ public class DailySchedulingService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        if (DataHolder.getInstance().getHomeActivityInstance() == null) {
-            System.out.println("------app is closed");
-            dailySchedulingTask();
-        } else {
-            System.out.println("------app is not closed");
-        }
-
+        if (DataHolder.getInstance().getHomeActivityInstance() == null) dailySchedulingTask();
 
         // Release the wake lock provided by the BroadcastReceiver.
         DailyAlarmReceiver.completeWakefulIntent(intent);
