@@ -124,70 +124,69 @@ public class QuizFragment extends Fragment implements View.OnClickListener, View
 
         textView.setTextColor(ContextCompat.getColor(getActivity(), android.R.color.white));
         textView.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorPrimaryDark));
+        if (getView() != null) {
+            TextView txtViewA, txtViewB, txtViewC, txtViewD;
+            switch (selectedAnswer) {
+                case Constant.OPTION_A:
+                    txtViewB = ((TextView) getView().findViewById(R.id.txtViewB));
+                    txtViewC = ((TextView) getView().findViewById(R.id.txtViewC));
+                    txtViewD = ((TextView) getView().findViewById(R.id.txtViewD));
 
-        TextView txtViewA, txtViewB, txtViewC, txtViewD;
-        switch (selectedAnswer) {
-            case Constant.OPTION_A:
+                    txtViewB.setTextColor(ContextCompat.getColor(getActivity(), android.R.color.black));
+                    txtViewB.setBackgroundColor(ContextCompat.getColor(getActivity(), android.R.color.white));
 
-                txtViewB = ((TextView) getView().findViewById(R.id.txtViewB));
-                txtViewC = ((TextView) getView().findViewById(R.id.txtViewC));
-                txtViewD = ((TextView) getView().findViewById(R.id.txtViewD));
+                    txtViewC.setTextColor(ContextCompat.getColor(getActivity(), android.R.color.black));
+                    txtViewC.setBackgroundColor(ContextCompat.getColor(getActivity(), android.R.color.white));
 
-                txtViewB.setTextColor(ContextCompat.getColor(getActivity(), android.R.color.black));
-                txtViewB.setBackgroundColor(ContextCompat.getColor(getActivity(), android.R.color.white));
+                    txtViewD.setTextColor(ContextCompat.getColor(getActivity(), android.R.color.black));
+                    txtViewD.setBackgroundColor(ContextCompat.getColor(getActivity(), android.R.color.white));
+                    break;
 
-                txtViewC.setTextColor(ContextCompat.getColor(getActivity(), android.R.color.black));
-                txtViewC.setBackgroundColor(ContextCompat.getColor(getActivity(), android.R.color.white));
+                case Constant.OPTION_B:
+                    txtViewA = ((TextView) getView().findViewById(R.id.txtViewA));
+                    txtViewC = ((TextView) getView().findViewById(R.id.txtViewC));
+                    txtViewD = ((TextView) getView().findViewById(R.id.txtViewD));
 
-                txtViewD.setTextColor(ContextCompat.getColor(getActivity(), android.R.color.black));
-                txtViewD.setBackgroundColor(ContextCompat.getColor(getActivity(), android.R.color.white));
+                    txtViewA.setTextColor(ContextCompat.getColor(getActivity(), android.R.color.black));
+                    txtViewA.setBackgroundColor(ContextCompat.getColor(getActivity(), android.R.color.white));
 
-                break;
+                    txtViewC.setTextColor(ContextCompat.getColor(getActivity(), android.R.color.black));
+                    txtViewC.setBackgroundColor(ContextCompat.getColor(getActivity(), android.R.color.white));
 
-            case Constant.OPTION_B:
-                txtViewA = ((TextView) getView().findViewById(R.id.txtViewA));
-                txtViewC = ((TextView) getView().findViewById(R.id.txtViewC));
-                txtViewD = ((TextView) getView().findViewById(R.id.txtViewD));
+                    txtViewD.setTextColor(ContextCompat.getColor(getActivity(), android.R.color.black));
+                    txtViewD.setBackgroundColor(ContextCompat.getColor(getActivity(), android.R.color.white));
+                    break;
 
-                txtViewA.setTextColor(ContextCompat.getColor(getActivity(), android.R.color.black));
-                txtViewA.setBackgroundColor(ContextCompat.getColor(getActivity(), android.R.color.white));
+                case Constant.OPTION_C:
+                    txtViewA = ((TextView) getView().findViewById(R.id.txtViewA));
+                    txtViewB = ((TextView) getView().findViewById(R.id.txtViewB));
+                    txtViewD = ((TextView) getView().findViewById(R.id.txtViewD));
 
-                txtViewC.setTextColor(ContextCompat.getColor(getActivity(), android.R.color.black));
-                txtViewC.setBackgroundColor(ContextCompat.getColor(getActivity(), android.R.color.white));
+                    txtViewA.setTextColor(ContextCompat.getColor(getActivity(), android.R.color.black));
+                    txtViewA.setBackgroundColor(ContextCompat.getColor(getActivity(), android.R.color.white));
 
-                txtViewD.setTextColor(ContextCompat.getColor(getActivity(), android.R.color.black));
-                txtViewD.setBackgroundColor(ContextCompat.getColor(getActivity(), android.R.color.white));
-                break;
+                    txtViewB.setTextColor(ContextCompat.getColor(getActivity(), android.R.color.black));
+                    txtViewB.setBackgroundColor(ContextCompat.getColor(getActivity(), android.R.color.white));
 
-            case Constant.OPTION_C:
-                txtViewA = ((TextView) getView().findViewById(R.id.txtViewA));
-                txtViewB = ((TextView) getView().findViewById(R.id.txtViewB));
-                txtViewD = ((TextView) getView().findViewById(R.id.txtViewD));
+                    txtViewD.setTextColor(ContextCompat.getColor(getActivity(), android.R.color.black));
+                    txtViewD.setBackgroundColor(ContextCompat.getColor(getActivity(), android.R.color.white));
+                    break;
 
-                txtViewA.setTextColor(ContextCompat.getColor(getActivity(), android.R.color.black));
-                txtViewA.setBackgroundColor(ContextCompat.getColor(getActivity(), android.R.color.white));
+                case Constant.OPTION_D:
+                    txtViewA = ((TextView) getView().findViewById(R.id.txtViewA));
+                    txtViewB = ((TextView) getView().findViewById(R.id.txtViewB));
+                    txtViewC = ((TextView) getView().findViewById(R.id.txtViewC));
 
-                txtViewB.setTextColor(ContextCompat.getColor(getActivity(), android.R.color.black));
-                txtViewB.setBackgroundColor(ContextCompat.getColor(getActivity(), android.R.color.white));
+                    txtViewA.setTextColor(ContextCompat.getColor(getActivity(), android.R.color.black));
+                    txtViewA.setBackgroundColor(ContextCompat.getColor(getActivity(), android.R.color.white));
 
-                txtViewD.setTextColor(ContextCompat.getColor(getActivity(), android.R.color.black));
-                txtViewD.setBackgroundColor(ContextCompat.getColor(getActivity(), android.R.color.white));
-                break;
+                    txtViewB.setTextColor(ContextCompat.getColor(getActivity(), android.R.color.black));
+                    txtViewB.setBackgroundColor(ContextCompat.getColor(getActivity(), android.R.color.white));
 
-            case Constant.OPTION_D:
-                txtViewA = ((TextView) getView().findViewById(R.id.txtViewA));
-                txtViewB = ((TextView) getView().findViewById(R.id.txtViewB));
-                txtViewC = ((TextView) getView().findViewById(R.id.txtViewC));
-
-                txtViewA.setTextColor(ContextCompat.getColor(getActivity(), android.R.color.black));
-                txtViewA.setBackgroundColor(ContextCompat.getColor(getActivity(), android.R.color.white));
-
-                txtViewB.setTextColor(ContextCompat.getColor(getActivity(), android.R.color.black));
-                txtViewB.setBackgroundColor(ContextCompat.getColor(getActivity(), android.R.color.white));
-
-                txtViewC.setTextColor(ContextCompat.getColor(getActivity(), android.R.color.black));
-                txtViewC.setBackgroundColor(ContextCompat.getColor(getActivity(), android.R.color.white));
-                break;
+                    txtViewC.setTextColor(ContextCompat.getColor(getActivity(), android.R.color.black));
+                    txtViewC.setBackgroundColor(ContextCompat.getColor(getActivity(), android.R.color.white));
+                    break;
+            }
         }
     }
 

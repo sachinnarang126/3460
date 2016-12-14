@@ -80,7 +80,6 @@ public class SplashPresenterImpl extends MvpBasePresenter<SplashView> implements
         if (isViewAttached()) {
             SplashActivity context = (SplashActivity) getContext();
             if (context.isInternetAvailable()) {
-
                 queryInventory();
                 getView().showProgress();
 
@@ -96,7 +95,6 @@ public class SplashPresenterImpl extends MvpBasePresenter<SplashView> implements
                 context.putSubscriberInMap(splashInteractor.getAndroidQuestions(this, androidQuestion), Constant.ANDROID_URL);
                 context.putSubscriberInMap(splashInteractor.getIosQuestion(this, iosQuestion), Constant.IOS_URL);
                 context.putSubscriberInMap(splashInteractor.getJavaQuestions(this, javaQuestion), Constant.JAVA_URL);
-
             } else {
                 context.onError(context.getString(R.string.error_internet_first_launch));
             }
@@ -105,7 +103,6 @@ public class SplashPresenterImpl extends MvpBasePresenter<SplashView> implements
 
     @Override
     public void onSuccess(List<QuestionResponse.Response> questionList, int serviceType) {
-
         serviceCount++;
         saveDataToDB(questionList, serviceType);
         if (serviceCount == 3) {
@@ -139,7 +136,6 @@ public class SplashPresenterImpl extends MvpBasePresenter<SplashView> implements
 
     private void saveAndroidQuestion(final DatabaseManager databaseManager, List<QuestionResponse.Response> questionList) {
         final List<Android> androidList = new ArrayList<>();
-
         Observable.from(questionList).
                 map(new Func1<QuestionResponse.Response, Android>() {
                     @Override
@@ -217,7 +213,6 @@ public class SplashPresenterImpl extends MvpBasePresenter<SplashView> implements
 
     private void saveJavaQuestion(final DatabaseManager databaseManager, List<QuestionResponse.Response> questionList) {
         final List<Java> javaList = new ArrayList<>();
-
         Observable.from(questionList).
                 map(new Func1<QuestionResponse.Response, Java>() {
                     @Override

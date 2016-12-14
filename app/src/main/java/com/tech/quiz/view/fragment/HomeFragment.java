@@ -174,26 +174,24 @@ public class HomeFragment extends AppCompatFragment<HomePresenterImpl> implement
     }
 
     public void setAnimationView() {
-        AnimatorSet animatorSet = new AnimatorSet();
-        ObjectAnimator scale = ObjectAnimator.ofFloat(getView().findViewById(R.id.androidContainer), "scaleX", 0.0f, 1.0f);
-        scale.setDuration(200);
-        animatorSet.play(scale);
-        animatorSet.start();
+        if (getView() != null) {
+            AnimatorSet animatorSet = new AnimatorSet();
+            ObjectAnimator scale = ObjectAnimator.ofFloat(getView().findViewById(R.id.androidContainer), "scaleX", 0.0f, 1.0f);
+            scale.setDuration(200);
+            animatorSet.play(scale);
+            animatorSet.start();
 
-        AnimatorSet animatorSet1 = new AnimatorSet();
-        ObjectAnimator scale2 = ObjectAnimator.ofFloat(getView().findViewById(R.id.iosContainer), "scaleX", 0.0f, 1.0f);
-        scale2.setDuration(350);
-        animatorSet1.play(scale2);
-        animatorSet1.start();
+            AnimatorSet animatorSet1 = new AnimatorSet();
+            ObjectAnimator scale2 = ObjectAnimator.ofFloat(getView().findViewById(R.id.iosContainer), "scaleX", 0.0f, 1.0f);
+            scale2.setDuration(350);
+            animatorSet1.play(scale2);
+            animatorSet1.start();
 
-        AnimatorSet animatorSet2 = new AnimatorSet();
-        ObjectAnimator scale3 = ObjectAnimator.ofFloat(getView().findViewById(R.id.javaContainer), "scaleX", 0.0f, 1.0f);
-        scale3.setDuration(500);
-        animatorSet2.play(scale3);
-        animatorSet2.start();
-
-//        animatorSet.play(scale).before(childSet);
-//        childSet.play(scale2).with(scale3);
-//        animatorSet.start();
+            AnimatorSet animatorSet2 = new AnimatorSet();
+            ObjectAnimator scale3 = ObjectAnimator.ofFloat(getView().findViewById(R.id.javaContainer), "scaleX", 0.0f, 1.0f);
+            scale3.setDuration(500);
+            animatorSet2.play(scale3);
+            animatorSet2.start();
+        }
     }
 }

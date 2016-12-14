@@ -155,7 +155,8 @@ public class QuestionFragment extends Fragment implements View.OnClickListener, 
 
         if (selectedAnswer == answer) {
             textView.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.green));
-            ((TextView) getView().findViewById(R.id.txtUserValue)).setText(getString(R.string.correct));
+            if (getView() != null)
+                ((TextView) getView().findViewById(R.id.txtUserValue)).setText(getString(R.string.correct));
 
             question.setCorrectAnswerProvided(true);
             updateSelectionInToDB(databaseManager);
@@ -166,7 +167,8 @@ public class QuestionFragment extends Fragment implements View.OnClickListener, 
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    ((TextView) getView().findViewById(R.id.txtUserValue)).setText(getString(R.string.incorrect));
+                    if (getView() != null)
+                        ((TextView) getView().findViewById(R.id.txtUserValue)).setText(getString(R.string.incorrect));
 
                     switch (answer) {
                         case Constant.OPTION_A:
