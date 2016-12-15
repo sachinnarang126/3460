@@ -16,6 +16,10 @@ import com.tech.quiz.util.Constant;
 import library.basecontroller.AppBaseCompatActivity;
 import library.mvp.BasePresenter;
 
+/**
+ * @author Sachin Narang
+ */
+
 public class SubscriptionDataActivity extends AppBaseCompatActivity {
 
     public final static String ITEM_SKU = "ad_free";

@@ -9,6 +9,10 @@ import com.tech.quiz.view.activity.HomeActivity;
 
 import java.util.List;
 
+/**
+ * @author Sachin Narang
+ */
+
 public class DataHolder {
     private static DataHolder dataHolder;
     private List<Questions> questionList;

@@ -2,6 +2,10 @@ package com.tech.quiz.models.databasemodel;
 
 import com.j256.ormlite.field.DatabaseField;
 
+/**
+ * @author Sachin Narang
+ */
+
 public class Questions {
 
     public static final String ID = "question_id";

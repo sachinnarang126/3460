@@ -13,6 +13,10 @@ import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import rx.schedulers.Schedulers;
 
+/**
+ * @author Sachin Narang
+ */
+
 public class RetrofitClient {
 
     private static Retrofit mRetrofit;

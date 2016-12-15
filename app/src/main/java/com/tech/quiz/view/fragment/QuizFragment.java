@@ -18,6 +18,10 @@ import com.tech.quiz.models.databasemodel.Questions;
 import com.tech.quiz.util.Constant;
 import com.tech.quiz.view.activity.QuestionActivity;
 
+/**
+ * @author Sachin Narang
+ */
+
 public class QuizFragment extends Fragment implements View.OnClickListener, View.OnLongClickListener {
 
     private Questions question;

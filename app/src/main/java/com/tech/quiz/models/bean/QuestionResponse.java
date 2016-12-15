@@ -6,9 +6,10 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.Generated;
+/**
+ * @author Sachin Narang
+ */
 
-@Generated("org.jsonschema2pojo")
 public class QuestionResponse {
 
     @SerializedName("response")
@@ -47,7 +48,6 @@ public class QuestionResponse {
     }
 
 
-    @Generated("org.jsonschema2pojo")
     public class Response {
 
         @SerializedName("id")

@@ -2,6 +2,10 @@ package com.tech.quiz.interfaces;
 
 import android.view.View;
 
+/**
+ * @author Sachin Narang
+ */
+
 public class OnItemClickListener implements View.OnClickListener {
 
     private int position;

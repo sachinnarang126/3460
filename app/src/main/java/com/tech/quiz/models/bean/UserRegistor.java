@@ -3,9 +3,10 @@ package com.tech.quiz.models.bean;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import javax.annotation.Generated;
+/**
+ * @author Sachin Narang
+ */
 
-@Generated("org.jsonschema2pojo")
 public class UserRegistor {
     @SerializedName("status")
     @Expose

@@ -14,6 +14,10 @@ import com.tech.quiz.view.views.SettingView;
 
 import library.basecontroller.PreferenceCompatFragment;
 
+/**
+ * @author Sachin Narang
+ */
+
 public class SettingsFragment extends PreferenceCompatFragment<SettingPresenterImpl> implements SettingView {
 
     public static SettingsFragment getInstance() {

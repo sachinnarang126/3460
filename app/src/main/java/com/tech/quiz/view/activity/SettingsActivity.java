@@ -11,6 +11,10 @@ import com.tech.quiz.view.fragment.SettingsFragment;
 import library.basecontroller.AppBaseCompatActivity;
 import library.mvp.BasePresenter;
 
+/**
+ * @author Sachin Narang
+ */
+
 public class SettingsActivity extends AppBaseCompatActivity {
 
     @Override

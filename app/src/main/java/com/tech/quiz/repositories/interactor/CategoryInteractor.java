@@ -4,6 +4,10 @@ import com.tech.quiz.models.databasemodel.Questions;
 
 import java.util.List;
 
+/**
+ * @author Sachin Narang
+ */
+
 public interface CategoryInteractor {
 
     void getJavaQuestions(OnQuestionResponseListener questionResponseListener, boolean isShowAnsweredQuestion);

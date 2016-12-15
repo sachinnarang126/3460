@@ -17,6 +17,10 @@ import com.tech.quiz.view.views.SplashView;
 
 import library.basecontroller.AppBaseCompatActivity;
 
+/**
+ * @author Sachin Narang
+ */
+
 public class SplashActivity extends AppBaseCompatActivity<SplashPresenterImpl> implements SplashView {
 
     private ProgressBar progressBar;

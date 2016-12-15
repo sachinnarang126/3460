@@ -7,6 +7,10 @@ import java.util.List;
 import rx.Observable;
 import rx.Subscription;
 
+/**
+ * @author Sachin Narang
+ */
+
 public interface HomeInteractor {
 
     Subscription getJavaQuestions(OnJavaQuestionResponseListener questionResponseListener, Observable<QuestionResponse> questionCall);

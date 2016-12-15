@@ -17,6 +17,10 @@ import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
+/**
+ * @author Sachin Narang
+ */
+
 public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
 
     /**

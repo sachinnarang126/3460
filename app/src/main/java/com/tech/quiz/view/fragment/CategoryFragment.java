@@ -1,6 +1,5 @@
 package com.tech.quiz.view.fragment;
 
-
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -25,6 +24,10 @@ import com.tech.quiz.view.activity.HomeActivity;
 import com.tech.quiz.view.views.CategoryView;
 
 import library.basecontroller.AppCompatFragment;
+
+/**
+ * @author Sachin Narang
+ */
 
 public class CategoryFragment extends AppCompatFragment<CategoryPresenterImpl> implements CategoryView, OnItemClickListener.OnItemClickCallback {
 

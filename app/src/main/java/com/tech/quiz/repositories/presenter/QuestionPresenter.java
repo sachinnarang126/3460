@@ -6,6 +6,10 @@ import com.tech.quiz.models.databasemodel.Questions;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Sachin Narang
+ */
+
 public interface QuestionPresenter {
 
     List<Questions> shuffledQuestionList = new ArrayList<>();

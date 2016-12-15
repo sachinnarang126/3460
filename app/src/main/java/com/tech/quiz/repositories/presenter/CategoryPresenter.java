@@ -8,6 +8,10 @@ import com.tech.quiz.models.databasemodel.Questions;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Sachin Narang
+ */
+
 public interface CategoryPresenter {
 
     List<String> categoryList = new ArrayList<>();

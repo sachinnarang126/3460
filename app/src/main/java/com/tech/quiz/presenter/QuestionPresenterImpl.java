@@ -25,6 +25,10 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
+/**
+ * @author Sachin Narang
+ */
+
 public class QuestionPresenterImpl extends BasePresenter<QuestionView> implements QuestionPresenter {
 
     private BaseAdapter questionPagerAdapter;

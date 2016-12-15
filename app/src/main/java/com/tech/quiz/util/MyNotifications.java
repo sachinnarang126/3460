@@ -13,6 +13,10 @@ import com.tech.quiz.view.activity.SplashActivity;
 
 import java.util.List;
 
+/**
+ * @author Sachin Narang
+ */
+
 public class MyNotifications {
 
     public void sendBigLayoutNotification(List<String> dataInformation, Context context, String title) {

@@ -20,6 +20,10 @@ import com.tech.quiz.view.views.QuestionView;
 
 import library.basecontroller.AppBaseCompatActivity;
 
+/**
+ * @author Sachin Narang
+ */
+
 public class QuestionActivity extends AppBaseCompatActivity<QuestionPresenterImpl> implements QuestionView {
 
     @Override

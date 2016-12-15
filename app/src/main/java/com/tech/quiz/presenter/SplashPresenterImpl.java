@@ -34,6 +34,10 @@ import rx.Observable;
 import rx.Observer;
 import rx.functions.Func1;
 
+/**
+ * @author Sachin Narang
+ */
+
 public class SplashPresenterImpl extends BasePresenter<SplashView> implements SplashPresenter, SplashInteractor.OnIosQuestionResponseListener,
         SplashInteractor.OnAndroidQuestionResponseListener, SplashInteractor.OnJavaQuestionResponseListener {
 

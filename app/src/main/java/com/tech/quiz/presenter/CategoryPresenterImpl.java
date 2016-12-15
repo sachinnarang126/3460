@@ -32,6 +32,10 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
+/**
+ * @author Sachin Narang
+ */
+
 public class CategoryPresenterImpl extends BasePresenter<CategoryView> implements CategoryPresenter, CategoryInteractor.OnQuestionResponseListener {
 
     private CategoryInteractor categoryInteractor;

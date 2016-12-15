@@ -10,6 +10,10 @@ import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
+/**
+ * @author Sachin Narang
+ */
+
 public class HomeInteractorImpl implements HomeInteractor {
 
     @Override

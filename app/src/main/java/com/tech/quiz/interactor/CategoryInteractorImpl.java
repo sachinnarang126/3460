@@ -14,6 +14,10 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
+/**
+ * @author Sachin Narang
+ */
+
 public class CategoryInteractorImpl implements CategoryInteractor {
 
     private Context context;

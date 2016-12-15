@@ -22,6 +22,10 @@ import com.tech.quiz.models.databasemodel.Java;
 import com.tech.quiz.models.databasemodel.Questions;
 import com.tech.quiz.util.Constant;
 
+/**
+ * @author Sachin Narang
+ */
+
 public class QuestionFragment extends Fragment implements View.OnClickListener, View.OnLongClickListener {
 
     private Questions question;
