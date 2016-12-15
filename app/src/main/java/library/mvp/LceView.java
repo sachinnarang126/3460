@@ -6,7 +6,7 @@ import android.support.annotation.UiThread;
  * @author Sachin Narang
  */
 
-public interface MvpLceView<M> extends MvpView {
+public interface LceView<M> extends BaseView {
     /**
      * Display a loading view while loading data in background.
      * <b>The loading view must have the id = R.id.loadingView</b>

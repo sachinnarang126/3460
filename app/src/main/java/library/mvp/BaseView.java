@@ -6,6 +6,6 @@ package library.mvp;
  * @author Sachin Narang
  */
 
-public interface MvpView {
+public interface BaseView {
     // this interface must be empty, we are using this for type safe
 }

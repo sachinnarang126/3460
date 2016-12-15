@@ -16,6 +16,10 @@ import com.tech.quiz.interfaces.OnItemClickListener;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * @author Sachin Narang
+ */
+
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder> {
 
     private ArrayMap<String, Integer> categoryMap;

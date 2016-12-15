@@ -13,14 +13,14 @@ import com.tech.quiz.dataholder.DataHolder;
 import com.tech.quiz.view.fragment.HomeFragment;
 
 import library.basecontroller.AppBaseCompatActivity;
-import library.mvp.MvpBasePresenter;
+import library.mvp.BasePresenter;
 
 public class HomeActivity extends AppBaseCompatActivity {
 
     private boolean doubleBackToExitPressedOnce;
 
     @Override
-    protected MvpBasePresenter createPresenter() {
+    protected BasePresenter createPresenter() {
         return null;
     }
 

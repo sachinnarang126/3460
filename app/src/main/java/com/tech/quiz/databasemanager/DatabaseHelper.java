@@ -13,6 +13,10 @@ import com.tech.quiz.models.databasemodel.Java;
 
 import java.sql.SQLException;
 
+/**
+ * @author Sachin Narang
+ */
+
 class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
     // Name of the database file for your application -- change to something appropriate for your app

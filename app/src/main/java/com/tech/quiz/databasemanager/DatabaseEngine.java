@@ -5,6 +5,10 @@ import com.j256.ormlite.android.apptools.OrmLiteConfigUtil;
 import java.io.IOException;
 import java.sql.SQLException;
 
+/**
+ * @author Sachin Narang
+ */
+
 public class DatabaseEngine extends OrmLiteConfigUtil {
 
     /**

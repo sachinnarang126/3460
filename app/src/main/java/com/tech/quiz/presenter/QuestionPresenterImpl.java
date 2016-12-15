@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import library.mvp.MvpBasePresenter;
+import library.mvp.BasePresenter;
 import rx.Observable;
 import rx.Observer;
 import rx.Subscriber;
@@ -25,7 +25,7 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
-public class QuestionPresenterImpl extends MvpBasePresenter<QuestionView> implements QuestionPresenter {
+public class QuestionPresenterImpl extends BasePresenter<QuestionView> implements QuestionPresenter {
 
     private BaseAdapter questionPagerAdapter;
     private int attemptedQuestion = 0;

@@ -29,12 +29,12 @@ import com.tech.quiz.view.views.SplashView;
 import java.util.ArrayList;
 import java.util.List;
 
-import library.mvp.MvpBasePresenter;
+import library.mvp.BasePresenter;
 import rx.Observable;
 import rx.Observer;
 import rx.functions.Func1;
 
-public class SplashPresenterImpl extends MvpBasePresenter<SplashView> implements SplashPresenter, SplashInteractor.OnIosQuestionResponseListener,
+public class SplashPresenterImpl extends BasePresenter<SplashView> implements SplashPresenter, SplashInteractor.OnIosQuestionResponseListener,
         SplashInteractor.OnAndroidQuestionResponseListener, SplashInteractor.OnJavaQuestionResponseListener {
 
     private SplashInteractor splashInteractor;

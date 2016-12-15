@@ -9,9 +9,9 @@ import com.tech.quiz.databasemanager.DatabaseManager;
 import com.tech.quiz.repositories.presenter.SettingPresenter;
 import com.tech.quiz.view.views.SettingView;
 
-import library.mvp.MvpBasePresenter;
+import library.mvp.BasePresenter;
 
-public class SettingPresenterImpl extends MvpBasePresenter<SettingView> implements SettingPresenter, Preference.OnPreferenceClickListener {
+public class SettingPresenterImpl extends BasePresenter<SettingView> implements SettingPresenter, Preference.OnPreferenceClickListener {
 
     public SettingPresenterImpl(SettingView view, Context context) {
         attachView(view, context);

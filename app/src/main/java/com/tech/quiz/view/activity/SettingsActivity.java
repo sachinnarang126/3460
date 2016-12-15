@@ -9,12 +9,12 @@ import com.tech.R;
 import com.tech.quiz.view.fragment.SettingsFragment;
 
 import library.basecontroller.AppBaseCompatActivity;
-import library.mvp.MvpBasePresenter;
+import library.mvp.BasePresenter;
 
 public class SettingsActivity extends AppBaseCompatActivity {
 
     @Override
-    protected MvpBasePresenter createPresenter() {
+    protected BasePresenter createPresenter() {
         return null;
     }
 

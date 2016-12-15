@@ -11,6 +11,9 @@ import com.tech.quiz.util.MyNotifications;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Sachin Narang
+ */
 
 public class DailySchedulingService extends IntentService {
 

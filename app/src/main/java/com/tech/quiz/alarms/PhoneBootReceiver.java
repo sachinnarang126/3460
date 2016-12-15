@@ -10,6 +10,8 @@ import android.content.Intent;
  * application's manifest file. When the user sets the alarm, the receiver is enabled.
  * When the user cancels the alarm, the receiver is disabled, so that rebooting the
  * device will not trigger this receiver.
+ *
+ * @author Sachin Narang
  */
 
 

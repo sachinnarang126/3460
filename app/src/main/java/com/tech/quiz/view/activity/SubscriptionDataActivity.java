@@ -14,7 +14,7 @@ import com.tech.quiz.dataholder.DataHolder;
 import com.tech.quiz.util.Constant;
 
 import library.basecontroller.AppBaseCompatActivity;
-import library.mvp.MvpBasePresenter;
+import library.mvp.BasePresenter;
 
 public class SubscriptionDataActivity extends AppBaseCompatActivity {
 
@@ -92,7 +92,7 @@ public class SubscriptionDataActivity extends AppBaseCompatActivity {
     };
 
     @Override
-    protected MvpBasePresenter createPresenter() {
+    protected BasePresenter createPresenter() {
         return null;
     }
 

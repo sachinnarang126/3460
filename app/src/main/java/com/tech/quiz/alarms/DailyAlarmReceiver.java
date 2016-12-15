@@ -10,6 +10,10 @@ import android.support.v4.content.WakefulBroadcastReceiver;
 
 import java.util.Calendar;
 
+/**
+ * @author Sachin Narang
+ */
+
 public class DailyAlarmReceiver extends WakefulBroadcastReceiver {
 
     // The app's AlarmManager, which provides access to the system alarm services.

@@ -22,12 +22,12 @@ import com.tech.quiz.view.views.HomeView;
 import java.util.ArrayList;
 import java.util.List;
 
-import library.mvp.MvpBasePresenter;
+import library.mvp.BasePresenter;
 import rx.Observable;
 import rx.Observer;
 import rx.functions.Func1;
 
-public class HomePresenterImpl extends MvpBasePresenter<HomeView> implements HomePresenter, HomeInteractor.OnIosQuestionResponseListener,
+public class HomePresenterImpl extends BasePresenter<HomeView> implements HomePresenter, HomeInteractor.OnIosQuestionResponseListener,
         HomeInteractor.OnAndroidQuestionResponseListener, HomeInteractor.OnJavaQuestionResponseListener {
 
     private HomeInteractor homeInteractor;

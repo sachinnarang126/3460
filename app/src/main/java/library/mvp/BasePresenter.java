@@ -9,7 +9,7 @@ import java.lang.ref.WeakReference;
  * @author Sachin Narang
  */
 
-abstract public class MvpBasePresenter<V extends MvpView> implements MvpPresenter<V> {
+abstract public class BasePresenter<V extends BaseView> implements IPresenter<V> {
 
     private Context context;
     private WeakReference<V> viewRef;
@@ -48,7 +48,7 @@ abstract public class MvpBasePresenter<V extends MvpView> implements MvpPresente
      * calling {@link #getView()} to get the view instance.
      */
     @UiThread
-    public boolean isViewAttached() {
+    protected boolean isViewAttached() {
         return viewRef != null && viewRef.get() != null;
     }
 

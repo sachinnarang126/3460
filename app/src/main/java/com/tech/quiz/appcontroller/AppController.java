@@ -6,6 +6,10 @@ import com.tech.quiz.alarms.DailyAlarmReceiver;
 import com.tech.quiz.dataholder.DataHolder;
 import com.tech.quiz.util.Constant;
 
+/**
+ * @author Sachin Narang
+ */
+
 public class AppController extends Application {
 
     @Override

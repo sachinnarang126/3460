@@ -25,14 +25,14 @@ import com.tech.quiz.view.views.CategoryView;
 import java.util.ArrayList;
 import java.util.List;
 
-import library.mvp.MvpBasePresenter;
+import library.mvp.BasePresenter;
 import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
-public class CategoryPresenterImpl extends MvpBasePresenter<CategoryView> implements CategoryPresenter, CategoryInteractor.OnQuestionResponseListener {
+public class CategoryPresenterImpl extends BasePresenter<CategoryView> implements CategoryPresenter, CategoryInteractor.OnQuestionResponseListener {
 
     private CategoryInteractor categoryInteractor;
     private CategoryAdapter categoryAdapter;

@@ -8,6 +8,10 @@ import com.tech.quiz.view.fragment.QuizFragment;
 
 import java.util.List;
 
+/**
+ * @author Sachin Narang
+ */
+
 public class QuizPagerAdapter extends BaseAdapter {
 
     private List<Questions> questionList;

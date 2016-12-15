@@ -8,10 +8,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import library.mvp.MvpBasePresenter;
+import library.mvp.BasePresenter;
 import retrofit2.Call;
 
-public abstract class PreferenceCompatFragment<T extends MvpBasePresenter> extends PreferenceFragment {
+/**
+ * @author Sachin Narang
+ */
+
+public abstract class PreferenceCompatFragment<T extends BasePresenter> extends PreferenceFragment {
 
     private T presenter;
     /**

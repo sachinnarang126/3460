@@ -17,6 +17,10 @@ import java.util.concurrent.Callable;
 
 import rx.Observable;
 
+/**
+ * @author Sachin Narang
+ */
+
 public class DatabaseManager {
     private static DatabaseManager instance;
     private DatabaseHelper databaseHelper;
@@ -31,10 +35,6 @@ public class DatabaseManager {
         }
         return instance;
     }
-
-    /*public DatabaseHelper getDatabaseHelper() {
-        return databaseHelper;
-    }*/
 
     /*
      **********************************COMMON FUNCTIONS**********************************

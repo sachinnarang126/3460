@@ -9,7 +9,7 @@ import android.support.annotation.UiThread;
  * @author Sachin Narang
  */
 
-public interface MvpPresenter<V extends MvpView> extends LifeCyclePresenter {
+public interface IPresenter<V extends BaseView> extends LifeCyclePresenter {
 
     /**
      * Set or attach the view to this presenter

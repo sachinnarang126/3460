@@ -8,10 +8,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import library.mvp.MvpBasePresenter;
+import library.mvp.BasePresenter;
 import rx.Subscription;
 
-public abstract class AppCompatFragment<T extends MvpBasePresenter> extends Fragment {
+/**
+ * @author Sachin Narang
+ */
+
+public abstract class AppCompatFragment<T extends BasePresenter> extends Fragment {
 
     private T presenter;
     /**

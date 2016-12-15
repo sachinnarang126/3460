@@ -20,11 +20,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import library.mvp.MvpBasePresenter;
+import library.mvp.BasePresenter;
 import rx.Subscription;
 
+/**
+ * @author Sachin Narang
+ */
 
-public abstract class AppBaseCompatActivity<T extends MvpBasePresenter> extends AppCompatActivity {
+public abstract class AppBaseCompatActivity<T extends BasePresenter> extends AppCompatActivity {
 
     private T presenter;
     /**
