@@ -13,9 +13,9 @@ import android.view.View;
 
 import com.tech.quiz.adapter.CategoryAdapter;
 import com.tech.quiz.dataholder.DataHolder;
-import com.tech.quiz.interactor.CategoryInteractorImpl;
+import com.tech.quiz.interactor.CategoryInterActorImpl;
 import com.tech.quiz.models.databasemodel.Questions;
-import com.tech.quiz.repositories.interactor.CategoryInteractor;
+import com.tech.quiz.repositories.interactor.CategoryInterActor;
 import com.tech.quiz.repositories.presenter.CategoryPresenter;
 import com.tech.quiz.util.Constant;
 import com.tech.quiz.view.activity.QuestionActivity;
@@ -36,9 +36,9 @@ import rx.schedulers.Schedulers;
  * @author Sachin Narang
  */
 
-public class CategoryPresenterImpl extends BasePresenter<CategoryView> implements CategoryPresenter, CategoryInteractor.OnQuestionResponseListener {
+public class CategoryPresenterImpl extends BasePresenter<CategoryView> implements CategoryPresenter, CategoryInterActor.OnQuestionResponseListener {
 
-    private CategoryInteractor categoryInteractor;
+    private CategoryInterActor categoryInterActor;
     private CategoryAdapter categoryAdapter;
     private List<Questions> questionList;
     private boolean hasToShowRecyclerView;
@@ -58,7 +58,7 @@ public class CategoryPresenterImpl extends BasePresenter<CategoryView> implement
 
     public CategoryPresenterImpl(CategoryView view, Context context) {
         attachView(view, context);
-        categoryInteractor = new CategoryInteractorImpl(context);
+        categoryInterActor = new CategoryInterActorImpl(context);
         categoryMap = new ArrayMap<>();
     }
 
@@ -118,15 +118,15 @@ public class CategoryPresenterImpl extends BasePresenter<CategoryView> implement
 
                 switch (serviceType) {
                     case Constant.ANDROID:
-                        categoryInteractor.getAndroidQuestions(this, isShowAnsweredQuestion);
+                        categoryInterActor.getAndroidQuestions(this, isShowAnsweredQuestion);
                         break;
 
                     case Constant.IOS:
-                        categoryInteractor.getIosQuestion(this, isShowAnsweredQuestion);
+                        categoryInterActor.getIosQuestion(this, isShowAnsweredQuestion);
                         break;
 
                     case Constant.JAVA:
-                        categoryInteractor.getJavaQuestions(this, isShowAnsweredQuestion);
+                        categoryInterActor.getJavaQuestions(this, isShowAnsweredQuestion);
                         break;
                 }
             }
@@ -141,17 +141,17 @@ public class CategoryPresenterImpl extends BasePresenter<CategoryView> implement
             switch (serviceType) {
                 case Constant.ANDROID:
 
-                    categoryInteractor.getAndroidQuestions(this, isShowAnsweredQuestion);
+                    categoryInterActor.getAndroidQuestions(this, isShowAnsweredQuestion);
                     break;
 
                 case Constant.IOS:
 
-                    categoryInteractor.getIosQuestion(this, isShowAnsweredQuestion);
+                    categoryInterActor.getIosQuestion(this, isShowAnsweredQuestion);
                     break;
 
                 case Constant.JAVA:
 
-                    categoryInteractor.getJavaQuestions(this, isShowAnsweredQuestion);
+                    categoryInterActor.getJavaQuestions(this, isShowAnsweredQuestion);
                     break;
             }
         }

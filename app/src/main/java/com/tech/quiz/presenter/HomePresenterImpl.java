@@ -5,14 +5,14 @@ import android.content.Context;
 import com.tech.R;
 import com.tech.quiz.databasemanager.DatabaseManager;
 import com.tech.quiz.dataholder.DataHolder;
-import com.tech.quiz.interactor.HomeInteractorImpl;
+import com.tech.quiz.interactor.HomeInterActorImpl;
 import com.tech.quiz.models.bean.QuestionResponse;
 import com.tech.quiz.models.databasemodel.Android;
 import com.tech.quiz.models.databasemodel.Ios;
 import com.tech.quiz.models.databasemodel.Java;
 import com.tech.quiz.network.RetrofitApiService;
 import com.tech.quiz.network.RetrofitClient;
-import com.tech.quiz.repositories.interactor.HomeInteractor;
+import com.tech.quiz.repositories.interactor.HomeInterActor;
 import com.tech.quiz.repositories.presenter.HomePresenter;
 import com.tech.quiz.util.Constant;
 import com.tech.quiz.view.activity.HomeActivity;
@@ -31,14 +31,14 @@ import rx.functions.Func1;
  * @author Sachin Narang
  */
 
-public class HomePresenterImpl extends BasePresenter<HomeView> implements HomePresenter, HomeInteractor.OnIosQuestionResponseListener,
-        HomeInteractor.OnAndroidQuestionResponseListener, HomeInteractor.OnJavaQuestionResponseListener {
+public class HomePresenterImpl extends BasePresenter<HomeView> implements HomePresenter, HomeInterActor.OnIosQuestionResponseListener,
+        HomeInterActor.OnAndroidQuestionResponseListener, HomeInterActor.OnJavaQuestionResponseListener {
 
-    private HomeInteractor homeInteractor;
+    private HomeInterActor homeInteractor;
 
     public HomePresenterImpl(HomeView view, Context context) {
         attachView(view, context);
-        homeInteractor = new HomeInteractorImpl();
+        homeInteractor = new HomeInterActorImpl();
     }
 
     @Override

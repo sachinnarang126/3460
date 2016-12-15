@@ -11,14 +11,14 @@ import com.tech.quiz.billing.Inventory;
 import com.tech.quiz.billing.Purchase;
 import com.tech.quiz.databasemanager.DatabaseManager;
 import com.tech.quiz.dataholder.DataHolder;
-import com.tech.quiz.interactor.SplashInteractorImpl;
+import com.tech.quiz.interactor.SplashInterActorImpl;
 import com.tech.quiz.models.bean.QuestionResponse;
 import com.tech.quiz.models.databasemodel.Android;
 import com.tech.quiz.models.databasemodel.Ios;
 import com.tech.quiz.models.databasemodel.Java;
 import com.tech.quiz.network.RetrofitApiService;
 import com.tech.quiz.network.RetrofitClient;
-import com.tech.quiz.repositories.interactor.SplashInteractor;
+import com.tech.quiz.repositories.interactor.SplashInterActor;
 import com.tech.quiz.repositories.presenter.SplashPresenter;
 import com.tech.quiz.util.Constant;
 import com.tech.quiz.view.activity.HomeActivity;
@@ -38,15 +38,15 @@ import rx.functions.Func1;
  * @author Sachin Narang
  */
 
-public class SplashPresenterImpl extends BasePresenter<SplashView> implements SplashPresenter, SplashInteractor.OnIosQuestionResponseListener,
-        SplashInteractor.OnAndroidQuestionResponseListener, SplashInteractor.OnJavaQuestionResponseListener {
+public class SplashPresenterImpl extends BasePresenter<SplashView> implements SplashPresenter, SplashInterActor.OnIosQuestionResponseListener,
+        SplashInterActor.OnAndroidQuestionResponseListener, SplashInterActor.OnJavaQuestionResponseListener {
 
-    private SplashInteractor splashInteractor;
+    private SplashInterActor splashInteractor;
     private int serviceCount;
 
     public SplashPresenterImpl(SplashView view, Context context) {
         attachView(view, context);
-        splashInteractor = new SplashInteractorImpl();
+        splashInteractor = new SplashInterActorImpl();
     }
 
     @Override
