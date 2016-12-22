@@ -16,27 +16,60 @@
 #   public *;
 #}
 
--keep class !com.j256.ormlite.** {
-    *;
-}
+#-keep class !com.j256.ormlite.** {
+#    *;
+#}
+#-dontwarn com.j256.ormlite.**
+#
+#-keep class !com.google.android.gms.** {
+#    *;
+#}
+#-dontwarn com.google.android.gms.**
+#
+#-keep class !okio.** {
+#    *;
+#}
+#-dontwarn okio**
+#
+#-keep class !retrofit2.** {
+#    *;
+#}
+#-dontwarn retrofit2.**
+#
+#-keep class !rx.** {
+#    *;
+#}
+#-dontwarn rx.**
+
+#-keep class com.j256.ormlite.** {
+#    *;
+#}
+#-dontwarn com.j256.ormlite.**
+
+-keep class com.j256.**
+-keepclassmembers class com.j256.** { *; }
+-keep enum com.j256.**
+-keepclassmembers enum com.j256.** { *; }
+-keep interface com.j256.**
+-keepclassmembers interface com.j256.** { *; }
 -dontwarn com.j256.ormlite.**
 
--keep class !com.google.android.gms.** {
+-keep class com.google.android.gms.** {
     *;
 }
 -dontwarn com.google.android.gms.**
 
--keep class !okio.** {
+-keep class okio.** {
     *;
 }
 -dontwarn okio**
 
--keep class !retrofit2.** {
+-keep class retrofit2.** {
     *;
 }
 -dontwarn retrofit2.**
 
--keep class !rx.** {
+-keep class rx.** {
     *;
 }
 -dontwarn rx.**
