@@ -4,11 +4,13 @@ import com.tech.quiz.models.databasemodel.Questions;
 
 import java.util.List;
 
+import library.mvp.IBaseInterActor;
+
 /**
  * @author Sachin Narang
  */
 
-public interface CategoryInterActor {
+public interface CategoryInterActor extends IBaseInterActor {
 
     void getJavaQuestions(OnQuestionResponseListener questionResponseListener, boolean isShowAnsweredQuestion);
 

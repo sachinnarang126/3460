@@ -3,6 +3,7 @@ package com.tech.quiz.view.fragment;
 
 import android.os.Bundle;
 import android.preference.Preference;
+import android.view.View;
 
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
@@ -25,8 +26,13 @@ public class SettingsFragment extends PreferenceCompatFragment<SettingPresenterI
     }
 
     @Override
-    protected SettingPresenterImpl createPresenter() {
+    protected SettingPresenterImpl onAttachPresenter() {
         return new SettingPresenterImpl(this, getActivity());
+    }
+
+    @Override
+    protected void initUI(View view) {
+
     }
 
     @Override

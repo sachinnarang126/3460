@@ -32,9 +32,7 @@ public class QuestionActivity extends AppBaseCompatActivity<QuestionPresenterImp
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_question);
+    protected void initUI() {
         AdView mAdView = (AdView) findViewById(R.id.adView);
         if (!isSubscribedUser()) {
             MobileAds.initialize(getApplicationContext(), getString(R.string.question_footer));
@@ -68,6 +66,12 @@ public class QuestionActivity extends AppBaseCompatActivity<QuestionPresenterImp
         }
 
         getPresenter().shuffleQuestion();
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        setContentView(R.layout.activity_question);
+        super.onCreate(savedInstanceState);
     }
 
     @Override

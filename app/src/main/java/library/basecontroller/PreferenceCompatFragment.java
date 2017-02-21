@@ -1,122 +1,112 @@
 package library.basecontroller;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
 import android.support.annotation.Nullable;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
-import library.mvp.BasePresenter;
-import retrofit2.Call;
+import library.mvp.FragmentPresenter;
 
 /**
  * @author Sachin Narang
  */
 
-public abstract class PreferenceCompatFragment<T extends BasePresenter> extends PreferenceFragment {
+public abstract class PreferenceCompatFragment<T extends FragmentPresenter> extends PreferenceFragment {
 
     private T presenter;
-    /**
-     * holds the executing or executed service call instances
-     */
-    private HashMap<String, Call> mServiceCallsMap;
 
     /**
-     * Empty constructor to initialize the service map
+     * @return return the presenter
      */
-    public PreferenceCompatFragment() {
-        mServiceCallsMap = new HashMap<>();
-    }
-
     public T getPresenter() {
         return presenter;
     }
 
-    abstract protected T createPresenter();
+    /**
+     * In child fragment you must provide presenter implementation to this,
+     * otherwise it will give a null pointer exception
+     *
+     * @return return the presenterImp instance
+     */
+    abstract protected T onAttachPresenter();
+
+    /**
+     * initialized the ui component
+     *
+     * @param view view inflated from xml
+     */
+    abstract protected void initUI(View view);
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        presenter = onAttachPresenter();
+        presenter.onAttach(context);
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        presenter = createPresenter();
-        presenter.onCreate();
+        if (presenter != null) presenter.onCreate();
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = super.onCreateView(inflater, container, savedInstanceState);
+        if (presenter != null) presenter.onCreateView(inflater, container, savedInstanceState);
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        initUI(view);
+        if (presenter != null) presenter.onViewCreated(view, savedInstanceState);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        if (presenter != null) presenter.onActivityCreated(savedInstanceState);
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        presenter.onStart();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        presenter.onResume();
+        if (presenter != null) presenter.onStart();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        presenter.onPause();
+        if (presenter != null) presenter.onPause();
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        presenter.onStop();
+        if (presenter != null) presenter.onStop();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (presenter != null) presenter.onDestroyView();
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        presenter.onDestroy();
-        cancelAllServiceCalls(new ArrayList<>(mServiceCallsMap.values()));
-        mServiceCallsMap = null;
+        if (presenter != null) presenter.onDestroy();
     }
 
-    /**
-     * this function will cancel all the service which can have an asynchronous response from server
-     *
-     * @param serviceCallList pass the list of service you want to cancel
-     */
-    private void cancelAllServiceCalls(List<Call> serviceCallList) {
-        for (Call call : serviceCallList)
-            if (call != null) call.cancel();
-    }
-
-    /**
-     * returns the service call object from service map
-     *
-     * @param key key value of the service call (Basically the url)
-     * @param <T> Generic type of the service call
-     * @return Returns the Generic type if exists otherwise null
-     */
-    final public <T> Call<T> getServiceCallIfExist(String key) {
-        if (mServiceCallsMap != null && mServiceCallsMap.containsKey(key))
-            return mServiceCallsMap.get(key).clone();
-        else
-            return null;
-    }
-
-    /**
-     * create Call Service and put it in Service Map
-     *
-     * @param call Call Service object
-     * @param key  key value of Call Service (Basically URL)
-     * @param <T>  Generic type of Call Service
-     */
-    final public <T> void putServiceCallInServiceMap(Call<T> call, String key) {
-        mServiceCallsMap.put(key, call);
-    }
-
-    /**
-     * checks whether call service exists in service map or not
-     *
-     * @param key key of call service (Basicallly URL)
-     * @return true or false
-     */
-    final public boolean isServiceCallExist(String key) {
-        return mServiceCallsMap.containsKey(key);
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        if (presenter != null) presenter.onDetach();
     }
 }

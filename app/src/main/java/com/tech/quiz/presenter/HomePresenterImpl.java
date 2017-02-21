@@ -22,7 +22,7 @@ import com.tech.quiz.view.views.HomeView;
 import java.util.ArrayList;
 import java.util.List;
 
-import library.mvp.BasePresenter;
+import library.mvp.FragmentPresenter;
 import rx.Observable;
 import rx.Observer;
 import rx.functions.Func1;
@@ -31,14 +31,11 @@ import rx.functions.Func1;
  * @author Sachin Narang
  */
 
-public class HomePresenterImpl extends BasePresenter<HomeView> implements HomePresenter, HomeInterActor.OnIosQuestionResponseListener,
+public class HomePresenterImpl extends FragmentPresenter<HomeView, HomeInterActor> implements HomePresenter, HomeInterActor.OnIosQuestionResponseListener,
         HomeInterActor.OnAndroidQuestionResponseListener, HomeInterActor.OnJavaQuestionResponseListener {
-
-    private HomeInterActor homeInteractor;
 
     public HomePresenterImpl(HomeView view, Context context) {
         attachView(view, context);
-        homeInteractor = new HomeInterActorImpl();
     }
 
     @Override
@@ -88,13 +85,13 @@ public class HomePresenterImpl extends BasePresenter<HomeView> implements HomePr
                 Observable<QuestionResponse> javaQuestion = apiService.getJavaSelectedQuestion(javaIdList);
                 Observable<QuestionResponse> iosQuestion = apiService.getIosSelectedQuestion(iosIdList);
 
-                context.unSubscribeFromSubscriptionIfSubscribed(Constant.ANDROID_POST_URL);
-                context.unSubscribeFromSubscriptionIfSubscribed(Constant.IOS_POST_URL);
-                context.unSubscribeFromSubscriptionIfSubscribed(Constant.JAVA_POST_URL);
+                unSubscribeFromSubscriptionIfSubscribed(Constant.ANDROID_POST_URL);
+                unSubscribeFromSubscriptionIfSubscribed(Constant.IOS_POST_URL);
+                unSubscribeFromSubscriptionIfSubscribed(Constant.JAVA_POST_URL);
 
-                context.putSubscriberInMap(homeInteractor.getAndroidQuestions(this, androidQuestion), Constant.ANDROID_POST_URL);
-                context.putSubscriberInMap(homeInteractor.getIosQuestion(this, iosQuestion), Constant.IOS_POST_URL);
-                context.putSubscriberInMap(homeInteractor.getJavaQuestions(this, javaQuestion), Constant.JAVA_POST_URL);
+                putSubscriberInMap(getInterActor().getAndroidQuestions(this, androidQuestion), Constant.ANDROID_POST_URL);
+                putSubscriberInMap(getInterActor().getIosQuestion(this, iosQuestion), Constant.IOS_POST_URL);
+                putSubscriberInMap(getInterActor().getJavaQuestions(this, javaQuestion), Constant.JAVA_POST_URL);
 
             } else {
                 context.onError(context.getString(R.string.error_internet_first_launch));
@@ -256,5 +253,10 @@ public class HomePresenterImpl extends BasePresenter<HomeView> implements HomePr
                         javaList.add(java);
                     }
                 });
+    }
+
+    @Override
+    protected HomeInterActor createInterActor() {
+        return new HomeInterActorImpl();
     }
 }

@@ -14,7 +14,7 @@ import com.tech.quiz.dataholder.DataHolder;
 import com.tech.quiz.util.Constant;
 
 import library.basecontroller.AppBaseCompatActivity;
-import library.mvp.BasePresenter;
+import library.mvp.ActivityPresenter;
 
 /**
  * @author Sachin Narang
@@ -24,7 +24,7 @@ public class SubscriptionDataActivity extends AppBaseCompatActivity {
 
     public final static String ITEM_SKU = "ad_free";
     private static final int REQUEST_CODE_GOOGLE_WALLET = 10001;
-    private String TAG = "com.tech.quiz";
+    //    private String TAG = "com.tech.quiz";
     /*IabHelper.OnConsumeFinishedListener mConsumeFinishedListener =
             new IabHelper.OnConsumeFinishedListener() {
                 public void onConsumeFinished(Purchase purchase, IabResult result) {
@@ -96,15 +96,19 @@ public class SubscriptionDataActivity extends AppBaseCompatActivity {
     };
 
     @Override
-    protected BasePresenter createPresenter() {
+    protected ActivityPresenter createPresenter() {
         return null;
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_subcription_data);
+    protected void initUI() {
 
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        setContentView(R.layout.activity_subcription_data);
+        super.onCreate(savedInstanceState);
         initiateGoogleWallet();
     }
 

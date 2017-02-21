@@ -9,13 +9,14 @@ import com.tech.quiz.databasemanager.DatabaseManager;
 import com.tech.quiz.repositories.presenter.SettingPresenter;
 import com.tech.quiz.view.views.SettingView;
 
-import library.mvp.BasePresenter;
+import library.mvp.FragmentPresenter;
+import library.mvp.IBaseInterActor;
 
 /**
  * @author Sachin Narang
  */
 
-public class SettingPresenterImpl extends BasePresenter<SettingView> implements SettingPresenter, Preference.OnPreferenceClickListener {
+public class SettingPresenterImpl extends FragmentPresenter<SettingView, IBaseInterActor> implements SettingPresenter, Preference.OnPreferenceClickListener {
 
     public SettingPresenterImpl(SettingView view, Context context) {
         attachView(view, context);
@@ -55,32 +56,7 @@ public class SettingPresenterImpl extends BasePresenter<SettingView> implements 
     }
 
     @Override
-    public void onCreate() {
-
-    }
-
-    @Override
-    public void onStart() {
-
-    }
-
-    @Override
-    public void onResume() {
-
-    }
-
-    @Override
-    public void onPause() {
-
-    }
-
-    @Override
-    public void onStop() {
-
-    }
-
-    @Override
-    public void onDestroy() {
-        detachView();
+    protected IBaseInterActor createInterActor() {
+        return null;
     }
 }

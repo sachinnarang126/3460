@@ -35,7 +35,7 @@ public class HomeInterActorImpl implements HomeInterActor {
 
                     @Override
                     public void onNext(QuestionResponse questionResponse) {
-                        questionResponseListener.onSuccess(questionResponse.getResponse().get(0), Constant.JAVA) ;
+                        questionResponseListener.onSuccess(questionResponse.getResponse().get(0), Constant.JAVA);
                     }
                 });
     }

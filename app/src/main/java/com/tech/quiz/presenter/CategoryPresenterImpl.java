@@ -25,7 +25,7 @@ import com.tech.quiz.view.views.CategoryView;
 import java.util.ArrayList;
 import java.util.List;
 
-import library.mvp.BasePresenter;
+import library.mvp.FragmentPresenter;
 import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
@@ -36,9 +36,8 @@ import rx.schedulers.Schedulers;
  * @author Sachin Narang
  */
 
-public class CategoryPresenterImpl extends BasePresenter<CategoryView> implements CategoryPresenter, CategoryInterActor.OnQuestionResponseListener {
+public class CategoryPresenterImpl extends FragmentPresenter<CategoryView, CategoryInterActor> implements CategoryPresenter, CategoryInterActor.OnQuestionResponseListener {
 
-    private CategoryInterActor categoryInterActor;
     private CategoryAdapter categoryAdapter;
     private List<Questions> questionList;
     private boolean hasToShowRecyclerView;
@@ -58,7 +57,6 @@ public class CategoryPresenterImpl extends BasePresenter<CategoryView> implement
 
     public CategoryPresenterImpl(CategoryView view, Context context) {
         attachView(view, context);
-        categoryInterActor = new CategoryInterActorImpl(context);
         categoryMap = new ArrayMap<>();
     }
 
@@ -118,15 +116,15 @@ public class CategoryPresenterImpl extends BasePresenter<CategoryView> implement
 
                 switch (serviceType) {
                     case Constant.ANDROID:
-                        categoryInterActor.getAndroidQuestions(this, isShowAnsweredQuestion);
+                        getInterActor().getAndroidQuestions(this, isShowAnsweredQuestion);
                         break;
 
                     case Constant.IOS:
-                        categoryInterActor.getIosQuestion(this, isShowAnsweredQuestion);
+                        getInterActor().getIosQuestion(this, isShowAnsweredQuestion);
                         break;
 
                     case Constant.JAVA:
-                        categoryInterActor.getJavaQuestions(this, isShowAnsweredQuestion);
+                        getInterActor().getJavaQuestions(this, isShowAnsweredQuestion);
                         break;
                 }
             }
@@ -141,17 +139,17 @@ public class CategoryPresenterImpl extends BasePresenter<CategoryView> implement
             switch (serviceType) {
                 case Constant.ANDROID:
 
-                    categoryInterActor.getAndroidQuestions(this, isShowAnsweredQuestion);
+                    getInterActor().getAndroidQuestions(this, isShowAnsweredQuestion);
                     break;
 
                 case Constant.IOS:
 
-                    categoryInterActor.getIosQuestion(this, isShowAnsweredQuestion);
+                    getInterActor().getIosQuestion(this, isShowAnsweredQuestion);
                     break;
 
                 case Constant.JAVA:
 
-                    categoryInterActor.getJavaQuestions(this, isShowAnsweredQuestion);
+                    getInterActor().getJavaQuestions(this, isShowAnsweredQuestion);
                     break;
             }
         }
@@ -397,5 +395,10 @@ public class CategoryPresenterImpl extends BasePresenter<CategoryView> implement
                         tempList.add(questions);
                     }
                 });
+    }
+
+    @Override
+    protected CategoryInterActor createInterActor() {
+        return new CategoryInterActorImpl(getContext());
     }
 }

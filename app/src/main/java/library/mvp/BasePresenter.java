@@ -2,23 +2,36 @@ package library.mvp;
 
 import android.content.Context;
 import android.support.annotation.UiThread;
+import android.support.v4.util.ArrayMap;
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import rx.Subscription;
 
 /**
  * @author Sachin Narang
  */
 
-abstract public class BasePresenter<V extends BaseView> implements IPresenter<V> {
+abstract public class BasePresenter<V extends BaseView, T extends IBaseInterActor> implements IPresenter<V> {
 
-    private Context context;
+    private WeakReference<Context> contextRef;
     private WeakReference<V> viewRef;
+    private T interActor;
+    /**
+     * holds the executing or executed service call instances
+     */
+    private Map<String, Subscription> mRxSubscriberMap;
 
     @UiThread
     @Override
     public void attachView(V view, Context context) {
         viewRef = new WeakReference<>(view);
-        this.context = context;
+        contextRef = new WeakReference<>(context);
+        interActor = createInterActor();
+        mRxSubscriberMap = new ArrayMap<>();
     }
 
     /**
@@ -39,7 +52,19 @@ abstract public class BasePresenter<V extends BaseView> implements IPresenter<V>
         if (viewRef != null) {
             viewRef.clear();
             viewRef = null;
-            context = null;
+        }
+
+        if (contextRef != null) {
+            contextRef.clear();
+            contextRef = null;
+        }
+
+        if (interActor != null)
+            interActor = null;
+
+        if (mRxSubscriberMap != null) {
+            unSubscribeAllRxSubscriber(new ArrayList<>(mRxSubscriberMap.values()));
+            mRxSubscriberMap = null;
         }
     }
 
@@ -53,6 +78,73 @@ abstract public class BasePresenter<V extends BaseView> implements IPresenter<V>
     }
 
     protected Context getContext() {
-        return context;
+        if (contextRef != null)
+            return contextRef.get();
+        return null;
+    }
+
+    protected abstract T createInterActor();
+
+    protected T getInterActor() {
+        return interActor;
+    }
+
+    /**
+     * this function will cancel all the service which can have an asynchronous response from server
+     */
+    private void unSubscribeAllRxSubscriber(List<Subscription> subscriptionList) {
+        for (Subscription subscription : subscriptionList)
+            try {
+                if (!subscription.isUnsubscribed()) subscription.unsubscribe();
+            } catch (NullPointerException e) {
+                e.printStackTrace();
+            }
+    }
+
+    /**
+     * returns the service call object from service map, you can not override this method.
+     *
+     * @param key key value of the service call (Basically the url)
+     * @param <V> Generic type of the service call
+     * @return Returns the Generic type if exists otherwise null
+     */
+
+    /*final public <V> Call<V> getServiceCallIfExist(String key) {
+        if (mServiceCallsMap != null && mServiceCallsMap.containsKey(key))
+            return mServiceCallsMap.get(key).clone();
+        else
+            return null;
+    }*/
+
+    /**
+     * create Call Service and put it in Service Map, you can not override this method.
+     * <p>
+     * //* @param call Call Service object
+     *
+     * @param key key value of Call Service (Basically URL)
+     * @param <T> Generic type of Call Service
+     */
+    final public <T> void putSubscriberInMap(Subscription subscription, String key) {
+        mRxSubscriberMap.put(key, subscription);
+    }
+
+    /**
+     * checks whether call service exists in service map or not, you can not override this method.
+     *
+     * @param key key of call service (Basically URL)
+     * @return true or false
+     */
+    /*final public boolean isServiceCallExist(String key) {
+        return mServiceCallsMap.containsKey(key);
+    }*/
+    final public void unSubscribeFromSubscriptionIfSubscribed(String key) {
+        if (mRxSubscriberMap.containsKey(key) && !mRxSubscriberMap.get(key).isUnsubscribed()) {
+            mRxSubscriberMap.get(key).unsubscribe();
+            mRxSubscriberMap.remove(key);
+        }
+    }
+
+    final public Subscription getSubscription(String key) {
+        return mRxSubscriberMap.get(key);
     }
 }

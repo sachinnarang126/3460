@@ -45,8 +45,38 @@ public class CategoryFragment extends AppCompatFragment<CategoryPresenterImpl> i
     }
 
     @Override
-    protected CategoryPresenterImpl createPresenter() {
+    protected CategoryPresenterImpl onAttachPresenter() {
         return new CategoryPresenterImpl(this, getContext());
+    }
+
+    @Override
+    protected void initUI(View view) {
+        AdView mAdView = (AdView) view.findViewById(R.id.adView);
+        if (!((HomeActivity) getActivity()).isSubscribedUser()) {
+            mAdView.setVisibility(View.VISIBLE);
+            AdRequest adRequest = new AdRequest.Builder()
+                    .addTestDevice("9210683FFFBDE1953CE613AB2FDE46E5").
+                            addTestDevice("F56162DD974939BBF71A8D3E8CC8A44A").
+                            addTestDevice("1FBF7D7CF19C0C11158AF44FDA595121").
+                            addTestDevice("F58DA099F52C8D53E4DD635D0C5EB709").build();
+
+            mAdView.loadAd(adRequest);
+        } else {
+            mAdView.setVisibility(View.GONE);
+        }
+
+        progressBar = (FrameLayout) view.findViewById(R.id.progressBarContainer);
+
+        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(linearLayoutManager);
+
+        recyclerView.setAdapter(getPresenter().initCategoryAdapter());
+
+        if (!isDataFetchedFromDB) {
+            isDataFetchedFromDB = true;
+            getPresenter().prepareToFetchQuestionFromDB(getArguments().getInt("serviceType"));
+        }
     }
 
     @Override
@@ -75,33 +105,6 @@ public class CategoryFragment extends AppCompatFragment<CategoryPresenterImpl> i
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        AdView mAdView = (AdView) view.findViewById(R.id.adView);
-        if (!((HomeActivity) getActivity()).isSubscribedUser()) {
-            mAdView.setVisibility(View.VISIBLE);
-            AdRequest adRequest = new AdRequest.Builder()
-                    .addTestDevice("9210683FFFBDE1953CE613AB2FDE46E5").
-                            addTestDevice("F56162DD974939BBF71A8D3E8CC8A44A").
-                            addTestDevice("1FBF7D7CF19C0C11158AF44FDA595121").
-                            addTestDevice("F58DA099F52C8D53E4DD635D0C5EB709").build();
-
-            mAdView.loadAd(adRequest);
-        } else {
-            mAdView.setVisibility(View.GONE);
-        }
-
-        progressBar = (FrameLayout) view.findViewById(R.id.progressBarContainer);
-
-        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(linearLayoutManager);
-
-        recyclerView.setAdapter(getPresenter().initCategoryAdapter());
-
-        if (!isDataFetchedFromDB) {
-            isDataFetchedFromDB = true;
-            getPresenter().prepareToFetchQuestionFromDB(getArguments().getInt("serviceType"));
-        }
     }
 
     @Override

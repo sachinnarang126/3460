@@ -9,7 +9,7 @@ import com.tech.R;
 import com.tech.quiz.view.fragment.SettingsFragment;
 
 import library.basecontroller.AppBaseCompatActivity;
-import library.mvp.BasePresenter;
+import library.mvp.ActivityPresenter;
 
 /**
  * @author Sachin Narang
@@ -18,14 +18,12 @@ import library.mvp.BasePresenter;
 public class SettingsActivity extends AppBaseCompatActivity {
 
     @Override
-    protected BasePresenter createPresenter() {
+    protected ActivityPresenter createPresenter() {
         return null;
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_settings);
+    protected void initUI() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -34,6 +32,12 @@ public class SettingsActivity extends AppBaseCompatActivity {
         getFragmentManager().beginTransaction()
                 .replace(R.id.fragment_container, SettingsFragment.getInstance())
                 .commit();
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        setContentView(R.layout.activity_settings);
+        super.onCreate(savedInstanceState);
     }
 
     @Override

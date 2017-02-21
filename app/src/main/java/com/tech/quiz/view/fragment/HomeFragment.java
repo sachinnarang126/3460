@@ -48,20 +48,13 @@ public class HomeFragment extends AppCompatFragment<HomePresenterImpl> implement
     }
 
     @Override
-    protected HomePresenterImpl createPresenter() {
+    protected HomePresenterImpl onAttachPresenter() {
         return new HomePresenterImpl(this, getContext());
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (!((HomeActivity) getActivity()).isSubscribedUser())
-            MobileAds.initialize(getActivity().getApplicationContext(), getString(R.string.home_footer));
-    }
+    protected void initUI(View view) {
 
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
         AdView mAdView = (AdView) view.findViewById(R.id.adView);
         if (!((HomeActivity) getActivity()).isSubscribedUser()) {
 
@@ -103,6 +96,13 @@ public class HomeFragment extends AppCompatFragment<HomePresenterImpl> implement
     }
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (!((HomeActivity) getActivity()).isSubscribedUser())
+            MobileAds.initialize(getActivity().getApplicationContext(), getString(R.string.home_footer));
+    }
+
+    @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_home, menu);
         super.onCreateOptionsMenu(menu, inflater);
@@ -128,7 +128,6 @@ public class HomeFragment extends AppCompatFragment<HomePresenterImpl> implement
 
             case R.id.action_add_free:
                 startActivity(new Intent(getActivity(), SubscriptionDataActivity.class));
-                //((HomeActivity) getActivity()).showSnackBar("You will get the add free version on next update");
                 break;
 
             case R.id.action_rate_us:

@@ -7,6 +7,7 @@
     <uses-permission android:name="com.android.vending.BILLING" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.READ_SMS" />
 
     <application
         android:name="com.tech.quiz.appcontroller.AppController"
@@ -42,7 +43,8 @@
         <activity
             android:name="com.tech.quiz.view.activity.SubscriptionDataActivity"
             android:label="Subscription"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <!-- [START firebase_service] -->
         <service android:name="com.tech.quiz.fcm.MyFirebaseMessagingService">

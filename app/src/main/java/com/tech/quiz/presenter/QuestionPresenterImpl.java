@@ -17,7 +17,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import library.mvp.BasePresenter;
+import library.mvp.ActivityPresenter;
+import library.mvp.IBaseInterActor;
 import rx.Observable;
 import rx.Observer;
 import rx.Subscriber;
@@ -29,7 +30,7 @@ import rx.schedulers.Schedulers;
  * @author Sachin Narang
  */
 
-public class QuestionPresenterImpl extends BasePresenter<QuestionView> implements QuestionPresenter {
+public class QuestionPresenterImpl extends ActivityPresenter<QuestionView, IBaseInterActor> implements QuestionPresenter {
 
     private BaseAdapter questionPagerAdapter;
     private int attemptedQuestion = 0;
@@ -39,34 +40,9 @@ public class QuestionPresenterImpl extends BasePresenter<QuestionView> implement
     }
 
     @Override
-    public void onCreate() {
-
-    }
-
-    @Override
-    public void onStart() {
-
-    }
-
-    @Override
-    public void onResume() {
-
-    }
-
-    @Override
-    public void onPause() {
-
-    }
-
-    @Override
-    public void onStop() {
-
-    }
-
-    @Override
     public void onDestroy() {
+        super.onDestroy();
         questionPagerAdapter = null;
-        detachView();
         shuffledQuestionList.clear();
     }
 
@@ -390,5 +366,10 @@ public class QuestionPresenterImpl extends BasePresenter<QuestionView> implement
         if (attemptedQuestion == shuffledQuestionList.size()) {
             showResult();
         }
+    }
+
+    @Override
+    protected IBaseInterActor createInterActor() {
+        return null;
     }
 }

@@ -4,6 +4,7 @@ import com.tech.quiz.models.bean.QuestionResponse;
 
 import java.util.List;
 
+import library.mvp.IBaseInterActor;
 import rx.Observable;
 import rx.Subscription;
 
@@ -11,7 +12,7 @@ import rx.Subscription;
  * @author Sachin Narang
  */
 
-public interface HomeInterActor {
+public interface HomeInterActor extends IBaseInterActor {
 
     Subscription getJavaQuestions(OnJavaQuestionResponseListener questionResponseListener, Observable<QuestionResponse> questionCall);
 

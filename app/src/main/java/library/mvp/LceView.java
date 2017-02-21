@@ -10,11 +10,9 @@ public interface LceView<M> extends BaseView {
     /**
      * Display a loading view while loading data in background.
      * <b>The loading view must have the id = R.id.loadingView</b>
-     *
-     * @param pullToRefresh true, if pull-to-refresh has been invoked loading.
      */
     @UiThread
-    public void showLoading(boolean pullToRefresh);
+    void showLoading();
 
     /**
      * Show the content view.
@@ -22,24 +20,22 @@ public interface LceView<M> extends BaseView {
      * <b>The content view must have the id = R.id.contentView</b>
      */
     @UiThread
-    public void showContent();
+    void showContent();
 
     /**
      * Show the error view.
      * <b>The error view must be a TextView with the id = R.id.errorView</b>
      *
-     * @param e             The Throwable that has caused this error
-     * @param pullToRefresh true, if the exception was thrown during pull-to-refresh, otherwise
-     *                      false.
+     * @param e The Throwable that has caused this error
      */
     @UiThread
-    public void showError(Throwable e, boolean pullToRefresh);
+    void showError(Throwable e);
 
     /**
      * The data that should be displayed with {@link #showContent()}
      */
     @UiThread
-    public void setData(M data);
+    void setData(M data);
 
     /**
      * Load the data. Typically invokes the presenter method to load the desired data.
@@ -52,5 +48,5 @@ public interface LceView<M> extends BaseView {
      * @param pullToRefresh true, if triggered by a pull to refresh. Otherwise false.
      */
     @UiThread
-    public void loadData(boolean pullToRefresh);
+    void loadData(boolean pullToRefresh);
 }

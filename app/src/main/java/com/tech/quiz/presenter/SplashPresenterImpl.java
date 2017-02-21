@@ -29,7 +29,7 @@ import com.tech.quiz.view.views.SplashView;
 import java.util.ArrayList;
 import java.util.List;
 
-import library.mvp.BasePresenter;
+import library.mvp.ActivityPresenter;
 import rx.Observable;
 import rx.Observer;
 import rx.functions.Func1;
@@ -38,45 +38,13 @@ import rx.functions.Func1;
  * @author Sachin Narang
  */
 
-public class SplashPresenterImpl extends BasePresenter<SplashView> implements SplashPresenter, SplashInterActor.OnIosQuestionResponseListener,
+public class SplashPresenterImpl extends ActivityPresenter<SplashView, SplashInterActor> implements SplashPresenter, SplashInterActor.OnIosQuestionResponseListener,
         SplashInterActor.OnAndroidQuestionResponseListener, SplashInterActor.OnJavaQuestionResponseListener {
 
-    private SplashInterActor splashInteractor;
     private int serviceCount;
 
     public SplashPresenterImpl(SplashView view, Context context) {
         attachView(view, context);
-        splashInteractor = new SplashInterActorImpl();
-    }
-
-    @Override
-    public void onCreate() {
-
-    }
-
-    @Override
-    public void onStart() {
-
-    }
-
-    @Override
-    public void onResume() {
-
-    }
-
-    @Override
-    public void onPause() {
-
-    }
-
-    @Override
-    public void onStop() {
-
-    }
-
-    @Override
-    public void onDestroy() {
-        detachView();
     }
 
     @Override
@@ -92,13 +60,13 @@ public class SplashPresenterImpl extends BasePresenter<SplashView> implements Sp
                 Observable<QuestionResponse> javaQuestion = apiService.getJavaQuestion();
                 Observable<QuestionResponse> iosQuestion = apiService.getIosQuestion();
 
-                context.unSubscribeFromSubscriptionIfSubscribed(Constant.ANDROID_URL);
-                context.unSubscribeFromSubscriptionIfSubscribed(Constant.IOS_URL);
-                context.unSubscribeFromSubscriptionIfSubscribed(Constant.JAVA_URL);
+                unSubscribeFromSubscriptionIfSubscribed(Constant.ANDROID_URL);
+                unSubscribeFromSubscriptionIfSubscribed(Constant.IOS_URL);
+                unSubscribeFromSubscriptionIfSubscribed(Constant.JAVA_URL);
 
-                context.putSubscriberInMap(splashInteractor.getAndroidQuestions(this, androidQuestion), Constant.ANDROID_URL);
-                context.putSubscriberInMap(splashInteractor.getIosQuestion(this, iosQuestion), Constant.IOS_URL);
-                context.putSubscriberInMap(splashInteractor.getJavaQuestions(this, javaQuestion), Constant.JAVA_URL);
+                putSubscriberInMap(getInterActor().getAndroidQuestions(this, androidQuestion), Constant.ANDROID_URL);
+                putSubscriberInMap(getInterActor().getIosQuestion(this, iosQuestion), Constant.IOS_URL);
+                putSubscriberInMap(getInterActor().getJavaQuestions(this, javaQuestion), Constant.JAVA_URL);
             } else {
                 context.onError(context.getString(R.string.error_internet_first_launch));
             }
@@ -316,5 +284,10 @@ public class SplashPresenterImpl extends BasePresenter<SplashView> implements Sp
         if (isViewAttached())
             DataHolder.getInstance().getPreferences(getContext()).edit().
                     putLong(Constant.UPDATED_QUESTION_TIME_IN_MILLIS, System.currentTimeMillis()).apply();
+    }
+
+    @Override
+    protected SplashInterActor createInterActor() {
+        return new SplashInterActorImpl();
     }
 }

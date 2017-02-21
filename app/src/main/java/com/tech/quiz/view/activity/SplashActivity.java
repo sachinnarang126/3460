@@ -1,5 +1,7 @@
 package com.tech.quiz.view.activity;
 
+import android.app.AppOpsManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -31,8 +33,31 @@ public class SplashActivity extends AppBaseCompatActivity<SplashPresenterImpl> i
     }
 
     @Override
+    protected void initUI() {
+        if (DataHolder.getInstance().getPreferences(this).
+                getBoolean(Constant.IS_APP_FIRST_LAUNCH, true)) {
+            progressBar = (ProgressBar) findViewById(R.id.progressBar);
+            // fetch all data from server and save it to local DB
+            getPresenter().prepareToFetchQuestion();
+        } else {
+            startActivity(new Intent(SplashActivity.this, HomeActivity.class));
+            finish();
+        }
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            AppOpsManager appOps = (AppOpsManager) getSystemService(Context.APP_OPS_SERVICE);
+            try {
+                int mode = appOps.checkOpNoThrow(AppOpsManager.OPSTR_READ_SMS,
+                        android.os.Process.myUid(), getPackageName());
+                boolean granted = mode == AppOpsManager.MODE_ALLOWED;
+                System.out.println("granted " + granted);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
 
         if (Build.VERSION.SDK_INT < 16) {
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -44,16 +69,7 @@ public class SplashActivity extends AppBaseCompatActivity<SplashPresenterImpl> i
             decorView.setSystemUiVisibility(uiOptions);
         }
         setContentView(R.layout.activity_splash);
-
-        if (DataHolder.getInstance().getPreferences(this).
-                getBoolean(Constant.IS_APP_FIRST_LAUNCH, true)) {
-            progressBar = (ProgressBar) findViewById(R.id.progressBar);
-            // fetch all data from server and save it to local DB
-            getPresenter().prepareToFetchQuestion();
-        } else {
-            startActivity(new Intent(SplashActivity.this, HomeActivity.class));
-            finish();
-        }
+        super.onCreate(savedInstanceState);
     }
 
     @Override

@@ -13,7 +13,7 @@ import com.tech.quiz.dataholder.DataHolder;
 import com.tech.quiz.view.fragment.HomeFragment;
 
 import library.basecontroller.AppBaseCompatActivity;
-import library.mvp.BasePresenter;
+import library.mvp.ActivityPresenter;
 
 /**
  * @author Sachin Narang
@@ -24,18 +24,22 @@ public class HomeActivity extends AppBaseCompatActivity {
     private boolean doubleBackToExitPressedOnce;
 
     @Override
-    protected BasePresenter createPresenter() {
+    protected ActivityPresenter createPresenter() {
         return null;
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void initUI() {
         DataHolder.getInstance().setHomeActivityInstance(this);
-        setContentView(R.layout.activity_home);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         loadHomeFragment();
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        setContentView(R.layout.activity_home);
+        super.onCreate(savedInstanceState);
     }
 
     private void loadHomeFragment() {
