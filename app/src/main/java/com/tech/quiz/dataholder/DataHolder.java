@@ -19,7 +19,6 @@ public class DataHolder {
     private List<Questions> shuffledQuestionList;
     private HomeActivity instance;
 
-
     private DataHolder() {
         //singleton
     }

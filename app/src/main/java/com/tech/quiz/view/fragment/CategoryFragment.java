@@ -6,9 +6,6 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -87,13 +84,13 @@ public class CategoryFragment extends AppCompatFragment<CategoryPresenterImpl> i
             MobileAds.initialize(getActivity().getApplicationContext(), getString(R.string.category_footer));
         }
 
-        setHasOptionsMenu(true);
+        /*setHasOptionsMenu(true);
         getActivity().setTitle(getArguments().getString("technology"));
         try {
             ((HomeActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         } catch (NullPointerException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 
     @Override
@@ -102,18 +99,13 @@ public class CategoryFragment extends AppCompatFragment<CategoryPresenterImpl> i
         return inflater.inflate(R.layout.fragment_category, container, false);
     }
 
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-    }
-
-    @Override
+    /*@Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_category, menu);
         super.onCreateOptionsMenu(menu, inflater);
-    }
+    }*/
 
-    @Override
+    /*@Override
     public void onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
         switch (getArguments().getInt("serviceType")) {
@@ -141,9 +133,9 @@ public class CategoryFragment extends AppCompatFragment<CategoryPresenterImpl> i
                 menu.findItem(R.id.action_java).setVisible(false);
                 break;
         }
-    }
+    }*/
 
-    @Override
+    /*@Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
         switch (item.getItemId()) {
@@ -183,7 +175,7 @@ public class CategoryFragment extends AppCompatFragment<CategoryPresenterImpl> i
         }
 
         return super.onOptionsItemSelected(item);
-    }
+    }*/
 
     @Override
     public void onItemClicked(View view, int position) {
@@ -198,8 +190,6 @@ public class CategoryFragment extends AppCompatFragment<CategoryPresenterImpl> i
         } catch (NullPointerException e) {
             e.printStackTrace();
         }
-
-
     }
 
     @Override
