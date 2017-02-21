@@ -62,6 +62,7 @@ public class CategoryPresenterImpl extends FragmentPresenter<CategoryView, Categ
 
     @Override
     public void onDestroy() {
+        super.onDestroy();
         hasToShowRecyclerView = false;
         if (isViewAttached())
             LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(receiver);
@@ -69,17 +70,18 @@ public class CategoryPresenterImpl extends FragmentPresenter<CategoryView, Categ
         categoryMap.clear();
         questionList = null;
         categoryAdapter = null;
-        detachView();
     }
 
     @Override
     public void onCreate() {
+        super.onCreate();
         hasToShowRecyclerView = true;
         LocalBroadcastManager.getInstance(getContext()).registerReceiver(receiver, new IntentFilter(Constant.CATEGORY_RECEIVER));
     }
 
     @Override
     public void onStart() {
+        super.onStart();
         if (isViewAttached()) {
             if (!hasToShowRecyclerView) {
                 getView().showProgress();
@@ -89,21 +91,6 @@ public class CategoryPresenterImpl extends FragmentPresenter<CategoryView, Categ
                 getView().manageRecyclerView(View.VISIBLE);
             }
         }
-    }
-
-    @Override
-    public void onResume() {
-
-    }
-
-    @Override
-    public void onPause() {
-
-    }
-
-    @Override
-    public void onStop() {
-
     }
 
     @Override

@@ -40,32 +40,8 @@ public class HomePresenterImpl extends FragmentPresenter<HomeView, HomeInterActo
 
     @Override
     public void onCreate() {
+        super.onCreate();
         prepareToFetchQuestion();
-    }
-
-    @Override
-    public void onStart() {
-
-    }
-
-    @Override
-    public void onResume() {
-
-    }
-
-    @Override
-    public void onPause() {
-
-    }
-
-    @Override
-    public void onStop() {
-
-    }
-
-    @Override
-    public void onDestroy() {
-        detachView();
     }
 
     @Override
