@@ -104,20 +104,24 @@ public class CategoryPresenterImpl extends FragmentPresenter<CategoryView, Categ
         if (isViewAttached()) {
             boolean isShowAnsweredQuestion = PreferenceManager
                     .getDefaultSharedPreferences(getContext()).getBoolean("prefShowAnsweredQuestion", false);
+
             if (isViewAttached()) {
                 getView().showProgress();
 
                 switch (serviceType) {
                     case Constant.ANDROID:
                         getInterActor().getAndroidQuestions(this, isShowAnsweredQuestion);
+                        getView().getQuestionCountView().setText(getInterActor().getAndroidQuote());
                         break;
 
                     case Constant.IOS:
                         getInterActor().getIosQuestion(this, isShowAnsweredQuestion);
+                        getView().getQuestionCountView().setText(getInterActor().getIosQuote());
                         break;
 
                     case Constant.JAVA:
                         getInterActor().getJavaQuestions(this, isShowAnsweredQuestion);
+                        getView().getQuestionCountView().setText(getInterActor().getJavaQuote());
                         break;
                 }
             }

@@ -5,12 +5,26 @@
     android:layout_height="match_parent"
     android:background="@color/appBackground">
 
+    <TextView
+        android:id="@+id/txtQuestionCount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="0dp"
+        android:background="#77000000"
+        android:gravity="center"
+        android:padding="2dp"
+        android:textColor="@android:color/white"
+        android:textSize="14sp"
+        android:textStyle="normal" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@+id/txtQuestionCount"
         android:clipToPadding="false"
-        android:paddingBottom="?attr/actionBarSize" />
+        android:paddingBottom="?attr/actionBarSize"
+        android:scrollbars="vertical" />
 
     <FrameLayout
         android:id="@+id/progressBarContainer"

@@ -1,5 +1,7 @@
 package com.tech.quiz.view.views;
 
+import android.widget.TextView;
+
 import library.mvp.BaseView;
 
 /**
@@ -7,6 +9,9 @@ import library.mvp.BaseView;
  */
 
 public interface CategoryView extends BaseView {
+
+    TextView getQuestionCountView();
+
     void showProgress();
 
     void hideProgress();

@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import com.tech.R;
 import com.tech.quiz.interfaces.OnItemClickListener;
@@ -185,6 +186,11 @@ public class CategoryFragment extends AppCompatFragment<CategoryPresenterImpl> i
         } catch (NullPointerException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public TextView getQuestionCountView() {
+        return (TextView) getView().findViewById(R.id.txtQuestionCount);
     }
 
     @Override

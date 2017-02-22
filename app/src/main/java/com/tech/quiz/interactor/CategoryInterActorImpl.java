@@ -27,6 +27,24 @@ public class CategoryInterActorImpl implements CategoryInterActor {
     }
 
     @Override
+    public String getJavaQuote() {
+        DatabaseManager databaseManager = DatabaseManager.getDataBaseManager(context);
+        return "Total Question: " + databaseManager.fetchCountOfAllJavaQuestion() + ", Answered: " + databaseManager.getAnsweredJavaQuestionCount();
+    }
+
+    @Override
+    public String getAndroidQuote() {
+        DatabaseManager databaseManager = DatabaseManager.getDataBaseManager(context);
+        return "Total Question: " + databaseManager.fetchCountOfAllAndroidQuestion() + ", Answered: " + databaseManager.getAnsweredAndroidQuestionCount();
+    }
+
+    @Override
+    public String getIosQuote() {
+        DatabaseManager databaseManager = DatabaseManager.getDataBaseManager(context);
+        return "Total Question: " + databaseManager.fetchCountOfAllIosQuestion() + ", Answered: " + databaseManager.getAnsweredIosQuestionCount();
+    }
+
+    @Override
     public void getJavaQuestions(final OnQuestionResponseListener questionResponseListener, final boolean isShowAnsweredQuestion) {
         DatabaseManager.getDataBaseManager(context).fetchJavaQuestionFromDB(isShowAnsweredQuestion).
                 subscribeOn(Schedulers.io()).

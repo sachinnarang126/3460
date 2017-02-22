@@ -367,6 +367,14 @@ public class DatabaseManager {
         return 0;
     }
 
+    public Observable<Long> fetchCountOfAllJavaQuestion1() {
+        return Observable.fromCallable(new Callable<Long>() {
+            public Long call() throws Exception {
+                return databaseHelper.getJavaDao().queryBuilder().countOf();
+            }
+        });
+    }
+
     public void updateJavaQuestion(int questionID, String userLevel, String category, String question,
                                    String optionA, String optionB, String optionC, String optionD, int answer) {
         UpdateBuilder<Java, Integer> updateBuilder = databaseHelper.getJavaDao().updateBuilder();

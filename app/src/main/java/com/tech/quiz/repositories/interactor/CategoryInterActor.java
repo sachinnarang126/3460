@@ -12,6 +12,12 @@ import library.mvp.IBaseInterActor;
 
 public interface CategoryInterActor extends IBaseInterActor {
 
+    String getJavaQuote();
+
+    String getAndroidQuote();
+
+    String getIosQuote();
+
     void getJavaQuestions(OnQuestionResponseListener questionResponseListener, boolean isShowAnsweredQuestion);
 
     void getAndroidQuestions(OnQuestionResponseListener questionResponseListener, boolean isShowAnsweredQuestion);

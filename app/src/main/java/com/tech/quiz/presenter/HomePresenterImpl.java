@@ -18,7 +18,6 @@ import com.tech.quiz.repositories.interactor.HomeInterActor;
 import com.tech.quiz.repositories.presenter.HomePresenter;
 import com.tech.quiz.util.Constant;
 import com.tech.quiz.view.activity.HomeActivity;
-import com.tech.quiz.view.fragment.HomeFragment;
 import com.tech.quiz.view.views.HomeView;
 
 import java.util.ArrayList;
@@ -49,10 +48,10 @@ public class HomePresenterImpl extends ActivityPresenter<HomeView, HomeInterActo
     @Override
     public void prepareToFetchQuestion() {
         if (hasToFetchQuestionFromServer() && isViewAttached()) {
-            HomeFragment context = (HomeFragment) getView();
+
             if (((HomeActivity) getContext()).isInternetAvailable()) {
 
-                DatabaseManager databaseManager = DatabaseManager.getDataBaseManager(context.getActivity());
+                DatabaseManager databaseManager = DatabaseManager.getDataBaseManager(getContext());
                 List<Integer> androidIdList = databaseManager.getAndroidIdList();
                 List<Integer> iosIdList = databaseManager.getIosIdList();
                 List<Integer> javaIdList = databaseManager.getJavaIdList();
@@ -72,7 +71,7 @@ public class HomePresenterImpl extends ActivityPresenter<HomeView, HomeInterActo
                 putSubscriberInMap(getInterActor().getJavaQuestions(this, javaQuestion), Constant.JAVA_POST_URL);
 
             } else {
-                context.onError(context.getString(R.string.error_internet_first_launch));
+                onError(getContext().getString(R.string.error_internet_first_launch));
             }
         }
     }
