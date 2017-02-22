@@ -100,6 +100,11 @@ public class CategoryPresenterImpl extends FragmentPresenter<CategoryView, Categ
     }
 
     @Override
+    public void searchCategory(String textToSearch) {
+        categoryAdapter.filter(textToSearch);
+    }
+
+    @Override
     public void prepareToFetchQuestionFromDB(int serviceType) {
         if (isViewAttached()) {
             boolean isShowAnsweredQuestion = PreferenceManager
@@ -246,7 +251,7 @@ public class CategoryPresenterImpl extends FragmentPresenter<CategoryView, Categ
                     @Override
                     public void onCompleted() {
                         categoryMap.put("All Question", responseList.size());
-                        categoryAdapter.notifyDataSetChanged();
+                        categoryAdapter.notifyData();
                         getView().hideProgress();
                     }
 

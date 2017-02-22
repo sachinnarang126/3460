@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import library.basecontroller.AppBaseCompatActivity;
 import rx.Subscription;
 
 /**
@@ -17,6 +18,7 @@ import rx.Subscription;
 
 abstract public class BasePresenter<V extends BaseView, T extends IBaseInterActor> implements IPresenter<V> {
 
+    private WeakReference<AppBaseCompatActivity> activityRef;
     private WeakReference<Context> contextRef;
     private WeakReference<V> viewRef;
     private T interActor;
@@ -29,6 +31,7 @@ abstract public class BasePresenter<V extends BaseView, T extends IBaseInterActo
     @Override
     public void attachView(V view, Context context) {
         viewRef = new WeakReference<>(view);
+        activityRef = new WeakReference<>((AppBaseCompatActivity) context);
         contextRef = new WeakReference<>(context);
         interActor = createInterActor();
         mRxSubscriberMap = new ArrayMap<>();
@@ -49,6 +52,11 @@ abstract public class BasePresenter<V extends BaseView, T extends IBaseInterActo
 
     @Override
     public void detachView() {
+        if (activityRef != null) {
+            activityRef.clear();
+            activityRef = null;
+        }
+
         if (viewRef != null) {
             viewRef.clear();
             viewRef = null;
@@ -81,6 +89,10 @@ abstract public class BasePresenter<V extends BaseView, T extends IBaseInterActo
         if (contextRef != null)
             return contextRef.get();
         return null;
+    }
+
+    protected AppBaseCompatActivity getActivity() {
+        return activityRef.get();
     }
 
     protected abstract T createInterActor();

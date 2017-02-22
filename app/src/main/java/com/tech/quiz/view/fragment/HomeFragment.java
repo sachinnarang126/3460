@@ -6,6 +6,7 @@ import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -170,6 +171,11 @@ public class HomeFragment extends AppCompatFragment implements View.OnClickListe
     @Override
     public void onSuccess() {
 
+    }
+
+    @Override
+    public Toolbar getToolBar() {
+        return null;
     }
 
     public void setAnimationView() {

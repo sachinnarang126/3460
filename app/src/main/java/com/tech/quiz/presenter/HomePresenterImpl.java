@@ -3,8 +3,12 @@ package com.tech.quiz.presenter;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.view.ViewPager;
+import android.support.v7.widget.SearchView;
 
 import com.tech.R;
+import com.tech.quiz.adapter.PagerAdapter;
 import com.tech.quiz.databasemanager.DatabaseManager;
 import com.tech.quiz.dataholder.DataHolder;
 import com.tech.quiz.interactor.HomeInterActorImpl;
@@ -33,7 +37,10 @@ import rx.functions.Func1;
  */
 
 public class HomePresenterImpl extends ActivityPresenter<HomeView, HomeInterActor> implements HomePresenter, HomeInterActor.OnIosQuestionResponseListener,
-        HomeInterActor.OnAndroidQuestionResponseListener, HomeInterActor.OnJavaQuestionResponseListener {
+        HomeInterActor.OnAndroidQuestionResponseListener, HomeInterActor.OnJavaQuestionResponseListener, SearchView.OnQueryTextListener, ViewPager.OnPageChangeListener {
+
+    private PagerAdapter pagerAdapter;
+    private int position;
 
     public HomePresenterImpl(HomeView view, Context context) {
         super(view, context);
@@ -74,6 +81,11 @@ public class HomePresenterImpl extends ActivityPresenter<HomeView, HomeInterActo
                 onError(getContext().getString(R.string.error_internet_first_launch));
             }
         }
+    }
+
+    @Override
+    public PagerAdapter initAdapter(FragmentManager fm) {
+        return pagerAdapter = new PagerAdapter(fm);
     }
 
     @Override
@@ -235,5 +247,32 @@ public class HomePresenterImpl extends ActivityPresenter<HomeView, HomeInterActo
     @Override
     protected HomeInterActor createInterActor() {
         return new HomeInterActorImpl();
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        pagerAdapter.getCategoryInstance(position).getPresenter().searchCategory(newText);
+        return true;
+    }
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+        this.position = position;
+        getView().getToolBar().collapseActionView();
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+
     }
 }

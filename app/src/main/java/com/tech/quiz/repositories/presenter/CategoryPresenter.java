@@ -13,6 +13,8 @@ import java.util.List;
 
 public interface CategoryPresenter {
 
+    void searchCategory(String textToSearch);
+
     void prepareToFetchQuestionFromDB(int serviceType);
 
     void prepareToFetchQuestionFromDB(int serviceType, boolean isShowAnsweredQuestion);

@@ -1,5 +1,6 @@
 package com.tech.quiz.view.activity;
 
+import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -8,7 +9,9 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,7 +21,6 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 import com.tech.R;
-import com.tech.quiz.adapter.PagerAdapter;
 import com.tech.quiz.dataholder.DataHolder;
 import com.tech.quiz.presenter.HomePresenterImpl;
 import com.tech.quiz.view.views.HomeView;
@@ -32,6 +34,7 @@ import library.basecontroller.AppBaseCompatActivity;
 public class HomeActivity extends AppBaseCompatActivity<HomePresenterImpl> implements HomeView {
 
     private boolean doubleBackToExitPressedOnce;
+    private Toolbar toolbar;
 
     @Override
     protected HomePresenterImpl createPresenter() {
@@ -56,13 +59,13 @@ public class HomeActivity extends AppBaseCompatActivity<HomePresenterImpl> imple
         }
 
         DataHolder.getInstance().setHomeActivityInstance(this);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         //loadHomeFragment();
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
-        PagerAdapter pagerAdapter = new PagerAdapter(getSupportFragmentManager());
-        viewPager.setAdapter(pagerAdapter);
+        viewPager.setAdapter(getPresenter().initAdapter(getSupportFragmentManager()));
         viewPager.setOffscreenPageLimit(2);
+        viewPager.addOnPageChangeListener(getPresenter());
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabLayout);
         tabLayout.setupWithViewPager(viewPager);
@@ -77,6 +80,11 @@ public class HomeActivity extends AppBaseCompatActivity<HomePresenterImpl> imple
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_home, menu);
+        // Retrieve the SearchView and plug it into SearchManager
+        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
+        searchView.setOnQueryTextListener(getPresenter());
+        SearchManager searchManager = (SearchManager) getSystemService(SEARCH_SERVICE);
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -189,5 +197,10 @@ public class HomeActivity extends AppBaseCompatActivity<HomePresenterImpl> imple
     @Override
     public void onSuccess() {
 
+    }
+
+    @Override
+    public Toolbar getToolBar() {
+        return toolbar;
     }
 }

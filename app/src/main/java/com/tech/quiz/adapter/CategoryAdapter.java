@@ -12,7 +12,9 @@ import android.widget.TextView;
 import com.tech.R;
 import com.tech.quiz.interfaces.OnItemClickListener;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
 
@@ -24,6 +26,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
 
     private Map<String, Integer> categoryMap;
     private List<String> categoryList;
+    private List<String> filterCategoryList;
     private OnItemClickListener.OnItemClickCallback onItemClickCallback;
     private int lastPosition = -1;
 
@@ -31,6 +34,8 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         this.categoryList = categoryList;
         this.onItemClickCallback = onItemClickCallback;
         this.categoryMap = categoryMap;
+        filterCategoryList = new ArrayList<>();
+        filterCategoryList.addAll(categoryList);
     }
 
     @Override
@@ -77,4 +82,24 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         }
     }
 
+    public void notifyData() {
+        filterCategoryList.clear();
+        filterCategoryList.addAll(categoryList);
+        notifyDataSetChanged();
+    }
+
+    public void filter(String charText) {
+        charText = charText.toLowerCase(Locale.getDefault());
+        categoryList.clear();
+        if (charText.length() == 0) {
+            categoryList.addAll(filterCategoryList);
+        } else {
+            for (String category : filterCategoryList) {
+                if (category.toLowerCase(Locale.getDefault()).contains(charText)) {
+                    categoryList.add(category);
+                }
+            }
+        }
+        notifyDataSetChanged();
+    }
 }
