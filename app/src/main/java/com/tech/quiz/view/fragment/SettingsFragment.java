@@ -32,9 +32,6 @@ public class SettingsFragment extends PreferenceCompatFragment<SettingPresenterI
 
     @Override
     protected void initUI(View view) {
-        Preference prefResetAll = findPreference("prefResetAll");
-        prefResetAll.setOnPreferenceClickListener(getPresenter());
-
         final InterstitialAd mInterstitialAd = new InterstitialAd(getActivity());
         if (!((SettingsActivity) getActivity()).isSubscribedUser()) {
             // set the ad unit ID
@@ -61,8 +58,10 @@ public class SettingsFragment extends PreferenceCompatFragment<SettingPresenterI
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        addPreferencesFromResource(R.xml.settings);
         super.onCreate(savedInstanceState);
+        addPreferencesFromResource(R.xml.settings);
+        Preference prefResetAll = findPreference("prefResetAll");
+        prefResetAll.setOnPreferenceClickListener(getPresenter());
     }
 
     @Override
