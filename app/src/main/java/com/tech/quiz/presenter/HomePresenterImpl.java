@@ -36,7 +36,7 @@ public class HomePresenterImpl extends ActivityPresenter<HomeView, HomeInterActo
         HomeInterActor.OnAndroidQuestionResponseListener, HomeInterActor.OnJavaQuestionResponseListener {
 
     public HomePresenterImpl(HomeView view, Context context) {
-        attachView(view, context);
+        super(view, context);
     }
 
     @Override

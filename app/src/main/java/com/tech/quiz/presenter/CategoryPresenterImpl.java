@@ -60,7 +60,7 @@ public class CategoryPresenterImpl extends FragmentPresenter<CategoryView, Categ
     };
 
     public CategoryPresenterImpl(CategoryView view, Context context) {
-        attachView(view, context);
+        super(view, context);
         categoryList = new ArrayList<>();
         categoryMap = new ArrayMap<>();
     }

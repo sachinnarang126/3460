@@ -1,5 +1,6 @@
 package library.mvp;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -9,6 +10,10 @@ import android.view.MenuItem;
  */
 
 abstract public class ActivityPresenter<V extends BaseView, T extends IBaseInterActor> extends BasePresenter<V, T> implements APresenterLifeCycle {
+
+    public ActivityPresenter(V v, Context context) {
+        attachView(v, context);
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

@@ -19,7 +19,7 @@ import library.mvp.IBaseInterActor;
 public class SettingPresenterImpl extends FragmentPresenter<SettingView, IBaseInterActor> implements SettingPresenter, Preference.OnPreferenceClickListener {
 
     public SettingPresenterImpl(SettingView view, Context context) {
-        attachView(view, context);
+        super(view, context);
     }
 
     @Override

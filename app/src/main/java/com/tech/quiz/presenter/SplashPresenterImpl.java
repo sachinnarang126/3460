@@ -44,7 +44,7 @@ public class SplashPresenterImpl extends ActivityPresenter<SplashView, SplashInt
     private int serviceCount;
 
     public SplashPresenterImpl(SplashView view, Context context) {
-        attachView(view, context);
+        super(view, context);
     }
 
     @Override

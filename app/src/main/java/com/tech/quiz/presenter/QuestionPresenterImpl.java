@@ -36,7 +36,7 @@ public class QuestionPresenterImpl extends ActivityPresenter<QuestionView, IBase
     private int attemptedQuestion = 0;
 
     public QuestionPresenterImpl(QuestionView view, Context context) {
-        attachView(view, context);
+        super(view, context);
     }
 
     @Override
