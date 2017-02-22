@@ -1,7 +1,6 @@
 package com.tech.quiz.view.fragment;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,14 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.MobileAds;
 import com.tech.R;
 import com.tech.quiz.interfaces.OnItemClickListener;
 import com.tech.quiz.presenter.CategoryPresenterImpl;
 import com.tech.quiz.util.Constant;
-import com.tech.quiz.view.activity.HomeActivity;
 import com.tech.quiz.view.views.CategoryView;
 
 import library.basecontroller.AppCompatFragment;
@@ -48,7 +43,7 @@ public class CategoryFragment extends AppCompatFragment<CategoryPresenterImpl> i
 
     @Override
     protected void initUI(View view) {
-        AdView mAdView = (AdView) view.findViewById(R.id.adView);
+        /*AdView mAdView = (AdView) view.findViewById(R.id.adView);
         if (!((HomeActivity) getActivity()).isSubscribedUser()) {
             mAdView.setVisibility(View.VISIBLE);
             AdRequest adRequest = new AdRequest.Builder()
@@ -60,7 +55,7 @@ public class CategoryFragment extends AppCompatFragment<CategoryPresenterImpl> i
             mAdView.loadAd(adRequest);
         } else {
             mAdView.setVisibility(View.GONE);
-        }
+        }*/
 
         progressBar = (FrameLayout) view.findViewById(R.id.progressBarContainer);
 
@@ -76,7 +71,7 @@ public class CategoryFragment extends AppCompatFragment<CategoryPresenterImpl> i
         }
     }
 
-    @Override
+    /*@Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -84,14 +79,14 @@ public class CategoryFragment extends AppCompatFragment<CategoryPresenterImpl> i
             MobileAds.initialize(getActivity().getApplicationContext(), getString(R.string.category_footer));
         }
 
-        /*setHasOptionsMenu(true);
+        setHasOptionsMenu(true);
         getActivity().setTitle(getArguments().getString("technology"));
         try {
             ((HomeActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         } catch (NullPointerException e) {
             e.printStackTrace();
-        }*/
-    }
+        }
+    }*/
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

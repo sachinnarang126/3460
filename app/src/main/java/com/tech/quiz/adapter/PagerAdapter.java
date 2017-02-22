@@ -1,17 +1,16 @@
 package com.tech.quiz.adapter;
 
-import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.app.FragmentPagerAdapter;
 
 import com.tech.quiz.util.Constant;
 import com.tech.quiz.view.fragment.CategoryFragment;
 
-public class PagerAdapter extends FragmentStatePagerAdapter {
+public class PagerAdapter extends FragmentPagerAdapter {
     private String tabTitles[] = new String[]{"ANDROID", "iOS", "JAVA"};
 
-    public PagerAdapter(FragmentManager fm, Context context) {
+    public PagerAdapter(FragmentManager fm) {
         super(fm);
     }
 
@@ -37,11 +36,4 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
     public CharSequence getPageTitle(int position) {
         return tabTitles[position];
     }
-
-    /*public View getTabView(int position) {
-        View tab = LayoutInflater.from(context).inflate(R.layout.custom_tab, null);
-        TextView tv = (TextView) tab.findViewById(R.id.custom_text);
-        tv.setText(tabTitles[position]);
-        return tab;
-    }*/
 }

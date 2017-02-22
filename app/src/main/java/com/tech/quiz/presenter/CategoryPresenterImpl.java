@@ -5,7 +5,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.util.ArrayMap;
 import android.support.v7.app.AlertDialog;
@@ -24,6 +26,7 @@ import com.tech.quiz.view.views.CategoryView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import library.mvp.FragmentPresenter;
 import rx.Observable;
@@ -41,7 +44,8 @@ public class CategoryPresenterImpl extends FragmentPresenter<CategoryView, Categ
     private CategoryAdapter categoryAdapter;
     private List<Questions> questionList;
     private boolean hasToShowRecyclerView;
-    private ArrayMap<String, Integer> categoryMap;
+    private Map<String, Integer> categoryMap;
+    private List<String> categoryList;
 
     private BroadcastReceiver receiver = new BroadcastReceiver() {
 
@@ -57,6 +61,7 @@ public class CategoryPresenterImpl extends FragmentPresenter<CategoryView, Categ
 
     public CategoryPresenterImpl(CategoryView view, Context context) {
         attachView(view, context);
+        categoryList = new ArrayList<>();
         categoryMap = new ArrayMap<>();
     }
 
@@ -70,11 +75,12 @@ public class CategoryPresenterImpl extends FragmentPresenter<CategoryView, Categ
         categoryMap.clear();
         questionList = null;
         categoryAdapter = null;
+        categoryMap = null;
     }
 
     @Override
-    public void onCreate() {
-        super.onCreate();
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         hasToShowRecyclerView = true;
         LocalBroadcastManager.getInstance(getContext()).registerReceiver(receiver, new IntentFilter(Constant.CATEGORY_RECEIVER));
     }
@@ -124,20 +130,19 @@ public class CategoryPresenterImpl extends FragmentPresenter<CategoryView, Categ
         if (isViewAttached()) {
             getView().showProgress();
             switch (serviceType) {
-                case Constant.ANDROID:
 
+                case Constant.ANDROID:
                     getInterActor().getAndroidQuestions(this, isShowAnsweredQuestion);
                     break;
 
                 case Constant.IOS:
-
                     getInterActor().getIosQuestion(this, isShowAnsweredQuestion);
                     break;
 
                 case Constant.JAVA:
-
                     getInterActor().getJavaQuestions(this, isShowAnsweredQuestion);
                     break;
+
             }
         }
     }
@@ -188,9 +193,8 @@ public class CategoryPresenterImpl extends FragmentPresenter<CategoryView, Categ
 
     @Override
     public <T extends Questions> void onSuccess(List<T> questionListFromDB) {
-        if (isViewAttached()) {
+        if (isViewAttached())
             castToQuestions(questionListFromDB);
-        }
     }
 
     @Override
@@ -252,19 +256,11 @@ public class CategoryPresenterImpl extends FragmentPresenter<CategoryView, Categ
 
                     }
                 });
-
     }
 
     @Override
     public CategoryAdapter initCategoryAdapter() {
         return categoryAdapter = new CategoryAdapter(categoryList, categoryMap, (CategoryFragment) getView());
-    }
-
-    @Override
-    public void clearCategoryAdapter() {
-        categoryList.clear();
-        categoryMap.clear();
-        categoryAdapter.notifyDataSetChanged();
     }
 
     @Override

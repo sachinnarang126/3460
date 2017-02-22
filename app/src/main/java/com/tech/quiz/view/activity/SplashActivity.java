@@ -1,7 +1,5 @@
 package com.tech.quiz.view.activity;
 
-import android.app.AppOpsManager;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -47,18 +45,6 @@ public class SplashActivity extends AppBaseCompatActivity<SplashPresenterImpl> i
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-            AppOpsManager appOps = (AppOpsManager) getSystemService(Context.APP_OPS_SERVICE);
-            try {
-                int mode = appOps.checkOpNoThrow(AppOpsManager.OPSTR_READ_SMS,
-                        android.os.Process.myUid(), getPackageName());
-                boolean granted = mode == AppOpsManager.MODE_ALLOWED;
-                System.out.println("granted " + granted);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-
         if (Build.VERSION.SDK_INT < 16) {
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                     WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -95,12 +81,6 @@ public class SplashActivity extends AppBaseCompatActivity<SplashPresenterImpl> i
                 finish();
             }
         }, 3000);
-    }
-
-    @Override
-    protected void onDestroy() {
-        getPresenter().onDestroy();
-        super.onDestroy();
     }
 
     private void showSnackBar(String error) {

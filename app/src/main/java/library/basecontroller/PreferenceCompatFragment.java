@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.preference.PreferenceFragment;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -50,7 +52,7 @@ public abstract class PreferenceCompatFragment<T extends FragmentPresenter> exte
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (presenter != null) presenter.onCreate();
+        if (presenter != null) presenter.onCreate(savedInstanceState);
     }
 
     @Nullable
@@ -72,6 +74,18 @@ public abstract class PreferenceCompatFragment<T extends FragmentPresenter> exte
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         if (presenter != null) presenter.onActivityCreated(savedInstanceState);
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+        if (presenter != null) presenter.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (presenter != null) presenter.onOptionsItemSelected(item);
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

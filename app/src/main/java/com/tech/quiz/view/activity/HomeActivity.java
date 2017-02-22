@@ -12,51 +12,65 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 import com.tech.R;
 import com.tech.quiz.adapter.PagerAdapter;
 import com.tech.quiz.dataholder.DataHolder;
+import com.tech.quiz.presenter.HomePresenterImpl;
+import com.tech.quiz.view.views.HomeView;
 
 import library.basecontroller.AppBaseCompatActivity;
-import library.mvp.ActivityPresenter;
 
 /**
  * @author Sachin Narang
  */
 
-public class HomeActivity extends AppBaseCompatActivity {
+public class HomeActivity extends AppBaseCompatActivity<HomePresenterImpl> implements HomeView {
 
     private boolean doubleBackToExitPressedOnce;
 
     @Override
-    protected ActivityPresenter createPresenter() {
-        return null;
+    protected HomePresenterImpl createPresenter() {
+        return new HomePresenterImpl(this, this);
     }
 
     @Override
     protected void initUI() {
+
+        AdView mAdView = (AdView) findViewById(R.id.adView);
+        if (!isSubscribedUser()) {
+            MobileAds.initialize(getApplicationContext(), getString(R.string.home_footer));
+            mAdView.setVisibility(View.VISIBLE);
+            AdRequest adRequest = new AdRequest.Builder()
+                    .addTestDevice("9210683FFFBDE1953CE613AB2FDE46E5").
+                            addTestDevice("F56162DD974939BBF71A8D3E8CC8A44A").
+                            addTestDevice("1FBF7D7CF19C0C11158AF44FDA595121").
+                            addTestDevice("F58DA099F52C8D53E4DD635D0C5EB709").build();
+            mAdView.loadAd(adRequest);
+        } else {
+            mAdView.setVisibility(View.GONE);
+        }
+
         DataHolder.getInstance().setHomeActivityInstance(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         //loadHomeFragment();
-        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
-        PagerAdapter pagerAdapter = new PagerAdapter(getSupportFragmentManager(), HomeActivity.this);
+        ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
+        PagerAdapter pagerAdapter = new PagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(pagerAdapter);
         viewPager.setOffscreenPageLimit(2);
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabLayout);
         tabLayout.setupWithViewPager(viewPager);
-
-        /*for (int i = 0; i < tabLayout.getTabCount(); i++) {
-            TabLayout.Tab tab = tabLayout.getTabAt(i);
-            if (tab != null)
-                tab.setCustomView(pagerAdapter.getTabView(i));
-        }*/
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setContentView(R.layout.activity_home_new);
+        setContentView(R.layout.activity_home);
         super.onCreate(savedInstanceState);
     }
 
@@ -136,7 +150,6 @@ public class HomeActivity extends AppBaseCompatActivity {
 
     @Override
     public void onBackPressed() {
-        System.out.println("getSupportFragmentManager().getBackStackEntryCount() " + getSupportFragmentManager().getBackStackEntryCount());
         if (getSupportFragmentManager().getBackStackEntryCount() == 0) {
             if (doubleBackToExitPressedOnce) {
                 finish();
@@ -159,12 +172,22 @@ public class HomeActivity extends AppBaseCompatActivity {
     }
 
     public void showSnackBar(String text) {
-        Snackbar.make(findViewById(R.id.viewpager), text, 2000).show();
+        Snackbar.make(findViewById(R.id.viewPager), text, 2000).show();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         DataHolder.getInstance().setHomeActivityInstance(null);
+    }
+
+    @Override
+    public void onError(String error) {
+
+    }
+
+    @Override
+    public void onSuccess() {
+
     }
 }

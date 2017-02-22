@@ -32,14 +32,6 @@ public class SettingsFragment extends PreferenceCompatFragment<SettingPresenterI
 
     @Override
     protected void initUI(View view) {
-
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        addPreferencesFromResource(R.xml.settings);
-
         Preference prefResetAll = findPreference("prefResetAll");
         prefResetAll.setOnPreferenceClickListener(getPresenter());
 
@@ -65,6 +57,12 @@ public class SettingsFragment extends PreferenceCompatFragment<SettingPresenterI
                 }
             });
         }
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        addPreferencesFromResource(R.xml.settings);
+        super.onCreate(savedInstanceState);
     }
 
     @Override

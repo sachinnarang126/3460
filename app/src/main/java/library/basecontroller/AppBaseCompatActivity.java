@@ -10,6 +10,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.tech.quiz.dataholder.DataHolder;
@@ -51,7 +53,25 @@ public abstract class AppBaseCompatActivity<T extends ActivityPresenter> extends
         super.onCreate(savedInstanceState);
         presenter = createPresenter();
         initUI();
-        if (presenter != null) presenter.onCreate();
+        if (presenter != null) presenter.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        if (presenter != null) presenter.onCreateOptionsMenu(menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        if (presenter != null) presenter.onPrepareOptionsMenu(menu);
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (presenter != null) presenter.onOptionsItemSelected(item);
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

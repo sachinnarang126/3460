@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -50,7 +52,7 @@ public abstract class AppCompatFragment<T extends FragmentPresenter> extends Fra
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (presenter != null) presenter.onCreate();
+        if (presenter != null) presenter.onCreate(savedInstanceState);
     }
 
     @Nullable
@@ -73,6 +75,36 @@ public abstract class AppCompatFragment<T extends FragmentPresenter> extends Fra
         super.onActivityCreated(savedInstanceState);
         if (presenter != null) presenter.onActivityCreated(savedInstanceState);
     }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+        if (presenter != null) presenter.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (presenter != null) presenter.onOptionsItemSelected(item);
+        return super.onOptionsItemSelected(item);
+    }
+
+    /*@Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        if (presenter != null) presenter.onCreateOptionsMenu(menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        if (presenter != null) presenter.onPrepareOptionsMenu(menu);
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (presenter != null) presenter.onOptionsItemSelected(item);
+        return super.onOptionsItemSelected(item);
+    }*/
 
     @Override
     public void onStart() {

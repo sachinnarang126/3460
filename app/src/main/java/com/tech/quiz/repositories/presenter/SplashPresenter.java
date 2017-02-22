@@ -10,8 +10,6 @@ import java.util.List;
 
 public interface SplashPresenter {
 
-    void onDestroy();
-
     void prepareToFetchQuestion();
 
     void saveDataToDB(List<QuestionResponse.Response> questionList, int serviceType);

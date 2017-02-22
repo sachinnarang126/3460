@@ -1,6 +1,8 @@
 package com.tech.quiz.presenter;
 
 import android.content.Context;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 
 import com.tech.R;
 import com.tech.quiz.databasemanager.DatabaseManager;
@@ -22,7 +24,7 @@ import com.tech.quiz.view.views.HomeView;
 import java.util.ArrayList;
 import java.util.List;
 
-import library.mvp.FragmentPresenter;
+import library.mvp.ActivityPresenter;
 import rx.Observable;
 import rx.Observer;
 import rx.functions.Func1;
@@ -31,7 +33,7 @@ import rx.functions.Func1;
  * @author Sachin Narang
  */
 
-public class HomePresenterImpl extends FragmentPresenter<HomeView, HomeInterActor> implements HomePresenter, HomeInterActor.OnIosQuestionResponseListener,
+public class HomePresenterImpl extends ActivityPresenter<HomeView, HomeInterActor> implements HomePresenter, HomeInterActor.OnIosQuestionResponseListener,
         HomeInterActor.OnAndroidQuestionResponseListener, HomeInterActor.OnJavaQuestionResponseListener {
 
     public HomePresenterImpl(HomeView view, Context context) {
@@ -39,8 +41,8 @@ public class HomePresenterImpl extends FragmentPresenter<HomeView, HomeInterActo
     }
 
     @Override
-    public void onCreate() {
-        super.onCreate();
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         prepareToFetchQuestion();
     }
 

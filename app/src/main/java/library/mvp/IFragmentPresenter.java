@@ -10,7 +10,7 @@ import android.support.annotation.UiThread;
  * @author Sachin Narang
  */
 
-interface IFragmentPresenter<V extends BaseView> extends FragmentLifeCyclePresenter {
+interface IFragmentPresenter<V extends BaseView> extends FPresenterLifeCycle {
 
     /**
      * Set or attach the view to this presenter

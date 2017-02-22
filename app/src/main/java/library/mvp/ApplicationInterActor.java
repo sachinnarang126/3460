@@ -5,7 +5,7 @@ import retrofit2.Call;
 /**
  * @author Sachin Narang
  */
-
+@SuppressWarnings("ALL")
 public interface ApplicationInterActor extends IBaseInterActor {
     <T> void callable(OnCallableResponse onCallableResponse, Call<T> call, String serviceType);
 

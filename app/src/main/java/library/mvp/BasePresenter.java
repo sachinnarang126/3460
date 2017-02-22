@@ -102,29 +102,13 @@ abstract public class BasePresenter<V extends BaseView, T extends IBaseInterActo
     }
 
     /**
-     * returns the service call object from service map, you can not override this method.
-     *
-     * @param key key value of the service call (Basically the url)
-     * @param <V> Generic type of the service call
-     * @return Returns the Generic type if exists otherwise null
-     */
-
-    /*final public <V> Call<V> getServiceCallIfExist(String key) {
-        if (mServiceCallsMap != null && mServiceCallsMap.containsKey(key))
-            return mServiceCallsMap.get(key).clone();
-        else
-            return null;
-    }*/
-
-    /**
      * create Call Service and put it in Service Map, you can not override this method.
-     * <p>
-     * //* @param call Call Service object
      *
-     * @param key key value of Call Service (Basically URL)
-     * @param <T> Generic type of Call Service
+     * @param call Call Service object
+     * @param key  key value of Call Service (Basically URL)
      */
-    final public <T> void putSubscriberInMap(Subscription subscription, String key) {
+    @SuppressWarnings("ALL")
+    final protected void putSubscriberInMap(Subscription subscription, String key) {
         mRxSubscriberMap.put(key, subscription);
     }
 
@@ -134,17 +118,27 @@ abstract public class BasePresenter<V extends BaseView, T extends IBaseInterActo
      * @param key key of call service (Basically URL)
      * @return true or false
      */
-    /*final public boolean isServiceCallExist(String key) {
-        return mServiceCallsMap.containsKey(key);
-    }*/
-    final public void unSubscribeFromSubscriptionIfSubscribed(String key) {
+    @SuppressWarnings("ALL")
+    final protected boolean isServiceCallExist(String key) {
+        return mRxSubscriberMap.containsKey(key);
+    }
+
+    @SuppressWarnings("ALL")
+    final protected void unSubscribeFromSubscriptionIfSubscribed(String key) {
         if (mRxSubscriberMap.containsKey(key) && !mRxSubscriberMap.get(key).isUnsubscribed()) {
             mRxSubscriberMap.get(key).unsubscribe();
             mRxSubscriberMap.remove(key);
         }
     }
 
-    final public Subscription getSubscription(String key) {
+    /**
+     * returns the service call object from service map, you can not override this method.
+     *
+     * @param key key value of the service call (Basically the url)
+     * @return Returns Subscription if exists otherwise null
+     */
+    @SuppressWarnings("ALL")
+    final public Subscription getSubscriptionIfExist(String key) {
         return mRxSubscriberMap.get(key);
     }
 }

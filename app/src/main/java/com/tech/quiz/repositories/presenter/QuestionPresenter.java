@@ -14,10 +14,6 @@ public interface QuestionPresenter {
 
     List<Questions> shuffledQuestionList = new ArrayList<>();
 
-    void onDestroy();
-
-    void onCreate();
-
     void prepareListToShowAllQuestion();
 
     void prepareListToShowUnansweredQuestion();
@@ -27,8 +23,6 @@ public interface QuestionPresenter {
     void prepareListToResetAll();
 
     void shuffleQuestion();
-
-//    void shuffleQuestionAndResetAllLocally();
 
     void showResult();
 

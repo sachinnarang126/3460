@@ -19,7 +19,6 @@ import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 import com.tech.R;
 import com.tech.quiz.databasemanager.DatabaseManager;
-import com.tech.quiz.presenter.HomePresenterImpl;
 import com.tech.quiz.util.Constant;
 import com.tech.quiz.view.activity.HomeActivity;
 import com.tech.quiz.view.activity.SettingsActivity;
@@ -27,12 +26,13 @@ import com.tech.quiz.view.activity.SubscriptionDataActivity;
 import com.tech.quiz.view.views.HomeView;
 
 import library.basecontroller.AppCompatFragment;
+import library.mvp.FragmentPresenter;
 
 /**
  * @author Sachin Narang
  */
 
-public class HomeFragment extends AppCompatFragment<HomePresenterImpl> implements View.OnClickListener, HomeView {
+public class HomeFragment extends AppCompatFragment implements View.OnClickListener, HomeView {
 
     public static HomeFragment getInstance() {
         return new HomeFragment();
@@ -48,8 +48,8 @@ public class HomeFragment extends AppCompatFragment<HomePresenterImpl> implement
     }
 
     @Override
-    protected HomePresenterImpl onAttachPresenter() {
-        return new HomePresenterImpl(this, getContext());
+    protected FragmentPresenter onAttachPresenter() {
+        return null;
     }
 
     @Override

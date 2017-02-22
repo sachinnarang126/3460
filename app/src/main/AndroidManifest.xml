@@ -10,14 +10,14 @@
     <uses-permission android:name="android.permission.READ_SMS" />
 
     <application
-        android:name="com.tech.quiz.appcontroller.AppController"
+        android:name=".quiz.appcontroller.AppController"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
         <activity
-            android:name="com.tech.quiz.view.activity.SplashActivity"
+            android:name=".quiz.view.activity.SplashActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,34 +26,32 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.tech.quiz.view.activity.HomeActivity"
+            android:name=".quiz.view.activity.HomeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.tech.quiz.view.activity.QuestionActivity"
+            android:name=".quiz.view.activity.QuestionActivity"
             android:label=""
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.tech.quiz.view.activity.SettingsActivity"
+            android:name=".quiz.view.activity.SettingsActivity"
             android:label="@string/title_activity_settings"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
-            android:name="com.tech.quiz.view.activity.SubscriptionDataActivity"
+            android:name=".quiz.view.activity.SubscriptionDataActivity"
             android:label="Subscription"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <!-- [START firebase_service] -->
-        <service android:name="com.tech.quiz.fcm.MyFirebaseMessagingService">
+        <service android:name=".quiz.fcm.MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
-        <service android:name="com.tech.quiz.fcm.MyFirebaseInstanceIDService">
+        <service android:name=".quiz.fcm.MyFirebaseInstanceIDService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
@@ -61,21 +59,18 @@
         <!-- [END firebase_iid_service] -->
 
         <service
-            android:name="com.tech.quiz.alarms.DailySchedulingService"
+            android:name=".quiz.alarms.DailySchedulingService"
             android:exported="false" />
 
         <receiver
-            android:name="com.tech.quiz.alarms.DailyAlarmReceiver"
+            android:name=".quiz.alarms.DailyAlarmReceiver"
             android:enabled="true" />
-
         <receiver
-            android:name="com.tech.quiz.alarms.PhoneBootReceiver"
+            android:name=".quiz.alarms.PhoneBootReceiver"
             android:enabled="true">
-
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
-
         </receiver>
 
     </application>

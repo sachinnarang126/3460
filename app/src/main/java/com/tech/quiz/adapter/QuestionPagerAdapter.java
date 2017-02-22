@@ -43,5 +43,4 @@ public class QuestionPagerAdapter extends BaseAdapter {
     public int getItemPosition(Object object) {
         return POSITION_NONE;
     }
-
 }

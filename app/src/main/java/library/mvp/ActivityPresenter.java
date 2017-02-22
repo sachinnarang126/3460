@@ -1,13 +1,17 @@
 package library.mvp;
 
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+
 /**
  * @author Sachin Narang
  */
 
-abstract public class ActivityPresenter<V extends BaseView, T extends IBaseInterActor> extends BasePresenter<V, T> implements IPresenter<V> {
+abstract public class ActivityPresenter<V extends BaseView, T extends IBaseInterActor> extends BasePresenter<V, T> implements APresenterLifeCycle {
 
     @Override
-    public void onCreate() {
+    public void onCreate(Bundle savedInstanceState) {
 
     }
 
@@ -34,5 +38,20 @@ abstract public class ActivityPresenter<V extends BaseView, T extends IBaseInter
     @Override
     public void onDestroy() {
         detachView();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        return false;
     }
 }

@@ -5,7 +5,6 @@ import android.content.DialogInterface;
 import com.tech.quiz.adapter.CategoryAdapter;
 import com.tech.quiz.models.databasemodel.Questions;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -13,14 +12,6 @@ import java.util.List;
  */
 
 public interface CategoryPresenter {
-
-    List<String> categoryList = new ArrayList<>();
-
-    void onDestroy();
-
-    void onCreate();
-
-    void onStart();
 
     void prepareToFetchQuestionFromDB(int serviceType);
 
@@ -33,8 +24,6 @@ public interface CategoryPresenter {
     void updateUI(List<Questions> questionList);
 
     CategoryAdapter initCategoryAdapter();
-
-    void clearCategoryAdapter();
 
     <T extends Questions> void castToQuestions(List<T> questionListFromDB);
 }
