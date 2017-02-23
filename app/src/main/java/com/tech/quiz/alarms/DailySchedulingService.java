@@ -1,6 +1,7 @@
 package com.tech.quiz.alarms;
 
 import android.app.IntentService;
+import android.content.Context;
 import android.content.Intent;
 import android.preference.PreferenceManager;
 
@@ -23,7 +24,7 @@ public class DailySchedulingService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        if (DataHolder.getInstance().getHomeActivityInstance() == null) dailySchedulingTask();
+        if (DataHolder.getInstance().getHomeActivityInstance() == null) dailySchedulingTask(this);
 
         // Release the wake lock provided by the BroadcastReceiver.
         DailyAlarmReceiver.completeWakefulIntent(intent);
@@ -32,12 +33,12 @@ public class DailySchedulingService extends IntentService {
     /**
      * This function is called daily at 5:00 PM
      */
-    private void dailySchedulingTask() {
+    private void dailySchedulingTask(Context context) {
         try {
             boolean prefReceiveNotification = PreferenceManager
-                    .getDefaultSharedPreferences(this).getBoolean("prefReceiveNotification", true);
+                    .getDefaultSharedPreferences(context).getBoolean("prefReceiveNotification", true);
             if (prefReceiveNotification) {
-                List<String> dataInformation = getDataInformationFromDB();
+                List<String> dataInformation = getDataInformationFromDB(context);
                 if (dataInformation.size() > 0) {
                     String title = "Following Unanswered question found";
                     MyNotifications myNotifications = new MyNotifications();
@@ -49,9 +50,9 @@ public class DailySchedulingService extends IntentService {
         }
     }
 
-    private List<String> getDataInformationFromDB() {
+    private List<String> getDataInformationFromDB(Context context) {
 
-        DatabaseManager databaseManager = DatabaseManager.getDataBaseManager(this);
+        DatabaseManager databaseManager = DatabaseManager.getDataBaseManager(context);
         long unansweredAndroidQuestion = databaseManager.getUnansweredAndroidQuestionCount();
         long unansweredIosQuestion = databaseManager.getUnansweredIosQuestionCount();
         long unansweredJavaQuestion = databaseManager.getUnansweredJavaQuestionCount();

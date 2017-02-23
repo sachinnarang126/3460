@@ -4,22 +4,27 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
+    android:background="#009688"
     tools:context=".quiz.view.activity.SplashActivity">
 
-    <ImageView
-        android:layout_width="wrap_content"
+    <TextView
+        android:id="@+id/appTitle"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:contentDescription="@string/app_name"
-        android:src="@drawable/ic_mind_state" />
+        android:gravity="center"
+        android:text="@string/app_name"
+        android:textColor="@android:color/white"
+        android:textSize="32sp"
+        android:textStyle="bold" />
 
     <ProgressBar
         android:id="@+id/progressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/appTitle"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="48dp"
+        android:layout_marginBottom="24dp"
         android:theme="@style/AppTheme.WhiteAccent"
         android:visibility="gone" />
 

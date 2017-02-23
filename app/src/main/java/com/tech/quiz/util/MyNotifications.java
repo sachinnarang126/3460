@@ -26,8 +26,8 @@ public class MyNotifications {
                 PendingIntent.FLAG_ONE_SHOT);
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context)
-                .setSmallIcon(R.drawable.android_bg)
-                .setContentTitle("Tech Quiz")
+                .setSmallIcon(R.drawable.ic_notification)
+                .setContentTitle("TechQuiz")
                 .setAutoCancel(true)
                 .setSound(defaultSoundUri)
                 .setContentIntent(pendingIntent)
