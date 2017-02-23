@@ -11,7 +11,7 @@ import android.view.MenuItem;
 
 abstract public class ActivityPresenter<V extends BaseView, T extends IBaseInterActor> extends BasePresenter<V, T> implements APresenterLifeCycle {
 
-    public ActivityPresenter(V v, Context context) {
+    protected ActivityPresenter(V v, Context context) {
         attachView(v, context);
     }
 

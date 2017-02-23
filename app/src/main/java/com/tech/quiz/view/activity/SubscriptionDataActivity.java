@@ -37,7 +37,7 @@ public class SubscriptionDataActivity extends AppBaseCompatActivity {
                 }
             };*/
     private IabHelper mHelper;
-    IabHelper.OnIabPurchaseFinishedListener mPurchaseFinishedListener
+    private final IabHelper.OnIabPurchaseFinishedListener mPurchaseFinishedListener
             = new IabHelper.OnIabPurchaseFinishedListener() {
         public void onIabPurchaseFinished(IabResult result, Purchase purchase) {
 
@@ -57,7 +57,7 @@ public class SubscriptionDataActivity extends AppBaseCompatActivity {
         }
     };
     // Listener that's called when we finish querying the items and subscriptions we own
-    IabHelper.QueryInventoryFinishedListener mGotInventoryListener = new IabHelper.QueryInventoryFinishedListener() {
+    private final IabHelper.QueryInventoryFinishedListener mGotInventoryListener = new IabHelper.QueryInventoryFinishedListener() {
         public void onQueryInventoryFinished(IabResult result, Inventory inventory) {
             // Have we been disposed of in the meantime? If so, quit.
             if (mHelper == null) return;

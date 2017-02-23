@@ -45,7 +45,7 @@ abstract public class BasePresenter<V extends BaseView, T extends IBaseInterActo
      * @return <code>null</code>, if view is not attached, otherwise the concrete view instance
      */
     @UiThread
-    public V getView() {
+    protected V getView() {
         return viewRef == null ? null : viewRef.get();
     }
 

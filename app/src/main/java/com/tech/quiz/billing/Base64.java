@@ -35,9 +35,10 @@ package com.tech.quiz.billing;
  * Base64 converter class. This code is not a complete MIME encoder;
  * it simply converts binary data to base64 data and back.
  * <p>
- * <p>Note {@link CharBase64} is a GWT-compatible implementation of this
+ * <p>Note is a GWT-compatible implementation of this
  * class.
  */
+@SuppressWarnings("ALL")
 public class Base64 {
     /**
      * Specify encoding (value is {@code true}).
@@ -288,7 +289,7 @@ public class Base64 {
 
         // If doPadding is false, set length to truncate '='
         // padding characters
-        while (doPadding == false && outLen > 0) {
+        while (!doPadding && outLen > 0) {
             if (outBuff[outLen - 1] != '=') {
                 break;
             }

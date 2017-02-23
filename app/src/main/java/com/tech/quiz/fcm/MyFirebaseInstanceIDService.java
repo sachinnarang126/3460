@@ -49,6 +49,7 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
      *
      * @param token The new token.
      */
+    @SuppressWarnings("All")
     private void sendRegistrationToServer(String token) {
         DataHolder.getInstance().getPreferences(this).edit().putString(Constant.DEVICE_TOKEN, token).apply();
         // if connected to internet

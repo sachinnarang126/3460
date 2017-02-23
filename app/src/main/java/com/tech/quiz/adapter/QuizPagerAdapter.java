@@ -14,7 +14,7 @@ import java.util.List;
 
 public class QuizPagerAdapter extends BaseAdapter {
 
-    private List<Questions> questionList;
+    private final List<Questions> questionList;
 
     public QuizPagerAdapter(FragmentManager fm, List<Questions> questionList) {
         super(fm);

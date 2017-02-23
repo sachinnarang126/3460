@@ -8,8 +8,8 @@ import android.view.View;
 
 public class OnItemClickListener implements View.OnClickListener {
 
-    private int position;
-    private OnItemClickCallback onItemClickCallback;
+    private final int position;
+    private final OnItemClickCallback onItemClickCallback;
 
     public OnItemClickListener(int position, OnItemClickCallback onItemClickCallback) {
         this.position = position;

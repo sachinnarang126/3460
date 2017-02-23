@@ -20,7 +20,7 @@ import java.util.List;
 
 public class UpdateQuestionPresenterImpl implements UpdateQuestionPresenter {
 
-    private Context context;
+    private final Context context;
 
     public UpdateQuestionPresenterImpl(Context context) {
         this.context = context;

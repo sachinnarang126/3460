@@ -14,8 +14,8 @@ import java.util.List;
 
 public class QuestionPagerAdapter extends BaseAdapter {
 
-    private List<Questions> questionList;
-    private int technology;
+    private final List<Questions> questionList;
+    private final int technology;
 
     public QuestionPagerAdapter(FragmentManager fm, List<Questions> questionList, int technology) {
         super(fm);

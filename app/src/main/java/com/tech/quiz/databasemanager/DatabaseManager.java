@@ -23,7 +23,7 @@ import rx.Observable;
 
 public class DatabaseManager {
     private static DatabaseManager instance;
-    private DatabaseHelper databaseHelper;
+    private final DatabaseHelper databaseHelper;
 
     private DatabaseManager(Context ctx) {
         databaseHelper = new DatabaseHelper(ctx);

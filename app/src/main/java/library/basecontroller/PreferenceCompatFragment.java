@@ -23,7 +23,7 @@ public abstract class PreferenceCompatFragment<T extends FragmentPresenter> exte
     /**
      * @return return the presenter
      */
-    public T getPresenter() {
+    protected T getPresenter() {
         return presenter;
     }
 

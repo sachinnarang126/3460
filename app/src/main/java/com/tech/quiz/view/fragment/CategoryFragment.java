@@ -1,6 +1,5 @@
 package com.tech.quiz.view.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
@@ -118,7 +117,8 @@ public class CategoryFragment extends AppCompatFragment<CategoryPresenterImpl> i
     @Override
     public void manageRecyclerView(int visibility) {
         try {
-            getView().findViewById(R.id.recyclerView).setVisibility(visibility);
+            if (getView() != null)
+                getView().findViewById(R.id.recyclerView).setVisibility(visibility);
         } catch (NullPointerException e) {
             e.printStackTrace();
         }
@@ -129,8 +129,4 @@ public class CategoryFragment extends AppCompatFragment<CategoryPresenterImpl> i
         return getArguments().getInt("serviceType");
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-    }
 }

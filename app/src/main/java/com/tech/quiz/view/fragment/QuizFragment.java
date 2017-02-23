@@ -237,7 +237,7 @@ public class QuizFragment extends Fragment implements View.OnClickListener, View
         return false;
     }
 
-    public void showOptionDialog(String message, String title) {
+    private void showOptionDialog(String message, String title) {
         new AlertDialog.Builder(getActivity())
                 .setMessage(message)
                 .setTitle(title)

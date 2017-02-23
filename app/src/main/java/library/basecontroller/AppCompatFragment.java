@@ -113,6 +113,12 @@ public abstract class AppCompatFragment<T extends FragmentPresenter> extends Fra
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        if (presenter != null) presenter.onResume();
+    }
+
+    @Override
     public void onPause() {
         super.onPause();
         if (presenter != null) presenter.onPause();

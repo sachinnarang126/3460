@@ -14,9 +14,9 @@ import android.view.ViewGroup;
  * @author Sachin Narang
  */
 
-abstract public class FragmentPresenter<V extends BaseView, T extends IBaseInterActor> extends BasePresenter<V, T> implements IFragmentPresenter<V> {
+abstract public class FragmentPresenter<V extends BaseView, T extends IBaseInterActor> extends BasePresenter<V, T> implements FPresenterLifeCycle {
 
-    public FragmentPresenter(V v, Context context) {
+    protected FragmentPresenter(V v, Context context) {
         attachView(v, context);
     }
 

@@ -21,6 +21,7 @@ package com.tech.quiz.billing;
  * To get the IAB result that caused this exception to be thrown,
  * call {@link #getResult()}.
  */
+@SuppressWarnings("ALL")
 public class IabException extends Exception {
     IabResult mResult;
 

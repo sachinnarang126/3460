@@ -14,7 +14,7 @@ public class QuestionResponse {
 
     @SerializedName("response")
     @Expose
-    private List<List<Response>> response = new ArrayList<List<Response>>();
+    private List<List<Response>> response = new ArrayList<>();
     @SerializedName("status")
     @Expose
     private int status;

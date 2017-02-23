@@ -11,7 +11,7 @@ import com.tech.quiz.view.fragment.CategoryFragment;
 import java.util.Map;
 
 public class PagerAdapter extends FragmentPagerAdapter {
-    private String tabTitles[] = new String[]{"ANDROID", "iOS", "JAVA"};
+    private final String tabTitles[] = new String[]{"ANDROID", "iOS", "JAVA"};
     private Map<String, CategoryFragment> categoryFragmentMap;
 
     public PagerAdapter(FragmentManager fm) {

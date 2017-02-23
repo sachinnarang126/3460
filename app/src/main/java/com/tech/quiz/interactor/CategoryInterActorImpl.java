@@ -21,7 +21,7 @@ import rx.schedulers.Schedulers;
 
 public class CategoryInterActorImpl implements CategoryInterActor {
 
-    private Context context;
+    private final Context context;
 
     public CategoryInterActorImpl(Context context) {
         this.context = context;

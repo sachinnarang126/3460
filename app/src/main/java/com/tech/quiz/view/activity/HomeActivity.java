@@ -6,9 +6,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.SearchView;
@@ -61,7 +58,6 @@ public class HomeActivity extends AppBaseCompatActivity<HomePresenterImpl> imple
         DataHolder.getInstance().setHomeActivityInstance(this);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        //loadHomeFragment();
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
         viewPager.setAdapter(getPresenter().initAdapter(getSupportFragmentManager()));
         viewPager.setOffscreenPageLimit(2);
@@ -120,45 +116,6 @@ public class HomeActivity extends AppBaseCompatActivity<HomePresenterImpl> imple
         return super.onOptionsItemSelected(item);
     }
 
-    /*private void loadHomeFragment() {
-        startFragmentTransaction(HomeFragment.getInstance(), getString(R.string.home_fragment), R.id.fragment_container);
-    }*/
-
-    /*public void startFragmentTransaction(Fragment fragment, String tag, int container) {
-        try {
-            FragmentManager mFragmentManager = getSupportFragmentManager();
-            Fragment fragmentFromBackStack = mFragmentManager.findFragmentByTag(tag);
-            if (fragmentFromBackStack == null) {
-                FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
-                fragmentTransaction.replace(container, fragment, tag);
-                fragmentTransaction.commit();
-            } else {
-                // this called if add to back stack
-                mFragmentManager.popBackStack(tag, 0);
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }*/
-
-    public void startFragmentTransactionAllowingBackStack(Fragment fragment, String tag, int container) {
-        try {
-            FragmentManager mFragmentManager = getSupportFragmentManager();
-            Fragment fragmentFromBackStack = mFragmentManager.findFragmentByTag(tag);
-            if (fragmentFromBackStack == null) {
-                FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
-                fragmentTransaction.replace(container, fragment, tag);
-                fragmentTransaction.addToBackStack(tag);
-                fragmentTransaction.commit();
-            } else {
-                // this called if add to back stack
-                mFragmentManager.popBackStack(tag, 0);
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
-
     @Override
     public void onBackPressed() {
         if (getSupportFragmentManager().getBackStackEntryCount() == 0) {
@@ -182,7 +139,7 @@ public class HomeActivity extends AppBaseCompatActivity<HomePresenterImpl> imple
         }
     }
 
-    public void showSnackBar(String text) {
+    private void showSnackBar(String text) {
         Snackbar.make(findViewById(R.id.viewPager), text, 2000).show();
     }
 

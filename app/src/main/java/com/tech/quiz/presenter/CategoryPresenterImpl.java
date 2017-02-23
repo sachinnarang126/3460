@@ -46,9 +46,9 @@ public class CategoryPresenterImpl extends FragmentPresenter<CategoryView, Categ
     private List<Questions> questionList;
     //    private boolean hasToShowRecyclerView;
     private Map<String, Integer> categoryMap;
-    private List<String> categoryList;
+    private final List<String> categoryList;
 
-    private BroadcastReceiver receiver = new BroadcastReceiver() {
+    private final BroadcastReceiver receiver = new BroadcastReceiver() {
 
         @Override
         public void onReceive(Context context, Intent intent) {

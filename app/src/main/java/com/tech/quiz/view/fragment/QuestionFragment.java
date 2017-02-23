@@ -270,7 +270,7 @@ public class QuestionFragment extends Fragment implements View.OnClickListener, 
         return false;
     }
 
-    public void showOptionDialog(String message, String title) {
+    private void showOptionDialog(String message, String title) {
         new AlertDialog.Builder(getActivity())
                 .setMessage(message)
                 .setTitle(title)

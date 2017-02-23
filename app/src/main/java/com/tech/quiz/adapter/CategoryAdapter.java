@@ -24,10 +24,10 @@ import java.util.Random;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder> {
 
-    private Map<String, Integer> categoryMap;
-    private List<String> categoryList;
-    private List<String> filterCategoryList;
-    private OnItemClickListener.OnItemClickCallback onItemClickCallback;
+    private final Map<String, Integer> categoryMap;
+    private final List<String> categoryList;
+    private final List<String> filterCategoryList;
+    private final OnItemClickListener.OnItemClickCallback onItemClickCallback;
     private int lastPosition = -1;
 
     public CategoryAdapter(List<String> categoryList, Map<String, Integer> categoryMap, OnItemClickListener.OnItemClickCallback onItemClickCallback) {
@@ -72,8 +72,8 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView txtCategory;
-        CardView container;
+        final TextView txtCategory;
+        final CardView container;
 
         ViewHolder(View itemView) {
             super(itemView);
