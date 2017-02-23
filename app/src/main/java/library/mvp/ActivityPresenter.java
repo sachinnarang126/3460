@@ -21,6 +21,21 @@ abstract public class ActivityPresenter<V extends BaseView, T extends IBaseInter
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        return true;
+    }
+
+    @Override
     public void onStart() {
 
     }
@@ -43,20 +58,5 @@ abstract public class ActivityPresenter<V extends BaseView, T extends IBaseInter
     @Override
     public void onDestroy() {
         detachView();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        return true;
-    }
-
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        return false;
     }
 }

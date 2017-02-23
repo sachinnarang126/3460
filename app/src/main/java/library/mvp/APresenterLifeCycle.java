@@ -12,6 +12,12 @@ interface APresenterLifeCycle {
 
     void onCreate(Bundle savedInstanceState);
 
+    boolean onCreateOptionsMenu(Menu menu);
+
+    boolean onPrepareOptionsMenu(Menu menu);
+
+    boolean onOptionsItemSelected(MenuItem item);
+
     void onStart();
 
     void onResume();
@@ -21,10 +27,4 @@ interface APresenterLifeCycle {
     void onStop();
 
     void onDestroy();
-
-    boolean onCreateOptionsMenu(Menu menu);
-
-    boolean onPrepareOptionsMenu(Menu menu);
-
-    boolean onOptionsItemSelected(MenuItem item);
 }

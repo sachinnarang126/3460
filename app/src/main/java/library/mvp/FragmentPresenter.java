@@ -47,12 +47,12 @@ abstract public class FragmentPresenter<V extends BaseView, T extends IBaseInter
 
     @Override
     public void onPrepareOptionsMenu(Menu menu) {
-
+//        ((AppCompatFragment) getView()).onPrepareOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        return false;
+        return true;
     }
 
     @Override

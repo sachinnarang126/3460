@@ -32,4 +32,5 @@ public interface QuestionPresenter {
 
     void checkForQuizCompletion();
 
+    void increaseAttemptedQuestionCount();
 }

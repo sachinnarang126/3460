@@ -19,4 +19,8 @@ public interface CategoryView extends BaseView {
     void onError(String error);
 
     void manageRecyclerView(int visibility);
+
+    int getServiceType();
+
+    boolean getUserVisibleHint();
 }

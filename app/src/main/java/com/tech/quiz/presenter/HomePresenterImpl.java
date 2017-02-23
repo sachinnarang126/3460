@@ -4,8 +4,10 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.SearchView;
+import android.view.MenuItem;
 
 import com.tech.R;
 import com.tech.quiz.adapter.PagerAdapter;
@@ -36,8 +38,10 @@ import rx.functions.Func1;
  * @author Sachin Narang
  */
 
-public class HomePresenterImpl extends ActivityPresenter<HomeView, HomeInterActor> implements HomePresenter, HomeInterActor.OnIosQuestionResponseListener,
-        HomeInterActor.OnAndroidQuestionResponseListener, HomeInterActor.OnJavaQuestionResponseListener, SearchView.OnQueryTextListener, ViewPager.OnPageChangeListener {
+public class HomePresenterImpl extends ActivityPresenter<HomeView, HomeInterActor> implements HomePresenter,
+        HomeInterActor.OnIosQuestionResponseListener, HomeInterActor.OnAndroidQuestionResponseListener,
+        HomeInterActor.OnJavaQuestionResponseListener, SearchView.OnQueryTextListener,
+        ViewPager.OnPageChangeListener, MenuItemCompat.OnActionExpandListener {
 
     private PagerAdapter pagerAdapter;
     private int position;
@@ -267,12 +271,38 @@ public class HomePresenterImpl extends ActivityPresenter<HomeView, HomeInterActo
 
     @Override
     public void onPageSelected(int position) {
-        this.position = position;
         getView().getToolBar().collapseActionView();
+        this.position = position;
+//        pagerAdapter.getCategoryInstance(position).getPresenter().thisTechnologyHasUnAnsweredQuestion();
     }
 
     @Override
     public void onPageScrollStateChanged(int state) {
 
+    }
+
+    /**
+     * Called when a menu item
+     * is expanded.
+     *
+     * @param item Item that was expanded
+     * @return true if the item should expand, false if expansion should be suppressed.
+     */
+    @Override
+    public boolean onMenuItemActionExpand(MenuItem item) {
+        return true;
+    }
+
+    /**
+     * Called when a menu item
+     * is collapsed.
+     *
+     * @param item Item that was collapsed
+     * @return true if the item should collapse, false if collapsing should be suppressed.
+     */
+    @Override
+    public boolean onMenuItemActionCollapse(MenuItem item) {
+        pagerAdapter.getCategoryInstance(position).getPresenter().searchCategory("");
+        return true;
     }
 }

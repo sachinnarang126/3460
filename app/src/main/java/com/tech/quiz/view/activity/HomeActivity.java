@@ -81,10 +81,13 @@ public class HomeActivity extends AppBaseCompatActivity<HomePresenterImpl> imple
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_home, menu);
         // Retrieve the SearchView and plug it into SearchManager
-        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
+        MenuItem searchMenu = menu.findItem(R.id.action_search);
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchMenu);
         searchView.setOnQueryTextListener(getPresenter());
         SearchManager searchManager = (SearchManager) getSystemService(SEARCH_SERVICE);
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        MenuItemCompat.setOnActionExpandListener(searchMenu, getPresenter());
+
         return super.onCreateOptionsMenu(menu);
     }
 

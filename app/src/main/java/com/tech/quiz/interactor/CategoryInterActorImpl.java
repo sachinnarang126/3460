@@ -2,6 +2,7 @@ package com.tech.quiz.interactor;
 
 import android.content.Context;
 
+import com.tech.R;
 import com.tech.quiz.databasemanager.DatabaseManager;
 import com.tech.quiz.models.databasemodel.Android;
 import com.tech.quiz.models.databasemodel.Ios;
@@ -56,11 +57,11 @@ public class CategoryInterActorImpl implements CategoryInterActor {
                             questionResponseListener.onSuccess(javaList);
                         } else if (!isShowAnsweredQuestion) {
                             if (DatabaseManager.getDataBaseManager(context).fetchCountOfAllJavaQuestion() > 0)
-                                questionResponseListener.onError("No unanswered question found, Do you want to load answered question?", true);
+                                questionResponseListener.onError(context.getString(R.string.load_answered_question), true);
                             else
-                                questionResponseListener.onError("No question found..!!!", false);
+                                questionResponseListener.onError(context.getString(R.string.error_no_question), false);
                         } else {
-                            questionResponseListener.onError("No question found..!!!", false);
+                            questionResponseListener.onError(context.getString(R.string.error_no_question), false);
                         }
                     }
                 });

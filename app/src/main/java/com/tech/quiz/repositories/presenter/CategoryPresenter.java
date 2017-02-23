@@ -28,4 +28,6 @@ public interface CategoryPresenter {
     CategoryAdapter initCategoryAdapter();
 
     <T extends Questions> void castToQuestions(List<T> questionListFromDB);
+
+    void thisTechnologyHasUnAnsweredQuestion();
 }

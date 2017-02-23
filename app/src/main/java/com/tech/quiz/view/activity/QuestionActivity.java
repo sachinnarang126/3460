@@ -1,8 +1,6 @@
 package com.tech.quiz.view.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -153,11 +151,5 @@ public class QuestionActivity extends AppBaseCompatActivity<QuestionPresenterImp
             default:
                 return "";
         }
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(Constant.CATEGORY_RECEIVER).putExtra("category", getIntent().getStringExtra("title")));
     }
 }

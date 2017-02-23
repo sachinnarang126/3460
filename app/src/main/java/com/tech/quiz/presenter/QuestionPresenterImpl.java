@@ -2,6 +2,8 @@ package com.tech.quiz.presenter;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
 
 import com.tech.quiz.adapter.BaseAdapter;
@@ -10,6 +12,7 @@ import com.tech.quiz.adapter.QuizPagerAdapter;
 import com.tech.quiz.dataholder.DataHolder;
 import com.tech.quiz.models.databasemodel.Questions;
 import com.tech.quiz.repositories.presenter.QuestionPresenter;
+import com.tech.quiz.util.Constant;
 import com.tech.quiz.view.activity.QuestionActivity;
 import com.tech.quiz.view.views.QuestionView;
 
@@ -41,9 +44,12 @@ public class QuestionPresenterImpl extends ActivityPresenter<QuestionView, IBase
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
         questionPagerAdapter = null;
         shuffledQuestionList.clear();
+        if (!getActivity().getIntent().getBooleanExtra("isQuizMode", false) && attemptedQuestion > 0)
+            LocalBroadcastManager.getInstance(getContext()).sendBroadcast(new Intent(Constant.CATEGORY_RECEIVER)/*.putExtra("category", getIntent().getStringExtra("title"))*/);
+
+        super.onDestroy();
     }
 
     @Override
@@ -366,6 +372,11 @@ public class QuestionPresenterImpl extends ActivityPresenter<QuestionView, IBase
         if (attemptedQuestion == shuffledQuestionList.size()) {
             showResult();
         }
+    }
+
+    @Override
+    public void increaseAttemptedQuestionCount() {
+        attemptedQuestion++;
     }
 
     @Override

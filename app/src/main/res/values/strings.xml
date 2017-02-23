@@ -30,6 +30,8 @@
     <string name="title_activity_settings">Settings</string>
 
     <string name="error_internet">Internet Not Available</string>
+    <string name="error_no_question">No question found..!!!</string>
+    <string name="load_answered_question">No unanswered question found, Do you want to load answered question?</string>
     <string name="error_internet_first_launch">Internet required to fetch question from server</string>
     <string name="home_footer">ca-app-pub-9904475983820331/1350090808</string>
     <string name="question_footer">ca-app-pub-9904475983820331/2737595609</string>

@@ -3,6 +3,7 @@ package com.tech.quiz.view.fragment;
 
 import android.os.Bundle;
 import android.preference.Preference;
+import android.preference.SwitchPreference;
 import android.view.View;
 
 import com.google.android.gms.ads.AdListener;
@@ -59,8 +60,11 @@ public class SettingsFragment extends PreferenceCompatFragment<SettingPresenterI
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setPreferenceScreen(null);
         addPreferencesFromResource(R.xml.settings);
         Preference prefResetAll = findPreference("prefResetAll");
+        SwitchPreference prefShowAnsweredQuestion = (SwitchPreference) findPreference("prefShowAnsweredQuestion");
+        prefShowAnsweredQuestion.setOnPreferenceChangeListener(getPresenter());
         prefResetAll.setOnPreferenceClickListener(getPresenter());
     }
 

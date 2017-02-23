@@ -13,6 +13,7 @@ import android.support.v4.util.ArrayMap;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
 
+import com.tech.R;
 import com.tech.quiz.adapter.CategoryAdapter;
 import com.tech.quiz.dataholder.DataHolder;
 import com.tech.quiz.interactor.CategoryInterActorImpl;
@@ -43,7 +44,7 @@ public class CategoryPresenterImpl extends FragmentPresenter<CategoryView, Categ
 
     private CategoryAdapter categoryAdapter;
     private List<Questions> questionList;
-    private boolean hasToShowRecyclerView;
+    //    private boolean hasToShowRecyclerView;
     private Map<String, Integer> categoryMap;
     private List<String> categoryList;
 
@@ -52,9 +53,10 @@ public class CategoryPresenterImpl extends FragmentPresenter<CategoryView, Categ
         @Override
         public void onReceive(Context context, Intent intent) {
             if (isViewAttached()) {
-                getView().manageRecyclerView(View.VISIBLE);
+                prepareToFetchQuestionFromDB(getView().getServiceType());
+                /*getView().manageRecyclerView(View.VISIBLE);
                 getView().hideProgress();
-                hasToShowRecyclerView = true;
+                hasToShowRecyclerView = true;*/
             }
         }
     };
@@ -68,7 +70,7 @@ public class CategoryPresenterImpl extends FragmentPresenter<CategoryView, Categ
     @Override
     public void onDestroy() {
         super.onDestroy();
-        hasToShowRecyclerView = false;
+//        hasToShowRecyclerView = false;
         if (isViewAttached())
             LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(receiver);
         categoryList.clear();
@@ -81,11 +83,17 @@ public class CategoryPresenterImpl extends FragmentPresenter<CategoryView, Categ
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        hasToShowRecyclerView = true;
+//        hasToShowRecyclerView = true;
         LocalBroadcastManager.getInstance(getContext()).registerReceiver(receiver, new IntentFilter(Constant.CATEGORY_RECEIVER));
     }
 
     @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        prepareToFetchQuestionFromDB(getView().getServiceType());
+    }
+
+    /*@Override
     public void onStart() {
         super.onStart();
         if (isViewAttached()) {
@@ -97,7 +105,7 @@ public class CategoryPresenterImpl extends FragmentPresenter<CategoryView, Categ
                 getView().manageRecyclerView(View.VISIBLE);
             }
         }
-    }
+    }*/
 
     @Override
     public void searchCategory(String textToSearch) {
@@ -111,6 +119,9 @@ public class CategoryPresenterImpl extends FragmentPresenter<CategoryView, Categ
                     .getDefaultSharedPreferences(getContext()).getBoolean("prefShowAnsweredQuestion", false);
 
             if (isViewAttached()) {
+                categoryMap.clear();
+                categoryList.clear();
+                categoryAdapter.notifyData();
                 getView().showProgress();
 
                 switch (serviceType) {
@@ -210,17 +221,24 @@ public class CategoryPresenterImpl extends FragmentPresenter<CategoryView, Categ
     public void onError(String error, boolean hasToLoadQuestionFromDb) {
         if (isViewAttached()) {
             getView().hideProgress();
-            if (hasToLoadQuestionFromDb) {
-                showAnsweredQuestionDialog(error, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        prepareToFetchQuestionFromDB(((CategoryFragment) getView()).getArguments().getInt("serviceType"), true);
-                    }
-                });
-            } else {
-                showAnsweredQuestionDialog(error, null);
-            }
+            if (getView().getUserVisibleHint())
+                if (hasToLoadQuestionFromDb) {
+                    showAnsweredQuestionDialog(error, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            prepareToFetchQuestionFromDB(((CategoryFragment) getView()).getArguments().getInt("serviceType"), true);
+                        }
+                    });
+                } else {
+                    showAnsweredQuestionDialog(error, null);
+                }
         }
+    }
+
+    @Override
+    public void thisTechnologyHasUnAnsweredQuestion() {
+        if (categoryList.size() == 0)
+            onError(getContext().getString(R.string.load_answered_question), true);
     }
 
     @Override
@@ -342,7 +360,7 @@ public class CategoryPresenterImpl extends FragmentPresenter<CategoryView, Categ
         intent.putExtra("isQuizMode", isQuizMode);
         intent.putExtra("technology", context.getArguments().getInt("serviceType"));
         context.startActivity(intent);
-        hasToShowRecyclerView = false;
+//        hasToShowRecyclerView = false;
     }
 
     private void resetToDefaultValue(final int position, final String category) {
