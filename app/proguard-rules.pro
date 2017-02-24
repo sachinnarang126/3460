@@ -7,40 +7,6 @@
 # For more details, see
 #   http://developer.android.com/guide/developing/tools/proguard.html
 
-# Add any project specific keep options here:
-
-# If your project uses WebView with JS, uncomment the following
-# and specify the fully qualified class name to the JavaScript interface
-# class:
-#-keepclassmembers class fqcn.of.javascript.interface.for.webview {
-#   public *;
-#}
-
-#-keep class !com.j256.ormlite.** {
-#    *;
-#}
-#-dontwarn com.j256.ormlite.**
-#
-#-keep class !com.google.android.gms.** {
-#    *;
-#}
-#-dontwarn com.google.android.gms.**
-#
-#-keep class !okio.** {
-#    *;
-#}
-#-dontwarn okio**
-#
-#-keep class !retrofit2.** {
-#    *;
-#}
-#-dontwarn retrofit2.**
-#
-#-keep class !rx.** {
-#    *;
-#}
-#-dontwarn rx.**
-
 #-keep class com.j256.ormlite.** {
 #    *;
 #}
@@ -53,6 +19,37 @@
 -keep interface com.j256.**
 -keepclassmembers interface com.j256.** { *; }
 -dontwarn com.j256.ormlite.**
+
+# Keep the annotations
+-keepattributes *Annotation*
+-keepattributes *DatabaseField*
+-keepattributes *DatabaseTable*
+-keepattributes *SerializedName*
+
+# Keep all model classes that are used by OrmLite
+# Also keep their field names and the constructor
+-keep @com.j256.ormlite.table.DatabaseTable class * {
+    @com.j256.ormlite.field.DatabaseField <fields>;
+    @com.j256.ormlite.field.ForeignCollectionField <fields>;
+    <init>();
+}
+
+#-keep class com.tech.quiz.models.databasemodel.**
+#-keepclassmembers class om.tech.quiz.models.databasemodel.** { *; }
+
+# Keep the helper class and its constructor
+#-keep class * extends com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper
+#-keepclassmembers class * extends com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper {
+#  public <init>(android.content.Context);
+#}
+
+#-dontwarn com.j256.ormlite.android.**
+#-dontwarn com.j256.ormlite.logger.**
+#-dontwarn com.j256.ormlite.misc.**
+
+-keepattributes SourceFile,LineNumberTable,Signature,InnerClasses,*Annotation*
+-keepclassmembers class * {public <init>(android.content.Context);}
+-keep class com.j256.** { *; }
 
 -keep class com.google.android.gms.** {
     *;

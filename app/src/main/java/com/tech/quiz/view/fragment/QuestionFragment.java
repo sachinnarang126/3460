@@ -165,8 +165,6 @@ public class QuestionFragment extends Fragment implements View.OnClickListener, 
                 ((TextView) getView().findViewById(R.id.txtUserValue)).setText(getString(R.string.correct));
 
             question.setCorrectAnswerProvided(true);
-            updateSelectionInToDB(databaseManager);
-
         } else {
             question.setCorrectAnswerProvided(false);
             textView.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.red));
@@ -203,8 +201,8 @@ public class QuestionFragment extends Fragment implements View.OnClickListener, 
                     }
                 }
             }, 100);
-            updateSelectionInToDB(databaseManager);
         }
+        updateSelectionInToDB(databaseManager);
     }
 
     private void updateSelectionInToDB(DatabaseManager databaseManager) {

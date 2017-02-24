@@ -80,9 +80,10 @@ public class QuestionActivity extends AppBaseCompatActivity<QuestionPresenterImp
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        if (getIntent().getBooleanExtra("isQuizMode", false))
-            menu.findItem(R.id.action_show_result).setVisible(true);
-        else menu.findItem(R.id.action_show_result).setVisible(false);
+        if (getIntent().getBooleanExtra("isQuizMode", false)) {
+            MenuItem menuItem = menu.findItem(R.id.action_show_result);
+            menuItem.setVisible(true);
+        } else menu.findItem(R.id.action_show_result).setVisible(false);
 
         return super.onPrepareOptionsMenu(menu);
     }

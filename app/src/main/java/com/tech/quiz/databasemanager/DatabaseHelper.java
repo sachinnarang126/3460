@@ -1,15 +1,20 @@
 package com.tech.quiz.databasemanager;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
+import com.tech.quiz.dataholder.DataHolder;
 import com.tech.quiz.models.databasemodel.Android;
 import com.tech.quiz.models.databasemodel.Ios;
 import com.tech.quiz.models.databasemodel.Java;
+import com.tech.quiz.util.Constant;
+import com.tech.quiz.view.activity.SplashActivity;
 
 import java.sql.SQLException;
 
@@ -23,16 +28,16 @@ class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     private static final String DATABASE_NAME = "IQ_DB";
 
     // Any time you make changes to your database objects, you may have to increase the database version
-    private static final int DATABASE_VERSION = 1; // update shared preference for authorized user flag
+    private static final int DATABASE_VERSION = 2; // update shared preference for authorized user flag
 
     private Dao<Java, Integer> javaDao;
     private Dao<Ios, Integer> iosDao;
     private Dao<Android, Integer> androidDao;
-//    private Context context;
+    private Context context;
 
     DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
-//        this.context = context;
+        this.context = context;
     }
 
     @Override
@@ -49,7 +54,20 @@ class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, ConnectionSource connectionSource, int oldVersion, int newVersion) {
 
-/*
+        if (oldVersion == 1 && newVersion == 2) {
+            try {
+                TableUtils.dropTable(connectionSource, Android.class, true);
+                TableUtils.dropTable(connectionSource, Ios.class, true);
+                TableUtils.dropTable(connectionSource, Java.class, true);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            onCreate(sqLiteDatabase, connectionSource);
+            DataHolder.getInstance().getPreferences(context).edit().putBoolean(Constant.IS_APP_FIRST_LAUNCH, true).apply();
+            restartApp();
+        }
+
+    /*
         try {
             if(oldVersion == 6 && newVersion == 7) {
                 sqLiteDatabase.execSQL("ALTER TABLE `TEMPSMS` ADD COLUMN isSmsParsed BOOLEAN;");
@@ -91,6 +109,15 @@ class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             e.printStackTrace();
         }
 */
+    }
+
+
+    private void restartApp() {
+        Intent intent = new Intent(context, SplashActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
+        ((Activity) context).finish();
     }
 
     Dao<Android, Integer> getAndroidDao() {

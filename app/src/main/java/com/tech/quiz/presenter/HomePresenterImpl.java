@@ -273,7 +273,6 @@ public class HomePresenterImpl extends ActivityPresenter<HomeView, HomeInterActo
     public void onPageSelected(int position) {
         getView().getToolBar().collapseActionView();
         this.position = position;
-//        pagerAdapter.getCategoryInstance(position).getPresenter().thisTechnologyHasUnAnsweredQuestion();
     }
 
     @Override
