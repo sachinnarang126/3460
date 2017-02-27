@@ -13,4 +13,6 @@ public interface QuestionView extends BaseView {
     void hideProgress();
 
     String getTechnology();
+
+    void setSelectionOfViewPager(int position);
 }

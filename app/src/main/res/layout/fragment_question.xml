@@ -39,6 +39,13 @@
                 android:layout_alignParentBottom="true"
                 android:background="@color/colorPrimary">
 
+                <ImageView
+                    android:id="@+id/imgLeft"
+                    android:layout_width="30dp"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/app_name"
+                    android:src="@drawable/left_selector" />
+
                 <TextView
                     android:id="@+id/txtUserValue"
                     android:layout_width="wrap_content"
@@ -46,6 +53,8 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="12dp"
                     android:layout_marginStart="12dp"
+                    android:layout_toEndOf="@+id/imgLeft"
+                    android:layout_toRightOf="@+id/imgLeft"
                     android:textColor="@android:color/white"
                     android:textSize="16sp" />
 
@@ -53,13 +62,22 @@
                     android:id="@+id/txtCount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="12dp"
                     android:layout_marginRight="12dp"
+                    android:layout_toLeftOf="@+id/imgRight"
+                    android:layout_toStartOf="@+id/imgRight"
                     android:textColor="@android:color/white"
                     android:textSize="16sp" />
+
+                <ImageView
+                    android:id="@+id/imgRight"
+                    android:layout_width="30dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:contentDescription="@string/app_name"
+                    android:src="@drawable/right_selector" />
 
 
             </RelativeLayout>

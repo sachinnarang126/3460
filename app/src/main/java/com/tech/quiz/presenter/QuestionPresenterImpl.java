@@ -380,6 +380,11 @@ public class QuestionPresenterImpl extends ActivityPresenter<QuestionView, IBase
     }
 
     @Override
+    public void setSelectionOfViewPager(int position) {
+        getView().setSelectionOfViewPager(position);
+    }
+
+    @Override
     protected IBaseInterActor createInterActor() {
         return null;
     }

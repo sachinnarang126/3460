@@ -24,6 +24,8 @@ import library.basecontroller.AppBaseCompatActivity;
 
 public class QuestionActivity extends AppBaseCompatActivity<QuestionPresenterImpl> implements QuestionView {
 
+    private ViewPager viewPager;
+
     @Override
     protected QuestionPresenterImpl createPresenter() {
         return new QuestionPresenterImpl(this, this);
@@ -54,7 +56,7 @@ public class QuestionActivity extends AppBaseCompatActivity<QuestionPresenterImp
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
 
-        ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
+        viewPager = (ViewPager) findViewById(R.id.viewPager);
         viewPager.setPageTransformer(true, new DepthPageTransformer());
 
         if (getIntent().getBooleanExtra("isQuizMode", false)) {
@@ -152,5 +154,10 @@ public class QuestionActivity extends AppBaseCompatActivity<QuestionPresenterImp
             default:
                 return "";
         }
+    }
+
+    @Override
+    public void setSelectionOfViewPager(int position) {
+        viewPager.setCurrentItem(position, true);
     }
 }

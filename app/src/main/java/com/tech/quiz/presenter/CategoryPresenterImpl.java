@@ -42,12 +42,11 @@ import rx.schedulers.Schedulers;
 
 public class CategoryPresenterImpl extends FragmentPresenter<CategoryView, CategoryInterActor> implements CategoryPresenter, CategoryInterActor.OnQuestionResponseListener {
 
+    private final List<String> categoryList;
     private CategoryAdapter categoryAdapter;
     private List<Questions> questionList;
     //    private boolean hasToShowRecyclerView;
     private Map<String, Integer> categoryMap;
-    private final List<String> categoryList;
-
     private final BroadcastReceiver receiver = new BroadcastReceiver() {
 
         @Override
@@ -173,7 +172,7 @@ public class CategoryPresenterImpl extends FragmentPresenter<CategoryView, Categ
     }
 
     private void filterListToShowQuestion(final int position) {
-        if (position == 0) {
+        if (categoryList.get(position).equalsIgnoreCase("All Question")) {
             DataHolder.getInstance().setQuestionList(questionList);
             goToQuestionActivity(position, false);
         } else {

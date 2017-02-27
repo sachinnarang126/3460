@@ -33,4 +33,6 @@ public interface QuestionPresenter {
     void checkForQuizCompletion();
 
     void increaseAttemptedQuestionCount();
+
+    void setSelectionOfViewPager(int position);
 }

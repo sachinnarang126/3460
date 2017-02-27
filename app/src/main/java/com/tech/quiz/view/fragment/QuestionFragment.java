@@ -11,6 +11,7 @@ import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.tech.R;
@@ -29,6 +30,7 @@ import com.tech.quiz.view.activity.QuestionActivity;
 
 public class QuestionFragment extends Fragment implements View.OnClickListener, View.OnLongClickListener {
 
+    private int position;
     private Questions question;
 
     public static QuestionFragment getInstance(int pos, int total, int technology) {
@@ -55,7 +57,9 @@ public class QuestionFragment extends Fragment implements View.OnClickListener, 
 
     private void init(View view) {
         Bundle bundle = getArguments();
-        question = DataHolder.getInstance().getShuffledQuestionList().get(bundle.getInt("pos"));
+        position = bundle.getInt("pos");
+        int total = bundle.getInt("total");
+        question = DataHolder.getInstance().getShuffledQuestionList().get(position);
 
         TextView txtQuestion = (TextView) view.findViewById(R.id.txtQuestion);
         TextView txtViewA = (TextView) view.findViewById(R.id.txtViewA);
@@ -64,11 +68,24 @@ public class QuestionFragment extends Fragment implements View.OnClickListener, 
         TextView txtViewD = (TextView) view.findViewById(R.id.txtViewD);
         TextView txtCount = (TextView) view.findViewById(R.id.txtCount);
 
+        ImageView imgLeft = (ImageView) view.findViewById(R.id.imgLeft);
+        ImageView imgRight = (ImageView) view.findViewById(R.id.imgRight);
+        System.out.println("------position " + position + " total " + total);
+        if (total == 1) {
+            imgLeft.setVisibility(View.GONE);
+            imgRight.setVisibility(View.GONE);
+        } else if (position == 0) {
+            imgLeft.setVisibility(View.INVISIBLE);
+            imgRight.setVisibility(View.VISIBLE);
+        } else if (position + 1 == total) {
+            imgLeft.setVisibility(View.VISIBLE);
+            imgRight.setVisibility(View.INVISIBLE);
+        }
+
         txtViewA.setMovementMethod(new ScrollingMovementMethod());
         txtViewB.setMovementMethod(new ScrollingMovementMethod());
         txtViewC.setMovementMethod(new ScrollingMovementMethod());
         txtViewD.setMovementMethod(new ScrollingMovementMethod());
-
 
         txtQuestion.setText(question.getQuestion());
 
@@ -89,6 +106,10 @@ public class QuestionFragment extends Fragment implements View.OnClickListener, 
         txtViewC.setOnLongClickListener(this);
         txtViewD.setOnLongClickListener(this);
 
+        imgRight.setOnClickListener(this);
+        imgLeft.setOnClickListener(this);
+
+        System.out.println("question.isAttempted() " + question.isAttempted());
         if (question.isAttempted()) {
             TextView txtUserValue = (TextView) view.findViewById(R.id.txtUserValue);
             setUiCorrectAnswer(txtViewA, txtViewB, txtViewC, txtViewD);
@@ -223,26 +244,42 @@ public class QuestionFragment extends Fragment implements View.OnClickListener, 
 
     @Override
     public void onClick(View view) {
-        if (!question.isAttempted()) {
-            question.setAttempted(true);
-
-            switch (view.getId()) {
-                case R.id.txtViewA:
+        switch (view.getId()) {
+            case R.id.txtViewA:
+                if (!question.isAttempted()) {
+                    question.setAttempted(true);
                     updateViewAccordingToAnswer(Constant.OPTION_A, (TextView) view);
-                    break;
+                }
+                break;
 
-                case R.id.txtViewB:
+            case R.id.txtViewB:
+                if (!question.isAttempted()) {
+                    question.setAttempted(true);
                     updateViewAccordingToAnswer(Constant.OPTION_B, (TextView) view);
-                    break;
+                }
+                break;
 
-                case R.id.txtViewC:
+            case R.id.txtViewC:
+                if (!question.isAttempted()) {
+                    question.setAttempted(true);
                     updateViewAccordingToAnswer(Constant.OPTION_C, (TextView) view);
-                    break;
+                }
+                break;
 
-                case R.id.txtViewD:
+            case R.id.txtViewD:
+                if (!question.isAttempted()) {
+                    question.setAttempted(true);
                     updateViewAccordingToAnswer(Constant.OPTION_D, (TextView) view);
-                    break;
-            }
+                }
+                break;
+
+            case R.id.imgLeft:
+                ((QuestionActivity) getActivity()).getPresenter().setSelectionOfViewPager(position - 1);
+                break;
+
+            case R.id.imgRight:
+                ((QuestionActivity) getActivity()).getPresenter().setSelectionOfViewPager(position + 1);
+                break;
         }
     }
 
