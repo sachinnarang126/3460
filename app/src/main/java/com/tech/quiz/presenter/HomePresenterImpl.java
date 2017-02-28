@@ -6,7 +6,9 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.SearchViewCompat;
 import android.support.v7.widget.SearchView;
+import android.view.Menu;
 import android.view.MenuItem;
 
 import com.tech.R;
@@ -41,7 +43,7 @@ import rx.functions.Func1;
 public class HomePresenterImpl extends ActivityPresenter<HomeView, HomeInterActor> implements HomePresenter,
         HomeInterActor.OnIosQuestionResponseListener, HomeInterActor.OnAndroidQuestionResponseListener,
         HomeInterActor.OnJavaQuestionResponseListener, SearchView.OnQueryTextListener,
-        ViewPager.OnPageChangeListener, MenuItemCompat.OnActionExpandListener {
+        ViewPager.OnPageChangeListener, MenuItemCompat.OnActionExpandListener, SearchViewCompat.OnCloseListener {
 
     private PagerAdapter pagerAdapter;
     private int position;
@@ -289,6 +291,7 @@ public class HomePresenterImpl extends ActivityPresenter<HomeView, HomeInterActo
      */
     @Override
     public boolean onMenuItemActionExpand(MenuItem item) {
+        setItemsVisibility(item, false);
         return true;
     }
 
@@ -301,7 +304,29 @@ public class HomePresenterImpl extends ActivityPresenter<HomeView, HomeInterActo
      */
     @Override
     public boolean onMenuItemActionCollapse(MenuItem item) {
+        setItemsVisibility(item, true);
         pagerAdapter.getCategoryInstance(position).getPresenter().searchCategory("");
         return true;
+    }
+
+    /**
+     * The user is attempting to close the SearchView.
+     *
+     * @return true if the listener wants to override the default behavior of clearing the
+     * text field and dismissing it, false otherwise.
+     */
+    @Override
+    public boolean onClose() {
+        return false;
+    }
+
+    private void setItemsVisibility(MenuItem exception, boolean visible) {
+        Menu menu = getView().getOptionMenu();
+        for (int i = 0; i < menu.size(); ++i) {
+            MenuItem item = menu.getItem(i);
+            if (item != exception) {
+                item.setVisible(visible);
+            }
+        }
     }
 }

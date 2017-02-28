@@ -2,6 +2,7 @@
     <string name="app_name">TechQuiz</string>
     <string name="title_activity_home">HomeActivity</string>
     <string name="action_settings">Settings</string>
+    <string name="action_discussion">Hot Topics</string>
     <string name="action_search">Search</string>
     <string name="action_rate_us">Rate US</string>
     <string name="ad_free">Ad Free Version?</string>
@@ -38,6 +39,7 @@
     <string name="category_footer">ca-app-pub-9904475983820331/4074728009</string>
     <string name="settings_interstitial_full_screen">ca-app-pub-9904475983820331/9702459207</string>
     <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_discussion">Hot Topics</string>
 
 
 </resources>

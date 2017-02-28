@@ -68,6 +68,10 @@
             </intent-filter>
         </receiver>
 
+        <activity
+            android:name=".quiz.view.activity.DiscussionActivity"
+            android:screenOrientation="portrait"
+            android:label="@string/title_activity_discussion" />
     </application>
 
 </manifest>

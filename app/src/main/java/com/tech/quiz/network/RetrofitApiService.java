@@ -1,5 +1,6 @@
 package com.tech.quiz.network;
 
+import com.tech.quiz.models.bean.Discussion;
 import com.tech.quiz.models.bean.QuestionResponse;
 import com.tech.quiz.models.bean.UserRegistor;
 import com.tech.quiz.util.Constant;
@@ -46,4 +47,8 @@ public interface RetrofitApiService {
     @FormUrlEncoded
     @POST(Constant.JAVA_POST_URL)
     Observable<QuestionResponse> getJavaSelectedQuestion(@Field("id[]") List<Integer> id);
+
+    @FormUrlEncoded
+    @POST(Constant.DISCUSSION_URL)
+    Observable<Discussion> getDiscussion();
 }

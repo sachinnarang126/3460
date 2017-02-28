@@ -12,6 +12,7 @@ public class Constant {
     public static final String JAVA_URL = "java.php";
     public static final String IOS_POST_URL = "ios_post.php";
     public static final String JAVA_POST_URL = "java_post.php";
+    public static final String DISCUSSION_URL = "discussion.php";
     public static final String REGISTER_USER = "register_user.php";
     public static final String ANDROID_POST_URL = "android_post.php";
 

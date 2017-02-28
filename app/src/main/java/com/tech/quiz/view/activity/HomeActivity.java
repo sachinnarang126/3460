@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.SearchView;
@@ -13,6 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -32,6 +34,7 @@ public class HomeActivity extends AppBaseCompatActivity<HomePresenterImpl> imple
 
     private boolean doubleBackToExitPressedOnce;
     private Toolbar toolbar;
+    private Menu mMenu;
 
     @Override
     protected HomePresenterImpl createPresenter() {
@@ -76,12 +79,19 @@ public class HomeActivity extends AppBaseCompatActivity<HomePresenterImpl> imple
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_home, menu);
+        mMenu = menu;
         // Retrieve the SearchView and plug it into SearchManager
         MenuItem searchMenu = menu.findItem(R.id.action_search);
         SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchMenu);
+
+        EditText searchEditText = (EditText) searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
+        searchEditText.setTextColor(ContextCompat.getColor(this, android.R.color.white));
+        searchEditText.setHintTextColor(ContextCompat.getColor(this, android.R.color.white));
+
         searchView.setOnQueryTextListener(getPresenter());
         SearchManager searchManager = (SearchManager) getSystemService(SEARCH_SERVICE);
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+
         MenuItemCompat.setOnActionExpandListener(searchMenu, getPresenter());
 
         return super.onCreateOptionsMenu(menu);
@@ -111,6 +121,10 @@ public class HomeActivity extends AppBaseCompatActivity<HomePresenterImpl> imple
 
             case R.id.action_rate_us:
                 openPlayStoreForRating("com.tech.quiz");
+                break;
+
+            case R.id.action_discussion:
+                startActivity(new Intent(this, DiscussionActivity.class));
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -152,6 +166,11 @@ public class HomeActivity extends AppBaseCompatActivity<HomePresenterImpl> imple
     @Override
     public void onError(String error) {
 
+    }
+
+    @Override
+    public Menu getOptionMenu() {
+        return mMenu;
     }
 
     @Override
