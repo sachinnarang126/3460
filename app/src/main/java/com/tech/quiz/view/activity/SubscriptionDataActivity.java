@@ -198,13 +198,6 @@ public class SubscriptionDataActivity extends AppBaseCompatActivity {
     }
 
     private void launchPurchaseFlow() {
-        /*
-         * TODO: for security, generate your payload here for
-         * verification. See the comments on
-         * verifyDeveloperPayload() for more info. Since this is
-         * a SAMPLE, we just use an empty string, but on a
-         * production app you should carefully generate this.
-						 */
         String payload = "";
         try {
             if (mHelper != null) {
