@@ -17,7 +17,7 @@ public interface DiscussionInterActor extends IBaseInterActor {
     Subscription getDiscussion(DiscussionInterActor.OnDiscussionResponseListener onDiscussionResponseListener, Observable<Discussion> discussionCall);
 
     interface OnDiscussionResponseListener {
-        void onSuccess(List<Discussion> discussionList);
+        void onSuccess(List<Discussion.Response> discussionList);
 
         void onError(String error);
     }

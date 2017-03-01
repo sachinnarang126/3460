@@ -31,6 +31,9 @@ public interface RetrofitApiService {
     @GET(Constant.JAVA_URL)
     Observable<QuestionResponse> getJavaQuestion();
 
+    @GET(Constant.DISCUSSION_URL)
+    Observable<Discussion> getDiscussion();
+
     @FormUrlEncoded
     @POST(Constant.REGISTER_USER)
     Observable<UserRegistor> registerUserForFCM(@Field("device_id") String deviceID, @Field("device_token") String device_token,
@@ -47,8 +50,4 @@ public interface RetrofitApiService {
     @FormUrlEncoded
     @POST(Constant.JAVA_POST_URL)
     Observable<QuestionResponse> getJavaSelectedQuestion(@Field("id[]") List<Integer> id);
-
-    @FormUrlEncoded
-    @POST(Constant.DISCUSSION_URL)
-    Observable<Discussion> getDiscussion();
 }

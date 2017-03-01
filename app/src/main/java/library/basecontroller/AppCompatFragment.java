@@ -46,7 +46,8 @@ public abstract class AppCompatFragment<T extends FragmentPresenter> extends Fra
     public void onAttach(Context context) {
         super.onAttach(context);
         presenter = onAttachPresenter();
-        presenter.onAttach(context);
+        if (presenter != null)
+            presenter.onAttach(context);
     }
 
     @Override

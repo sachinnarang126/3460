@@ -42,4 +42,7 @@
     <string name="title_activity_discussion">Hot Topics</string>
 
 
+    <string name="question"><u><b>Question: </b></u></string>
+    <string name="answer"><u><b>Answer: </b></u></string>
+
 </resources>

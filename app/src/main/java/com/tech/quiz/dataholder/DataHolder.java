@@ -3,6 +3,7 @@ package com.tech.quiz.dataholder;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.tech.quiz.models.bean.Discussion;
 import com.tech.quiz.models.databasemodel.Questions;
 import com.tech.quiz.util.Constant;
 import com.tech.quiz.view.activity.HomeActivity;
@@ -18,6 +19,7 @@ public class DataHolder {
     private List<Questions> questionList;
     private List<Questions> shuffledQuestionList;
     private HomeActivity instance;
+    private Discussion.Response discussion;
 
     private DataHolder() {
         //singleton
@@ -58,4 +60,11 @@ public class DataHolder {
         return context.getSharedPreferences(Constant.SHARED_PREF, 0);
     }
 
+    public Discussion.Response getDiscussion() {
+        return discussion;
+    }
+
+    public void setDiscussion(Discussion.Response discussion) {
+        this.discussion = discussion;
+    }
 }
