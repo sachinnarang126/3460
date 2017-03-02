@@ -80,8 +80,10 @@ public class QuizFragment extends Fragment implements View.OnClickListener, View
         txtViewB.setMovementMethod(new ScrollingMovementMethod());
         txtViewC.setMovementMethod(new ScrollingMovementMethod());
         txtViewD.setMovementMethod(new ScrollingMovementMethod());
+        txtQuestion.setMovementMethod(new ScrollingMovementMethod());
 
         txtQuestion.setText(question.getQuestion());
+        txtQuestion.setTextIsSelectable(true);
 
         txtViewA.setText(question.getA());
         txtViewB.setText(question.getB());

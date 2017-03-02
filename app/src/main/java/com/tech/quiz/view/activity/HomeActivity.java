@@ -43,7 +43,6 @@ public class HomeActivity extends AppBaseCompatActivity<HomePresenterImpl> imple
 
     @Override
     protected void initUI() {
-
         AdView mAdView = (AdView) findViewById(R.id.adView);
         if (!isSubscribedUser()) {
             MobileAds.initialize(getApplicationContext(), getString(R.string.home_footer));
