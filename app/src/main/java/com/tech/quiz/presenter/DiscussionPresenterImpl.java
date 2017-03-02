@@ -57,7 +57,7 @@ public class DiscussionPresenterImpl extends FragmentPresenter<DiscussionView, D
                 Observable<Discussion> discussionObservable = apiService.getDiscussion();
                 putSubscriberInMap(getInterActor().getDiscussion(this, discussionObservable), Constant.DISCUSSION_URL);
             } else {
-                getView().onError(getContext().getString(R.string.error_internet));
+                getView().onError(getString(R.string.error_internet));
             }
         }
     }
@@ -105,7 +105,7 @@ public class DiscussionPresenterImpl extends FragmentPresenter<DiscussionView, D
 
     private void showAppPurchaseDialog() {
         new AlertDialog.Builder(getContext())
-                .setTitle(getContext().getString(R.string.app_name))
+                .setTitle(getString(R.string.app_name))
                 .setMessage("Buy the App to get access to all the answers")
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override

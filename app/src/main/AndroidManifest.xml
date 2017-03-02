@@ -40,7 +40,6 @@
             android:label="Subscription"
             android:screenOrientation="portrait" />
 
-        <!-- [START firebase_service] -->
         <service android:name=".quiz.fcm.MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
@@ -51,7 +50,6 @@
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
-        <!-- [END firebase_iid_service] -->
 
         <service
             android:name=".quiz.alarms.DailySchedulingService"
@@ -70,8 +68,13 @@
 
         <activity
             android:name=".quiz.view.activity.DiscussionActivity"
+            android:label="@string/title_activity_discussion"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".quiz.view.activity.AskQuestionActivity"
+            android:label="@string/title_activity_ask_question"
             android:screenOrientation="portrait"
-            android:label="@string/title_activity_discussion" />
+            android:windowSoftInputMode="adjustNothing" />
     </application>
 
 </manifest>

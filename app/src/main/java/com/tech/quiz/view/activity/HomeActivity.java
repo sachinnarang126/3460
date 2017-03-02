@@ -123,6 +123,10 @@ public class HomeActivity extends AppBaseCompatActivity<HomePresenterImpl> imple
                 openPlayStoreForRating("com.tech.quiz");
                 break;
 
+            case R.id.action_ask_question:
+                startActivity(new Intent(this, AskQuestionActivity.class));
+                break;
+
             case R.id.action_discussion:
                 startActivity(new Intent(this, DiscussionActivity.class));
                 break;

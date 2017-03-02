@@ -237,7 +237,7 @@ public class CategoryPresenterImpl extends FragmentPresenter<CategoryView, Categ
     @Override
     public void thisTechnologyHasUnAnsweredQuestion() {
         if (categoryList.size() == 0)
-            onError(getContext().getString(R.string.load_answered_question), true);
+            onError(getString(R.string.load_answered_question), true);
     }
 
     @Override
@@ -334,14 +334,15 @@ public class CategoryPresenterImpl extends FragmentPresenter<CategoryView, Categ
 
     private void showTestModeDialog(final int position) {
         new AlertDialog.Builder(getContext())
-                .setMessage("Quiz Mode?")
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                .setTitle(getString(R.string.app_name))
+                .setMessage("Choose Test Type")
+                .setPositiveButton("Quiz Mode", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         resetToDefaultValue(position, categoryList.get(position));
                     }
                 })
-                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                .setNegativeButton("Normal Mode", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         filterListToShowQuestion(position);

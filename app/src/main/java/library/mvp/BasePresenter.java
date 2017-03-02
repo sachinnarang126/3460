@@ -91,6 +91,10 @@ abstract public class BasePresenter<V extends BaseView, T extends IBaseInterActo
         return null;
     }
 
+    protected String getString(int id) {
+        return contextRef.get().getString(id);
+    }
+
     protected AppBaseCompatActivity getActivity() {
         return activityRef.get();
     }

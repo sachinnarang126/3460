@@ -67,7 +67,7 @@ public class SplashPresenterImpl extends ActivityPresenter<SplashView, SplashInt
                 putSubscriberInMap(getInterActor().getIosQuestion(this, iosQuestion), Constant.IOS_URL);
                 putSubscriberInMap(getInterActor().getJavaQuestions(this, javaQuestion), Constant.JAVA_URL);
             } else {
-                getView().onError(getActivity().getString(R.string.error_internet_first_launch));
+                getView().onError(getString(R.string.error_internet_first_launch));
             }
         }
     }

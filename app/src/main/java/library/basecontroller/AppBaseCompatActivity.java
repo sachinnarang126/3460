@@ -12,6 +12,8 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.tech.quiz.dataholder.DataHolder;
@@ -36,7 +38,7 @@ public abstract class AppBaseCompatActivity<T extends ActivityPresenter> extends
     }
 
     /**
-     * In child fragment you must provide presenter implementation to this,
+     * In child Activity you must provide presenter implementation to this,
      * otherwise it will give a null pointer exception
      *
      * @return return the presenterImp instance
@@ -158,5 +160,17 @@ public abstract class AppBaseCompatActivity<T extends ActivityPresenter> extends
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
         finish();
+    }
+
+    public void hideSoftKeyboard() {
+        try {
+            View view = this.getCurrentFocus();
+            if (view != null) {
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -10,8 +10,9 @@ public class Constant {
     public static final String ANDROID_URL = "android.php";
     public static final String IOS_URL = "ios.php";
     public static final String JAVA_URL = "java.php";
-    public static final String IOS_POST_URL = "ios_post.php";
+    public static final String ASK_QUESTION_URL = "ask_question.php";
     public static final String JAVA_POST_URL = "java_post.php";
+    public static final String IOS_POST_URL = "ios_post.php";
     public static final String DISCUSSION_URL = "get_all_discussion.php";
     public static final String REGISTER_USER = "register_user.php";
     public static final String ANDROID_POST_URL = "android_post.php";

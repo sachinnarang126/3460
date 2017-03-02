@@ -84,7 +84,7 @@ public class HomePresenterImpl extends ActivityPresenter<HomeView, HomeInterActo
                 putSubscriberInMap(getInterActor().getJavaQuestions(this, javaQuestion), Constant.JAVA_POST_URL);
 
             } else {
-                onError(getContext().getString(R.string.error_internet_first_launch));
+                onError(getString(R.string.error_internet_first_launch));
             }
         }
     }
