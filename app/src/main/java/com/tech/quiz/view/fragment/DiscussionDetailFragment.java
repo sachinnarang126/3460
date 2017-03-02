@@ -38,14 +38,18 @@ public class DiscussionDetailFragment extends AppCompatFragment<DiscussionDetail
      *
      * @param view view inflated from xml
      */
+    @SuppressWarnings("All")
     @Override
     protected void initUI(View view) {
         Discussion.Response response = DataHolder.getInstance().getDiscussion();
-        TextView txtDetail = (TextView) view.findViewById(R.id.txtDetail);
         ((DiscussionActivity) getActivity()).getSupportActionBar().setTitle(response.getTechnology().toUpperCase());
-        String detail = getString(R.string.question) + response.getQuestion() + "\n\n" +
-                getString(R.string.answer) + response.getAnswer();
-        txtDetail.setText(detail);
+
+        TextView txtAnswer = (TextView) view.findViewById(R.id.txtAnswer);
+        TextView txtQuestion = (TextView) view.findViewById(R.id.txtQuestion);
+        String answer = getString(R.string.answer) + response.getAnswer();
+        txtAnswer.setText(answer);
+        String question = getString(R.string.question) + response.getQuestion();
+        txtQuestion.setText(question);
     }
 
     @Nullable
@@ -55,6 +59,7 @@ public class DiscussionDetailFragment extends AppCompatFragment<DiscussionDetail
         return inflater.inflate(R.layout.fragment_discussion_detail, container, false);
     }
 
+    @SuppressWarnings("All")
     @Override
     public void onDestroyView() {
         super.onDestroyView();

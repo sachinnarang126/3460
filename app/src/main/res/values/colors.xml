@@ -4,6 +4,7 @@
     <color name="colorPrimaryDark">#008375</color>
     <color name="colorAccent">#83d0c9</color>
     <color name="appBackground">#E8E7ED</color>
+    <color name="rippleColor">#7783d0c9</color>
     <color name="green">#008744</color>
     <color name="red">#d62d20</color>
 

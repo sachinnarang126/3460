@@ -83,9 +83,9 @@ public class QuestionActivity extends AppBaseCompatActivity<QuestionPresenterImp
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         if (getIntent().getBooleanExtra("isQuizMode", false)) {
-            MenuItem menuItem = menu.findItem(R.id.action_show_result);
+            MenuItem menuItem = menu.findItem(R.id.action_result);
             menuItem.setVisible(true);
-        } else menu.findItem(R.id.action_show_result).setVisible(false);
+        } else menu.findItem(R.id.action_result).setVisible(false);
 
         return super.onPrepareOptionsMenu(menu);
     }
@@ -121,7 +121,7 @@ public class QuestionActivity extends AppBaseCompatActivity<QuestionPresenterImp
                 getPresenter().prepareListToResetAll();
                 break;
 
-            case R.id.action_show_result:
+            case R.id.action_result:
                 getPresenter().showResult();
                 break;
         }

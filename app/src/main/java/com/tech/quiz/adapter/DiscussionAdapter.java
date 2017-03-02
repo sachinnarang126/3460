@@ -1,6 +1,7 @@
 package com.tech.quiz.adapter;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -50,13 +51,16 @@ public class DiscussionAdapter extends RecyclerView.Adapter<DiscussionAdapter.Vi
                 if (isSubScribedUser) {
                     String answer = context.getString(R.string.answer) + response.getAnswer();
                     holder.txtAnswer.setText(answer);
+                    holder.txtAnswer.setTypeface(null, Typeface.NORMAL);
                 } else {
                     String paidAnswer = "This Answer is only for subscribed users";
                     holder.txtAnswer.setText(paidAnswer);
+                    holder.txtAnswer.setTypeface(null, Typeface.BOLD_ITALIC);
                 }
             } else {
                 String answer = context.getString(R.string.answer) + response.getAnswer();
                 holder.txtAnswer.setText(answer);
+                holder.txtAnswer.setTypeface(null, Typeface.NORMAL);
             }
         } catch (Exception e) {
             e.printStackTrace();

@@ -2,6 +2,7 @@ package com.tech.quiz.view.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -72,6 +73,11 @@ public class DiscussionFragment extends AppCompatFragment<DiscussionPresenterImp
 
     @Override
     public void onError(String error) {
-        // show snackbar here
+        showSnackBar(error);
+    }
+
+    private void showSnackBar(String error) {
+        if (getView() != null)
+            Snackbar.make(getView().findViewById(R.id.container), error, Snackbar.LENGTH_LONG).show();
     }
 }

@@ -50,8 +50,7 @@ public class SplashPresenterImpl extends ActivityPresenter<SplashView, SplashInt
     @Override
     public void prepareToFetchQuestion() {
         if (isViewAttached()) {
-            SplashActivity context = (SplashActivity) getContext();
-            if (context.isInternetAvailable()) {
+            if (getActivity().isInternetAvailable()) {
                 queryInventory();
                 getView().showProgress();
 
@@ -68,7 +67,7 @@ public class SplashPresenterImpl extends ActivityPresenter<SplashView, SplashInt
                 putSubscriberInMap(getInterActor().getIosQuestion(this, iosQuestion), Constant.IOS_URL);
                 putSubscriberInMap(getInterActor().getJavaQuestions(this, javaQuestion), Constant.JAVA_URL);
             } else {
-                context.onError(context.getString(R.string.error_internet_first_launch));
+                getView().onError(getActivity().getString(R.string.error_internet_first_launch));
             }
         }
     }
