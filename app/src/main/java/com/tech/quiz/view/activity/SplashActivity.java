@@ -32,6 +32,7 @@ public class SplashActivity extends AppBaseCompatActivity<SplashPresenterImpl> i
 
     @Override
     protected void initUI() {
+//        makeAppAddFree();
         if (DataHolder.getInstance().getPreferences(this).
                 getBoolean(Constant.IS_APP_FIRST_LAUNCH, true)) {
             progressBar = (ProgressBar) findViewById(R.id.progressBar);
@@ -86,4 +87,10 @@ public class SplashActivity extends AppBaseCompatActivity<SplashPresenterImpl> i
     private void showSnackBar(String error) {
         Snackbar.make(findViewById(R.id.container), error, Snackbar.LENGTH_LONG).show();
     }
+
+    /*private void makeAppAddFree() {
+        if (!isSubscribedUser()) {
+            DataHolder.getInstance().getPreferences(this).edit().putBoolean(Constant.IS_SUBSCRIBED_USER, true).apply();
+        }
+    }*/
 }
