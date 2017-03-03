@@ -68,6 +68,9 @@ public class QuestionFragment extends Fragment implements View.OnClickListener, 
         TextView txtViewD = (TextView) view.findViewById(R.id.txtViewD);
         TextView txtCount = (TextView) view.findViewById(R.id.txtCount);
 
+        /*ScrollView mainScrollView = (ScrollView) view.findViewById(R.id.scrollView);
+        mainScrollView.smoothScrollTo(0, 0);*/
+
         ImageView imgLeft = (ImageView) view.findViewById(R.id.imgLeft);
         ImageView imgRight = (ImageView) view.findViewById(R.id.imgRight);
         System.out.println("------position " + position + " total " + total);
@@ -86,8 +89,10 @@ public class QuestionFragment extends Fragment implements View.OnClickListener, 
         txtViewB.setMovementMethod(new ScrollingMovementMethod());
         txtViewC.setMovementMethod(new ScrollingMovementMethod());
         txtViewD.setMovementMethod(new ScrollingMovementMethod());
+        txtQuestion.setMovementMethod(new ScrollingMovementMethod());
 
         txtQuestion.setText(question.getQuestion());
+        txtQuestion.setTextIsSelectable(true);
 
         txtViewA.setText(question.getA());
         txtViewB.setText(question.getB());

@@ -8,9 +8,8 @@ android {
         applicationId 'com.tech.quiz'
         minSdkVersion 14
         targetSdkVersion 25
-        versionCode 8
-        versionName "1.2.2"
-//        multiDexEnabled true
+        versionCode 9
+        versionName "1.3"
     }
     buildTypes {
         release {
@@ -19,9 +18,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    /*dexOptions {
-        javaMaxHeapSize "4g"
-    }*/
 }
 
 dependencies {

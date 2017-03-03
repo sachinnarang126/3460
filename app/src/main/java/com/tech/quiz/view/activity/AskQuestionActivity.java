@@ -8,6 +8,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
 import com.tech.R;
 import com.tech.quiz.presenter.AskQuestionPresenterImpl;
 import com.tech.quiz.view.views.AskQuestionView;
@@ -34,6 +37,30 @@ public class AskQuestionActivity extends AppBaseCompatActivity<AskQuestionPresen
      */
     @Override
     protected void initUI() {
+
+        final InterstitialAd mInterstitialAd = new InterstitialAd(this);
+        if (!isSubscribedUser()) {
+            // set the ad unit ID
+            mInterstitialAd.setAdUnitId(getString(R.string.settings_interstitial_full_screen));
+
+            AdRequest adRequest = new AdRequest.Builder()
+                    .addTestDevice("9210683FFFBDE1953CE613AB2FDE46E5").
+                            addTestDevice("F56162DD974939BBF71A8D3E8CC8A44A").
+                            addTestDevice("1FBF7D7CF19C0C11158AF44FDA595121").
+                            addTestDevice("F58DA099F52C8D53E4DD635D0C5EB709").build();
+
+            // Load ads into Interstitial Ads
+            mInterstitialAd.loadAd(adRequest);
+
+            mInterstitialAd.setAdListener(new AdListener() {
+                public void onAdLoaded() {
+                    if (mInterstitialAd.isLoaded()) {
+                        mInterstitialAd.show();
+                    }
+                }
+            });
+        }
+
         etTechnology = (EditText) findViewById(R.id.etTechnology);
         etEmail = (EditText) findViewById(R.id.etEmail);
         etQuestion = (EditText) findViewById(R.id.etQuestion);
