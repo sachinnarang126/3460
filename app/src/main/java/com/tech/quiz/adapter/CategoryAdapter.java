@@ -48,7 +48,6 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         try {
             String data = categoryList.get(position) + " (" + categoryMap.get(categoryList.get(position)) + ")";
             holder.txtCategory.setText(data);
-            holder.txtCategory.setOnClickListener(new OnItemClickListener(position, onItemClickCallback));
             setAnimation(holder.container, position);
         } catch (Exception e) {
             e.printStackTrace();
@@ -67,18 +66,6 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
             anim.setDuration(new Random().nextInt(501));//to make duration random number between [0,501)
             viewToAnimate.startAnimation(anim);
             lastPosition = position;
-        }
-    }
-
-    class ViewHolder extends RecyclerView.ViewHolder {
-
-        final TextView txtCategory;
-        final CardView container;
-
-        ViewHolder(View itemView) {
-            super(itemView);
-            txtCategory = (TextView) itemView.findViewById(R.id.txtCategory);
-            container = (CardView) itemView.findViewById(R.id.container);
         }
     }
 
@@ -101,5 +88,32 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
             }
         }
         notifyDataSetChanged();
+    }
+
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
+        final TextView txtCategory;
+        final CardView container;
+
+        ViewHolder(View itemView) {
+            super(itemView);
+            txtCategory = (TextView) itemView.findViewById(R.id.txtCategory);
+            txtCategory.setOnClickListener(this);
+            container = (CardView) itemView.findViewById(R.id.container);
+        }
+
+        /**
+         * Called when a view has been clicked.
+         *
+         * @param v The view that was clicked.
+         */
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()) {
+                case R.id.txtCategory:
+                    onItemClickCallback.onItemClicked(v, getLayoutPosition());
+                    break;
+            }
+        }
     }
 }

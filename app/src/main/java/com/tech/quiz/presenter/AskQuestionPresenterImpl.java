@@ -51,10 +51,10 @@ public class AskQuestionPresenterImpl extends ActivityPresenter<AskQuestionView,
 
     @Override
     public void createAskQuestionApi(String technology, String email, String question) {
+        getActivity().hideSoftKeyboard();
         if (getActivity().isInternetAvailable()) {
             String error = validateData(technology, email, question);
             if (error.isEmpty()) {
-                getActivity().hideSoftKeyboard();
                 showProgressBar();
                 technology = technology.replace("'", "\\'");
                 question = question.replace("'", "\\'");
