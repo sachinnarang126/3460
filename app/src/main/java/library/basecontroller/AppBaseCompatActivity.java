@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdRequest;
 import com.tech.quiz.dataholder.DataHolder;
 import com.tech.quiz.util.Constant;
 import com.tech.quiz.view.activity.SplashActivity;
@@ -173,4 +174,15 @@ public abstract class AppBaseCompatActivity<T extends ActivityPresenter> extends
             e.printStackTrace();
         }
     }
+
+    public AdRequest getAddRequest() {
+        return new AdRequest.Builder().
+                /*.addTestDevice("9210683FFFBDE1953CE613AB2FDE46E5").
+                        addTestDevice("F56162DD974939BBF71A8D3E8CC8A44A").
+                        addTestDevice("1FBF7D7CF19C0C11158AF44FDA595121").*/
+                        addTestDevice("F58DA099F52C8D53E4DD635D0C5EB709").
+                        addTestDevice("D083D5AB51804F754591182D7F09C824").
+                        build();
+    }
+
 }

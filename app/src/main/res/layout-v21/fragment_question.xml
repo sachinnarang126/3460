@@ -109,7 +109,7 @@
                     android:background="@color/colorPrimary"
                     android:gravity="center"
                     android:padding="8dp"
-                    android:text="A"
+                    android:text="@string/a"
                     android:textColor="@android:color/white" />
 
                 <TextView
@@ -147,7 +147,7 @@
                     android:background="@color/colorPrimary"
                     android:gravity="center"
                     android:padding="8dp"
-                    android:text="B"
+                    android:text="@string/b"
                     android:textColor="@android:color/white" />
 
                 <TextView
@@ -185,7 +185,7 @@
                     android:background="@color/colorPrimary"
                     android:gravity="center"
                     android:padding="8dp"
-                    android:text="C"
+                    android:text="@string/c"
                     android:textColor="@android:color/white" />
 
                 <TextView
@@ -223,7 +223,7 @@
                     android:background="@color/colorPrimary"
                     android:gravity="center"
                     android:padding="8dp"
-                    android:text="D"
+                    android:text="@string/d"
                     android:textColor="@android:color/white" />
 
                 <TextView

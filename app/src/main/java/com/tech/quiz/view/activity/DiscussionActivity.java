@@ -44,11 +44,7 @@ public class DiscussionActivity extends AppBaseCompatActivity {
         if (!isSubscribedUser()) {
             MobileAds.initialize(getApplicationContext(), getString(R.string.hot_topics));
             mAdView.setVisibility(View.VISIBLE);
-            AdRequest adRequest = new AdRequest.Builder()
-                    .addTestDevice("9210683FFFBDE1953CE613AB2FDE46E5").
-                            addTestDevice("F56162DD974939BBF71A8D3E8CC8A44A").
-                            addTestDevice("1FBF7D7CF19C0C11158AF44FDA595121").
-                            addTestDevice("F58DA099F52C8D53E4DD635D0C5EB709").build();
+            AdRequest adRequest = getAddRequest();
             mAdView.loadAd(adRequest);
         } else {
             mAdView.setVisibility(View.GONE);

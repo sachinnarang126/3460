@@ -68,15 +68,12 @@ public class QuestionFragment extends Fragment implements View.OnClickListener, 
         TextView txtViewD = (TextView) view.findViewById(R.id.txtViewD);
         TextView txtCount = (TextView) view.findViewById(R.id.txtCount);
 
-        /*ScrollView mainScrollView = (ScrollView) view.findViewById(R.id.scrollView);
-        mainScrollView.smoothScrollTo(0, 0);*/
-
         ImageView imgLeft = (ImageView) view.findViewById(R.id.imgLeft);
         ImageView imgRight = (ImageView) view.findViewById(R.id.imgRight);
-        System.out.println("------position " + position + " total " + total);
+
         if (total == 1) {
-            imgLeft.setVisibility(View.GONE);
-            imgRight.setVisibility(View.GONE);
+            imgLeft.setVisibility(View.INVISIBLE);
+            imgRight.setVisibility(View.INVISIBLE);
         } else if (position == 0) {
             imgLeft.setVisibility(View.INVISIBLE);
             imgRight.setVisibility(View.VISIBLE);

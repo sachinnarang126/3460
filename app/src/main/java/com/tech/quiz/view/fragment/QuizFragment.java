@@ -66,8 +66,8 @@ public class QuizFragment extends Fragment implements View.OnClickListener, View
         ImageView imgRight = (ImageView) view.findViewById(R.id.imgRight);
 
         if (total == 1) {
-            imgLeft.setVisibility(View.GONE);
-            imgRight.setVisibility(View.GONE);
+            imgLeft.setVisibility(View.INVISIBLE);
+            imgRight.setVisibility(View.INVISIBLE);
         } else if (position == 0) {
             imgLeft.setVisibility(View.INVISIBLE);
             imgRight.setVisibility(View.VISIBLE);

@@ -335,7 +335,7 @@ public class QuestionPresenterImpl extends ActivityPresenter<QuestionView, IBase
                                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {
-                                        ((QuestionActivity) getContext()).finish();
+//                                        ((QuestionActivity) getContext()).finish();
                                     }
                                 })
                                 .create()

@@ -24,6 +24,10 @@
     <string name="ios">iOS</string>
     <string name="android">ANDROID</string>
     <string name="java">JAVA</string>
+    <string name="d">D</string>
+    <string name="c">C</string>
+    <string name="b">B</string>
+    <string name="a">A</string>
 
     <!-- Question Activity -->
     <string name="all">All</string>
@@ -59,6 +63,7 @@
     <string name="technology">Technology Ex: Java</string>
     <string name="hint_question">Question&#8230;</string>
     <string name="submit">Submit</string>
+    <string name="purchase_app">Purchase App</string>
 
 
 </resources>
