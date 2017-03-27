@@ -1,10 +1,14 @@
 package com.tech.quiz.view.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.Settings;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ProgressBar;
@@ -33,14 +37,15 @@ public class SplashActivity extends AppBaseCompatActivity<SplashPresenterImpl> i
     @Override
     protected void initUI() {
 //        makeAppAddFree();
+        sampleForXiaomi();
         if (DataHolder.getInstance().getPreferences(this).
                 getBoolean(Constant.IS_APP_FIRST_LAUNCH, true)) {
             progressBar = (ProgressBar) findViewById(R.id.progressBar);
             // fetch all data from server and save it to local DB
             getPresenter().prepareToFetchQuestion();
         } else {
-            startActivity(new Intent(SplashActivity.this, HomeActivity.class));
-            finish();
+            /*startActivity(new Intent(SplashActivity.this, HomeActivity.class));
+            finish();*/
         }
     }
 
@@ -93,4 +98,59 @@ public class SplashActivity extends AppBaseCompatActivity<SplashPresenterImpl> i
             DataHolder.getInstance().getPreferences(this).edit().putBoolean(Constant.IS_SUBSCRIBED_USER, true).apply();
         }
     }*/
+
+
+    private void sampleForXiaomi() {
+        String brand = Build.BRAND;
+        System.out.println("------" + brand + "--------");
+        if (brand.contains("Xiaomi")) {
+            showDialog("FinArt required permission to read your SMS", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                    Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                    Uri uri = Uri.fromParts("package", getPackageName(), null);
+                    intent.setData(uri);
+                    startActivityForResult(intent, 102);
+                }
+            }, false);
+        } else {
+            showToast("Non Xiaomi Device");
+        }
+    }
+
+    public void showDialog(String message, DialogInterface.OnClickListener okListener, boolean hasToShowDone) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this)
+                .setMessage(message)
+                .setPositiveButton("Enable", okListener)
+                .setCancelable(false);
+        if (hasToShowDone)
+            builder.setNegativeButton("Done", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                }
+            });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case 102:
+                showDialog("FinArt required permission to read your SMS", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                        Uri uri = Uri.fromParts("package", getPackageName(), null);
+                        intent.setData(uri);
+                        startActivityForResult(intent, 102);
+                    }
+                }, true);
+                break;
+        }
+    }
 }
